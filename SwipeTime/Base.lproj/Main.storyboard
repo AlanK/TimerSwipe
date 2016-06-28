@@ -18,24 +18,27 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="center" horizontalHuggingPriority="750" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" misplaced="YES" axis="vertical" distribution="equalSpacing" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="F3f-0s-rqz">
-                                <rect key="frame" x="116" y="77" width="210" height="107"/>
+                                <rect key="frame" x="116" y="77" width="266" height="151"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" text="Swipe Anywhere to Start" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="74y-S5-5gr" userLabel="Top Label">
-                                        <rect key="frame" x="0.0" y="0.0" width="210" height="23"/>
+                                        <rect key="frame" x="28" y="0.0" width="210" height="23"/>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleTitle3"/>
                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="753" verticalCompressionResistancePriority="753" misplaced="YES" text="00:00:00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kn3-O2-ymo" userLabel="Time">
-                                        <rect key="frame" x="49" y="31" width="113" height="33"/>
-                                        <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="753" verticalCompressionResistancePriority="753" misplaced="YES" text="00:00.00" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kn3-O2-ymo" userLabel="Time">
+                                        <rect key="frame" x="0.0" y="31" width="266" height="77"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="64"/>
                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="752" verticalCompressionResistancePriority="752" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yum-AW-GvH" userLabel="Bottom Button">
-                                        <rect key="frame" x="76" y="72" width="59" height="35"/>
+                                        <rect key="frame" x="104" y="116" width="59" height="35"/>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleTitle3"/>
                                         <state key="normal" title="Cancel"/>
+                                        <connections>
+                                            <action selector="cancelTimer:" destination="BYZ-38-t0r" eventType="touchUpInside" id="bYh-Uv-HlO"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                             </stackView>
@@ -48,22 +51,36 @@
                         </constraints>
                         <connections>
                             <outletCollection property="gestureRecognizers" destination="iu1-W6-3dE" appends="YES" id="vOO-zn-J0U"/>
+                            <outletCollection property="gestureRecognizers" destination="BUd-Ub-Zt7" appends="YES" id="u3q-53-Tnt"/>
+                            <outletCollection property="gestureRecognizers" destination="LVv-oa-87s" appends="YES" id="5Rk-SY-LS0"/>
+                            <outletCollection property="gestureRecognizers" destination="F4s-7J-Mun" appends="YES" id="yLj-XZ-tPl"/>
                         </connections>
                     </view>
                     <connections>
-                        <outlet property="cancelTimer" destination="yum-AW-GvH" id="M6w-Ik-n4w"/>
-                        <outlet property="downStartTimer" destination="F4s-7J-Mun" id="X7a-d1-u0u"/>
-                        <outlet property="leftStartTimer" destination="BUd-Ub-Zt7" id="oZt-0n-Ohg"/>
-                        <outlet property="rightStartTimer" destination="iu1-W6-3dE" id="PoS-Ey-Jm3"/>
                         <outlet property="timeDisplay" destination="Kn3-O2-ymo" id="drX-9g-UjM"/>
-                        <outlet property="upStartTimer" destination="LVv-oa-87s" id="xhy-Ty-iMs"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
-                <swipeGestureRecognizer direction="right" id="iu1-W6-3dE" userLabel="Swipe Right"/>
-                <swipeGestureRecognizer direction="left" id="BUd-Ub-Zt7" userLabel="Swipe Left"/>
-                <swipeGestureRecognizer direction="up" id="LVv-oa-87s" userLabel="Swipe Up"/>
-                <swipeGestureRecognizer direction="down" id="F4s-7J-Mun" userLabel="Swipe Down"/>
+                <swipeGestureRecognizer direction="right" id="iu1-W6-3dE" userLabel="Swipe Right">
+                    <connections>
+                        <action selector="swipeRight:" destination="BYZ-38-t0r" id="SfV-0U-3zi"/>
+                    </connections>
+                </swipeGestureRecognizer>
+                <swipeGestureRecognizer direction="left" id="BUd-Ub-Zt7" userLabel="Swipe Left">
+                    <connections>
+                        <action selector="swipeLeft:" destination="BYZ-38-t0r" id="5sj-I9-rRP"/>
+                    </connections>
+                </swipeGestureRecognizer>
+                <swipeGestureRecognizer direction="up" id="LVv-oa-87s" userLabel="Swipe Up">
+                    <connections>
+                        <action selector="swipeUp:" destination="BYZ-38-t0r" id="PPy-4v-yN9"/>
+                    </connections>
+                </swipeGestureRecognizer>
+                <swipeGestureRecognizer direction="down" id="F4s-7J-Mun" userLabel="Swipe Down">
+                    <connections>
+                        <action selector="swipeDown:" destination="BYZ-38-t0r" id="Rwu-Vn-2Sp"/>
+                    </connections>
+                </swipeGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="286" y="389"/>
         </scene>
