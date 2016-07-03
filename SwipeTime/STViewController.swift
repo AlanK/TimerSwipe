@@ -12,7 +12,10 @@ class STViewController: UIViewController {
     
     
     var timer = NSTimer()
-    var counter = 3000
+    let defaultCounter = 3000
+    var counterValue = 3000
+    var savedCounter = 3000
+    var timerUnlocked = true
     
     func formatTime(time: Int) -> (String) {
         
@@ -34,21 +37,28 @@ class STViewController: UIViewController {
     }
     
     func startTimer() {
+        guard timerUnlocked else {
+            return
+        }
+        timerUnlocked = false
+        tapView.enabled = false
         timer = NSTimer.scheduledTimerWithTimeInterval(0.01, target:self, selector: #selector(STViewController.incrementCounter), userInfo: nil, repeats: true)
     }
     
     func incrementCounter() {
-        counter -= 1
-        timeDisplay.text = formatTime(counter)
-        if counter <= 0 {
+        counterValue -= 1
+        timeDisplay.text = formatTime(counterValue)
+        if counterValue <= 0 {
             stopTimer()
         }
     }
     
     func stopTimer() {
         timer.invalidate()
-        counter = 3000
-        timeDisplay.text = formatTime(counter)
+        counterValue = savedCounter
+        timeDisplay.text = formatTime(counterValue)
+        timerUnlocked = true
+        tapView.enabled = true
     }
     
     
@@ -74,11 +84,14 @@ class STViewController: UIViewController {
         startTimer()
     }
     
+    @IBOutlet var tapView: UITapGestureRecognizer!
+    
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
-        
         stopTimer()
         
     }
@@ -98,5 +111,12 @@ class STViewController: UIViewController {
      // Pass the selected object to the new view controller.
      }
      */
+    
+    @IBAction func unwindToSTVC(sender: UIStoryboardSegue) {
+        if let sourceViewController = sender.sourceViewController as? STModalViewController, newCounter = sourceViewController.counter {
+            savedCounter = newCounter
+        }
+        stopTimer()
+    }
     
 }
