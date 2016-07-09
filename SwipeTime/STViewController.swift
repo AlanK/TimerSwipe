@@ -7,15 +7,27 @@
 //
 
 import UIKit
+import AudioToolbox
 
 class STViewController: UIViewController {
-    
     
     var timer = NSTimer()
     let defaultCounter = 3000
     var counterValue = 3000
     var savedCounter = 3000
     var timerUnlocked = true
+    
+    func readySounds() {
+        let firstSoundURLRef = CFBundleCopyResourceURL(CFBundleGetMainBundle(), "AudioCue_01", "aif", nil)
+        var firstSoundID: SystemSoundID = 0
+        
+        AudioServicesCreateSystemSoundID(firstSoundURLRef, &firstSoundID)
+        AudioServicesPlaySystemSound(firstSoundID)
+
+        
+        
+    }
+    
     
     func formatTime(time: Int) -> (String) {
         
@@ -42,6 +54,7 @@ class STViewController: UIViewController {
         }
         timerUnlocked = false
         tapView.enabled = false
+        
         timer = NSTimer.scheduledTimerWithTimeInterval(0.01, target:self, selector: #selector(STViewController.incrementCounter), userInfo: nil, repeats: true)
     }
     
@@ -61,7 +74,6 @@ class STViewController: UIViewController {
         tapView.enabled = true
     }
     
-    
     @IBOutlet var timeDisplay: UILabel!
     
     @IBAction func cancelTimer(sender: AnyObject) {
@@ -71,11 +83,11 @@ class STViewController: UIViewController {
     @IBAction func swipeRight(sender: AnyObject) {
         startTimer()
     }
-
+    
     @IBAction func swipeLeft(sender: AnyObject) {
         startTimer()
     }
-
+    
     @IBAction func swipeUp(sender: AnyObject) {
         startTimer()
     }
@@ -92,6 +104,8 @@ class STViewController: UIViewController {
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
+        
+        readySounds()
         stopTimer()
         
     }

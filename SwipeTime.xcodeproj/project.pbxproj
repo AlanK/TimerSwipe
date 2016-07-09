@@ -12,6 +12,8 @@
 		5A03B9AF1D1DDB9800E245C9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5A03B9AE1D1DDB9800E245C9 /* Assets.xcassets */; };
 		5A03B9B21D1DDB9800E245C9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5A03B9B01D1DDB9800E245C9 /* LaunchScreen.storyboard */; };
 		5A4536841D298CA300E62273 /* STModalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A4536831D298CA300E62273 /* STModalViewController.swift */; };
+		5A9563E51D313BB100313EEF /* AudioCue_01.aif in Resources */ = {isa = PBXBuildFile; fileRef = 5A9563E31D313BB100313EEF /* AudioCue_01.aif */; };
+		5A9563E61D313BB100313EEF /* AudioCue_02.aif in Resources */ = {isa = PBXBuildFile; fileRef = 5A9563E41D313BB100313EEF /* AudioCue_02.aif */; };
 		5AB18AFA1D2058CA007B9D9F /* STViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AB18AF91D2058CA007B9D9F /* STViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -23,6 +25,8 @@
 		5A03B9B11D1DDB9800E245C9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		5A03B9B31D1DDB9800E245C9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5A4536831D298CA300E62273 /* STModalViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STModalViewController.swift; sourceTree = "<group>"; };
+		5A9563E31D313BB100313EEF /* AudioCue_01.aif */ = {isa = PBXFileReference; lastKnownFileType = file; path = AudioCue_01.aif; sourceTree = "<group>"; };
+		5A9563E41D313BB100313EEF /* AudioCue_02.aif */ = {isa = PBXFileReference; lastKnownFileType = file; path = AudioCue_02.aif; sourceTree = "<group>"; };
 		5AB18AF91D2058CA007B9D9F /* STViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -63,6 +67,8 @@
 				5A03B9AE1D1DDB9800E245C9 /* Assets.xcassets */,
 				5A03B9B01D1DDB9800E245C9 /* LaunchScreen.storyboard */,
 				5A03B9B31D1DDB9800E245C9 /* Info.plist */,
+				5A9563E31D313BB100313EEF /* AudioCue_01.aif */,
+				5A9563E41D313BB100313EEF /* AudioCue_02.aif */,
 			);
 			path = SwipeTime;
 			sourceTree = "<group>";
@@ -125,7 +131,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5A9563E51D313BB100313EEF /* AudioCue_01.aif in Resources */,
 				5A03B9B21D1DDB9800E245C9 /* LaunchScreen.storyboard in Resources */,
+				5A9563E61D313BB100313EEF /* AudioCue_02.aif in Resources */,
 				5A03B9AF1D1DDB9800E245C9 /* Assets.xcassets in Resources */,
 				5A03B9AD1D1DDB9800E245C9 /* Main.storyboard in Resources */,
 			);
@@ -187,6 +195,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				EMBED_ASSET_PACKS_IN_PRODUCT_BUNDLE = YES;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -232,6 +241,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				EMBED_ASSET_PACKS_IN_PRODUCT_BUNDLE = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -253,6 +263,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				EMBED_ASSET_PACKS_IN_PRODUCT_BUNDLE = YES;
 				INFOPLIST_FILE = SwipeTime/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.asciilus.SwipeTime;
@@ -264,6 +275,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				EMBED_ASSET_PACKS_IN_PRODUCT_BUNDLE = YES;
 				INFOPLIST_FILE = SwipeTime/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.asciilus.SwipeTime;
