@@ -11,41 +11,23 @@ import AudioToolbox
 
 class STViewController: UIViewController {
     
+    let timeFormatter = STTimeFormatter()
+    let soundController = STSoundController()
+
+    // MARK: - Timer
+
+    var initialCounterValue = 3000
+    var currentCounterValue: Int? //Gets a value in readyTimer()
+    
     var timer = NSTimer()
-    let defaultCounter = 3000
-    var counterValue = 3000
-    var savedCounter = 3000
     var timerUnlocked = true
     
-    func readySounds() {
-        let firstSoundURLRef = CFBundleCopyResourceURL(CFBundleGetMainBundle(), "AudioCue_01", "aif", nil)
-        var firstSoundID: SystemSoundID = 0
-        
-        AudioServicesCreateSystemSoundID(firstSoundURLRef, &firstSoundID)
-        AudioServicesPlaySystemSound(firstSoundID)
-
-        
-        
-    }
-    
-    
-    func formatTime(time: Int) -> (String) {
-        
-        let timeBlocks = [time / 6000, (time / 100) % 60, time % 100]
-        let numberFormatter = NSNumberFormatter()
-        numberFormatter.formatWidth = 2
-        numberFormatter.paddingCharacter = "0"
-        
-        var timeAsString = ["", "", ""]
-        
-        var i = 0
-        for block in timeBlocks {
-            timeAsString[i] = numberFormatter.stringFromNumber(block)!
-            i += 1
-        }
-        
-        return timeAsString[0] + ":" + timeAsString[1] + "." + timeAsString[2]
-        
+    func readyTimer() {
+        timer.invalidate()
+        currentCounterValue = initialCounterValue
+        timeDisplay.text = timeFormatter.formatTime(currentCounterValue!)
+        timerUnlocked = true
+        tapView.enabled = true
     }
     
     func startTimer() {
@@ -56,25 +38,31 @@ class STViewController: UIViewController {
         tapView.enabled = false
         
         timer = NSTimer.scheduledTimerWithTimeInterval(0.01, target:self, selector: #selector(STViewController.incrementCounter), userInfo: nil, repeats: true)
+        
+        soundController.playFirstSound()
     }
-    
+
     func incrementCounter() {
-        counterValue -= 1
-        timeDisplay.text = formatTime(counterValue)
-        if counterValue <= 0 {
+        currentCounterValue! -= 1
+        timeDisplay.text = timeFormatter.formatTime(currentCounterValue!)
+        if currentCounterValue <= 0 {
             stopTimer()
         }
     }
-    
+
     func stopTimer() {
-        timer.invalidate()
-        counterValue = savedCounter
-        timeDisplay.text = formatTime(counterValue)
-        timerUnlocked = true
-        tapView.enabled = true
+        readyTimer()
+        soundController.playSecondSound()
     }
     
+    
+   // MARK: - Labels
+
+    
     @IBOutlet var timeDisplay: UILabel!
+    
+    
+    // MARK: - Actions
     
     @IBAction func cancelTimer(sender: AnyObject) {
         stopTimer()
@@ -98,15 +86,14 @@ class STViewController: UIViewController {
     
     @IBOutlet var tapView: UITapGestureRecognizer!
     
-    
+    // MARK: - Load and Memory
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
         
-        readySounds()
-        stopTimer()
+        readyTimer()
         
     }
     
@@ -127,10 +114,12 @@ class STViewController: UIViewController {
      */
     
     @IBAction func unwindToSTVC(sender: UIStoryboardSegue) {
-        if let sourceViewController = sender.sourceViewController as? STModalViewController, newCounter = sourceViewController.counter {
-            savedCounter = newCounter
+        if let sourceViewController = sender.sourceViewController as? STModalViewController {
+            if let newCounter = sourceViewController.counter {
+                initialCounterValue = newCounter
+            }
         }
-        stopTimer()
+        readyTimer()
     }
     
 }
