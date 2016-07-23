@@ -55,8 +55,7 @@ class STViewController: UIViewController {
         soundController.playSecondSound()
     }
     
-    
-   // MARK: - Labels
+    // MARK: - Labels
 
     
     @IBOutlet var timeDisplay: UILabel!
@@ -93,6 +92,7 @@ class STViewController: UIViewController {
         
         // Do any additional setup after loading the view.
         
+        timeDisplay.font = UIFont.monospacedDigitSystemFontOfSize(64, weight: UIFontWeightRegular)
         readyTimer()
         
     }
