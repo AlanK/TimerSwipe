@@ -46,13 +46,13 @@ class STViewController: UIViewController {
         currentCounterValue! -= 1
         timeDisplay.text = timeFormatter.formatTime(currentCounterValue!)
         if currentCounterValue <= 0 {
+            soundController.playSecondSound()
             stopTimer()
         }
     }
 
     func stopTimer() {
         readyTimer()
-        soundController.playSecondSound()
     }
     
     // MARK: - Labels

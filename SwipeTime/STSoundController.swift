@@ -19,12 +19,12 @@ class STSoundController: NSObject {
     
     func playFirstSound() {
         AudioServicesCreateSystemSoundID(firstSoundURLRef, &firstSoundID)
-        AudioServicesPlaySystemSound(firstSoundID)
+        AudioServicesPlayAlertSound(firstSoundID)
     }
     
     func playSecondSound() {
         AudioServicesCreateSystemSoundID(secondSoundURLRef, &secondSoundID)
-        AudioServicesPlaySystemSound(secondSoundID)
+        AudioServicesPlayAlertSound(secondSoundID)
     }
     
 }
