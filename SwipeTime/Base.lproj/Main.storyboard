@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
     </dependencies>
     <scenes>
         <!--Time-->
@@ -17,30 +18,30 @@
                         <rect key="frame" x="0.0" y="64" width="600" height="536"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="center" misplaced="YES" alignment="lastBaseline" translatesAutoresizingMaskIntoConstraints="NO" id="EBw-ms-KRz">
-                                <rect key="frame" x="281" y="251" width="207" height="33"/>
+                            <stackView opaque="NO" contentMode="center" misplaced="YES" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="EBw-ms-KRz">
+                                <rect key="frame" x="14" y="56" width="213" height="33"/>
                                 <subviews>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="30" textAlignment="right" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ca7-if-Q5u">
-                                        <rect key="frame" x="0.0" y="0.0" width="100" height="33"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="100" id="5bg-vR-fx6"/>
-                                        </constraints>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="bottom" misplaced="YES" contentHorizontalAlignment="right" contentVerticalAlignment="bottom" text="30" textAlignment="right" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ca7-if-Q5u">
+                                        <rect key="frame" x="0.0" y="0.0" width="107" height="33"/>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
                                         <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
                                     </textField>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text=" seconds" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qgT-9m-flz">
-                                        <rect key="frame" x="100" y="1" width="107" height="33"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text=" seconds" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qgT-9m-flz">
+                                        <rect key="frame" x="107" y="0.0" width="107" height="33"/>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
+                                <constraints>
+                                    <constraint firstItem="qgT-9m-flz" firstAttribute="width" secondItem="ca7-if-Q5u" secondAttribute="width" id="FtH-KS-zHS"/>
+                                </constraints>
                             </stackView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="EBw-ms-KRz" firstAttribute="centerY" secondItem="N7v-Kv-bVu" secondAttribute="centerY" id="Owb-ma-6qg"/>
-                            <constraint firstItem="EBw-ms-KRz" firstAttribute="centerX" secondItem="N7v-Kv-bVu" secondAttribute="centerX" id="QVn-QC-YwM"/>
+                            <constraint firstItem="K5O-pt-ruv" firstAttribute="top" secondItem="EBw-ms-KRz" secondAttribute="bottom" multiplier="2" id="Lch-t8-ATq"/>
+                            <constraint firstItem="EBw-ms-KRz" firstAttribute="centerX" secondItem="N7v-Kv-bVu" secondAttribute="centerX" id="tud-uM-fzK"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Time" id="dUN-Qd-ef5">
