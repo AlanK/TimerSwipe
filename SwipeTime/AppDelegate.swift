@@ -12,10 +12,55 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-
+    var scheme: String!
+    var query: String!
+    
+    // These don't do anything yet
+    var startTimer = false
+    var providedTime: Int?
+    
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
+        return true
+    }
+    
+    func application(application: UIApplication, openURL url: NSURL,
+                     sourceApplication: String?, annotation: AnyObject)-> Bool {
+        
+        scheme = url.scheme
+        query = url.query
+        
+        guard scheme == "swipetime" else {
+            return false
+        }
+        
+        let arguments = query.componentsSeparatedByString("&")
+        
+        for argument in arguments {
+            if argument == "start" {
+                
+                // This doesn't do anything yet and something else will need to reset startTimer to false.
+                startTimer = true
+                return true
+            }
+            
+            if argument.hasPrefix("timer=") {
+                
+                // This is ugly as sin. Can we fix it? Please? It is garbage.
+                
+                var attemptedValues = argument.componentsSeparatedByString("timer=")
+                let value = attemptedValues.removeLast()
+                let numberValue = try? Int(value)
+                
+                if numberValue != nil && numberValue! <= 999 {
+                        providedTime = numberValue!
+                }
+                
+                // Make this do something. This doesn't do anything yet. Why is removing a range from a string so hard?
+            }
+        }
+        
         return true
     }
 
