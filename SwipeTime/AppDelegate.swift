@@ -12,8 +12,8 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-    var scheme: String!
-    var query: String!
+    var scheme = ""
+    var query = ""
     
     // These don't do anything yet
     var startTimer = false
@@ -29,7 +29,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                      sourceApplication: String?, annotation: AnyObject)-> Bool {
         
         scheme = url.scheme
-        query = url.query
+        
+        query = url.query ?? "&"
         
         guard scheme == "swipetime" else {
             return false
@@ -49,9 +50,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 
                 // This is ugly as sin. Can we fix it? Please? It is garbage.
                 
-                var attemptedValues = argument.componentsSeparatedByString("timer=")
+                var attemptedValues = argument.componentsSeparatedByString("=")
                 let value = attemptedValues.removeLast()
-                let numberValue = try? Int(value)
+                let numberValue = Int(value)
                 
                 if numberValue != nil && numberValue! <= 999 {
                         providedTime = numberValue!
