@@ -58,7 +58,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                         providedTime = numberValue!
                 }
                 
-                // Make this do something. This doesn't do anything yet. Why is removing a range from a string so hard?
+                // Make this do something. This doesn't do anything yet.
             }
         }
         

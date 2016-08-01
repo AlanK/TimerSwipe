@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import AudioToolbox
 
 class STViewController: UIViewController {
     
@@ -15,6 +14,7 @@ class STViewController: UIViewController {
     let soundController = STSoundController()
 
     // MARK: - Timer
+    // My current struggle is figuring out how to pull out *almost* all of this code and leave it to STTimer. Certain bits need to stay in here. In particular, anything that updates timeDisplay.text should be in the view controller.
 
     var initialCounterValue = 3000
     var currentCounterValue: Int? //Gets a value in readyTimer()
@@ -42,6 +42,10 @@ class STViewController: UIViewController {
         soundController.playFirstSound()
     }
 
+    func stopTimer() {
+        readyTimer()
+    }
+
     func incrementCounter() {
         currentCounterValue! -= 1
         timeDisplay.text = timeFormatter.formatTime(currentCounterValue!)
@@ -49,10 +53,6 @@ class STViewController: UIViewController {
             soundController.playSecondSound()
             stopTimer()
         }
-    }
-
-    func stopTimer() {
-        readyTimer()
     }
     
     // MARK: - Labels
