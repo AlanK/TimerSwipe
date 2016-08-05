@@ -19,7 +19,7 @@ class STModalViewController: UIViewController, UITextFieldDelegate {
         dismissViewControllerAnimated(true, completion: nil)
     }
     
-    var counter: Int?
+    var userSelectedTime: Int?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -56,10 +56,10 @@ class STModalViewController: UIViewController, UITextFieldDelegate {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
         
-        if let counterText = timeField.text {
-            if let counterNumber = Int(counterText + "00") {
-                if counterNumber > 0 {
-                    counter = counterNumber
+        if let userEnteredTime = timeField.text {
+            if let userEnteredTimeInMilliseconds = Int(userEnteredTime + "00") {
+                if userEnteredTimeInMilliseconds > 0 {
+                    userSelectedTime = userEnteredTimeInMilliseconds
                 }
             }
         }

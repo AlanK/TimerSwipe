@@ -12,46 +12,47 @@ class STViewController: UIViewController {
     
     let timeFormatter = STTimeFormatter()
     let soundController = STSoundController()
-
+    
     // MARK: - Timer
-    // My current struggle is figuring out how to pull out *almost* all of this code and leave it to STTimer. Certain bits need to stay in here. In particular, anything that updates timeDisplay.text should be in the view controller.
 
-    var initialCounterValue = 3000
-    var currentCounterValue: Int? //Gets a value in readyTimer()
+    var duration = 3000
+    var timeRemaining: Int?
     
     var timer = NSTimer()
-    var timerUnlocked = true
+    var unlocked = true
     
-    func readyTimer() {
+    func clearTimer() {
         timer.invalidate()
-        currentCounterValue = initialCounterValue
-        timeDisplay.text = timeFormatter.formatTime(currentCounterValue!)
-        timerUnlocked = true
+        timeRemaining = duration
+        timeDisplay.text = timeFormatter.formatTime(timeRemaining!)
+        unlocked = true
         tapView.enabled = true
     }
     
     func startTimer() {
-        guard timerUnlocked else {
+        guard unlocked else {
             return
         }
-        timerUnlocked = false
+        unlocked = false
         tapView.enabled = false
         
-        timer = NSTimer.scheduledTimerWithTimeInterval(0.01, target:self, selector: #selector(STViewController.incrementCounter), userInfo: nil, repeats: true)
+        timer = NSTimer.scheduledTimerWithTimeInterval(0.01, target:self, selector: #selector(STViewController.tick), userInfo: nil, repeats: true)
         
         soundController.playFirstSound()
     }
 
-    func stopTimer() {
-        readyTimer()
-    }
-
-    func incrementCounter() {
-        currentCounterValue! -= 1
-        timeDisplay.text = timeFormatter.formatTime(currentCounterValue!)
-        if currentCounterValue <= 0 {
-            soundController.playSecondSound()
-            stopTimer()
+    func tick() {
+        if timeRemaining > 0 {
+            timeRemaining! -= 1
+            
+            // Here I need to update the time display
+            
+            timeDisplay.text = timeFormatter.formatTime(timeRemaining!)
+            
+            if timeRemaining == 0 {
+                clearTimer()
+                soundController.playSecondSound()
+            }
         }
     }
     
@@ -61,10 +62,12 @@ class STViewController: UIViewController {
     @IBOutlet var timeDisplay: UILabel!
     
     
+
+    
     // MARK: - Actions
     
     @IBAction func cancelTimer(sender: AnyObject) {
-        stopTimer()
+        clearTimer()
     }
     
     @IBAction func swipeRight(sender: AnyObject) {
@@ -91,9 +94,8 @@ class STViewController: UIViewController {
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
-        
         timeDisplay.font = UIFont.monospacedDigitSystemFontOfSize(64, weight: UIFontWeightRegular)
-        readyTimer()
+        clearTimer()
         
     }
     
@@ -115,11 +117,11 @@ class STViewController: UIViewController {
     
     @IBAction func unwindToSTVC(sender: UIStoryboardSegue) {
         if let sourceViewController = sender.sourceViewController as? STModalViewController {
-            if let newCounter = sourceViewController.counter {
-                initialCounterValue = newCounter
+            if let userSelectedTime = sourceViewController.userSelectedTime {
+                duration = userSelectedTime
             }
         }
-        readyTimer()
+        clearTimer()
     }
     
 }

@@ -11,7 +11,6 @@
 		5A03B9AD1D1DDB9800E245C9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5A03B9AB1D1DDB9800E245C9 /* Main.storyboard */; };
 		5A03B9AF1D1DDB9800E245C9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5A03B9AE1D1DDB9800E245C9 /* Assets.xcassets */; };
 		5A03B9B21D1DDB9800E245C9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5A03B9B01D1DDB9800E245C9 /* LaunchScreen.storyboard */; };
-		5A3385FB1D4F72AC0060D0C4 /* STTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A3385FA1D4F72AC0060D0C4 /* STTimer.swift */; };
 		5A4536841D298CA300E62273 /* STModalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A4536831D298CA300E62273 /* STModalViewController.swift */; };
 		5A591CE71D3A9F6100B9BD3D /* STTimeFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A591CE61D3A9F6100B9BD3D /* STTimeFormatter.swift */; };
 		5A591CE91D3AA18E00B9BD3D /* STSoundController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A591CE81D3AA18E00B9BD3D /* STSoundController.swift */; };
@@ -27,7 +26,6 @@
 		5A03B9AE1D1DDB9800E245C9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		5A03B9B11D1DDB9800E245C9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		5A03B9B31D1DDB9800E245C9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		5A3385FA1D4F72AC0060D0C4 /* STTimer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STTimer.swift; sourceTree = "<group>"; };
 		5A4536831D298CA300E62273 /* STModalViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STModalViewController.swift; sourceTree = "<group>"; };
 		5A591CE61D3A9F6100B9BD3D /* STTimeFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STTimeFormatter.swift; sourceTree = "<group>"; };
 		5A591CE81D3AA18E00B9BD3D /* STSoundController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STSoundController.swift; sourceTree = "<group>"; };
@@ -67,7 +65,6 @@
 			isa = PBXGroup;
 			children = (
 				5A03B9A71D1DDB9800E245C9 /* AppDelegate.swift */,
-				5A3385FA1D4F72AC0060D0C4 /* STTimer.swift */,
 				5AB18AF91D2058CA007B9D9F /* STViewController.swift */,
 				5A4536831D298CA300E62273 /* STModalViewController.swift */,
 				5A591CE61D3A9F6100B9BD3D /* STTimeFormatter.swift */,
@@ -160,7 +157,6 @@
 				5AB18AFA1D2058CA007B9D9F /* STViewController.swift in Sources */,
 				5A591CE91D3AA18E00B9BD3D /* STSoundController.swift in Sources */,
 				5A591CE71D3A9F6100B9BD3D /* STTimeFormatter.swift in Sources */,
-				5A3385FB1D4F72AC0060D0C4 /* STTimer.swift in Sources */,
 				5A4536841D298CA300E62273 /* STModalViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
