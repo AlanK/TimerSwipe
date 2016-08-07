@@ -12,21 +12,27 @@ class STViewController: UIViewController {
     
     let timeFormatter = STTimeFormatter()
     let soundController = STSoundController()
+    let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
     
     // MARK: - Timer
 
     var duration = 3000
     var timeRemaining: Int?
-    
     var timer = NSTimer()
     var unlocked = true
     
     func clearTimer() {
+        unlocked = true
         timer.invalidate()
         timeRemaining = duration
         timeDisplay.text = timeFormatter.formatTime(timeRemaining!)
-        unlocked = true
-        tapView.enabled = true
+        
+        // Use performWithoutAnimation to prevent weird flashing as button text animates.
+        
+        UIView.performWithoutAnimation {
+            self.changeButton.setTitle("Change", forState: .Normal)
+            self.changeButton.layoutIfNeeded()
+        }
     }
     
     func startTimer() {
@@ -34,21 +40,21 @@ class STViewController: UIViewController {
             return
         }
         unlocked = false
-        tapView.enabled = false
-        
         timer = NSTimer.scheduledTimerWithTimeInterval(0.01, target:self, selector: #selector(STViewController.tick), userInfo: nil, repeats: true)
-        
         soundController.playFirstSound()
+        
+        // Use performWithoutAnimation to prevent weird flashing as button text animates.
+        
+        UIView.performWithoutAnimation {
+            self.changeButton.setTitle("Cancel", forState: .Normal)
+            self.changeButton.layoutIfNeeded()
+        }
     }
 
     func tick() {
         if timeRemaining > 0 {
             timeRemaining! -= 1
-            
-            // Here I need to update the time display
-            
             timeDisplay.text = timeFormatter.formatTime(timeRemaining!)
-            
             if timeRemaining == 0 {
                 clearTimer()
                 soundController.playSecondSound()
@@ -56,19 +62,27 @@ class STViewController: UIViewController {
         }
     }
     
-    // MARK: - Labels
+    // MARK: - Labels & Buttons
 
     
     @IBOutlet var timeDisplay: UILabel!
+    @IBOutlet var changeButton: UIButton!
     
-    
-
     
     // MARK: - Actions
     
-    @IBAction func cancelTimer(sender: AnyObject) {
-        clearTimer()
+    // Here I use a named segue ("Picker") so I can trigger it programmatically (in this case, conditionally).
+    
+    @IBAction func changeButton(sender: AnyObject) {
+        if unlocked {
+            performSegueWithIdentifier("Picker", sender: self)
+        }
+        else {
+            clearTimer()
+        }
     }
+
+    
     
     @IBAction func swipeRight(sender: AnyObject) {
         startTimer()
@@ -86,8 +100,6 @@ class STViewController: UIViewController {
         startTimer()
     }
     
-    @IBOutlet var tapView: UITapGestureRecognizer!
-    
     // MARK: - Load and Memory
     
     override func viewDidLoad() {
@@ -97,6 +109,15 @@ class STViewController: UIViewController {
         timeDisplay.font = UIFont.monospacedDigitSystemFontOfSize(64, weight: UIFontWeightRegular)
         clearTimer()
         
+        // Handle starting from the URL scheme.
+        duration = appDelegate.providedTime ?? duration
+        if appDelegate.startTimer {
+            startTimer()
+        }
+        
+        // Clean up after URL scheme.
+        appDelegate.providedTime = nil
+        appDelegate.startTimer = false
     }
     
     override func didReceiveMemoryWarning() {

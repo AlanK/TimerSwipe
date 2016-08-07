@@ -21,7 +21,7 @@
                             <stackView opaque="NO" contentMode="center" misplaced="YES" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="EBw-ms-KRz">
                                 <rect key="frame" x="14" y="56" width="213" height="33"/>
                                 <subviews>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="bottom" misplaced="YES" contentHorizontalAlignment="right" contentVerticalAlignment="bottom" text="30" textAlignment="right" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ca7-if-Q5u">
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="bottom" contentHorizontalAlignment="right" contentVerticalAlignment="bottom" text="30" textAlignment="right" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ca7-if-Q5u">
                                         <rect key="frame" x="0.0" y="0.0" width="107" height="33"/>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
                                         <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
@@ -95,12 +95,12 @@
                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <button opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="752" verticalCompressionResistancePriority="752" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yum-AW-GvH" userLabel="Bottom Button">
-                                        <rect key="frame" x="104" y="116" width="59" height="35"/>
+                                    <button opaque="NO" contentMode="center" horizontalCompressionResistancePriority="752" verticalCompressionResistancePriority="752" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yum-AW-GvH" userLabel="Bottom Button">
+                                        <rect key="frame" x="100" y="116" width="66" height="35"/>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleTitle3"/>
-                                        <state key="normal" title="Cancel"/>
+                                        <state key="normal" title="Change"/>
                                         <connections>
-                                            <action selector="cancelTimer:" destination="BYZ-38-t0r" eventType="touchUpInside" id="bYh-Uv-HlO"/>
+                                            <action selector="changeButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ceb-WU-pa9"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -117,12 +117,12 @@
                             <outletCollection property="gestureRecognizers" destination="BUd-Ub-Zt7" appends="YES" id="u3q-53-Tnt"/>
                             <outletCollection property="gestureRecognizers" destination="LVv-oa-87s" appends="YES" id="5Rk-SY-LS0"/>
                             <outletCollection property="gestureRecognizers" destination="F4s-7J-Mun" appends="YES" id="yLj-XZ-tPl"/>
-                            <outletCollection property="gestureRecognizers" destination="IgJ-5t-wX6" appends="YES" id="CNP-YB-Muk"/>
                         </connections>
                     </view>
                     <connections>
-                        <outlet property="tapView" destination="IgJ-5t-wX6" id="fXt-ME-Enb"/>
+                        <outlet property="changeButton" destination="yum-AW-GvH" id="XN3-PN-cy0"/>
                         <outlet property="timeDisplay" destination="Kn3-O2-ymo" id="drX-9g-UjM"/>
+                        <segue destination="DR8-bL-z0W" kind="presentation" identifier="Picker" id="uaH-dP-yur"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -146,11 +146,6 @@
                         <action selector="swipeDown:" destination="BYZ-38-t0r" id="Rwu-Vn-2Sp"/>
                     </connections>
                 </swipeGestureRecognizer>
-                <tapGestureRecognizer id="IgJ-5t-wX6">
-                    <connections>
-                        <segue destination="DR8-bL-z0W" kind="presentation" id="s4z-d0-Wo4"/>
-                    </connections>
-                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="286" y="389"/>
         </scene>
@@ -170,7 +165,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="J1f-yd-gIJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1064" y="253"/>
+            <point key="canvasLocation" x="941" y="376"/>
         </scene>
     </scenes>
 </document>
