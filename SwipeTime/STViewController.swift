@@ -12,8 +12,11 @@ class STViewController: UIViewController {
     
     let timeFormatter = STTimeFormatter()
     let soundController = STSoundController()
-    let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
     
+    /*
+    let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+    */
+ 
     // MARK: - Timer
 
     var duration = 3000
@@ -109,6 +112,7 @@ class STViewController: UIViewController {
         timeDisplay.font = UIFont.monospacedDigitSystemFontOfSize(64, weight: UIFontWeightRegular)
         clearTimer()
         
+        /*
         // Handle starting from the URL scheme.
         duration = appDelegate.providedTime ?? duration
         if appDelegate.startTimer {
@@ -118,6 +122,7 @@ class STViewController: UIViewController {
         // Clean up after URL scheme.
         appDelegate.providedTime = nil
         appDelegate.startTimer = false
+        */
     }
     
     override func didReceiveMemoryWarning() {
