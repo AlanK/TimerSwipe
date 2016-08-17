@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="nxx-IB-3vs">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
     </dependencies>
     <scenes>
-        <!--Time-->
+        <!--New Timer-->
         <scene sceneID="DiQ-Xy-7Qb">
             <objects>
                 <viewController id="4mk-ba-roI" customClass="STModalViewController" customModule="SwipeTime" customModuleProvider="target" sceneMemberID="viewController">
@@ -44,7 +44,7 @@
                             <constraint firstItem="EBw-ms-KRz" firstAttribute="centerX" secondItem="N7v-Kv-bVu" secondAttribute="centerX" id="tud-uM-fzK"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Time" id="dUN-Qd-ef5">
+                    <navigationItem key="navigationItem" title="New Timer" id="dUN-Qd-ef5">
                         <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="6fE-Qr-fr2">
                             <connections>
                                 <action selector="cancel:" destination="4mk-ba-roI" id="rEU-OG-XmZ"/>
@@ -65,12 +65,12 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jay-3y-jOP" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="TJF-2v-XSI" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="2010" y="334"/>
+            <point key="canvasLocation" x="1022" y="1148"/>
         </scene>
-        <!--Table View Controller-->
+        <!--Saved Timers-->
         <scene sceneID="EQS-1j-nI2">
             <objects>
-                <tableViewController id="l3v-I2-uXY" sceneMemberID="viewController">
+                <tableViewController id="l3v-I2-uXY" customClass="STTableViewController" customModule="SwipeTime" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="Rac-Mk-hEI">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -86,16 +86,22 @@
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="seconds" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lv9-sQ-pS8" userLabel="Seconds">
                                             <rect key="frame" x="8" y="8" width="215" height="43.5"/>
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
-                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="C23-7f-YoB" userLabel="Star">
+                                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="C23-7f-YoB" userLabel="Favorite">
                                             <rect key="frame" x="562" y="6.5" width="30" height="45"/>
+                                            <gestureRecognizers/>
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
                                             <state key="normal" title="◎"/>
                                         </button>
                                     </subviews>
+                                    <gestureRecognizers/>
                                 </tableViewCellContentView>
+                                <gestureRecognizers/>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="rcX-Sv-2oU" appends="YES" id="8ky-yw-FbB"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -103,14 +109,15 @@
                             <outlet property="delegate" destination="l3v-I2-uXY" id="V8c-qS-7Ps"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="gaf-FJ-zIG">
+                    <navigationItem key="navigationItem" title="Saved Timers" id="gaf-FJ-zIG">
                         <barButtonItem key="leftBarButtonItem" systemItem="edit" id="Mal-wu-NLy"/>
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="2XU-Q7-9vK"/>
                     </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="glh-9n-EK2" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="rcX-Sv-2oU" userLabel="Cell Tap Gesture Recognizer"/>
             </objects>
-            <point key="canvasLocation" x="1094" y="-364"/>
+            <point key="canvasLocation" x="1022" y="-354"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
@@ -210,11 +217,12 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="J1f-yd-gIJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1153" y="334"/>
+            <point key="canvasLocation" x="286" y="1148"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="2fh-Z3-vSW">
             <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="H2x-lF-UZw" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="nxx-IB-3vs" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="VwB-dG-MWg">
@@ -226,9 +234,8 @@
                         <segue destination="l3v-I2-uXY" kind="relationship" relationship="rootViewController" id="GlF-IE-T0Z"/>
                     </connections>
                 </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="H2x-lF-UZw" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="282" y="-364"/>
+            <point key="canvasLocation" x="286" y="-354"/>
         </scene>
     </scenes>
 </document>

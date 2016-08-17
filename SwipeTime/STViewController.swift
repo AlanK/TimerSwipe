@@ -12,11 +12,14 @@ class STViewController: UIViewController {
     
     let timeFormatter = STTimeFormatter()
     let soundController = STSoundController()
+    var savedTimerList = STTimerList.sharedInstance
     
     /*
     let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
     */
  
+
+    
     // MARK: - Timer
 
     var duration = 3000
@@ -150,4 +153,7 @@ class STViewController: UIViewController {
         clearTimer()
     }
     
+
+
+
 }

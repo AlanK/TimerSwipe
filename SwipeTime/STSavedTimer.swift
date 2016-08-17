@@ -6,12 +6,17 @@
 //  Copyright © 2016 Alan Kantz. All rights reserved.
 //
 
-struct STSavedTimer {
+class STSavedTimer {
     let milliseconds: Int
-    var favorite: Bool
+    var isFavorite: Bool
     
     init(milliseconds: Int) {
         self.milliseconds = milliseconds
-        self.favorite = false
+        self.isFavorite = false
+    }
+    
+    init() {
+        self.milliseconds = 3000
+        self.isFavorite = false
     }
 }
