@@ -108,7 +108,6 @@ class STViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Do any additional setup after loading the view.
         timeDisplay.font = UIFont.monospacedDigitSystemFontOfSize(64, weight: UIFontWeightRegular)
         clearTimer()
         
@@ -128,6 +127,16 @@ class STViewController: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        UIApplication.sharedApplication().idleTimerDisabled = true
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        UIApplication.sharedApplication().idleTimerDisabled = false
     }
     
     
