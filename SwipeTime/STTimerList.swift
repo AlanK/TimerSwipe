@@ -32,19 +32,17 @@ class STTimerList {
             defaultTimer.isFavorite = true
             timers.append(defaultTimer)
         } else {
-            var numberOfFavorites = 0
+            var foundAFavorite = false
             for timer in timers {
-                if numberOfFavorites > 0 {
-                    if timer.isFavorite {
-                        timer.isFavorite = false
-                    }
+                if foundAFavorite {
+                    timer.isFavorite = false
                 } else {
                     if timer.isFavorite {
-                        numberOfFavorites += 1
+                        foundAFavorite = true
                     }
                 }
             }
-            if numberOfFavorites == 0 {
+            if !foundAFavorite {
                 timers[0].isFavorite = true
             }
         }
