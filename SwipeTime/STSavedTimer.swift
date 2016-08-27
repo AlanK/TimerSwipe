@@ -7,16 +7,16 @@
 //
 
 class STSavedTimer {
-    let milliseconds: Int
+    let centiseconds: Int
     var isFavorite: Bool
     
-    init(milliseconds: Int) {
-        self.milliseconds = milliseconds
+    init(centiseconds: Int) {
+        self.centiseconds = centiseconds
         self.isFavorite = false
     }
     
     init() {
-        self.milliseconds = 3000
+        self.centiseconds = 3000
         self.isFavorite = false
     }
 }

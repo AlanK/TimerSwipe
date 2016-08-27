@@ -57,9 +57,9 @@ class STModalViewController: UIViewController, UITextFieldDelegate {
         // Pass the selected object to the new view controller.
         
         if let userEnteredTime = timeField.text {
-            if let userEnteredTimeInMilliseconds = Int(userEnteredTime + "00") {
-                if userEnteredTimeInMilliseconds > 0 {
-                    userSelectedTime = userEnteredTimeInMilliseconds
+            if let userEnteredTimeInCentiseconds = Int(userEnteredTime + "00") {
+                if userEnteredTimeInCentiseconds > 0 {
+                    userSelectedTime = userEnteredTimeInCentiseconds
                 }
             }
         }

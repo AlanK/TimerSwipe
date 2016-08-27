@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
     </dependencies>
     <scenes>
@@ -83,23 +84,36 @@
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="59.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="seconds" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lv9-sQ-pS8" userLabel="Seconds">
-                                            <rect key="frame" x="8" y="8" width="215" height="43.5"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="seconds" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lv9-sQ-pS8" userLabel="Seconds">
+                                            <rect key="frame" x="8" y="8" width="100.5" height="43.5"/>
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="C23-7f-YoB" userLabel="Favorite">
+                                        <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="C23-7f-YoB" userLabel="Favorite">
                                             <rect key="frame" x="562" y="6.5" width="30" height="45"/>
                                             <gestureRecognizers/>
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
                                             <state key="normal" title="◎"/>
+                                            <connections>
+                                                <action selector="favoriteButton:" destination="Tkz-t1-8aP" eventType="touchUpInside" id="dYo-4u-PXp"/>
+                                            </connections>
                                         </button>
                                     </subviews>
                                     <gestureRecognizers/>
+                                    <constraints>
+                                        <constraint firstItem="lv9-sQ-pS8" firstAttribute="bottom" secondItem="hQt-XQ-0tT" secondAttribute="bottomMargin" id="8Un-N9-5d5"/>
+                                        <constraint firstItem="C23-7f-YoB" firstAttribute="trailing" secondItem="hQt-XQ-0tT" secondAttribute="trailingMargin" id="N01-LN-dAb"/>
+                                        <constraint firstItem="lv9-sQ-pS8" firstAttribute="top" secondItem="hQt-XQ-0tT" secondAttribute="topMargin" id="NSG-GL-nCq"/>
+                                        <constraint firstItem="C23-7f-YoB" firstAttribute="top" secondItem="hQt-XQ-0tT" secondAttribute="topMargin" id="XmV-tj-j9f"/>
+                                        <constraint firstItem="lv9-sQ-pS8" firstAttribute="leading" secondItem="hQt-XQ-0tT" secondAttribute="leadingMargin" id="bre-4B-fqM"/>
+                                        <constraint firstItem="C23-7f-YoB" firstAttribute="bottom" secondItem="hQt-XQ-0tT" secondAttribute="bottomMargin" id="gAr-80-78e"/>
+                                    </constraints>
                                 </tableViewCellContentView>
                                 <gestureRecognizers/>
                                 <connections>
+                                    <outlet property="favoriteIcon" destination="C23-7f-YoB" id="MhY-r4-qFx"/>
+                                    <outlet property="secondsLabel" destination="lv9-sQ-pS8" id="jAS-J0-E6u"/>
                                     <outletCollection property="gestureRecognizers" destination="rcX-Sv-2oU" appends="YES" id="8ky-yw-FbB"/>
                                 </connections>
                             </tableViewCell>
@@ -110,9 +124,12 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Saved Timers" id="gaf-FJ-zIG">
-                        <barButtonItem key="leftBarButtonItem" systemItem="edit" id="Mal-wu-NLy"/>
-                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="2XU-Q7-9vK"/>
+                        <barButtonItem key="leftBarButtonItem" systemItem="add" id="Mal-wu-NLy"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="edit" id="2XU-Q7-9vK"/>
                     </navigationItem>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="show" action="showDetailViewController:sender:" id="BYt-yy-Thc"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="glh-9n-EK2" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <tapGestureRecognizer id="rcX-Sv-2oU" userLabel="Cell Tap Gesture Recognizer"/>
@@ -174,7 +191,7 @@
                     <connections>
                         <outlet property="changeButton" destination="yum-AW-GvH" id="XN3-PN-cy0"/>
                         <outlet property="timeDisplay" destination="Kn3-O2-ymo" id="drX-9g-UjM"/>
-                        <segue destination="DR8-bL-z0W" kind="presentation" identifier="Picker" id="uaH-dP-yur"/>
+                        <segue destination="DR8-bL-z0W" kind="presentation" identifier="timePicker" id="uaH-dP-yur"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

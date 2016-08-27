@@ -12,13 +12,7 @@ class STViewController: UIViewController {
     
     let timeFormatter = STTimeFormatter()
     let soundController = STSoundController()
-    var savedTimerList = STTimerList.sharedInstance
-    
-    /*
-    let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-    */
- 
-
+    var savedTimerList = STTimerList()
     
     // MARK: - Timer
 
@@ -77,31 +71,26 @@ class STViewController: UIViewController {
     
     // MARK: - Actions
     
-    // Here I use a named segue ("Picker") so I can trigger it programmatically (in this case, conditionally).
+    // Here I use a named segue ("timePicker") so I can trigger it programmatically (in this case, conditionally).
     
     @IBAction func changeButton(sender: AnyObject) {
         if unlocked {
-            performSegueWithIdentifier("Picker", sender: self)
+            performSegueWithIdentifier("timePicker", sender: self)
         }
         else {
             clearTimer()
         }
     }
-
-    
     
     @IBAction func swipeRight(sender: AnyObject) {
         startTimer()
     }
-    
     @IBAction func swipeLeft(sender: AnyObject) {
         startTimer()
     }
-    
     @IBAction func swipeUp(sender: AnyObject) {
         startTimer()
     }
-    
     @IBAction func swipeDown(sender: AnyObject) {
         startTimer()
     }
@@ -113,18 +102,6 @@ class STViewController: UIViewController {
         
         timeDisplay.font = UIFont.monospacedDigitSystemFontOfSize(64, weight: UIFontWeightRegular)
         clearTimer()
-        
-        /*
-        // Handle starting from the URL scheme.
-        duration = appDelegate.providedTime ?? duration
-        if appDelegate.startTimer {
-            startTimer()
-        }
-        
-        // Clean up after URL scheme.
-        appDelegate.providedTime = nil
-        appDelegate.startTimer = false
-        */
     }
     
     override func didReceiveMemoryWarning() {

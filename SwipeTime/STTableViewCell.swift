@@ -10,6 +10,14 @@ import UIKit
 
 class STTableViewCell: UITableViewCell {
 
+    // MARK: Properties
+    
+    @IBOutlet var secondsLabel: UILabel!
+    @IBOutlet var favoriteIcon: UIButton!
+    
+    @IBAction func favoriteButton(sender: AnyObject) {
+    }
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

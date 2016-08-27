@@ -7,15 +7,14 @@
 //
 
 class STTimerList {
-    // Create a singleton instance of this class.
-    static let sharedInstance = STTimerList()
-    // Ensure no other object can call STTimerList() and bust up the unique nature of the singleton.
-    private init() {
-        validate()
-    }
+
     
     var timers = [STSavedTimer]()
     let defaultTimer = STSavedTimer()
+
+    init () {
+        validate()
+    }
     
     func favorite() -> STSavedTimer {
         for timer in timers {
@@ -26,7 +25,30 @@ class STTimerList {
         return defaultTimer
     }
     
-    func validate() {
+    func append (timer: STSavedTimer) {
+        timers.append(timer)
+    }
+    
+    func count () -> Int {
+        return timers.count
+    }
+    
+    func append (timerArray: [STSavedTimer]) {
+        for timer in timerArray {
+            timers.append(timer)
+        }
+    }
+    
+    subscript(index: Int) -> STSavedTimer {
+        get {
+            return timers[index]
+        }
+        set (newValue) {
+            timers[index] = newValue
+        }
+    }
+    
+    func validate () {
         // Confirm there are timers and exactly one of them is marked favorite.
         if timers.isEmpty {
             defaultTimer.isFavorite = true

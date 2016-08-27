@@ -10,14 +10,22 @@ import UIKit
 
 class STTableViewController: UITableViewController {
 
+    var savedTimerList = STTimerList()
+    
+    func loadSampleTimers () {
+        let timer2 = STSavedTimer(centiseconds: 2000)
+        let timer3 = STSavedTimer(centiseconds: 1000)
+        savedTimerList.append([timer2, timer3])
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+        // Load fake sample timers.
+        loadSampleTimers()
+        
+        // Display an Edit button in the navigation bar for this view controller.
+        self.navigationItem.rightBarButtonItem = self.editButtonItem()
     }
 
     override func didReceiveMemoryWarning() {
@@ -28,24 +36,29 @@ class STTableViewController: UITableViewController {
     // MARK: - Table view data source
 
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 0
+        return 1
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return 0
+        return savedTimerList.count()
     }
 
-    /*
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("reuseIdentifier", forIndexPath: indexPath)
+        let cellIdentifier = "STTableViewCell"
+        let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath) as! STTableViewCell
+        
+        let savedTimer = savedTimerList[indexPath.row]
+        
 
-        // Configure the cell...
+        cell.secondsLabel.text = String(savedTimer.centiseconds/100) + " seconds"
+        if savedTimer.isFavorite {
+            cell.favoriteIcon.setTitle("◉", forState: .Normal)
+        } else {
+            cell.favoriteIcon.setTitle("◎", forState: .Normal)
+        }
 
         return cell
     }
-    */
 
     /*
     // Override to support conditional editing of the table view.
@@ -55,7 +68,6 @@ class STTableViewController: UITableViewController {
     }
     */
 
-    /*
     // Override to support editing the table view.
     override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         if editingStyle == .Delete {
@@ -65,14 +77,11 @@ class STTableViewController: UITableViewController {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
         }    
     }
-    */
 
-    /*
     // Override to support rearranging the table view.
     override func tableView(tableView: UITableView, moveRowAtIndexPath fromIndexPath: NSIndexPath, toIndexPath: NSIndexPath) {
 
     }
-    */
 
     /*
     // Override to support conditional rearranging of the table view.
