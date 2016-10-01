@@ -7,6 +7,26 @@
 //
 
 import UIKit
+fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l < r
+  case (nil, _?):
+    return true
+  default:
+    return false
+  }
+}
+
+fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l > r
+  default:
+    return rhs < lhs
+  }
+}
+
 
 class STViewController: UIViewController {
     
@@ -21,7 +41,7 @@ class STViewController: UIViewController {
 
     var duration = 3000
     var timeRemaining: Int?
-    var timer = NSTimer()
+    var timer = Timer()
     var unlocked = true
     
     func clearTimer() {
@@ -33,7 +53,7 @@ class STViewController: UIViewController {
         // Use performWithoutAnimation to prevent weird flashing as button text animates.
         
         UIView.performWithoutAnimation {
-            self.changeButton.setTitle("Change", forState: .Normal)
+            self.changeButton.setTitle("Change", for: UIControlState())
             self.changeButton.layoutIfNeeded()
         }
     }
@@ -43,13 +63,13 @@ class STViewController: UIViewController {
             return
         }
         unlocked = false
-        timer = NSTimer.scheduledTimerWithTimeInterval(0.01, target:self, selector: #selector(STViewController.tick), userInfo: nil, repeats: true)
+        timer = Timer.scheduledTimer(timeInterval: 0.01, target:self, selector: #selector(STViewController.tick), userInfo: nil, repeats: true)
         soundController.playFirstSound()
         
         // Use performWithoutAnimation to prevent weird flashing as button text animates.
         
         UIView.performWithoutAnimation {
-            self.changeButton.setTitle("Cancel", forState: .Normal)
+            self.changeButton.setTitle("Cancel", for: UIControlState())
             self.changeButton.layoutIfNeeded()
         }
     }
@@ -76,9 +96,9 @@ class STViewController: UIViewController {
     
     // Here I use a named segue ("Picker") so I can trigger it programmatically (in this case, conditionally).
     
-    @IBAction func changeButton(sender: AnyObject) {
+    @IBAction func changeButton(_ sender: AnyObject) {
         if unlocked {
-            performSegueWithIdentifier("Picker", sender: self)
+            performSegue(withIdentifier: "Picker", sender: self)
         }
         else {
             clearTimer()
@@ -87,19 +107,19 @@ class STViewController: UIViewController {
 
     
     
-    @IBAction func swipeRight(sender: AnyObject) {
+    @IBAction func swipeRight(_ sender: AnyObject) {
         startTimer()
     }
     
-    @IBAction func swipeLeft(sender: AnyObject) {
+    @IBAction func swipeLeft(_ sender: AnyObject) {
         startTimer()
     }
     
-    @IBAction func swipeUp(sender: AnyObject) {
+    @IBAction func swipeUp(_ sender: AnyObject) {
         startTimer()
     }
     
-    @IBAction func swipeDown(sender: AnyObject) {
+    @IBAction func swipeDown(_ sender: AnyObject) {
         startTimer()
     }
     
@@ -108,7 +128,7 @@ class STViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        timeDisplay.font = UIFont.monospacedDigitSystemFontOfSize(64, weight: UIFontWeightRegular)
+        timeDisplay.font = UIFont.monospacedDigitSystemFont(ofSize: 64, weight: UIFontWeightRegular)
         clearTimer()
         
         /*
@@ -129,14 +149,14 @@ class STViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        UIApplication.sharedApplication().idleTimerDisabled = true
+        UIApplication.shared.isIdleTimerDisabled = true
     }
     
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        UIApplication.sharedApplication().idleTimerDisabled = false
+        UIApplication.shared.isIdleTimerDisabled = false
     }
     
     
@@ -150,8 +170,8 @@ class STViewController: UIViewController {
      }
      */
     
-    @IBAction func unwindToSTVC(sender: UIStoryboardSegue) {
-        if let sourceViewController = sender.sourceViewController as? STModalViewController {
+    @IBAction func unwindToSTVC(_ sender: UIStoryboardSegue) {
+        if let sourceViewController = sender.source as? STModalViewController {
             if let userSelectedTime = sourceViewController.userSelectedTime {
                 duration = userSelectedTime
             }
