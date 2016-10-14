@@ -26,6 +26,10 @@ class STTableViewController: UITableViewController {
         
         // Display an Edit button in the navigation bar for this view controller.
         self.navigationItem.rightBarButtonItem = self.editButtonItem
+        
+        // Navigate to the correct entry point
+        var timerScreen = storyboard?.instantiateViewController(withIdentifier: "timerView") as! STViewController
+        self.navigationController?.setViewControllers([timerScreen], animated: false)
     }
 
     override func didReceiveMemoryWarning() {
