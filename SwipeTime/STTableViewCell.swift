@@ -15,7 +15,7 @@ class STTableViewCell: UITableViewCell {
     @IBOutlet var secondsLabel: UILabel!
     @IBOutlet var favoriteIcon: UIButton!
     
-    @IBAction func favoriteButton(sender: AnyObject) {
+    @IBAction func favoriteButton(_ sender: AnyObject) {
     }
     
     override func awakeFromNib() {
@@ -23,7 +23,7 @@ class STTableViewCell: UITableViewCell {
         // Initialization code
     }
 
-    override func setSelected(selected: Bool, animated: Bool) {
+    override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state

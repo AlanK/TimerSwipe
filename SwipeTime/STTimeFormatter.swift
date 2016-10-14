@@ -10,7 +10,7 @@ import UIKit
 
 class STTimeFormatter: NSObject {
 
-    let numberFormatter = NSNumberFormatter()
+    let numberFormatter = NumberFormatter()
     var timeAsString = ["", "", ""]
     
     override init() {
@@ -18,12 +18,12 @@ class STTimeFormatter: NSObject {
         numberFormatter.paddingCharacter = "0"
     }
     
-    func formatTime(time: Int) -> (String) {
+    func formatTime(_ time: Int) -> (String) {
         
         let timeBlocks = [time / 6000, (time / 100) % 60, time % 100]
         
         for index in 0...2 {
-            timeAsString[index] = numberFormatter.stringFromNumber(timeBlocks[index])!
+            timeAsString[index] = numberFormatter.string(from: NSNumber(value: timeBlocks[index]))!
         }
         
         return timeAsString[0] + ":" + timeAsString[1] + "." + timeAsString[2]

@@ -124,6 +124,7 @@
 					5A03B9A31D1DDB9800E245C9 = {
 						CreatedOnToolsVersion = 7.3.1;
 						DevelopmentTeam = 97HM35W3Q3;
+						LastSwiftMigration = 0800;
 					};
 				};
 			};
@@ -296,6 +297,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.asciilus.SwipeTime;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -311,6 +313,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.asciilus.SwipeTime;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};

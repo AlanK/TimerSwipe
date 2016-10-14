@@ -12,11 +12,11 @@ class STModalViewController: UIViewController, UITextFieldDelegate {
     
     @IBOutlet var timeField: UITextField!
     @IBOutlet var doneButton: UIBarButtonItem!
-    @IBAction func cancel(sender: UIBarButtonItem) {
+    @IBAction func cancel(_ sender: UIBarButtonItem) {
         
         // Make sure to get rid of the keyboard before dismissing the view controller
         timeField.resignFirstResponder()
-        dismissViewControllerAnimated(true, completion: nil)
+        dismiss(animated: true, completion: nil)
     }
     
     var userSelectedTime: Int?
@@ -35,7 +35,7 @@ class STModalViewController: UIViewController, UITextFieldDelegate {
         // Dispose of any resources that can be recreated.
     }
     
-    func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         
         // This is taken from the Internet. The first bit prevents a crash-on-undo that happens when iOS tries to undo to a change that was blocked by shouldChangeCharactersInRange = false. The second bit only allows characters to be added to the text field if the current number of characters plus the number to be added (minus the range of characters being replaced) is <= 0.
         
@@ -50,7 +50,7 @@ class STModalViewController: UIViewController, UITextFieldDelegate {
     // MARK: - Navigation
     
     // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         timeField.resignFirstResponder()
         
         // Get the new view controller using segue.destinationViewController.

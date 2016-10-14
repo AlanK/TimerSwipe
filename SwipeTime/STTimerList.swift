@@ -25,7 +25,7 @@ class STTimerList {
         return defaultTimer
     }
     
-    func append (timer: STSavedTimer) {
+    func append (_ timer: STSavedTimer) {
         timers.append(timer)
     }
     
@@ -33,7 +33,7 @@ class STTimerList {
         return timers.count
     }
     
-    func append (timerArray: [STSavedTimer]) {
+    func append (_ timerArray: [STSavedTimer]) {
         for timer in timerArray {
             timers.append(timer)
         }
