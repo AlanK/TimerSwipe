@@ -37,6 +37,7 @@ class STViewController: UIViewController {
     // MARK: - Timer
 
     var duration = 3000
+    var providedDuration: Int?
     var timeRemaining: Int?
     var timer = Timer()
     var unlocked = true
@@ -95,7 +96,7 @@ class STViewController: UIViewController {
     
     @IBAction func changeButton(_ sender: AnyObject) {
         if unlocked {
-            performSegue(withIdentifier: "timePicker", sender: self)
+            self.navigationController?.popViewController(animated: true)
         }
         else {
             clearTimer()
@@ -121,6 +122,9 @@ class STViewController: UIViewController {
         super.viewDidLoad()
         
         timeDisplay.font = UIFont.monospacedDigitSystemFont(ofSize: 64, weight: UIFontWeightRegular)
+        if let providedDuration = providedDuration {
+            duration = providedDuration
+        }
         clearTimer()
     }
     
@@ -132,6 +136,7 @@ class STViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         UIApplication.shared.isIdleTimerDisabled = true
+        self.navigationController?.setNavigationBarHidden(true, animated: false)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -149,14 +154,7 @@ class STViewController: UIViewController {
      }
      */
     
-    @IBAction func unwindToSTVC(_ sender: UIStoryboardSegue) {
-        if let sourceViewController = sender.source as? STModalViewController {
-            if let userSelectedTime = sourceViewController.userSelectedTime {
-                duration = userSelectedTime
-            }
-        }
-        clearTimer()
-    }
+
     
 
 

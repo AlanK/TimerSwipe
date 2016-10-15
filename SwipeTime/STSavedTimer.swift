@@ -17,6 +17,6 @@ class STSavedTimer {
     
     init() {
         self.centiseconds = 3000
-        self.isFavorite = false
+        self.isFavorite = true
     }
 }

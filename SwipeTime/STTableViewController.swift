@@ -28,14 +28,22 @@ class STTableViewController: UITableViewController {
         self.navigationItem.rightBarButtonItem = self.editButtonItem
         
         // Navigate to the correct entry point
-        var timerScreen = storyboard?.instantiateViewController(withIdentifier: "timerView") as! STViewController
-        self.navigationController?.setViewControllers([timerScreen], animated: false)
+        
+        performSegue(withIdentifier: "tableToTimer", sender: self)
+
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController?.setNavigationBarHidden(false, animated: animated)
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    
 
     // MARK: - Table view data source
 
@@ -76,7 +84,9 @@ class STTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             // Delete the row from the data source
+            savedTimerList.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)
+            tableView.reloadData()
         } else if editingStyle == .insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
         }    
@@ -95,14 +105,42 @@ class STTableViewController: UITableViewController {
     }
     */
 
-    /*
+
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "tableToTimer" {
+            let timerScreen = segue.destination as! STViewController
+            var selectedTimer: STSavedTimer
+
+            if let selectedTimerCell = sender as? STTableViewCell {
+                let indexPath = tableView.indexPath(for: selectedTimerCell)
+                selectedTimer = savedTimerList[indexPath!.row]
+                
+
+            }
+            else {
+                selectedTimer = savedTimerList.favorite()
+            }
+            
+            timerScreen.providedDuration = selectedTimer.centiseconds
+        }
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
     }
-    */
+
+    
+    @IBAction func unwindToSTTVC(_ sender: UIStoryboardSegue) {
+        if let sourceViewController = sender.source as? STModalViewController {
+            if let userSelectedTime = sourceViewController.userSelectedTime {
+                let newTimer = STSavedTimer(centiseconds: userSelectedTime)
+                let newIndexPath = IndexPath(row: savedTimerList.count(), section: 0)
+                
+                savedTimerList.append(newTimer)
+                tableView.insertRows(at: [newIndexPath], with: .bottom)
+            }
+        }
+    }
 
 }

@@ -52,7 +52,7 @@
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="done" id="LD5-RY-RMJ">
                             <connections>
-                                <segue destination="TJF-2v-XSI" kind="unwind" unwindAction="unwindToSTVC:" id="p9G-dn-feQ"/>
+                                <segue destination="TJF-2v-XSI" kind="unwind" unwindAction="unwindToSTTVC:" id="WKZ-5A-LQc"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -85,6 +85,7 @@
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="seconds" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lv9-sQ-pS8" userLabel="Seconds">
                                             <frame key="frameInset" minX="8" minY="8" width="100.5" height="43.5"/>
+                                            <gestureRecognizers/>
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <nil key="highlightedColor"/>
@@ -113,7 +114,7 @@
                                 <connections>
                                     <outlet property="favoriteIcon" destination="C23-7f-YoB" id="MhY-r4-qFx"/>
                                     <outlet property="secondsLabel" destination="lv9-sQ-pS8" id="jAS-J0-E6u"/>
-                                    <outletCollection property="gestureRecognizers" destination="rcX-Sv-2oU" appends="YES" id="8ky-yw-FbB"/>
+                                    <segue destination="BYZ-38-t0r" kind="show" identifier="tableToTimer" id="GPC-Yi-0fL"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -123,15 +124,15 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Saved Timers" id="gaf-FJ-zIG">
-                        <barButtonItem key="leftBarButtonItem" systemItem="add" id="Mal-wu-NLy"/>
+                        <barButtonItem key="leftBarButtonItem" systemItem="add" id="Mal-wu-NLy">
+                            <connections>
+                                <segue destination="DR8-bL-z0W" kind="presentation" id="QyM-c1-qUc"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="edit" id="2XU-Q7-9vK"/>
                     </navigationItem>
-                    <connections>
-                        <segue destination="BYZ-38-t0r" kind="show" identifier="goToTimerScreen" action="showDetailViewController:sender:" id="BYt-yy-Thc"/>
-                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="glh-9n-EK2" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <tapGestureRecognizer id="rcX-Sv-2oU" userLabel="Cell Tap Gesture Recognizer"/>
             </objects>
             <point key="canvasLocation" x="286" y="322"/>
         </scene>
@@ -186,7 +187,6 @@
                     <connections>
                         <outlet property="changeButton" destination="yum-AW-GvH" id="XN3-PN-cy0"/>
                         <outlet property="timeDisplay" destination="Kn3-O2-ymo" id="drX-9g-UjM"/>
-                        <segue destination="DR8-bL-z0W" kind="presentation" identifier="timePicker" id="uaH-dP-yur"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

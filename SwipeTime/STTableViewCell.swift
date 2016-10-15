@@ -18,6 +18,8 @@ class STTableViewCell: UITableViewCell {
     @IBAction func favoriteButton(_ sender: AnyObject) {
     }
     
+    
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

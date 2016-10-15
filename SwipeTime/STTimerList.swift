@@ -10,7 +10,7 @@ class STTimerList {
 
     
     var timers = [STSavedTimer]()
-    let defaultTimer = STSavedTimer()
+    var defaultTimer = STSavedTimer()
 
     init () {
         validate()
@@ -22,11 +22,13 @@ class STTimerList {
                 return timer
             }
         }
-        return defaultTimer
+        validate()
+        return favorite()
     }
     
     func append (_ timer: STSavedTimer) {
         timers.append(timer)
+        validate()
     }
     
     func count () -> Int {
@@ -37,6 +39,7 @@ class STTimerList {
         for timer in timerArray {
             timers.append(timer)
         }
+        validate()
     }
     
     subscript(index: Int) -> STSavedTimer {
@@ -48,10 +51,14 @@ class STTimerList {
         }
     }
     
+    func remove(at: Int) {
+        timers.remove(at: at)
+        validate()
+    }
+    
     func validate () {
         // Confirm there are timers and exactly one of them is marked favorite.
         if timers.isEmpty {
-            defaultTimer.isFavorite = true
             timers.append(defaultTimer)
         } else {
             var foundAFavorite = false
