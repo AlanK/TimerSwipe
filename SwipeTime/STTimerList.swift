@@ -22,8 +22,14 @@ class STTimerList {
                 return timer
             }
         }
-        validate()
         return favorite()
+    }
+    
+    func markFavorite(at: Int) {
+        for timer in timers {
+            timer.isFavorite = false
+        }
+        timers[at].isFavorite = true
     }
     
     func append (_ timer: STSavedTimer) {
@@ -48,12 +54,17 @@ class STTimerList {
         }
         set (newValue) {
             timers[index] = newValue
+            validate()
         }
     }
     
     func remove(at: Int) {
         timers.remove(at: at)
         validate()
+    }
+    
+    func insert(_ newElement: STSavedTimer, at: Int) {
+        timers.insert(newElement, at: at)
     }
     
     func validate () {

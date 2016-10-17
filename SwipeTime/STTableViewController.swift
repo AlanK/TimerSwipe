@@ -61,7 +61,9 @@ class STTableViewController: UITableViewController {
         
         let savedTimer = savedTimerList[(indexPath as NSIndexPath).row]
         
-
+        cell.containingTable = self
+        cell.favoriteIcon.tag = indexPath.row
+        
         cell.secondsLabel.text = String(savedTimer.centiseconds/100) + " seconds"
         if savedTimer.isFavorite {
             cell.favoriteIcon.setTitle("◉", for: UIControlState())
@@ -71,6 +73,7 @@ class STTableViewController: UITableViewController {
 
         return cell
     }
+
 
     /*
     // Override to support conditional editing of the table view.
@@ -86,7 +89,6 @@ class STTableViewController: UITableViewController {
             // Delete the row from the data source
             savedTimerList.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)
-            tableView.reloadData()
         } else if editingStyle == .insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
         }    
@@ -94,7 +96,9 @@ class STTableViewController: UITableViewController {
 
     // Override to support rearranging the table view.
     override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to toIndexPath: IndexPath) {
-
+        var movingTimer = savedTimerList[fromIndexPath.row]
+        savedTimerList.timers.remove(at: fromIndexPath.row)
+        savedTimerList.timers.insert(movingTimer, at: toIndexPath.row)
     }
 
     /*

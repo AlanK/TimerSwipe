@@ -12,10 +12,14 @@ class STTableViewCell: UITableViewCell {
 
     // MARK: Properties
     
+    var containingTable: STTableViewController?
+    
     @IBOutlet var secondsLabel: UILabel!
     @IBOutlet var favoriteIcon: UIButton!
     
-    @IBAction func favoriteButton(_ sender: AnyObject) {
+    @IBAction func favoriteButton(_ sender: UIButton) {
+        containingTable?.savedTimerList.markFavorite(at: sender.tag)
+        containingTable?.tableView.reloadData()
     }
     
     

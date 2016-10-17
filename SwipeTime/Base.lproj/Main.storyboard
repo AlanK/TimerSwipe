@@ -20,8 +20,7 @@
                         <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="center" misplaced="YES" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="EBw-ms-KRz">
-                                <frame key="frameInset" minX="14" minY="56" width="221" height="34"/>
+                            <stackView opaque="NO" contentMode="center" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="EBw-ms-KRz">
                                 <subviews>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="bottom" contentHorizontalAlignment="right" contentVerticalAlignment="bottom" text="30" textAlignment="right" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ca7-if-Q5u">
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
@@ -83,15 +82,13 @@
                                     <frame key="frameInset" width="375" height="59.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="seconds" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lv9-sQ-pS8" userLabel="Seconds">
-                                            <frame key="frameInset" minX="8" minY="8" width="100.5" height="43.5"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="seconds" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lv9-sQ-pS8" userLabel="Seconds">
                                             <gestureRecognizers/>
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="C23-7f-YoB" userLabel="Favorite">
-                                            <frame key="frameInset" minX="562" minY="6.5" width="30" height="45"/>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="C23-7f-YoB" userLabel="Favorite">
                                             <gestureRecognizers/>
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
                                             <state key="normal" title="◎"/>
