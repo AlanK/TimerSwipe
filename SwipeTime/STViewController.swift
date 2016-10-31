@@ -7,26 +7,6 @@
 //
 
 import UIKit
-fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
-  switch (lhs, rhs) {
-  case let (l?, r?):
-    return l < r
-  case (nil, _?):
-    return true
-  default:
-    return false
-  }
-}
-
-fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
-  switch (lhs, rhs) {
-  case let (l?, r?):
-    return l > r
-  default:
-    return rhs < lhs
-  }
-}
-
 
 class STViewController: UIViewController {
     
@@ -39,6 +19,9 @@ class STViewController: UIViewController {
     var duration = 3000
     var providedDuration: Int?
     var timeRemaining: Int?
+    var startTime: Int?
+    var currentTime: Int?
+    var endTime: Int?
     var timer = Timer()
     var unlocked = true
     
@@ -73,13 +56,13 @@ class STViewController: UIViewController {
     }
 
     func tick() {
-        if timeRemaining > 0 {
+        if timeRemaining! > 0 {
             timeRemaining! -= 1
             timeDisplay.text = timeFormatter.formatTime(timeRemaining!)
-            if timeRemaining == 0 {
-                clearTimer()
-                soundController.playSecondSound()
-            }
+        }
+        if timeRemaining! <= 0 {
+            clearTimer()
+            soundController.playSecondSound()
         }
     }
     
