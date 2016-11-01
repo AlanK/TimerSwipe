@@ -19,9 +19,9 @@ class STViewController: UIViewController {
     var duration = 3000
     var providedDuration: Int?
     var timeRemaining: Int?
-    var startTime: Int?
-    var currentTime: Int?
-    var endTime: Int?
+    var startTime: Date?
+    var currentTime: Date?
+    var endTime: Date?
     var timer = Timer()
     var unlocked = true
     
@@ -44,6 +44,8 @@ class STViewController: UIViewController {
             return
         }
         unlocked = false
+        startTime = Date.init()
+        endTime = Date.init(timeInterval: (Double(duration)/100.0), since: startTime!)
         timer = Timer.scheduledTimer(timeInterval: 0.01, target:self, selector: #selector(STViewController.tick), userInfo: nil, repeats: true)
         soundController.playFirstSound()
         
@@ -56,13 +58,14 @@ class STViewController: UIViewController {
     }
 
     func tick() {
-        if timeRemaining! > 0 {
-            timeRemaining! -= 1
-            timeDisplay.text = timeFormatter.formatTime(timeRemaining!)
-        }
-        if timeRemaining! <= 0 {
+        currentTime = Date.init()
+        if currentTime! >= endTime! {
             clearTimer()
             soundController.playSecondSound()
+        }
+        else {
+            let decimalOfDisplay = endTime!.timeIntervalSince(currentTime!) * 100
+            timeDisplay.text = timeFormatter.formatTime(Int(decimalOfDisplay))
         }
     }
     
