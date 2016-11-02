@@ -15,7 +15,7 @@ class STTableViewController: UITableViewController {
     func loadSampleTimers () {
         let timer2 = STSavedTimer(centiseconds: 2000)
         let timer3 = STSavedTimer(centiseconds: 1000)
-        savedTimerList.append([timer2, timer3])
+        savedTimerList.append(timerArray: [timer2, timer3])
     }
     
     override func viewDidLoad() {
@@ -141,7 +141,7 @@ class STTableViewController: UITableViewController {
                 let newTimer = STSavedTimer(centiseconds: userSelectedTime)
                 let newIndexPath = IndexPath(row: savedTimerList.count(), section: 0)
                 
-                savedTimerList.append(newTimer)
+                savedTimerList.append(timer: newTimer)
                 tableView.insertRows(at: [newIndexPath], with: .bottom)
             }
         }

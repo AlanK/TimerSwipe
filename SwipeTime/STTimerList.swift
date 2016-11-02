@@ -6,24 +6,27 @@
 //  Copyright © 2016 Alan Kantz. All rights reserved.
 //
 
-class STTimerList {
+import Foundation
+
+class STTimerList: NSCoding {
 
     
     var timers = [STSavedTimer]()
-    var defaultTimer = STSavedTimer()
-
-    init () {
+    
+    // MARK: - Initializers
+    
+    // Memberwise initializer makes NSCoding support easier.
+    
+    init(timers: [STSavedTimer]) {
+        self.timers = timers
+        self.validate()
+    }
+    
+    init() {
         validate()
     }
     
-    func favorite() -> STSavedTimer {
-        for timer in timers {
-            if timer.isFavorite {
-                return timer
-            }
-        }
-        return favorite()
-    }
+    // MARK: - Methods
     
     func markFavorite(at: Int) {
         for timer in timers {
@@ -32,32 +35,18 @@ class STTimerList {
         timers[at].isFavorite = true
     }
     
-    func append (_ timer: STSavedTimer) {
+    func append(timer: STSavedTimer) {
         timers.append(timer)
         validate()
     }
-    
-    func count () -> Int {
-        return timers.count
-    }
-    
-    func append (_ timerArray: [STSavedTimer]) {
+
+    func append(timerArray: [STSavedTimer]) {
         for timer in timerArray {
             timers.append(timer)
         }
         validate()
     }
-    
-    subscript(index: Int) -> STSavedTimer {
-        get {
-            return timers[index]
-        }
-        set (newValue) {
-            timers[index] = newValue
-            validate()
-        }
-    }
-    
+
     func remove(at: Int) {
         timers.remove(at: at)
         validate()
@@ -67,10 +56,10 @@ class STTimerList {
         timers.insert(newElement, at: at)
     }
     
-    func validate () {
+    func validate() {
         // Confirm there are timers and exactly one of them is marked favorite.
         if timers.isEmpty {
-            timers.append(defaultTimer)
+            timers.append(STSavedTimer())
         } else {
             var foundAFavorite = false
             for timer in timers {
@@ -87,4 +76,48 @@ class STTimerList {
             }
         }
     }
+    
+    // MARK: - Properties
+    
+    func favorite() -> STSavedTimer {
+        for timer in timers {
+            if timer.isFavorite {
+                return timer
+            }
+        }
+        return favorite()
+    }
+    
+    func count() -> Int {
+        return timers.count
+    }
+    
+    // MARK: - Subscript
+    
+    subscript(index: Int) -> STSavedTimer {
+        get {
+            return timers[index]
+        }
+        set (newValue) {
+            timers[index] = newValue
+            validate()
+        }
+    }
+    
+    // MARK: - NSCoding
+    
+    struct PropertyKey {
+        static let timersKey = "timers"
+    }
+    
+    func encode(with aCoder: NSCoder) {
+        aCoder.encode(timers, forKey: PropertyKey.timersKey)
+    }
+    
+    required convenience init?(coder aDecoder: NSCoder) {
+        let timers = aDecoder.decodeObject(forKey: PropertyKey.timersKey) as! [STSavedTimer]
+        
+        self.init(timers: timers)
+    }
+    
 }
