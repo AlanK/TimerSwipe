@@ -16,7 +16,7 @@ class STSavedTimer: NSObject, NSCoding {
     
     // Memberwise initializer enables NSCoding required convenience initializer to work more simply.
     
-    init(centiseconds: Int, isFavorite: Bool) {
+    required init(centiseconds: Int, isFavorite: Bool) {
         self.centiseconds = centiseconds
         self.isFavorite = isFavorite
     }
@@ -45,7 +45,7 @@ class STSavedTimer: NSObject, NSCoding {
         aCoder.encode(isFavorite, forKey: PropertyKey.isFavoriteKey)
     }
     
-    required convenience init?(coder aDecoder: NSCoder) {
+    required convenience init(coder aDecoder: NSCoder) {
         let centiseconds = aDecoder.decodeInteger(forKey: PropertyKey.centisecondsKey)
         let isFavorite = aDecoder.decodeBool(forKey: PropertyKey.isFavoriteKey)
         
