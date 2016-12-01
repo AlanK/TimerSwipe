@@ -19,6 +19,7 @@ class STTableViewCell: UITableViewCell {
     
     @IBAction func favoriteButton(_ sender: UIButton) {
         containingTable?.savedTimerList.markFavorite(at: sender.tag)
+        containingTable?.saveData()
         containingTable?.tableView.reloadData()
     }
     

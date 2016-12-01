@@ -21,8 +21,7 @@ class STTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Load fake sample timers.
-        loadSampleTimers()
+        readData()
         
         // Display an Edit button in the navigation bar for this view controller.
         self.navigationItem.rightBarButtonItem = self.editButtonItem
@@ -43,7 +42,24 @@ class STTableViewController: UITableViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    // MARK: - Persist data
     
+    func saveData() {
+        let persistentList = NSKeyedArchiver.archivedData(withRootObject: savedTimerList)
+        UserDefaults.standard.set(persistentList, forKey: "persistedList")
+        print("Saved data!")
+    }
+    
+    func readData() {
+        if let persistentList = UserDefaults.standard.object(forKey: "persistedList") {
+            savedTimerList = NSKeyedUnarchiver.unarchiveObject(with: persistentList as! Data) as! STTimerList
+            print("Read data!")
+        }
+        
+        else {
+            loadSampleTimers()
+        }
+    }
 
     // MARK: - Table view data source
 
@@ -109,6 +125,14 @@ class STTableViewController: UITableViewController {
     }
     */
 
+    override func setEditing(_ editing: Bool, animated: Bool) {
+        savedTimerList.validate()
+        saveData()
+        super.setEditing(editing, animated: animated)
+        
+        // Once I have validated the timer list, I need to conditionally add a favorite mark to the most favorite cell. Until I can do that, I am reloading the entire table, which interfers with the animation for entering and editing edit mode.
+        tableView.reloadData()
+    }
 
     // MARK: - Navigation
 
@@ -143,8 +167,8 @@ class STTableViewController: UITableViewController {
                 
                 savedTimerList.append(timer: newTimer)
                 tableView.insertRows(at: [newIndexPath], with: .bottom)
+                saveData()
             }
         }
     }
-
 }

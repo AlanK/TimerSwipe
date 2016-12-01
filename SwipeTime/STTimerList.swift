@@ -8,7 +8,7 @@
 
 import Foundation
 
-class STTimerList: NSCoding {
+class STTimerList: NSObject, NSCoding {
 
     
     var timers = [STSavedTimer]()
@@ -18,11 +18,13 @@ class STTimerList: NSCoding {
     // Memberwise initializer makes NSCoding support easier.
     
     init(timers: [STSavedTimer]) {
+        super.init()
         self.timers = timers
         self.validate()
     }
     
-    init() {
+    override init() {
+        super.init()
         validate()
     }
     
