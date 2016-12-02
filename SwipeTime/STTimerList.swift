@@ -49,13 +49,16 @@ class STTimerList: NSObject, NSCoding {
         validate()
     }
 
-    func remove(at: Int) {
-        timers.remove(at: at)
-        validate()
+    func remove(at: Int) -> STSavedTimer {
+        let timer = timers.remove(at: at)
+        return timer
+        
+        // Can't validate here without fucking up rearranging; gotta remove before inserting, so removing the favorite would trigger creation of a new favorite…
     }
     
     func insert(_ newElement: STSavedTimer, at: Int) {
         timers.insert(newElement, at: at)
+        validate()
     }
     
     func validate() {

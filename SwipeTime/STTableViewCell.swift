@@ -13,17 +13,16 @@ class STTableViewCell: UITableViewCell {
     // MARK: Properties
     
     var containingTable: STTableViewController?
+    var tapAction: ((UITableViewCell) -> Void)?
     
     @IBOutlet var secondsLabel: UILabel!
     @IBOutlet var favoriteIcon: UIButton!
     
     @IBAction func favoriteButton(_ sender: UIButton) {
-        containingTable?.savedTimerList.markFavorite(at: sender.tag)
-        containingTable?.saveData()
-        containingTable?.tableView.reloadData()
+        tapAction?(self)
+        print(secondsLabel.text!)
+
     }
-    
-    
     
     override func awakeFromNib() {
         super.awakeFromNib()

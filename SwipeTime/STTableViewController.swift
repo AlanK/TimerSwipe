@@ -11,6 +11,7 @@ import UIKit
 class STTableViewController: UITableViewController {
 
     var savedTimerList = STTimerList()
+    let firstRow = IndexPath.init(row: 0, section: 0)
     
     func loadSampleTimers () {
         let timer2 = STSavedTimer(centiseconds: 2000)
@@ -41,6 +42,24 @@ class STTableViewController: UITableViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    func setIconToFavorite(cell: STTableViewCell) {
+        cell.favoriteIcon.setTitle("◉", for: UIControlState())
+    }
+    
+    func setIconToNotFavorite(cell: STTableViewCell) {
+        cell.favoriteIcon.setTitle("◎", for: UIControlState())
+    }
+    
+    func reloadRowsInRange(low: Int, high: Int) {
+        var indexPaths = [IndexPath]()
+        for position in low...high {
+            let indexPath = IndexPath.init(row: position, section: 0)
+            indexPaths.append(indexPath)
+        }
+        tableView.reloadRows(at: indexPaths, with: .none)
+    }
+
     
     // MARK: - Persist data
     
@@ -75,22 +94,24 @@ class STTableViewController: UITableViewController {
         let cellIdentifier = "STTableViewCell"
         let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as! STTableViewCell
         
-        let savedTimer = savedTimerList[(indexPath as NSIndexPath).row]
+        let savedTimer = savedTimerList[indexPath.row]
         
         cell.containingTable = self
-        cell.favoriteIcon.tag = indexPath.row
+        cell.tapAction = { (cell) in
+            self.savedTimerList.markFavorite(at: indexPath.row)
+            self.saveData()
+            self.tableView.reloadData()
+        }
         
         cell.secondsLabel.text = String(savedTimer.centiseconds/100) + " seconds"
         if savedTimer.isFavorite {
-            cell.favoriteIcon.setTitle("◉", for: UIControlState())
+            setIconToFavorite(cell: cell)
         } else {
-            cell.favoriteIcon.setTitle("◎", for: UIControlState())
+            setIconToNotFavorite(cell: cell)
         }
 
         return cell
     }
-
-
     /*
     // Override to support conditional editing of the table view.
     override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
@@ -103,18 +124,30 @@ class STTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             // Delete the row from the data source
+            
+            // Check if I'm removing the favorite
+            if savedTimerList[indexPath.row].isFavorite == true {
+                //If I'm removing the last timer, append a new one
+                if savedTimerList.count() == 1 {
+                    savedTimerList.append(timer: STSavedTimer())
+                }
+                // Make the first row the new favorite (unless I'm deleting the first row, in which case the second row should be the new favorite)
+                var newFavorite = indexPath == firstRow ? IndexPath.init(row: 1, section: 0) : firstRow
+                savedTimerList.markFavorite(at: newFavorite.row)
+                tableView.reloadRows(at: [newFavorite], with: .none)
+            }
             savedTimerList.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)
         } else if editingStyle == .insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
+        }
+
     }
 
     // Override to support rearranging the table view.
     override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to toIndexPath: IndexPath) {
-        var movingTimer = savedTimerList[fromIndexPath.row]
-        savedTimerList.timers.remove(at: fromIndexPath.row)
-        savedTimerList.timers.insert(movingTimer, at: toIndexPath.row)
+        let movingTimer = savedTimerList.remove(at: fromIndexPath.row)
+        savedTimerList.insert(movingTimer, at: toIndexPath.row)
     }
 
     /*
@@ -126,12 +159,8 @@ class STTableViewController: UITableViewController {
     */
 
     override func setEditing(_ editing: Bool, animated: Bool) {
-        savedTimerList.validate()
         saveData()
         super.setEditing(editing, animated: animated)
-        
-        // Once I have validated the timer list, I need to conditionally add a favorite mark to the most favorite cell. Until I can do that, I am reloading the entire table, which interfers with the animation for entering and editing edit mode.
-        tableView.reloadData()
     }
 
     // MARK: - Navigation
