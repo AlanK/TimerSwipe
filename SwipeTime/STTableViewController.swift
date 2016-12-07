@@ -125,12 +125,13 @@ class STTableViewController: UITableViewController {
         if editingStyle == .delete {
             // Delete the row from the data source
             
+            // Awkwardly don't allow the last row to be deleted
+            guard savedTimerList.count() != 1 else {
+                return
+            }
+            
             // Check if I'm removing the favorite
             if savedTimerList[indexPath.row].isFavorite == true {
-                //If I'm removing the last timer, append a new one
-                if savedTimerList.count() == 1 {
-                    savedTimerList.append(timer: STSavedTimer())
-                }
                 // Make the first row the new favorite (unless I'm deleting the first row, in which case the second row should be the new favorite)
                 var newFavorite = indexPath == firstRow ? IndexPath.init(row: 1, section: 0) : firstRow
                 savedTimerList.markFavorite(at: newFavorite.row)
@@ -141,7 +142,7 @@ class STTableViewController: UITableViewController {
         } else if editingStyle == .insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
         }
-
+        
     }
 
     // Override to support rearranging the table view.
