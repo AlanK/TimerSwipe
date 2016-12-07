@@ -8,7 +8,7 @@
 
 import UIKit
 
-class STTableViewController: UITableViewController {
+class STTableViewController: UITableViewController, STTableViewCellDelegate {
 
     var savedTimerList = STTimerList()
     let firstRow = IndexPath.init(row: 0, section: 0)
@@ -59,6 +59,13 @@ class STTableViewController: UITableViewController {
         }
         tableView.reloadRows(at: indexPaths, with: .none)
     }
+    
+    func cellButtonTapped(cell: STTableViewCell) {
+        let indexPath = self.tableView.indexPathForRow(at: cell.center)
+        self.savedTimerList.markFavorite(at: indexPath!.row)
+        saveData()
+        tableView.reloadData()
+    }
 
     
     // MARK: - Persist data
@@ -96,12 +103,7 @@ class STTableViewController: UITableViewController {
         
         let savedTimer = savedTimerList[indexPath.row]
         
-        cell.containingTable = self
-        cell.tapAction = { (cell) in
-            self.savedTimerList.markFavorite(at: indexPath.row)
-            self.saveData()
-            self.tableView.reloadData()
-        }
+        cell.delegate = self
         
         cell.secondsLabel.text = String(savedTimer.centiseconds/100) + " seconds"
         if savedTimer.isFavorite {

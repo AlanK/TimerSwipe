@@ -8,20 +8,21 @@
 
 import UIKit
 
+protocol STTableViewCellDelegate {
+    func cellButtonTapped(cell: STTableViewCell)
+}
+
 class STTableViewCell: UITableViewCell {
 
     // MARK: Properties
     
-    var containingTable: STTableViewController?
-    var tapAction: ((UITableViewCell) -> Void)?
+    var delegate: STTableViewCellDelegate?
     
     @IBOutlet var secondsLabel: UILabel!
     @IBOutlet var favoriteIcon: UIButton!
     
     @IBAction func favoriteButton(_ sender: UIButton) {
-        tapAction?(self)
-        print(secondsLabel.text!)
-
+        delegate?.cellButtonTapped(cell: self)
     }
     
     override func awakeFromNib() {
