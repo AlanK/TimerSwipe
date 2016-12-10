@@ -24,23 +24,20 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="center" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="EBw-ms-KRz">
-                                <rect key="frame" x="77" y="267.5" width="221" height="34"/>
+                                <rect key="frame" x="104.5" y="267.5" width="166.5" height="34"/>
                                 <subviews>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="bottom" contentHorizontalAlignment="right" contentVerticalAlignment="bottom" text="30" textAlignment="right" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ca7-if-Q5u">
-                                        <rect key="frame" x="0.0" y="0.0" width="110.5" height="34"/>
+                                    <textField opaque="NO" contentMode="bottom" contentHorizontalAlignment="right" contentVerticalAlignment="bottom" text="888" textAlignment="right" clearsOnBeginEditing="YES" adjustsFontSizeToFit="NO" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ca7-if-Q5u">
+                                        <rect key="frame" x="0.0" y="0.0" width="56" height="34"/>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
                                         <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
                                     </textField>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" seconds" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qgT-9m-flz">
-                                        <rect key="frame" x="110.5" y="0.0" width="110.5" height="33.5"/>
+                                        <rect key="frame" x="56" y="0.0" width="110.5" height="33.5"/>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
-                                <constraints>
-                                    <constraint firstItem="qgT-9m-flz" firstAttribute="width" secondItem="ca7-if-Q5u" secondAttribute="width" id="FtH-KS-zHS"/>
-                                </constraints>
                             </stackView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
