@@ -76,30 +76,29 @@
         <scene sceneID="EQS-1j-nI2">
             <objects>
                 <tableViewController id="l3v-I2-uXY" customClass="STTableViewController" customModule="SwipeTime" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="Rac-Mk-hEI">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="80" sectionHeaderHeight="28" sectionFooterHeight="28" id="Rac-Mk-hEI">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="STTableViewCell" rowHeight="60" id="Tkz-t1-8aP" customClass="STTableViewCell" customModule="SwipeTime" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="28" width="375" height="60"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="STTableViewCell" id="Tkz-t1-8aP" customClass="STTableViewCell" customModule="SwipeTime" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="28" width="375" height="80"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Tkz-t1-8aP" id="hQt-XQ-0tT">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="59.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="79.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="seconds" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lv9-sQ-pS8" userLabel="Seconds">
-                                            <rect key="frame" x="8" y="8" width="104" height="43.5"/>
+                                            <rect key="frame" x="16" y="8" width="104" height="63.5"/>
                                             <gestureRecognizers/>
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="C23-7f-YoB" userLabel="Favorite">
-                                            <rect key="frame" x="337" y="8" width="30" height="43.5"/>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="C23-7f-YoB" userLabel="Favorite">
+                                            <rect key="frame" x="343" y="8" width="16" height="63.5"/>
                                             <gestureRecognizers/>
-                                            <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
-                                            <state key="normal" title="◎"/>
+                                            <state key="normal" image="Empty heart.pdf"/>
                                             <connections>
                                                 <action selector="favoriteButton:" destination="Tkz-t1-8aP" eventType="touchUpInside" id="dYo-4u-PXp"/>
                                             </connections>
@@ -108,10 +107,28 @@
                                     <gestureRecognizers/>
                                     <constraints>
                                         <constraint firstItem="lv9-sQ-pS8" firstAttribute="bottom" secondItem="hQt-XQ-0tT" secondAttribute="bottomMargin" id="8Un-N9-5d5"/>
-                                        <constraint firstItem="C23-7f-YoB" firstAttribute="trailing" secondItem="hQt-XQ-0tT" secondAttribute="trailingMargin" id="N01-LN-dAb"/>
+                                        <constraint firstItem="C23-7f-YoB" firstAttribute="trailing" secondItem="hQt-XQ-0tT" secondAttribute="trailingMargin" constant="-8" id="N01-LN-dAb">
+                                            <attributedString key="userComments">
+                                                <fragment content="Add constant of 8 to equal left margin.">
+                                                    <attributes>
+                                                        <font key="NSFont" metaFont="smallSystem"/>
+                                                        <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                                    </attributes>
+                                                </fragment>
+                                            </attributedString>
+                                        </constraint>
                                         <constraint firstItem="lv9-sQ-pS8" firstAttribute="top" secondItem="hQt-XQ-0tT" secondAttribute="topMargin" id="NSG-GL-nCq"/>
                                         <constraint firstItem="C23-7f-YoB" firstAttribute="top" secondItem="hQt-XQ-0tT" secondAttribute="topMargin" id="XmV-tj-j9f"/>
-                                        <constraint firstItem="lv9-sQ-pS8" firstAttribute="leading" secondItem="hQt-XQ-0tT" secondAttribute="leadingMargin" id="bre-4B-fqM"/>
+                                        <constraint firstItem="lv9-sQ-pS8" firstAttribute="leading" secondItem="hQt-XQ-0tT" secondAttribute="leadingMargin" constant="8" id="bre-4B-fqM">
+                                            <attributedString key="userComments">
+                                                <fragment content="Adding 8 to make the left edge of the label align with the left edge of the table row dividers.">
+                                                    <attributes>
+                                                        <font key="NSFont" metaFont="smallSystem"/>
+                                                        <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                                    </attributes>
+                                                </fragment>
+                                            </attributedString>
+                                        </constraint>
                                         <constraint firstItem="C23-7f-YoB" firstAttribute="bottom" secondItem="hQt-XQ-0tT" secondAttribute="bottomMargin" id="gAr-80-78e"/>
                                     </constraints>
                                 </tableViewCellContentView>
@@ -259,4 +276,7 @@
             <point key="canvasLocation" x="-470" y="322"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="Empty heart.pdf" width="16" height="16"/>
+    </resources>
 </document>

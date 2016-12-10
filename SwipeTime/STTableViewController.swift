@@ -44,11 +44,11 @@ class STTableViewController: UITableViewController, STTableViewCellDelegate {
     }
     
     func setIconToFavorite(cell: STTableViewCell) {
-        cell.favoriteIcon.setTitle("◉", for: UIControlState())
+        cell.favoriteIcon.setImage(UIImage(named: "Full heart")?.withRenderingMode(.alwaysTemplate), for: UIControlState())
     }
     
     func setIconToNotFavorite(cell: STTableViewCell) {
-        cell.favoriteIcon.setTitle("◎", for: UIControlState())
+        cell.favoriteIcon.setImage(UIImage(named: "Empty heart")?.withRenderingMode(.alwaysTemplate), for: UIControlState())
     }
     
     func reloadRowsInRange(low: Int, high: Int) {
