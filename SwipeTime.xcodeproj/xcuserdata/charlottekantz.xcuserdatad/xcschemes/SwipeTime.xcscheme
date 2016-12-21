@@ -15,8 +15,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "5A03B9A31D1DDB9800E245C9"
-               BuildableName = "SwipeTime.app"
-               BlueprintName = "SwipeTime"
+               BuildableName = "TimerSwipe.app"
+               BlueprintName = "TimerSwipe"
                ReferencedContainer = "container:SwipeTime.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -33,8 +33,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "5A03B9A31D1DDB9800E245C9"
-            BuildableName = "SwipeTime.app"
-            BlueprintName = "SwipeTime"
+            BuildableName = "TimerSwipe.app"
+            BlueprintName = "TimerSwipe"
             ReferencedContainer = "container:SwipeTime.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -56,8 +56,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "5A03B9A31D1DDB9800E245C9"
-            BuildableName = "SwipeTime.app"
-            BlueprintName = "SwipeTime"
+            BuildableName = "TimerSwipe.app"
+            BlueprintName = "TimerSwipe"
             ReferencedContainer = "container:SwipeTime.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -75,8 +75,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "5A03B9A31D1DDB9800E245C9"
-            BuildableName = "SwipeTime.app"
-            BlueprintName = "SwipeTime"
+            BuildableName = "TimerSwipe.app"
+            BlueprintName = "TimerSwipe"
             ReferencedContainer = "container:SwipeTime.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>

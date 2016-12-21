@@ -24,7 +24,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		5A03B9A41D1DDB9800E245C9 /* SwipeTime.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwipeTime.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		5A03B9A41D1DDB9800E245C9 /* TimerSwipe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TimerSwipe.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5A03B9A71D1DDB9800E245C9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5A03B9AC1D1DDB9800E245C9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		5A03B9AE1D1DDB9800E245C9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -64,7 +64,7 @@
 		5A03B9A51D1DDB9800E245C9 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				5A03B9A41D1DDB9800E245C9 /* SwipeTime.app */,
+				5A03B9A41D1DDB9800E245C9 /* TimerSwipe.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -94,9 +94,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		5A03B9A31D1DDB9800E245C9 /* SwipeTime */ = {
+		5A03B9A31D1DDB9800E245C9 /* TimerSwipe */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 5A03B9B61D1DDB9800E245C9 /* Build configuration list for PBXNativeTarget "SwipeTime" */;
+			buildConfigurationList = 5A03B9B61D1DDB9800E245C9 /* Build configuration list for PBXNativeTarget "TimerSwipe" */;
 			buildPhases = (
 				5A03B9A01D1DDB9800E245C9 /* Sources */,
 				5A03B9A11D1DDB9800E245C9 /* Frameworks */,
@@ -106,9 +106,9 @@
 			);
 			dependencies = (
 			);
-			name = SwipeTime;
+			name = TimerSwipe;
 			productName = SwipeTime;
-			productReference = 5A03B9A41D1DDB9800E245C9 /* SwipeTime.app */;
+			productReference = 5A03B9A41D1DDB9800E245C9 /* TimerSwipe.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -141,7 +141,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				5A03B9A31D1DDB9800E245C9 /* SwipeTime */,
+				5A03B9A31D1DDB9800E245C9 /* TimerSwipe */,
 			);
 		};
 /* End PBXProject section */
@@ -300,7 +300,7 @@
 				EMBED_ASSET_PACKS_IN_PRODUCT_BUNDLE = NO;
 				INFOPLIST_FILE = SwipeTime/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.asciilus.SwipeTime;
+				PRODUCT_BUNDLE_IDENTIFIER = com.asciilus.TimerSwipe;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_VERSION = 3.0;
@@ -318,7 +318,7 @@
 				EMBED_ASSET_PACKS_IN_PRODUCT_BUNDLE = NO;
 				INFOPLIST_FILE = SwipeTime/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.asciilus.SwipeTime;
+				PRODUCT_BUNDLE_IDENTIFIER = com.asciilus.TimerSwipe;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_VERSION = 3.0;
@@ -338,7 +338,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		5A03B9B61D1DDB9800E245C9 /* Build configuration list for PBXNativeTarget "SwipeTime" */ = {
+		5A03B9B61D1DDB9800E245C9 /* Build configuration list for PBXNativeTarget "TimerSwipe" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				5A03B9B71D1DDB9800E245C9 /* Debug */,
