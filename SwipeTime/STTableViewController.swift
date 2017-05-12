@@ -38,11 +38,6 @@ class STTableViewController: UITableViewController, STTableViewCellDelegate {
         self.navigationController?.setNavigationBarHidden(false, animated: animated)
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
     func setIconToFavorite(cell: STTableViewCell) {
         cell.favoriteIcon.setImage(UIImage(named: "Full heart")?.withRenderingMode(.alwaysTemplate), for: UIControlState())
     }
