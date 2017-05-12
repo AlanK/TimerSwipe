@@ -14,9 +14,10 @@ class STTableViewController: UITableViewController, STTableViewCellDelegate {
     let firstRow = IndexPath.init(row: 0, section: 0)
     
     func loadSampleTimers () {
+        let timer1 = STSavedTimer(centiseconds: 3000)
         let timer2 = STSavedTimer(centiseconds: 2000)
         let timer3 = STSavedTimer(centiseconds: 1000)
-        savedTimerList.append(timerArray: [timer2, timer3])
+        savedTimerList = STTimerList.init(timers: [timer1, timer2, timer3])
     }
     
     override func viewDidLoad() {
@@ -72,14 +73,12 @@ class STTableViewController: UITableViewController, STTableViewCellDelegate {
     }
     
     func readData() {
-        if let persistentList = UserDefaults.standard.object(forKey: "persistedList") {
-            savedTimerList = NSKeyedUnarchiver.unarchiveObject(with: persistentList as! Data) as! STTimerList
-            print("Read data!")
-        }
-        
-        else {
+        guard let persistentList = UserDefaults.standard.object(forKey: "persistedList") else {
             loadSampleTimers()
+            return
         }
+        savedTimerList = NSKeyedUnarchiver.unarchiveObject(with: persistentList as! Data) as! STTimerList
+        print("Read data!")
     }
 
     // MARK: - Table view data source
