@@ -13,13 +13,14 @@ protocol STTableViewCellDelegate {
 }
 
 class STTableViewCell: UITableViewCell {
-
-    // MARK: Properties
-    
     var delegate: STTableViewCellDelegate?
+    
+    // MARK: Properties
     
     @IBOutlet var secondsLabel: UILabel!
     @IBOutlet var favoriteIcon: UIButton!
+    
+    // MARK: Actions
     
     @IBAction func favoriteButton(_ sender: UIButton) {
         delegate?.cellButtonTapped(cell: self)
