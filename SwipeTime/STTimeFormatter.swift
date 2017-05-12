@@ -8,12 +8,12 @@
 
 import UIKit
 
-class STTimeFormatter: NSObject {
+class STTimeFormatter {
 
     let numberFormatter = NumberFormatter()
     var timeAsString = ["", "", ""]
     
-    override init() {
+    init() {
         numberFormatter.formatWidth = 2
         numberFormatter.paddingCharacter = "0"
     }
