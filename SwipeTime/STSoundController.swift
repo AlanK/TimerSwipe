@@ -6,10 +6,9 @@
 //  Copyright © 2016 Alan Kantz. All rights reserved.
 //
 
-import UIKit
 import AudioToolbox
 
-class STSoundController: NSObject {
+class STSoundController {
 
     
     let firstSoundURLRef = CFBundleCopyResourceURL(CFBundleGetMainBundle(), "AudioCue_01" as CFString!, "aif" as CFString!, nil)
@@ -18,7 +17,7 @@ class STSoundController: NSObject {
     var secondSoundID: SystemSoundID = 1
     
  
-    override init() {
+    init() {
         // Prep both sounds
         AudioServicesCreateSystemSoundID(firstSoundURLRef!, &firstSoundID)
         AudioServicesCreateSystemSoundID(secondSoundURLRef!, &secondSoundID)
