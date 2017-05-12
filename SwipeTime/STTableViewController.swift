@@ -114,15 +114,7 @@ class STTableViewController: UITableViewController, STTableViewCellDelegate {
 
         return cell
     }
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
-    }
-    */
 
-    // Override to support editing the table view.
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             // Delete the row from the data source
@@ -147,19 +139,10 @@ class STTableViewController: UITableViewController, STTableViewCellDelegate {
         
     }
 
-    // Override to support rearranging the table view.
     override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to toIndexPath: IndexPath) {
         let movingTimer = savedTimerList.remove(at: fromIndexPath.row)
         savedTimerList.insert(movingTimer, at: toIndexPath.row)
     }
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
 
     override func setEditing(_ editing: Bool, animated: Bool) {
         saveData()
@@ -186,8 +169,6 @@ class STTableViewController: UITableViewController, STTableViewCellDelegate {
             
             timerScreen.providedDuration = selectedTimer.centiseconds
         }
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
     }
 
     
