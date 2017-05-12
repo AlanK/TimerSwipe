@@ -25,6 +25,10 @@ class STViewController: UIViewController {
     var timer = Timer()
     var unlocked = true
     
+    func setDuration() {
+        duration = providedDuration ?? duration
+    }
+    
     func clearTimer() {
         unlocked = true
         timer.invalidate()
@@ -78,14 +82,10 @@ class STViewController: UIViewController {
     
     // MARK: - Actions
     
-    // Here I use a named segue ("timePicker") so I can trigger it programmatically (in this case, conditionally).
-    
     @IBAction func changeButton(_ sender: AnyObject) {
-        if unlocked {
-            self.navigationController?.popViewController(animated: true)
-        }
-        else {
-            clearTimer()
+        switch unlocked {
+        case true: self.navigationController?.popViewController(animated: true)
+        case false: clearTimer()
         }
     }
     
@@ -102,15 +102,13 @@ class STViewController: UIViewController {
         startTimer()
     }
     
-    // MARK: - Load and Memory
+    // MARK: - View Loading and Other
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         timeDisplay.font = UIFont.monospacedDigitSystemFont(ofSize: 64, weight: UIFontWeightRegular)
-        if let providedDuration = providedDuration {
-            duration = providedDuration
-        }
+        setDuration()
         clearTimer()
     }
     
