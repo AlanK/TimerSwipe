@@ -26,13 +26,6 @@ class STModalViewController: UIViewController, UITextFieldDelegate {
         
         timeField.delegate = self
         timeField.becomeFirstResponder()
-        
-        // Do any additional setup after loading the view.
-    }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
@@ -49,12 +42,8 @@ class STModalViewController: UIViewController, UITextFieldDelegate {
     
     // MARK: - Navigation
     
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         timeField.resignFirstResponder()
-        
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
         
         if let userEnteredTime = timeField.text {
             if let userEnteredTimeInCentiseconds = Int(userEnteredTime + "00") {
