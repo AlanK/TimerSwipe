@@ -9,7 +9,9 @@
 import UIKit
 
 class STModalViewController: UIViewController, UITextFieldDelegate {
+    var userSelectedTime: Int?
     
+
     @IBOutlet var timeField: UITextField!
     @IBOutlet var doneButton: UIBarButtonItem!
     @IBAction func cancel(_ sender: UIBarButtonItem) {
@@ -18,8 +20,6 @@ class STModalViewController: UIViewController, UITextFieldDelegate {
         timeField.resignFirstResponder()
         dismiss(animated: true, completion: nil)
     }
-    
-    var userSelectedTime: Int?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,14 +45,7 @@ class STModalViewController: UIViewController, UITextFieldDelegate {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         timeField.resignFirstResponder()
         
-        if let userEnteredTime = timeField.text {
-            if let userEnteredTimeInCentiseconds = Int(userEnteredTime + "00") {
-                if userEnteredTimeInCentiseconds > 0 {
-                    userSelectedTime = userEnteredTimeInCentiseconds
-                }
-            }
-        }
-        
-    }
-    
+        guard let userTime = timeField.text, let userTimeInCentiseconds = Int(userTime + "00"), userTimeInCentiseconds > 0 else {return}
+        userSelectedTime = userTimeInCentiseconds
+    }    
 }
