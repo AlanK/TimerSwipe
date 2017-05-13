@@ -103,8 +103,6 @@ class STTableViewController: UITableViewController, STTableViewCellDelegate {
 
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            // Awkwardly don't allow the last row to be deleted
-            guard savedTimerList.count() != 1 else {return}
             _ = savedTimerList.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)
         } else if editingStyle == .insert {
