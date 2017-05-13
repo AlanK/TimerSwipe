@@ -10,7 +10,7 @@ import UIKit
 
 class STViewController: UIViewController {
     
-    let timeFormatter = STTimeFormatter()
+    let timeFormatter = TimeFormatter()
     let soundController = SoundController()
     var savedTimerList = STTimerList()
     

@@ -1,5 +1,5 @@
 //
-//  STTimeFormatter.swift
+//  TimeFormatter.swift
 //  SwipeTime
 //
 //  Created by Alan Kantz on 7/16/16.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-struct STTimeFormatter {
+struct TimeFormatter {
     let numberFormatter = NumberFormatter()
     
     init() {

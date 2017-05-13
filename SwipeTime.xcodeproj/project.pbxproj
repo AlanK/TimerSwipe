@@ -15,7 +15,7 @@
 		5A12267E1D5A94C3006D49F1 /* STTimerList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A12267D1D5A94C3006D49F1 /* STTimerList.swift */; };
 		5A4536841D298CA300E62273 /* STModalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A4536831D298CA300E62273 /* STModalViewController.swift */; };
 		5A4DC9181D596D460009446B /* STSavedTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A4DC9171D596D460009446B /* STSavedTimer.swift */; };
-		5A591CE71D3A9F6100B9BD3D /* STTimeFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A591CE61D3A9F6100B9BD3D /* STTimeFormatter.swift */; };
+		5A591CE71D3A9F6100B9BD3D /* TimeFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A591CE61D3A9F6100B9BD3D /* TimeFormatter.swift */; };
 		5A591CE91D3AA18E00B9BD3D /* SoundController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A591CE81D3AA18E00B9BD3D /* SoundController.swift */; };
 		5A871FFA1D6FC68900B08A05 /* STTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A871FF91D6FC68900B08A05 /* STTableViewCell.swift */; };
 		5A9563E51D313BB100313EEF /* AudioCue_01.aif in Resources */ = {isa = PBXBuildFile; fileRef = 5A9563E31D313BB100313EEF /* AudioCue_01.aif */; };
@@ -34,7 +34,7 @@
 		5A12267D1D5A94C3006D49F1 /* STTimerList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STTimerList.swift; sourceTree = "<group>"; };
 		5A4536831D298CA300E62273 /* STModalViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STModalViewController.swift; sourceTree = "<group>"; };
 		5A4DC9171D596D460009446B /* STSavedTimer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STSavedTimer.swift; sourceTree = "<group>"; };
-		5A591CE61D3A9F6100B9BD3D /* STTimeFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STTimeFormatter.swift; sourceTree = "<group>"; };
+		5A591CE61D3A9F6100B9BD3D /* TimeFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeFormatter.swift; sourceTree = "<group>"; };
 		5A591CE81D3AA18E00B9BD3D /* SoundController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoundController.swift; sourceTree = "<group>"; };
 		5A871FF91D6FC68900B08A05 /* STTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STTableViewCell.swift; sourceTree = "<group>"; };
 		5A9563E31D313BB100313EEF /* AudioCue_01.aif */ = {isa = PBXFileReference; lastKnownFileType = file; path = AudioCue_01.aif; sourceTree = "<group>"; };
@@ -79,7 +79,7 @@
 				5A4536831D298CA300E62273 /* STModalViewController.swift */,
 				5A4DC9171D596D460009446B /* STSavedTimer.swift */,
 				5A12267D1D5A94C3006D49F1 /* STTimerList.swift */,
-				5A591CE61D3A9F6100B9BD3D /* STTimeFormatter.swift */,
+				5A591CE61D3A9F6100B9BD3D /* TimeFormatter.swift */,
 				5A591CE81D3AA18E00B9BD3D /* SoundController.swift */,
 				5A03B9AB1D1DDB9800E245C9 /* Main.storyboard */,
 				5A03B9AE1D1DDB9800E245C9 /* Assets.xcassets */,
@@ -172,7 +172,7 @@
 				5A4DC9181D596D460009446B /* STSavedTimer.swift in Sources */,
 				5A591CE91D3AA18E00B9BD3D /* SoundController.swift in Sources */,
 				5A871FFA1D6FC68900B08A05 /* STTableViewCell.swift in Sources */,
-				5A591CE71D3A9F6100B9BD3D /* STTimeFormatter.swift in Sources */,
+				5A591CE71D3A9F6100B9BD3D /* TimeFormatter.swift in Sources */,
 				5A4536841D298CA300E62273 /* STModalViewController.swift in Sources */,
 				5A12267C1D5A80BA006D49F1 /* STTableViewController.swift in Sources */,
 			);
