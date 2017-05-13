@@ -28,11 +28,11 @@ class STTimerList: NSObject, NSCoding {
     
     // MARK: - Methods
     
-    func markFavorite(at: Int) {
+    func markFavorite(at index: Int) {
         for timer in timers {
             timer.isFavorite = false
         }
-        timers[at].isFavorite = true
+        timers[index].isFavorite = true
     }
     
     func append(timer: STSavedTimer) {
@@ -54,29 +54,28 @@ class STTimerList: NSObject, NSCoding {
         // Can't validate here without fucking up rearranging; gotta remove before inserting, so removing the favorite would trigger creation of a new favorite…
     }
     
-    func insert(_ newElement: STSavedTimer, at: Int) {
-        timers.insert(newElement, at: at)
+    func insert(_ newElement: STSavedTimer, at index: Int) {
+        timers.insert(newElement, at: index)
         validate()
     }
     
     func validate() {
         // Confirm there are timers and exactly one of them is marked favorite.
-        if timers.isEmpty {
+        guard timers.isEmpty == false else {
             timers.append(STSavedTimer())
-        } else {
-            var foundAFavorite = false
-            for timer in timers {
-                if foundAFavorite {
-                    timer.isFavorite = false
-                } else {
-                    if timer.isFavorite {
-                        foundAFavorite = true
-                    }
-                }
+            return
+        }
+        var foundAFavorite = false
+        for timer in timers {
+            switch foundAFavorite {
+            case true: timer.isFavorite = false
+            case false: if timer.isFavorite {foundAFavorite = true}
             }
-            if !foundAFavorite {
-                timers[0].isFavorite = true
-            }
+        }
+        
+        guard foundAFavorite else {
+            timers[0].isFavorite = true
+            return
         }
     }
     
@@ -91,11 +90,9 @@ class STTimerList: NSObject, NSCoding {
     
     func favorite() -> STSavedTimer {
         for timer in timers {
-            if timer.isFavorite {
-                return timer
-            }
+            if timer.isFavorite {return timer}
         }
-        return favorite()
+        fatalError("Could not find a favorite.")
     }
     
     func count() -> Int {
@@ -126,8 +123,6 @@ class STTimerList: NSObject, NSCoding {
     
     required convenience init(coder aDecoder: NSCoder) {
         let timers = aDecoder.decodeObject(forKey: PropertyKey.timersKey) as! [STSavedTimer]
-        
         self.init(timers: timers)
     }
-    
 }
