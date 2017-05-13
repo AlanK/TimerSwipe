@@ -20,7 +20,14 @@ class STTableViewController: UITableViewController, STTableViewCellDelegate {
         self.navigationItem.rightBarButtonItem = self.editButtonItem
         
         // Navigate to the correct entry point
-        performSegue(withIdentifier: "tableToTimer", sender: self)
+        
+        // Delete me -->
+        var fav: STSavedTimer?
+        fav = savedTimerList.favorite()
+        // <-- Delete me
+        
+        guard let favoriteTimer = fav else {return}
+        performSegue(withIdentifier: "tableToTimer", sender: favoriteTimer)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -135,7 +142,7 @@ class STTableViewController: UITableViewController, STTableViewCellDelegate {
                 selectedTimer = savedTimerList[indexPath!.row]
             }
             else {
-                selectedTimer = savedTimerList.favorite()
+                selectedTimer = sender as! STSavedTimer
             }
             timerScreen.providedDuration = selectedTimer.centiseconds
         }
