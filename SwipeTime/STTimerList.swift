@@ -35,6 +35,13 @@ class STTimerList: NSObject, NSCoding {
         timers[index].isFavorite = true
     }
     
+    func toggleFavorite(at index: Int) {
+        switch timers[index].isFavorite {
+        case true: timers[index].isFavorite = false
+        case false: markFavorite(at: index)
+        }
+    }
+    
     func append(timer: STSavedTimer) {
         timers.append(timer)
         validate()

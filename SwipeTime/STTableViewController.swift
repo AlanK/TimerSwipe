@@ -39,7 +39,10 @@ class STTableViewController: UITableViewController, STTableViewCellDelegate {
     
     func cellButtonTapped(cell: STTableViewCell) {
         let indexPath = self.tableView.indexPathForRow(at: cell.center)
-        self.savedTimerList.markFavorite(at: indexPath!.row)
+        
+        guard let index = indexPath?.row else {return}
+        savedTimerList.toggleFavorite(at: index)
+        
         saveData()
         tableView.reloadData()
     }
