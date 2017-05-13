@@ -13,13 +13,6 @@ class STTableViewController: UITableViewController, STTableViewCellDelegate {
     var savedTimerList = STTimerList()
     let firstRow = IndexPath.init(row: 0, section: 0)
     
-    func loadSampleTimers () {
-        let timer1 = STSavedTimer(centiseconds: 3000)
-        let timer2 = STSavedTimer(centiseconds: 2000)
-        let timer3 = STSavedTimer(centiseconds: 1000)
-        savedTimerList = STTimerList.init(timers: [timer1, timer2, timer3])
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -74,7 +67,7 @@ class STTableViewController: UITableViewController, STTableViewCellDelegate {
     
     func readData() {
         guard let persistentList = UserDefaults.standard.object(forKey: "persistedList") else {
-            loadSampleTimers()
+            savedTimerList.loadSampleTimers()
             return
         }
         savedTimerList = NSKeyedUnarchiver.unarchiveObject(with: persistentList as! Data) as! STTimerList

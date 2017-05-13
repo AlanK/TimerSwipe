@@ -9,8 +9,6 @@
 import Foundation
 
 class STTimerList: NSObject, NSCoding {
-
-    
     var timers = [STSavedTimer]()
     
     // MARK: - Initializers
@@ -80,6 +78,13 @@ class STTimerList: NSObject, NSCoding {
                 timers[0].isFavorite = true
             }
         }
+    }
+    
+    func loadSampleTimers() {
+        let timer1 = STSavedTimer(centiseconds: 3000, isFavorite: true)
+        let timer2 = STSavedTimer(centiseconds: 2000)
+        let timer3 = STSavedTimer(centiseconds: 1000)
+        timers = [timer1, timer2, timer3]
     }
     
     // MARK: - Properties
