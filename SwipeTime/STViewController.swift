@@ -13,68 +13,13 @@ class STViewController: UIViewController {
     let timeFormatter = TimeFormatter()
     let soundController = SoundController()
     var savedTimerList = STTimerList()
+    var stopwatch: Stopwatch?
     
-    // MARK: - Timer
-
-    var duration = 3000
+    var buttonStatus = ChangeButtonValues.Change
+    
     var providedDuration: Int?
-    var timeRemaining: Int?
-    var startTime: Date?
-    var currentTime: Date?
-    var endTime: Date?
-    var timer = Timer()
-    var unlocked = true
-    
-    func setDuration() {
-        duration = providedDuration ?? duration
-    }
-    
-    func clearTimer() {
-        unlocked = true
-        timer.invalidate()
-        timeRemaining = duration
-        timeDisplay.text = timeFormatter.formatTime(timeRemaining!)
-        
-        // Use performWithoutAnimation to prevent weird flashing as button text animates.
-        
-        UIView.performWithoutAnimation {
-            self.changeButton.setTitle("Change", for: UIControlState())
-            self.changeButton.layoutIfNeeded()
-        }
-    }
-    
-    func startTimer() {
-        guard unlocked else {
-            return
-        }
-        unlocked = false
-        startTime = Date.init()
-        endTime = Date.init(timeInterval: (Double(duration)/100.0), since: startTime!)
-        timer = Timer.scheduledTimer(timeInterval: 0.01, target:self, selector: #selector(STViewController.tick), userInfo: nil, repeats: true)
-        soundController.playFirstSound()
-        
-        // Use performWithoutAnimation to prevent weird flashing as button text animates.
-        
-        UIView.performWithoutAnimation {
-            self.changeButton.setTitle("Cancel", for: UIControlState())
-            self.changeButton.layoutIfNeeded()
-        }
-    }
-
-    func tick() {
-        currentTime = Date.init()
-        if currentTime! >= endTime! {
-            clearTimer()
-            soundController.playSecondSound()
-        }
-        else {
-            let decimalOfDisplay = endTime!.timeIntervalSince(currentTime!) * 100
-            timeDisplay.text = timeFormatter.formatTime(Int(decimalOfDisplay))
-        }
-    }
     
     // MARK: - Labels & Buttons
-
     
     @IBOutlet var timeDisplay: UILabel!
     @IBOutlet var changeButton: UIButton!
@@ -83,33 +28,33 @@ class STViewController: UIViewController {
     // MARK: - Actions
     
     @IBAction func changeButton(_ sender: AnyObject) {
-        switch unlocked {
-        case true: self.navigationController?.popViewController(animated: true)
-        case false: clearTimer()
+        switch buttonStatus {
+        case .Change: self.navigationController?.popViewController(animated: true)
+        case .Cancel: stopwatch?.clearTimer()
         }
     }
     
     @IBAction func swipeRight(_ sender: AnyObject) {
-        startTimer()
+        stopwatch?.startTimer()
     }
     @IBAction func swipeLeft(_ sender: AnyObject) {
-        startTimer()
+        stopwatch?.startTimer()
     }
     @IBAction func swipeUp(_ sender: AnyObject) {
-        startTimer()
+        stopwatch?.startTimer()
     }
     @IBAction func swipeDown(_ sender: AnyObject) {
-        startTimer()
+        stopwatch?.startTimer()
     }
     
-    // MARK: - View Loading and Other
+    // MARK: - View Loading and Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         timeDisplay.font = UIFont.monospacedDigitSystemFont(ofSize: 64, weight: UIFontWeightRegular)
-        setDuration()
-        clearTimer()
+        stopwatch = Stopwatch.init(delegate: self, duration: providedDuration)
+        stopwatch?.clearTimer()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -121,5 +66,42 @@ class STViewController: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         UIApplication.shared.isIdleTimerDisabled = false
+    }
+    
+    // MARK: - Display Updating
+    
+    func displayInt(_ integer: Int) {
+        timeDisplay.text = timeFormatter.formatTime(integer)
+    }
+}
+
+extension STViewController: StopwatchDelegate {
+    func updateDisplay(with integer: Int) {
+        displayInt(integer)
+    }
+    
+    func setButton(to value: ChangeButtonValues) {
+        buttonStatus = value
+        // Use performWithoutAnimation to prevent weird flashing as button text animates.
+        switch value {
+        case .Change:
+            UIView.performWithoutAnimation {
+                self.changeButton.setTitle("Change", for: UIControlState())
+                self.changeButton.layoutIfNeeded()
+            }
+        case .Cancel:
+            UIView.performWithoutAnimation {
+                self.changeButton.setTitle("Cancel", for: UIControlState())
+                self.changeButton.layoutIfNeeded()
+            }
+        }
+    }
+    
+    func timerDidStart() {
+        soundController.playFirstSound()
+    }
+    
+    func timerDidEnd() {
+        soundController.playSecondSound()
     }
 }

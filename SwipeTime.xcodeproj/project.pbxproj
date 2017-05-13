@@ -21,6 +21,7 @@
 		5A9563E51D313BB100313EEF /* AudioCue_01.aif in Resources */ = {isa = PBXBuildFile; fileRef = 5A9563E31D313BB100313EEF /* AudioCue_01.aif */; };
 		5A9563E61D313BB100313EEF /* AudioCue_02.aif in Resources */ = {isa = PBXBuildFile; fileRef = 5A9563E41D313BB100313EEF /* AudioCue_02.aif */; };
 		5AB18AFA1D2058CA007B9D9F /* STViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AB18AF91D2058CA007B9D9F /* STViewController.swift */; };
+		5AB69EBF1EC799370078DDA5 /* Stopwatch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AB69EBE1EC799370078DDA5 /* Stopwatch.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -40,6 +41,7 @@
 		5A9563E31D313BB100313EEF /* AudioCue_01.aif */ = {isa = PBXFileReference; lastKnownFileType = file; path = AudioCue_01.aif; sourceTree = "<group>"; };
 		5A9563E41D313BB100313EEF /* AudioCue_02.aif */ = {isa = PBXFileReference; lastKnownFileType = file; path = AudioCue_02.aif; sourceTree = "<group>"; };
 		5AB18AF91D2058CA007B9D9F /* STViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STViewController.swift; sourceTree = "<group>"; };
+		5AB69EBE1EC799370078DDA5 /* Stopwatch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Stopwatch.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -74,6 +76,7 @@
 			children = (
 				5A03B9A71D1DDB9800E245C9 /* AppDelegate.swift */,
 				5AB18AF91D2058CA007B9D9F /* STViewController.swift */,
+				5AB69EBE1EC799370078DDA5 /* Stopwatch.swift */,
 				5A12267B1D5A80BA006D49F1 /* STTableViewController.swift */,
 				5A871FF91D6FC68900B08A05 /* STTableViewCell.swift */,
 				5A4536831D298CA300E62273 /* STModalViewController.swift */,
@@ -173,6 +176,7 @@
 				5A591CE91D3AA18E00B9BD3D /* SoundController.swift in Sources */,
 				5A871FFA1D6FC68900B08A05 /* STTableViewCell.swift in Sources */,
 				5A591CE71D3A9F6100B9BD3D /* TimeFormatter.swift in Sources */,
+				5AB69EBF1EC799370078DDA5 /* Stopwatch.swift in Sources */,
 				5A4536841D298CA300E62273 /* STModalViewController.swift in Sources */,
 				5A12267C1D5A80BA006D49F1 /* STTableViewController.swift in Sources */,
 			);
