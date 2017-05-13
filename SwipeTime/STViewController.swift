@@ -80,20 +80,12 @@ extension STViewController: StopwatchDelegate {
         displayInt(integer)
     }
     
-    func setButton(to value: ChangeButtonValues) {
-        buttonStatus = value
+    func setButton(to buttonValue: ChangeButtonValues) {
+        buttonStatus = buttonValue
         // Use performWithoutAnimation to prevent weird flashing as button text animates.
-        switch value {
-        case .Change:
-            UIView.performWithoutAnimation {
-                self.changeButton.setTitle("Change", for: UIControlState())
-                self.changeButton.layoutIfNeeded()
-            }
-        case .Cancel:
-            UIView.performWithoutAnimation {
-                self.changeButton.setTitle("Cancel", for: UIControlState())
-                self.changeButton.layoutIfNeeded()
-            }
+        UIView.performWithoutAnimation {
+            self.changeButton.setTitle(buttonValue.text, for: UIControlState())
+            self.changeButton.layoutIfNeeded()
         }
     }
     
