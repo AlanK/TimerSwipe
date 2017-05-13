@@ -37,15 +37,6 @@ class STTableViewController: UITableViewController, STTableViewCellDelegate {
         cell.favoriteIcon.setImage(UIImage(named: "Empty heart")?.withRenderingMode(.alwaysTemplate), for: UIControlState())
     }
     
-    func reloadRowsInRange(low: Int, high: Int) {
-        var indexPaths = [IndexPath]()
-        for position in low...high {
-            let indexPath = IndexPath.init(row: position, section: 0)
-            indexPaths.append(indexPath)
-        }
-        tableView.reloadRows(at: indexPaths, with: .none)
-    }
-    
     func cellButtonTapped(cell: STTableViewCell) {
         let indexPath = self.tableView.indexPathForRow(at: cell.center)
         self.savedTimerList.markFavorite(at: indexPath!.row)
