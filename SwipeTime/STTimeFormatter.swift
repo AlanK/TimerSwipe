@@ -8,10 +8,8 @@
 
 import UIKit
 
-class STTimeFormatter {
-
+struct STTimeFormatter {
     let numberFormatter = NumberFormatter()
-    var timeAsString = ["", "", ""]
     
     init() {
         numberFormatter.formatWidth = 2
@@ -19,15 +17,12 @@ class STTimeFormatter {
     }
     
     func formatTime(_ time: Int) -> (String) {
-        
+        var timeAsString = ["", "", ""]
         let timeBlocks = [time / 6000, (time / 100) % 60, time % 100]
         
         for index in 0...2 {
             timeAsString[index] = numberFormatter.string(from: NSNumber(value: timeBlocks[index]))!
         }
-        
         return timeAsString[0] + ":" + timeAsString[1] + "." + timeAsString[2]
-        
     }
-    
 }
