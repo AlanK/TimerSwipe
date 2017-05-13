@@ -30,36 +30,29 @@ protocol StopwatchDelegate {
 class Stopwatch {
     let delegate: StopwatchDelegate
     
-    var duration = 3000
-    var providedDuration: Int?
-    var timeRemaining: Int?
-    var startTime: Date?
+    let duration: Int
     var endTime: Date?
-    var timer = Timer()
+    var timer: Timer?
     var unlocked = true
     
     init(delegate: StopwatchDelegate, duration: Int? = nil) {
         self.delegate = delegate
-        self.duration = duration ?? self.duration
+        self.duration = duration ?? 3000
     }
     
     func clearTimer() {
         unlocked = true
-        timer.invalidate()
-        timeRemaining = duration
-        
-        guard let timeRemaining = timeRemaining else {return}
-        delegate.updateDisplay(with: timeRemaining)
+        timer?.invalidate()
+        delegate.updateDisplay(with: duration)
         delegate.setButton(to: .Change)
     }
     
     func startTimer() {
         guard unlocked else {return}
         unlocked = false
-        startTime = Date.init()
-        endTime = Date.init(timeInterval: (Double(duration)/100.0), since: startTime!)
+        let startTime = Date.init()
+        endTime = Date.init(timeInterval: (Double(duration)/100.0), since: startTime)
         timer = Timer.scheduledTimer(timeInterval: 0.01, target:self, selector: #selector(Stopwatch.tick), userInfo: nil, repeats: true)
-        
         delegate.timerDidStart()
         delegate.setButton(to: .Cancel)
     }
@@ -68,12 +61,10 @@ class Stopwatch {
         let currentTime = Date.init()
         guard currentTime < endTime! else {
             clearTimer()
-            
             delegate.timerDidEnd()
             return
         }
         let timeRemaining = Int(endTime!.timeIntervalSince(currentTime) * 100)
-        
         delegate.updateDisplay(with: timeRemaining)
     }
 }
