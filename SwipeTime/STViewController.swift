@@ -11,7 +11,7 @@ import UIKit
 class STViewController: UIViewController {
     
     let timeFormatter = STTimeFormatter()
-    let soundController = STSoundController()
+    let soundController = SoundController()
     var savedTimerList = STTimerList()
     
     // MARK: - Timer

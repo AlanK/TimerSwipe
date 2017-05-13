@@ -1,5 +1,5 @@
 //
-//  STSoundController.swift
+//  SoundController.swift
 //  SwipeTime
 //
 //  Created by Alan Kantz on 7/16/16.
@@ -8,7 +8,7 @@
 
 import AudioToolbox
 
-class STSoundController {
+class SoundController {
     var firstSound: SystemSoundID = 0
     var secondSound: SystemSoundID = 1
     
