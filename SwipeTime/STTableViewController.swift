@@ -105,13 +105,6 @@ class STTableViewController: UITableViewController, STTableViewCellDelegate {
         if editingStyle == .delete {
             // Awkwardly don't allow the last row to be deleted
             guard savedTimerList.count() != 1 else {return}
-            // Check if I'm removing the favorite
-            if savedTimerList[indexPath.row].isFavorite == true {
-                // Make the first row the new favorite (unless I'm deleting the first row, in which case the second row should be the new favorite)
-                var newFavorite = indexPath == firstRow ? IndexPath.init(row: 1, section: 0) : firstRow
-                savedTimerList.markFavorite(at: newFavorite.row)
-                tableView.reloadRows(at: [newFavorite], with: .none)
-            }
             _ = savedTimerList.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)
         } else if editingStyle == .insert {

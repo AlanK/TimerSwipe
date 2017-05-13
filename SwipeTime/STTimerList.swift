@@ -50,8 +50,6 @@ class STTimerList: NSObject, NSCoding {
     func remove(at: Int) -> STSavedTimer {
         let timer = timers.remove(at: at)
         return timer
-        
-        // Can't validate here without fucking up rearranging; gotta remove before inserting, so removing the favorite would trigger creation of a new favorite…
     }
     
     func insert(_ newElement: STSavedTimer, at index: Int) {
@@ -60,22 +58,14 @@ class STTimerList: NSObject, NSCoding {
     }
     
     func validate() {
-        // Confirm there are timers and exactly one of them is marked favorite.
-        guard timers.isEmpty == false else {
-            timers.append(STSavedTimer())
-            return
-        }
+        // Confirm there are <= 1 timers.
+        guard timers.isEmpty == false else {return}
         var foundAFavorite = false
         for timer in timers {
             switch foundAFavorite {
             case true: timer.isFavorite = false
             case false: if timer.isFavorite {foundAFavorite = true}
             }
-        }
-        
-        guard foundAFavorite else {
-            timers[0].isFavorite = true
-            return
         }
     }
     
@@ -88,11 +78,11 @@ class STTimerList: NSObject, NSCoding {
     
     // MARK: - Properties
     
-    func favorite() -> STSavedTimer {
+    func favorite() -> STSavedTimer? {
         for timer in timers {
             if timer.isFavorite {return timer}
         }
-        fatalError("Could not find a favorite.")
+        return nil
     }
     
     func count() -> Int {
