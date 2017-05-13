@@ -9,22 +9,18 @@
 import UIKit
 
 class STTableViewController: UITableViewController, STTableViewCellDelegate {
-
     var savedTimerList = STTimerList()
     let firstRow = IndexPath.init(row: 0, section: 0)
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
         readData()
         
         // Display an Edit button in the navigation bar for this view controller.
         self.navigationItem.rightBarButtonItem = self.editButtonItem
         
         // Navigate to the correct entry point
-        
         performSegue(withIdentifier: "tableToTimer", sender: self)
-
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -55,7 +51,6 @@ class STTableViewController: UITableViewController, STTableViewCellDelegate {
         saveData()
         tableView.reloadData()
     }
-
     
     // MARK: - Persist data
     
@@ -89,14 +84,11 @@ class STTableViewController: UITableViewController, STTableViewCellDelegate {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as! STTableViewCell
         
         let savedTimer = savedTimerList[indexPath.row]
-        
         cell.delegate = self
-        
         cell.secondsLabel.text = String(savedTimer.centiseconds/100) + " seconds"
-        if savedTimer.isFavorite {
-            setIconToFavorite(cell: cell)
-        } else {
-            setIconToNotFavorite(cell: cell)
+        switch savedTimer.isFavorite {
+        case true: setIconToFavorite(cell: cell)
+        case false: setIconToNotFavorite(cell: cell)
         }
 
         return cell
@@ -104,13 +96,8 @@ class STTableViewController: UITableViewController, STTableViewCellDelegate {
 
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            // Delete the row from the data source
-            
             // Awkwardly don't allow the last row to be deleted
-            guard savedTimerList.count() != 1 else {
-                return
-            }
-            
+            guard savedTimerList.count() != 1 else {return}
             // Check if I'm removing the favorite
             if savedTimerList[indexPath.row].isFavorite == true {
                 // Make the first row the new favorite (unless I'm deleting the first row, in which case the second row should be the new favorite)
@@ -123,7 +110,6 @@ class STTableViewController: UITableViewController, STTableViewCellDelegate {
         } else if editingStyle == .insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
         }
-        
     }
 
     override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to toIndexPath: IndexPath) {
@@ -147,17 +133,13 @@ class STTableViewController: UITableViewController, STTableViewCellDelegate {
             if let selectedTimerCell = sender as? STTableViewCell {
                 let indexPath = tableView.indexPath(for: selectedTimerCell)
                 selectedTimer = savedTimerList[indexPath!.row]
-                
-
             }
             else {
                 selectedTimer = savedTimerList.favorite()
             }
-            
             timerScreen.providedDuration = selectedTimer.centiseconds
         }
     }
-
     
     @IBAction func unwindToSTTVC(_ sender: UIStoryboardSegue) {
         if let sourceViewController = sender.source as? STModalViewController {
