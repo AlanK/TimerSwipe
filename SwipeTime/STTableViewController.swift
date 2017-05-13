@@ -20,13 +20,7 @@ class STTableViewController: UITableViewController, STTableViewCellDelegate {
         self.navigationItem.rightBarButtonItem = self.editButtonItem
         
         // Navigate to the correct entry point
-        
-        // Delete me -->
-        var fav: STSavedTimer?
-        fav = savedTimerList.favorite()
-        // <-- Delete me
-        
-        guard let favoriteTimer = fav else {return}
+        guard let favoriteTimer = savedTimerList.favorite() else {return}
         performSegue(withIdentifier: "tableToTimer", sender: favoriteTimer)
     }
     
