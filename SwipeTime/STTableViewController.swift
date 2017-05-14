@@ -10,7 +10,6 @@ import UIKit
 
 class STTableViewController: UITableViewController {
     var savedTimerList = STTimerList()
-    let firstRow = IndexPath.init(row: 0, section: 0)
     
     override func viewDidLoad() {
         super.viewDidLoad()
