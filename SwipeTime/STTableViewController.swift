@@ -8,7 +8,7 @@
 
 import UIKit
 
-class STTableViewController: UITableViewController, STTableViewCellDelegate {
+class STTableViewController: UITableViewController {
     var savedTimerList = STTimerList()
     let firstRow = IndexPath.init(row: 0, section: 0)
     
@@ -37,15 +37,6 @@ class STTableViewController: UITableViewController, STTableViewCellDelegate {
         cell.favoriteIcon.setImage(UIImage(named: "Empty heart")?.withRenderingMode(.alwaysTemplate), for: UIControlState())
     }
     
-    func cellButtonTapped(cell: STTableViewCell) {
-        let indexPath = self.tableView.indexPathForRow(at: cell.center)
-        
-        guard let index = indexPath?.row else {return}
-        savedTimerList.toggleFavorite(at: index)
-        
-        saveData()
-        tableView.reloadData()
-    }
     
     // MARK: - Persist data
     
@@ -136,5 +127,17 @@ class STTableViewController: UITableViewController, STTableViewCellDelegate {
                 saveData()
             }
         }
+    }
+}
+
+extension STTableViewController: STTableViewCellDelegate {
+    func cellButtonTapped(cell: STTableViewCell) {
+        let indexPath = self.tableView.indexPathForRow(at: cell.center)
+        
+        guard let index = indexPath?.row else {return}
+        savedTimerList.toggleFavorite(at: index)
+        
+        saveData()
+        tableView.reloadData()
     }
 }
