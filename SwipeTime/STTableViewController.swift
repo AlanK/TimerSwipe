@@ -14,7 +14,7 @@ class STTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        readData()
+        savedTimerList.readData()
         
         // Display an Edit button in the navigation bar for this view controller.
         self.navigationItem.rightBarButtonItem = self.editButtonItem
@@ -35,24 +35,6 @@ class STTableViewController: UITableViewController {
     
     func setIconToNotFavorite(cell: STTableViewCell) {
         cell.favoriteIcon.setImage(UIImage(named: "Empty heart")?.withRenderingMode(.alwaysTemplate), for: UIControlState())
-    }
-    
-    
-    // MARK: - Persist data
-    
-    func saveData() {
-        let persistentList = NSKeyedArchiver.archivedData(withRootObject: savedTimerList)
-        UserDefaults.standard.set(persistentList, forKey: "persistedList")
-        print("Saved data!")
-    }
-    
-    func readData() {
-        guard let persistentList = UserDefaults.standard.object(forKey: "persistedList") else {
-            savedTimerList.loadSampleTimers()
-            return
-        }
-        savedTimerList = NSKeyedUnarchiver.unarchiveObject(with: persistentList as! Data) as! STTimerList
-        print("Read data!")
     }
 
     // MARK: - Table view data source
@@ -93,7 +75,7 @@ class STTableViewController: UITableViewController {
     }
 
     override func setEditing(_ editing: Bool, animated: Bool) {
-        saveData()
+        savedTimerList.saveData()
         super.setEditing(editing, animated: animated)
     }
 
@@ -124,7 +106,7 @@ class STTableViewController: UITableViewController {
                 
                 savedTimerList.append(timer: newTimer)
                 tableView.insertRows(at: [newIndexPath], with: .bottom)
-                saveData()
+                savedTimerList.saveData()
             }
         }
     }
@@ -137,7 +119,7 @@ extension STTableViewController: STTableViewCellDelegate {
         guard let index = indexPath?.row else {return}
         savedTimerList.toggleFavorite(at: index)
         
-        saveData()
+        savedTimerList.saveData()
         tableView.reloadData()
     }
 }

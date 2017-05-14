@@ -129,3 +129,24 @@ extension STTimerList {
         self.append(timerArray: timers)
     }
 }
+
+extension STTimerList {
+    func saveData() {
+        let persistentList = NSKeyedArchiver.archivedData(withRootObject: self)
+        UserDefaults.standard.set(persistentList, forKey: "persistedList")
+        print("Saved data!")
+    }
+    
+    func readData() {
+        guard let persistentList = UserDefaults.standard.object(forKey: "persistedList") else {
+            self.loadSampleTimers()
+            return
+        }
+        // This is kind of silly but w/e
+        let restoredList = NSKeyedUnarchiver.unarchiveObject(with: persistentList as! Data) as! STTimerList
+        while restoredList.count() > 0 {
+            self.append(timer: restoredList.remove(at: 0))
+        }
+        print("Read data!")
+    }
+}
