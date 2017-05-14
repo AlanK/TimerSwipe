@@ -9,11 +9,9 @@
 import Foundation
 
 class STTimerList: NSObject, NSCoding {
-    var timers = [STSavedTimer]()
+    private var timers = [STSavedTimer]()
     
     // MARK: - Initializers
-    
-    // Memberwise initializer makes NSCoding support easier.
     
     init(timers: [STSavedTimer]) {
         super.init()
@@ -26,7 +24,7 @@ class STTimerList: NSObject, NSCoding {
         validate()
     }
     
-    // MARK: - Methods
+    // MARK: - Favorites
     
     func markFavorite(at index: Int) {
         for timer in timers {
@@ -42,6 +40,8 @@ class STTimerList: NSObject, NSCoding {
         }
     }
     
+    // MARK: - Add
+    
     func append(timer: STSavedTimer) {
         timers.append(timer)
         validate()
@@ -53,16 +53,24 @@ class STTimerList: NSObject, NSCoding {
         }
         validate()
     }
-
-    func remove(at: Int) -> STSavedTimer {
-        let timer = timers.remove(at: at)
-        return timer
-    }
     
     func insert(_ newElement: STSavedTimer, at index: Int) {
         timers.insert(newElement, at: index)
         validate()
     }
+
+    // MARK: - Remove
+    
+    func remove(at: Int) -> STSavedTimer {
+        let timer = timers.remove(at: at)
+        return timer
+    }
+    
+    func clear() {
+        timers = [STSavedTimer]()
+    }
+    
+    // MARK: - Validate
     
     func validate() {
         // Confirm there are <= 1 favorites.
@@ -74,13 +82,6 @@ class STTimerList: NSObject, NSCoding {
             case false: if timer.isFavorite {foundAFavorite = true}
             }
         }
-    }
-    
-    func loadSampleTimers() {
-        let timer1 = STSavedTimer(centiseconds: 6000)
-        let timer2 = STSavedTimer(centiseconds: 3000, isFavorite: true)
-        let timer3 = STSavedTimer(centiseconds: 1500)
-        timers = [timer1, timer2, timer3]
     }
     
     // MARK: - Properties
@@ -99,9 +100,7 @@ class STTimerList: NSObject, NSCoding {
     // MARK: - Subscript
     
     subscript(index: Int) -> STSavedTimer {
-        get {
-            return timers[index]
-        }
+        get {return timers[index]}
         set (newValue) {
             timers[index] = newValue
             validate()
@@ -110,16 +109,23 @@ class STTimerList: NSObject, NSCoding {
     
     // MARK: - NSCoding
     
-    struct PropertyKey {
-        static let timersKey = "timers"
-    }
+    struct PropertyKey {static let timersKey = "timers"}
     
-    func encode(with aCoder: NSCoder) {
-        aCoder.encode(timers, forKey: PropertyKey.timersKey)
-    }
+    func encode(with aCoder: NSCoder) {aCoder.encode(timers, forKey: PropertyKey.timersKey)}
     
     required convenience init(coder aDecoder: NSCoder) {
         let timers = aDecoder.decodeObject(forKey: PropertyKey.timersKey) as! [STSavedTimer]
         self.init(timers: timers)
+    }
+}
+
+extension STTimerList {
+    func loadSampleTimers() {
+        let timer1 = STSavedTimer(centiseconds: 6000)
+        let timer2 = STSavedTimer(centiseconds: 3000, isFavorite: true)
+        let timer3 = STSavedTimer(centiseconds: 1500)
+        let timers = [timer1, timer2, timer3]
+        self.clear()
+        self.append(timerArray: timers)
     }
 }
