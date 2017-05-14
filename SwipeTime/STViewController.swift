@@ -34,18 +34,10 @@ class STViewController: UIViewController {
         }
     }
     
-    @IBAction func swipeRight(_ sender: AnyObject) {
-        stopwatch?.startTimer()
-    }
-    @IBAction func swipeLeft(_ sender: AnyObject) {
-        stopwatch?.startTimer()
-    }
-    @IBAction func swipeUp(_ sender: AnyObject) {
-        stopwatch?.startTimer()
-    }
-    @IBAction func swipeDown(_ sender: AnyObject) {
-        stopwatch?.startTimer()
-    }
+    @IBAction func swipeRight(_ sender: AnyObject) {stopwatch?.startTimer()}
+    @IBAction func swipeLeft(_ sender: AnyObject) {stopwatch?.startTimer()}
+    @IBAction func swipeUp(_ sender: AnyObject) {stopwatch?.startTimer()}
+    @IBAction func swipeDown(_ sender: AnyObject) {stopwatch?.startTimer()}
     
     // MARK: - View Loading and Lifecycle
     
@@ -70,9 +62,7 @@ class STViewController: UIViewController {
     
     // MARK: - Display Updating
     
-    func displayInt(_ integer: Int) {
-        timeDisplay.text = timeFormatter.formatTime(integer)
-    }
+    func displayInt(_ integer: Int) {timeDisplay.text = timeFormatter.formatTime(integer)}
 }
 
 extension STViewController: StopwatchDelegate {
@@ -89,11 +79,7 @@ extension STViewController: StopwatchDelegate {
         }
     }
     
-    func timerDidStart() {
-        soundController.playFirstSound()
-    }
+    func timerDidStart() {soundController.playFirstSound()}
     
-    func timerDidEnd() {
-        soundController.playSecondSound()
-    }
+    func timerDidEnd() {soundController.playSecondSound()}
 }
