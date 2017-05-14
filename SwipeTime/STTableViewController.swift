@@ -28,14 +28,6 @@ class STTableViewController: UITableViewController {
         self.navigationController?.setNavigationBarHidden(false, animated: animated)
     }
 
-    func setIconToFavorite(cell: STTableViewCell) {
-        cell.favoriteIcon.setImage(UIImage(named: "Full heart")?.withRenderingMode(.alwaysTemplate), for: UIControlState())
-    }
-    
-    func setIconToNotFavorite(cell: STTableViewCell) {
-        cell.favoriteIcon.setImage(UIImage(named: "Empty heart")?.withRenderingMode(.alwaysTemplate), for: UIControlState())
-    }
-
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -50,14 +42,10 @@ class STTableViewController: UITableViewController {
         let cellIdentifier = "STTableViewCell"
         let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as! STTableViewCell
         
-        let savedTimer = savedTimerList[indexPath.row]
+        let cellTimer = savedTimerList[indexPath.row]
         cell.delegate = self
-        cell.secondsLabel.text = String(savedTimer.centiseconds/100) + " seconds"
-        switch savedTimer.isFavorite {
-        case true: setIconToFavorite(cell: cell)
-        case false: setIconToNotFavorite(cell: cell)
-        }
-
+        cell.setupCell(with: cellTimer)
+        
         return cell
     }
 

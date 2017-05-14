@@ -25,4 +25,14 @@ class STTableViewCell: UITableViewCell {
     @IBAction func favoriteButton(_ sender: UIButton) {
         delegate?.cellButtonTapped(cell: self)
     }
+
+    // MARK: Setup
+    
+    func setupCell(with timer: STSavedTimer) {
+        self.secondsLabel.text = String(timer.centiseconds/100) + " seconds"
+        switch timer.isFavorite {
+        case true: self.favoriteIcon.setImage(UIImage(named: "Full heart")?.withRenderingMode(.alwaysTemplate), for: UIControlState())
+        case false: self.favoriteIcon.setImage(UIImage(named: "Empty heart")?.withRenderingMode(.alwaysTemplate), for: UIControlState())
+        }
+    }
 }
