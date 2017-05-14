@@ -65,7 +65,7 @@ class STTimerList: NSObject, NSCoding {
     }
     
     func validate() {
-        // Confirm there are <= 1 timers.
+        // Confirm there are <= 1 favorites.
         guard timers.isEmpty == false else {return}
         var foundAFavorite = false
         for timer in timers {
@@ -77,9 +77,9 @@ class STTimerList: NSObject, NSCoding {
     }
     
     func loadSampleTimers() {
-        let timer1 = STSavedTimer(centiseconds: 3000, isFavorite: true)
-        let timer2 = STSavedTimer(centiseconds: 2000)
-        let timer3 = STSavedTimer(centiseconds: 1000)
+        let timer1 = STSavedTimer(centiseconds: 6000)
+        let timer2 = STSavedTimer(centiseconds: 3000, isFavorite: true)
+        let timer3 = STSavedTimer(centiseconds: 1500)
         timers = [timer1, timer2, timer3]
     }
     
