@@ -9,18 +9,18 @@
 import UIKit
 
 class STTableViewController: UITableViewController {
-    var savedTimerList = STTimerList()
+    var timerList = STTimerList()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        savedTimerList.readData()
+        timerList.readData()
         
         // Display an Edit button in the navigation bar for this view controller.
         self.navigationItem.rightBarButtonItem = self.editButtonItem
         
         // Navigate to the correct entry point
-        guard let favoriteTimer = savedTimerList.favorite() else {return}
-        performSegue(withIdentifier: "tableToTimer", sender: favoriteTimer)
+        guard let favoriteTimer = timerList.favorite() else {return}
+        performSegue(withIdentifier: SegueID.tableToTimer.rawValue, sender: favoriteTimer)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -30,34 +30,35 @@ class STTableViewController: UITableViewController {
 
     // MARK: - Table view data source
 
-    override func numberOfSections(in tableView: UITableView) -> Int {return 1}
+    override func numberOfSections(in tableView: UITableView) -> Int {return constants.sectionsInTableView}
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return savedTimerList.count()
+        return timerList.count()
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cellIdentifier = "STTableViewCell"
-        let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as! STTableViewCell
-        let cellTimer = savedTimerList[indexPath.row]
+        let cell = tableView.dequeueReusableCell(withIdentifier: constants.cellID, for: indexPath) as! STTableViewCell
+        let cellTimer = timerList[indexPath.row]
+
         cell.delegate = self
         cell.setupCell(with: cellTimer)
+
         return cell
     }
 
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         guard editingStyle == .delete else {return}
-        _ = savedTimerList.remove(at: indexPath.row)
+        _ = timerList.remove(at: indexPath.row)
         tableView.deleteRows(at: [indexPath], with: .fade)
     }
 
     override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to toIndexPath: IndexPath) {
-        let movingTimer = savedTimerList.remove(at: fromIndexPath.row)
-        savedTimerList.insert(movingTimer, at: toIndexPath.row)
+        let timer = timerList.remove(at: fromIndexPath.row)
+        timerList.insert(timer, at: toIndexPath.row)
     }
 
     override func setEditing(_ editing: Bool, animated: Bool) {
-        savedTimerList.saveData()
+        timerList.saveData()
         super.setEditing(editing, animated: animated)
     }
 
@@ -74,7 +75,7 @@ class STTableViewController: UITableViewController {
         var timer: STSavedTimer
         if let selectedCell = sender as? STTableViewCell {
             let indexPath = tableView.indexPath(for: selectedCell)
-            timer = savedTimerList[indexPath!.row]
+            timer = timerList[indexPath!.row]
         } else {timer = sender as! STSavedTimer}
         controller.providedDuration = timer.centiseconds
     }
@@ -83,11 +84,11 @@ class STTableViewController: UITableViewController {
         guard let sourceViewController = sender.source as? STModalViewController,
             let userSelectedTime = sourceViewController.userSelectedTime else {return}
         let newTimer = STSavedTimer(centiseconds: userSelectedTime)
-        let newIndexPath = IndexPath(row: savedTimerList.count(), section: 0)
+        let newIndexPath = IndexPath(row: timerList.count(), section: 0)
         
-        savedTimerList.append(timer: newTimer)
+        timerList.append(timer: newTimer)
         tableView.insertRows(at: [newIndexPath], with: .bottom)
-        savedTimerList.saveData()
+        timerList.saveData()
     }
 }
 
@@ -96,8 +97,8 @@ extension STTableViewController: STTableViewCellDelegate {
         let indexPath = self.tableView.indexPathForRow(at: cell.center)
         
         guard let index = indexPath?.row else {return}
-        savedTimerList.toggleFavorite(at: index)
-        savedTimerList.saveData()
+        timerList.toggleFavorite(at: index)
+        timerList.saveData()
         tableView.reloadData()
     }
 }

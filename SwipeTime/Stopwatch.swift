@@ -37,7 +37,7 @@ class Stopwatch {
     
     init(delegate: StopwatchDelegate, duration: Int? = nil) {
         self.delegate = delegate
-        self.duration = duration ?? 3000
+        self.duration = duration ?? constants.defaultDurationInCentiseconds
     }
     
     func clearTimer() {
