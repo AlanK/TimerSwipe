@@ -18,6 +18,7 @@
 		5A591CE71D3A9F6100B9BD3D /* TimeFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A591CE61D3A9F6100B9BD3D /* TimeFormatter.swift */; };
 		5A591CE91D3AA18E00B9BD3D /* SoundController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A591CE81D3AA18E00B9BD3D /* SoundController.swift */; };
 		5A871FFA1D6FC68900B08A05 /* STTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A871FF91D6FC68900B08A05 /* STTableViewCell.swift */; };
+		5A90785D1EEB8C24006BCDD3 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A90785C1EEB8C24006BCDD3 /* Constants.swift */; };
 		5A9563E51D313BB100313EEF /* AudioCue_01.aif in Resources */ = {isa = PBXBuildFile; fileRef = 5A9563E31D313BB100313EEF /* AudioCue_01.aif */; };
 		5A9563E61D313BB100313EEF /* AudioCue_02.aif in Resources */ = {isa = PBXBuildFile; fileRef = 5A9563E41D313BB100313EEF /* AudioCue_02.aif */; };
 		5AB18AFA1D2058CA007B9D9F /* STViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AB18AF91D2058CA007B9D9F /* STViewController.swift */; };
@@ -38,6 +39,7 @@
 		5A591CE61D3A9F6100B9BD3D /* TimeFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeFormatter.swift; sourceTree = "<group>"; };
 		5A591CE81D3AA18E00B9BD3D /* SoundController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoundController.swift; sourceTree = "<group>"; };
 		5A871FF91D6FC68900B08A05 /* STTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STTableViewCell.swift; sourceTree = "<group>"; };
+		5A90785C1EEB8C24006BCDD3 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		5A9563E31D313BB100313EEF /* AudioCue_01.aif */ = {isa = PBXFileReference; lastKnownFileType = file; path = AudioCue_01.aif; sourceTree = "<group>"; };
 		5A9563E41D313BB100313EEF /* AudioCue_02.aif */ = {isa = PBXFileReference; lastKnownFileType = file; path = AudioCue_02.aif; sourceTree = "<group>"; };
 		5AB18AF91D2058CA007B9D9F /* STViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STViewController.swift; sourceTree = "<group>"; };
@@ -74,6 +76,7 @@
 		5A03B9A61D1DDB9800E245C9 /* SwipeTime */ = {
 			isa = PBXGroup;
 			children = (
+				5A90785C1EEB8C24006BCDD3 /* Constants.swift */,
 				5A03B9A71D1DDB9800E245C9 /* AppDelegate.swift */,
 				5AB18AF91D2058CA007B9D9F /* STViewController.swift */,
 				5AB69EBE1EC799370078DDA5 /* Stopwatch.swift */,
@@ -170,6 +173,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5A12267E1D5A94C3006D49F1 /* STTimerList.swift in Sources */,
+				5A90785D1EEB8C24006BCDD3 /* Constants.swift in Sources */,
 				5A03B9A81D1DDB9800E245C9 /* AppDelegate.swift in Sources */,
 				5AB18AFA1D2058CA007B9D9F /* STViewController.swift in Sources */,
 				5A4DC9181D596D460009446B /* STSavedTimer.swift in Sources */,

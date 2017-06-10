@@ -152,7 +152,7 @@
                     <navigationItem key="navigationItem" title="Saved Timers" id="gaf-FJ-zIG">
                         <barButtonItem key="leftBarButtonItem" systemItem="add" id="Mal-wu-NLy">
                             <connections>
-                                <segue destination="DR8-bL-z0W" kind="presentation" id="QyM-c1-qUc"/>
+                                <segue destination="DR8-bL-z0W" kind="presentation" identifier="tableToNew" id="QyM-c1-qUc"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="edit" id="2XU-Q7-9vK"/>

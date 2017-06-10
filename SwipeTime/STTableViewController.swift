@@ -63,18 +63,20 @@ class STTableViewController: UITableViewController {
 
     // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        guard segue.identifier == "tableToTimer" else {return}
-        let timerScreen = segue.destination as! STViewController
-        var selectedTimer: STSavedTimer
-        
-        if let selectedTimerCell = sender as? STTableViewCell {
-            let indexPath = tableView.indexPath(for: selectedTimerCell)
-            selectedTimer = savedTimerList[indexPath!.row]
-        } else {selectedTimer = sender as! STSavedTimer}
-        
-        timerScreen.providedDuration = selectedTimer.centiseconds
+        if segue.identifier == SegueID.tableToTimer.rawValue {
+            segueToSTViewController(via: segue, from: sender)
+        }
+    }
+    
+    func segueToSTViewController(via segue: UIStoryboardSegue, from sender: Any?) {
+        guard let controller = segue.destination as? STViewController else {return}
+        var timer: STSavedTimer
+        if let selectedCell = sender as? STTableViewCell {
+            let indexPath = tableView.indexPath(for: selectedCell)
+            timer = savedTimerList[indexPath!.row]
+        } else {timer = sender as! STSavedTimer}
+        controller.providedDuration = timer.centiseconds
     }
     
     @IBAction func unwindToSTTVC(_ sender: UIStoryboardSegue) {
