@@ -12,11 +12,11 @@ class STViewController: UIViewController {
     
     let timeFormatter = TimeFormatter()
     let soundController = SoundController()
-    var savedTimerList = STTimerList()
-    var stopwatch: Stopwatch?
     
+    var stopwatch: Stopwatch?
     var buttonStatus = ChangeButtonValues.Change
     
+    /// The duration in centiseconds provided by the segue from STTableViewController.
     var providedDuration: Int?
     
     // MARK: - Labels & Buttons
@@ -34,10 +34,10 @@ class STViewController: UIViewController {
         }
     }
     
-    @IBAction func swipeRight(_ sender: AnyObject) {stopwatch?.startTimer()}
-    @IBAction func swipeLeft(_ sender: AnyObject) {stopwatch?.startTimer()}
-    @IBAction func swipeUp(_ sender: AnyObject) {stopwatch?.startTimer()}
-    @IBAction func swipeDown(_ sender: AnyObject) {stopwatch?.startTimer()}
+    @IBAction func swipeRight(_ sender: AnyObject) {start()}
+    @IBAction func swipeLeft(_ sender: AnyObject) {start()}
+    @IBAction func swipeUp(_ sender: AnyObject) {start()}
+    @IBAction func swipeDown(_ sender: AnyObject) {start()}
     
     // MARK: - View Loading and Lifecycle
     
@@ -63,7 +63,13 @@ class STViewController: UIViewController {
     // MARK: - Display Updating
     
     func displayInt(_ integer: Int) {timeDisplay.text = timeFormatter.formatTime(integer)}
+    
+    // MARK: - Convenience
+    
+    func start() {stopwatch?.startTimer()}
 }
+
+// MARK: - STViewController Extensions
 
 extension STViewController: StopwatchDelegate {
     func updateDisplay(with integer: Int) {
