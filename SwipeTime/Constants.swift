@@ -20,4 +20,6 @@ struct constants {
     static let defaultDurationInCentiseconds = 3000
     static let centisecondsPerSecond = 100.0
     static let hundredthOfASecond = 0.01
+    static let timersKey = "timers"
+    static let persistedList = "persistedList"
 }

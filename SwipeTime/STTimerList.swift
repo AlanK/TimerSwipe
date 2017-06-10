@@ -109,12 +109,10 @@ class STTimerList: NSObject, NSCoding {
     
     // MARK: - NSCoding
     
-    struct PropertyKey {static let timersKey = "timers"}
-    
-    func encode(with aCoder: NSCoder) {aCoder.encode(timers, forKey: PropertyKey.timersKey)}
+    func encode(with aCoder: NSCoder) {aCoder.encode(timers, forKey: constants.timersKey)}
     
     required convenience init(coder aDecoder: NSCoder) {
-        let timers = aDecoder.decodeObject(forKey: PropertyKey.timersKey) as! [STSavedTimer]
+        let timers = aDecoder.decodeObject(forKey: constants.timersKey) as! [STSavedTimer]
         self.init(timers: timers)
     }
 }
@@ -133,12 +131,12 @@ extension STTimerList {
 extension STTimerList {
     func saveData() {
         let persistentList = NSKeyedArchiver.archivedData(withRootObject: self)
-        UserDefaults.standard.set(persistentList, forKey: "persistedList")
+        UserDefaults.standard.set(persistentList, forKey: constants.persistedList)
         print("Saved data!")
     }
     
     func readData() {
-        guard let persistentList = UserDefaults.standard.object(forKey: "persistedList") else {
+        guard let persistentList = UserDefaults.standard.object(forKey: constants.persistedList) else {
             self.loadSampleTimers()
             return
         }
