@@ -29,8 +29,8 @@ protocol StopwatchDelegate {
 
 class Stopwatch {
     let delegate: StopwatchDelegate
-    
     let duration: Int
+    
     var endTime: Date?
     var timer: Timer?
     var unlocked = true
@@ -51,8 +51,8 @@ class Stopwatch {
         guard unlocked else {return}
         unlocked = false
         let startTime = Date.init()
-        endTime = Date.init(timeInterval: (Double(duration)/100.0), since: startTime)
-        timer = Timer.scheduledTimer(timeInterval: 0.01, target:self, selector: #selector(Stopwatch.tick), userInfo: nil, repeats: true)
+        endTime = Date.init(timeInterval: (Double(duration)/constants.centisecondsPerSecond), since: startTime)
+        timer = Timer.scheduledTimer(timeInterval: constants.hundredthOfASecond, target:self, selector: #selector(Stopwatch.tick), userInfo: nil, repeats: true)
         delegate.timerDidStart()
         delegate.setButton(to: .Cancel)
     }
@@ -64,7 +64,7 @@ class Stopwatch {
             delegate.timerDidEnd()
             return
         }
-        let timeRemaining = Int(endTime!.timeIntervalSince(currentTime) * 100)
+        let timeRemaining = Int(endTime!.timeIntervalSince(currentTime) * constants.centisecondsPerSecond)
         delegate.updateDisplay(with: timeRemaining)
     }
 }
