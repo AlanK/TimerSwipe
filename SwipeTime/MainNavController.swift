@@ -13,6 +13,7 @@ class MainNavController: UINavigationController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        model.readData()
     }
 
     override func didReceiveMemoryWarning() {

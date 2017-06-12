@@ -18,7 +18,6 @@ class STTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         modelController = self.navigationController as? ModelController
-        modelController?.model.readData()
         
         // Display an Edit button in the navigation bar for this view controller.
         self.navigationItem.rightBarButtonItem = self.editButtonItem
@@ -86,6 +85,11 @@ class STTableViewController: UITableViewController {
     }
     
     @IBAction func unwindToSTTVC(_ sender: UIStoryboardSegue) {
+        
+        
+        // I probably need to rip some of this code out and move it to MainNavController or a struct or something.
+        
+        
         guard let sourceViewController = sender.source as? STModalViewController,
             let userSelectedTime = sourceViewController.userSelectedTime else {return}
         let newTimer = STSavedTimer(centiseconds: userSelectedTime)
