@@ -78,9 +78,7 @@
 			children = (
 				5A90785C1EEB8C24006BCDD3 /* Constants.swift */,
 				5A03B9A71D1DDB9800E245C9 /* AppDelegate.swift */,
-				5A4536831D298CA300E62273 /* STModalViewController.swift */,
-				5AA3E3AB1EEF356600FB5F1D /* Table */,
-				5AA3E3AA1EEF354300FB5F1D /* Main */,
+				5AA3E3AC1EEF360C00FB5F1D /* Views and Controllers */,
 				5AA3E3A81EEF34E900FB5F1D /* Model */,
 				5AA3E3A91EEF34F700FB5F1D /* Storyboards */,
 				5A03B9AE1D1DDB9800E245C9 /* Assets.xcassets */,
@@ -127,6 +125,16 @@
 				5A871FF91D6FC68900B08A05 /* STTableViewCell.swift */,
 			);
 			name = Table;
+			sourceTree = "<group>";
+		};
+		5AA3E3AC1EEF360C00FB5F1D /* Views and Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				5A4536831D298CA300E62273 /* STModalViewController.swift */,
+				5AA3E3AB1EEF356600FB5F1D /* Table */,
+				5AA3E3AA1EEF354300FB5F1D /* Main */,
+			);
+			name = "Views and Controllers";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
