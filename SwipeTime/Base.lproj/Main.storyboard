@@ -267,10 +267,10 @@
             </objects>
             <point key="canvasLocation" x="286" y="1148"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--Main Nav Controller-->
         <scene sceneID="2fh-Z3-vSW">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="nxx-IB-3vs" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="nxx-IB-3vs" customClass="MainNavController" customModule="TimerSwipe" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="VwB-dG-MWg">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>

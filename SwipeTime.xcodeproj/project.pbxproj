@@ -21,6 +21,7 @@
 		5A90785D1EEB8C24006BCDD3 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A90785C1EEB8C24006BCDD3 /* Constants.swift */; };
 		5A9563E51D313BB100313EEF /* AudioCue_01.aif in Resources */ = {isa = PBXBuildFile; fileRef = 5A9563E31D313BB100313EEF /* AudioCue_01.aif */; };
 		5A9563E61D313BB100313EEF /* AudioCue_02.aif in Resources */ = {isa = PBXBuildFile; fileRef = 5A9563E41D313BB100313EEF /* AudioCue_02.aif */; };
+		5AA3E3AE1EEF36C400FB5F1D /* MainNavController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AA3E3AD1EEF36C400FB5F1D /* MainNavController.swift */; };
 		5AB18AFA1D2058CA007B9D9F /* STViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AB18AF91D2058CA007B9D9F /* STViewController.swift */; };
 		5AB69EBF1EC799370078DDA5 /* Stopwatch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AB69EBE1EC799370078DDA5 /* Stopwatch.swift */; };
 /* End PBXBuildFile section */
@@ -42,6 +43,7 @@
 		5A90785C1EEB8C24006BCDD3 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		5A9563E31D313BB100313EEF /* AudioCue_01.aif */ = {isa = PBXFileReference; lastKnownFileType = file; path = AudioCue_01.aif; sourceTree = "<group>"; };
 		5A9563E41D313BB100313EEF /* AudioCue_02.aif */ = {isa = PBXFileReference; lastKnownFileType = file; path = AudioCue_02.aif; sourceTree = "<group>"; };
+		5AA3E3AD1EEF36C400FB5F1D /* MainNavController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainNavController.swift; sourceTree = "<group>"; };
 		5AB18AF91D2058CA007B9D9F /* STViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STViewController.swift; sourceTree = "<group>"; };
 		5AB69EBE1EC799370078DDA5 /* Stopwatch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Stopwatch.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -131,6 +133,7 @@
 			isa = PBXGroup;
 			children = (
 				5A4536831D298CA300E62273 /* STModalViewController.swift */,
+				5AA3E3AD1EEF36C400FB5F1D /* MainNavController.swift */,
 				5AA3E3AB1EEF356600FB5F1D /* Table */,
 				5AA3E3AA1EEF354300FB5F1D /* Main */,
 			);
@@ -216,6 +219,7 @@
 				5A90785D1EEB8C24006BCDD3 /* Constants.swift in Sources */,
 				5A03B9A81D1DDB9800E245C9 /* AppDelegate.swift in Sources */,
 				5AB18AFA1D2058CA007B9D9F /* STViewController.swift in Sources */,
+				5AA3E3AE1EEF36C400FB5F1D /* MainNavController.swift in Sources */,
 				5A4DC9181D596D460009446B /* STSavedTimer.swift in Sources */,
 				5A591CE91D3AA18E00B9BD3D /* SoundController.swift in Sources */,
 				5A871FFA1D6FC68900B08A05 /* STTableViewCell.swift in Sources */,
