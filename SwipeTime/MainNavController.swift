@@ -9,6 +9,7 @@
 import UIKit
 
 class MainNavController: UINavigationController {
+    var model = STTimerList()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -18,3 +19,5 @@ class MainNavController: UINavigationController {
         super.didReceiveMemoryWarning()
     }
 }
+
+extension MainNavController: ModelController {}
