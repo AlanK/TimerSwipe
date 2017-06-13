@@ -10,7 +10,13 @@ import UIKit
 
 enum SegueID: String {
     case tableToTimer = "tableToTimer"
-    case tableToNew = "tableToNew"
+    case tableToNew = "tableToModal"
+}
+
+enum StoryboardID: String {
+    case mainView = "mainView"
+    case tableView = "tableView"
+    case modalView = "modalView"
 }
 
 struct constants {

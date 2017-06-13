@@ -72,7 +72,7 @@
         <!--Saved Timers-->
         <scene sceneID="EQS-1j-nI2">
             <objects>
-                <tableViewController id="l3v-I2-uXY" customClass="STTableViewController" customModule="TimerSwipe" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="tableView" useStoryboardIdentifierAsRestorationIdentifier="YES" id="l3v-I2-uXY" customClass="STTableViewController" customModule="TimerSwipe" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="80" sectionHeaderHeight="28" sectionFooterHeight="28" id="Rac-Mk-hEI">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -152,7 +152,7 @@
                     <navigationItem key="navigationItem" title="Saved Timers" id="gaf-FJ-zIG">
                         <barButtonItem key="leftBarButtonItem" systemItem="add" id="Mal-wu-NLy">
                             <connections>
-                                <segue destination="DR8-bL-z0W" kind="presentation" identifier="tableToNew" id="QyM-c1-qUc"/>
+                                <segue destination="DR8-bL-z0W" kind="presentation" identifier="tableToModal" id="QyM-c1-qUc"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="edit" id="2XU-Q7-9vK"/>
@@ -165,7 +165,7 @@
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController storyboardIdentifier="timerView" id="BYZ-38-t0r" customClass="STViewController" customModule="TimerSwipe" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="mainView" useStoryboardIdentifierAsRestorationIdentifier="YES" id="BYZ-38-t0r" customClass="STViewController" customModule="TimerSwipe" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -252,7 +252,7 @@
         <!--Navigation Controller-->
         <scene sceneID="mEn-tM-Fvl">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="DR8-bL-z0W" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="modalView" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="DR8-bL-z0W" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="KxC-b3-dyR">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
