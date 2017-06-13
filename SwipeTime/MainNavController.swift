@@ -14,6 +14,14 @@ class MainNavController: UINavigationController {
     override func viewDidLoad() {
         super.viewDidLoad()
         model.readData()
+        
+        // Navigate to the correct entry point
+        let tableView = self.storyboard!.instantiateViewController(withIdentifier: StoryboardID.tableView.rawValue)
+        guard model.favorite() != nil else {
+            self.setViewControllers([tableView], animated: false)
+            return
+        }
+        self.setViewControllers([tableView, self.storyboard!.instantiateViewController(withIdentifier: StoryboardID.mainView.rawValue)], animated: false)
     }
 
     override func didReceiveMemoryWarning() {

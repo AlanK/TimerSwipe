@@ -21,10 +21,6 @@ class STTableViewController: UITableViewController {
         
         // Display an Edit button in the navigation bar for this view controller.
         self.navigationItem.rightBarButtonItem = self.editButtonItem
-        
-        // Navigate to the correct entry point
-        guard let favoriteTimer = modelController?.model.favorite() else {return}
-        performSegue(withIdentifier: SegueID.tableToTimer.rawValue, sender: favoriteTimer)
     }
     
     override func viewWillAppear(_ animated: Bool) {

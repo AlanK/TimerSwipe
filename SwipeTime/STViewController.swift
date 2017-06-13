@@ -18,6 +18,7 @@ class STViewController: UIViewController {
     
     /// The duration in centiseconds provided by the segue from STTableViewController.
     var providedDuration: Int?
+    var modelController: ModelController?
     
     // MARK: - Labels & Buttons
     
@@ -43,8 +44,11 @@ class STViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         timeDisplay.font = UIFont.monospacedDigitSystemFont(ofSize: 64, weight: UIFontWeightRegular)
+        if providedDuration == nil {
+            modelController = self.navigationController as? ModelController
+            providedDuration = modelController?.model.favorite()?.centiseconds
+        }
         stopwatch = Stopwatch.init(delegate: self, duration: providedDuration)
         stopwatch?.clearTimer()
     }
