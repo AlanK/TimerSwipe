@@ -22,6 +22,8 @@ class STViewController: UIViewController {
     
     // MARK: - Labels & Buttons
     
+    
+    @IBOutlet var instructionsDisplay: UILabel!
     @IBOutlet var timeDisplay: UILabel!
     @IBOutlet var changeButton: UIButton!
     
@@ -39,6 +41,10 @@ class STViewController: UIViewController {
     @IBAction func swipeLeft(_ sender: AnyObject) {start()}
     @IBAction func swipeUp(_ sender: AnyObject) {start()}
     @IBAction func swipeDown(_ sender: AnyObject) {start()}
+    override func accessibilityPerformMagicTap() -> Bool {
+        start()
+        return true
+    }
     
     // MARK: - View Loading and Lifecycle
     
@@ -51,6 +57,8 @@ class STViewController: UIViewController {
         }
         stopwatch = Stopwatch.init(delegate: self, duration: providedDuration)
         stopwatch?.clearTimer()
+        
+        changeButton.accessibilityLabel = "\(providedDuration!/100) second timer, \(buttonStatus)s timer"
     }
     
     override func viewWillAppear(_ animated: Bool) {

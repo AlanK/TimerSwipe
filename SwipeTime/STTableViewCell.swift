@@ -30,9 +30,17 @@ class STTableViewCell: UITableViewCell {
     
     func setupCell(with timer: STSavedTimer) {
         self.secondsLabel.text = String(timer.centiseconds/100) + " seconds"
+        
+        self.secondsLabel.accessibilityTraits = UIAccessibilityTraitButton
+        self.favoriteIcon.accessibilityLabel = "Favorite"
+        
         switch timer.isFavorite {
-        case true: self.favoriteIcon.setImage(UIImage(named: "Full heart")?.withRenderingMode(.alwaysTemplate), for: UIControlState())
-        case false: self.favoriteIcon.setImage(UIImage(named: "Empty heart")?.withRenderingMode(.alwaysTemplate), for: UIControlState())
-        }
+        case true:
+            self.favoriteIcon.setImage(UIImage(named: "Full heart")?.withRenderingMode(.alwaysTemplate), for: UIControlState())
+            self.favoriteIcon.accessibilityValue = "On"
+        case false:
+            self.favoriteIcon.setImage(UIImage(named: "Empty heart")?.withRenderingMode(.alwaysTemplate), for: UIControlState())
+            self.favoriteIcon.accessibilityValue = "Off"
+}
     }
 }

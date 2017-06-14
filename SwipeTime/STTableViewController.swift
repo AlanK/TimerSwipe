@@ -15,12 +15,17 @@ protocol ModelController {
 class STTableViewController: UITableViewController {
     var modelController: ModelController?
     
+    @IBOutlet var footer: UILabel!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         modelController = self.navigationController as? ModelController
         
         // Display an Edit button in the navigation bar for this view controller.
         self.navigationItem.rightBarButtonItem = self.editButtonItem
+        
+        footer.lineBreakMode = .byWordWrapping
+        footer.numberOfLines = 0
     }
     
     override func viewWillAppear(_ animated: Bool) {
