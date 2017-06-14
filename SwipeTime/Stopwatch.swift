@@ -25,6 +25,7 @@ protocol StopwatchDelegate {
     func setButton(to: ChangeButtonValues)
     func timerDidStart()
     func timerDidEnd()
+    func timerDidCancel()
 }
 
 class Stopwatch {
@@ -66,5 +67,10 @@ class Stopwatch {
         }
         let timeRemaining = Int(endTime!.timeIntervalSince(currentTime) * constants.centisecondsPerSecond)
         delegate.updateDisplay(with: timeRemaining)
+    }
+    
+    func cancel() {
+        clearTimer()
+        delegate.timerDidCancel()
     }
 }

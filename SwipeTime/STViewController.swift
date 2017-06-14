@@ -30,11 +30,10 @@ class STViewController: UIViewController {
     
     // MARK: - Actions
     
-    @IBAction func changeButton(_ sender: AnyObject) {
-        switch buttonStatus {
-        case .Change: self.navigationController?.popViewController(animated: true)
-        case .Cancel: stopwatch?.clearTimer()
-        }
+    @IBAction func changeButton(_ sender: AnyObject) {buttonActions()}
+    override func accessibilityPerformEscape() -> Bool {
+        buttonActions()
+        return true
     }
     
     @IBAction func swipeRight(_ sender: AnyObject) {start()}
@@ -42,7 +41,12 @@ class STViewController: UIViewController {
     @IBAction func swipeUp(_ sender: AnyObject) {start()}
     @IBAction func swipeDown(_ sender: AnyObject) {start()}
     override func accessibilityPerformMagicTap() -> Bool {
-        start()
+        switch buttonStatus {
+        case .Change:
+            start()
+        case .Cancel:
+            buttonActions()
+        }
         return true
     }
     
@@ -57,8 +61,8 @@ class STViewController: UIViewController {
         }
         stopwatch = Stopwatch.init(delegate: self, duration: providedDuration)
         stopwatch?.clearTimer()
-        
-        changeButton.accessibilityLabel = "\(providedDuration!/100) second timer, \(buttonStatus)s timer"
+        changeButton.accessibilityLabel = "\(providedDuration!/100)-second timer, changes timer"
+        changeButton.accessibilityHint = "Two-finger double-tap starts or cancels timer."
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -79,6 +83,13 @@ class STViewController: UIViewController {
     // MARK: - Convenience
     
     func start() {stopwatch?.startTimer()}
+    
+    func buttonActions() {
+        switch buttonStatus {
+        case .Change: self.navigationController?.popViewController(animated: true)
+        case .Cancel: stopwatch?.cancel()
+        }
+    }
 }
 
 // MARK: - STViewController Extensions
@@ -90,14 +101,28 @@ extension STViewController: StopwatchDelegate {
     
     func setButton(to buttonValue: ChangeButtonValues) {
         buttonStatus = buttonValue
+        
         // Use performWithoutAnimation to prevent weird flashing as button text animates.
         UIView.performWithoutAnimation {
-            self.changeButton.setTitle(buttonValue.text, for: UIControlState())
+            self.changeButton.setTitle(buttonStatus.text, for: UIControlState())
             self.changeButton.layoutIfNeeded()
         }
     }
     
-    func timerDidStart() {soundController.playFirstSound()}
+    func timerDidStart() {
+        soundController.playFirstSound()
+        UIAccessibilityPostNotification(UIAccessibilityAnnouncementNotification, "Started timer")
+        changeButton.accessibilityLabel = "Running \(providedDuration!/100)-second timer, cancels timer"
+    }
     
-    func timerDidEnd() {soundController.playSecondSound()}
+    func timerDidEnd() {
+        soundController.playSecondSound()
+        UIAccessibilityPostNotification(UIAccessibilityAnnouncementNotification, "Timer finished")
+        changeButton.accessibilityLabel = "\(providedDuration!/100)-second timer, changes timer"
+    }
+    
+    func timerDidCancel() {
+        UIAccessibilityPostNotification(UIAccessibilityAnnouncementNotification, "Cancelled timer")
+        changeButton.accessibilityLabel = "\(providedDuration!/100)-second timer, changes timer"
+    }
 }

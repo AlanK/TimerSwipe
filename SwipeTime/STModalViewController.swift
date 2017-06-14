@@ -14,16 +14,14 @@ class STModalViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet var timeField: UITextField!
     @IBOutlet var doneButton: UIBarButtonItem!
     
-    @IBAction func cancel(_ sender: UIBarButtonItem) {
-        // Make sure to get rid of the keyboard before dismissing the view controller
-        timeField.resignFirstResponder()
-        dismiss(animated: true, completion: nil)
-    }
+    @IBAction func cancel(_ sender: UIBarButtonItem) {escape()}
     
     override func viewDidLoad() {
         super.viewDidLoad()
         timeField.delegate = self
         timeField.becomeFirstResponder()
+        
+        timeField.accessibilityLabel = "Duration of timer in seconds"
     }
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
@@ -36,6 +34,18 @@ class STModalViewController: UIViewController, UITextFieldDelegate {
     }
     
     // MARK: - Navigation
+    
+    override func accessibilityPerformEscape() -> Bool {
+        print("Escaped.")
+        escape()
+        return true
+    }
+    
+    func escape() {
+        // Make sure to get rid of the keyboard before dismissing the view controller
+        timeField.resignFirstResponder()
+        dismiss(animated: true, completion: nil)
+    }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         timeField.resignFirstResponder()
