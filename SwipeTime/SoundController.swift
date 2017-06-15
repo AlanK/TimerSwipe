@@ -9,12 +9,12 @@
 import AudioToolbox
 
 struct SoundController {
-    var firstSound: SystemSoundID = 0
-    var secondSound: SystemSoundID = 1
+    private var firstSound: SystemSoundID = 0
+    private var secondSound: SystemSoundID = 1
     
-    let firstSoundName = "AudioCue_01" as CFString
-    let secondSoundName = "AudioCue_02" as CFString
-    let fileExtension = "aif" as CFString
+    private let firstSoundName = "AudioCue_01" as CFString
+    private let secondSoundName = "AudioCue_02" as CFString
+    private let fileExtension = "aif" as CFString
     
     init() {
         if let firstSoundURLRef = CFBundleCopyResourceURL(CFBundleGetMainBundle(), firstSoundName, fileExtension, nil) {

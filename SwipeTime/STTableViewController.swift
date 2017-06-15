@@ -87,7 +87,7 @@ class STTableViewController: UITableViewController {
         }
     }
     
-    func segueToSTViewController(via segue: UIStoryboardSegue, from sender: Any?) {
+    private func segueToSTViewController(via segue: UIStoryboardSegue, from sender: Any?) {
         guard let controller = segue.destination as? STViewController,
             let selectedCell = sender as? STTableViewCell,
             let indexPath = tableView.indexPath(for: selectedCell),

@@ -41,7 +41,7 @@ class STModalViewController: UIViewController, UITextFieldDelegate {
         return true
     }
     
-    func escape() {
+    private func escape() {
         // Make sure to get rid of the keyboard before dismissing the view controller
         timeField.resignFirstResponder()
         dismiss(animated: true, completion: nil)
