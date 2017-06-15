@@ -132,8 +132,8 @@
 		5AA3E3AC1EEF360C00FB5F1D /* Views and Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				5A4536831D298CA300E62273 /* STModalViewController.swift */,
 				5AA3E3AD1EEF36C400FB5F1D /* MainNavController.swift */,
+				5A4536831D298CA300E62273 /* STModalViewController.swift */,
 				5AA3E3AB1EEF356600FB5F1D /* Table */,
 				5AA3E3AA1EEF354300FB5F1D /* Main */,
 			);

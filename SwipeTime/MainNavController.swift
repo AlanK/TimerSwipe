@@ -9,15 +9,21 @@
 import UIKit
 
 class MainNavController: UINavigationController {
-    var model = STTimerList()
+    var model: STTimerList?
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        model.readData()
+        
+        if let archivedData = UserDefaults.standard.object(forKey: K.persistedList) as? Data {
+            model = NSKeyedUnarchiver.unarchiveObject(with: archivedData) as? STTimerList
+        } else {
+            model = STTimerList()
+            model?.loadSampleTimers()
+        }
         
         // Navigate to the correct entry point
         let tableView = self.storyboard!.instantiateViewController(withIdentifier: StoryboardID.tableView.rawValue)
-        guard model.favorite() != nil else {
+        guard model?.favorite() != nil else {
             self.setViewControllers([tableView], animated: false)
             return
         }

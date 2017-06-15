@@ -57,7 +57,7 @@ class STViewController: UIViewController {
         timeDisplay.font = UIFont.monospacedDigitSystemFont(ofSize: 64, weight: UIFontWeightRegular)
         if providedDuration == nil {
             modelController = self.navigationController as? ModelController
-            providedDuration = modelController?.model.favorite()?.centiseconds
+            providedDuration = modelController?.model?.favorite()?.centiseconds ?? K.defaultDurationInCentiseconds
         }
         stopwatch = Stopwatch.init(delegate: self, duration: providedDuration)
         stopwatch?.clearTimer()

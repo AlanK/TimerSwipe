@@ -54,6 +54,11 @@ class STTimerList: NSObject, NSCoding {
         validate()
     }
     
+    func load(timerArray: [STSavedTimer]) {
+        clear()
+        append(timerArray: timerArray)
+    }
+    
     func insert(_ newElement: STSavedTimer, at index: Int) {
         timers.insert(newElement, at: index)
         validate()
@@ -114,13 +119,12 @@ class STTimerList: NSObject, NSCoding {
     required convenience init(coder aDecoder: NSCoder) {
         let timers = aDecoder.decodeObject(forKey: K.timersKey) as! [STSavedTimer]
         self.init(timers: timers)
-    }
+    }    
 }
 
 extension STTimerList {
     func loadSampleTimers() {
-        self.clear()
-        self.append(timerArray: [STSavedTimer(centiseconds: 6000), STSavedTimer(centiseconds: 3000, isFavorite: true), STSavedTimer(centiseconds: 1500)])
+        load(timerArray: [STSavedTimer(centiseconds: 6000), STSavedTimer(centiseconds: 3000, isFavorite: true), STSavedTimer(centiseconds: 1500)])
     }
 }
 
@@ -130,17 +134,17 @@ extension STTimerList {
         UserDefaults.standard.set(persistentList, forKey: K.persistedList)
         print("Saved data!")
     }
-    
-    func readData() {
-        guard let persistentList = UserDefaults.standard.object(forKey: K.persistedList) else {
-            self.loadSampleTimers()
-            return
-        }
-        // This is kind of silly but w/e
-        let restoredList = NSKeyedUnarchiver.unarchiveObject(with: persistentList as! Data) as! STTimerList
-        while restoredList.count() > 0 {
-            self.append(timer: restoredList.remove(at: 0))
-        }
-        print("Read data!")
-    }
+//    
+//    func readData() {
+//        guard let persistentList = UserDefaults.standard.object(forKey: K.persistedList) as? Data,
+//            let restoredList = NSKeyedUnarchiver.unarchiveObject(with: persistentList) as? STTimerList else {
+//            self.loadSampleTimers()
+//            return
+//        }
+//        // This is kind of silly but w/e
+//        while restoredList.count() > 0 {
+//            self.append(timer: restoredList.remove(at: 0))
+//        }
+//        print("Read data!")
+//    }
 }
