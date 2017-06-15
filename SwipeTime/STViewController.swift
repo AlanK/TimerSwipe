@@ -10,7 +10,7 @@ import UIKit
 
 class STViewController: UIViewController {
     
-    let timeFormatter = TimeFormatter()
+    var timeFormatter = TimeFormatter()
     let soundController = SoundController()
     
     var buttonStatus = ChangeButtonValue.change

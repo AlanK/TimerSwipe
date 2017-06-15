@@ -9,19 +9,19 @@
 import UIKit
 
 struct TimeFormatter {
-    let numberFormatter = NumberFormatter()
+    private let numberFormatter = NumberFormatter()
+    private var timeAsString = ["", "", ""]
+    private var timeAsInts = [0, 0, 0]
     
     init() {
         numberFormatter.formatWidth = 2
         numberFormatter.paddingCharacter = "0"
     }
     
-    func formatTime(_ time: Int) -> (String) {
-        var timeAsString = [String]()
-        let timeBlocks = [time / K.centisecondsPerMinute, (time / K.centisecondsPerSecond) % K.secondsPerMinute, time % K.centisecondsPerSecond]
-        
+    mutating func formatTime(_ time: Int) -> String {
+        timeAsInts = [time / K.centisecondsPerMinute, (time / K.centisecondsPerSecond) % K.secondsPerMinute, time % K.centisecondsPerSecond]
         for index in 0...2 {
-            timeAsString.append(numberFormatter.string(from: NSNumber(value: timeBlocks[index])) ?? "00")
+            timeAsString[index] = numberFormatter.string(from: NSNumber(value: timeAsInts[index])) ?? "00"
         }
         return timeAsString[0] + ":" + timeAsString[1] + "." + timeAsString[2]
     }
