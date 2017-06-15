@@ -104,7 +104,7 @@ class STTableViewController: UITableViewController {
         guard let sourceViewController = sender.source as? STModalViewController,
             let userSelectedTime = sourceViewController.userSelectedTime else {return}
         let newTimer = STSavedTimer(centiseconds: userSelectedTime)
-        let newIndexPath = IndexPath(row: modelController!.model.count(), section: 0)
+        let newIndexPath = IndexPath(row: modelController!.model.count(), section: constants.mainSection)
         
         modelController?.model.append(timer: newTimer)
         modelController?.model.saveData()
