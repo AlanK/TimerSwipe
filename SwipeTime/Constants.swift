@@ -22,6 +22,7 @@ enum StoryboardID: String {
 struct constants {
     static let cellID = "STTableViewCell"
     static let sectionsInTableView = 1
+    static let mainSection = 0
     static let tintColor = UIColor(red: 0.8, green: 0.3, blue: 0.8, alpha: 1.0)
     static let defaultDurationInCentiseconds = 3000
     static let centisecondsPerSecond = 100.0

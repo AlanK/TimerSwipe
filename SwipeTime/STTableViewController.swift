@@ -15,6 +15,7 @@ protocol ModelController {
 class STTableViewController: UITableViewController {
     var modelController: ModelController?
     
+    @IBOutlet var footerContainer: UIView!
     @IBOutlet var footer: UILabel!
     
     override func viewDidLoad() {
@@ -23,9 +24,19 @@ class STTableViewController: UITableViewController {
         
         // Display an Edit button in the navigation bar for this view controller.
         self.navigationItem.rightBarButtonItem = self.editButtonItem
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
         
-        footer.lineBreakMode = .byWordWrapping
-        footer.numberOfLines = 0
+        guard let footerView = tableView.tableFooterView else {return}
+        let height = footerView.systemLayoutSizeFitting(UILayoutFittingCompressedSize).height
+        var frame = footerView.frame
+        
+        guard height != frame.size.height else {return}
+        frame.size.height = height
+        footerView.frame = frame
+        tableView.tableFooterView = footerView
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -61,7 +72,7 @@ class STTableViewController: UITableViewController {
         let timer = modelController!.model.remove(at: fromIndexPath.row)
         modelController?.model.insert(timer, at: toIndexPath.row)
     }
-
+    
     override func setEditing(_ editing: Bool, animated: Bool) {
         modelController?.model.saveData()
         super.setEditing(editing, animated: animated)

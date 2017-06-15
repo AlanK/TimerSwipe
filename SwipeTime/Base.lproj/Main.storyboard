@@ -76,23 +76,35 @@
         <scene sceneID="EQS-1j-nI2">
             <objects>
                 <tableViewController storyboardIdentifier="tableView" useStoryboardIdentifierAsRestorationIdentifier="YES" id="l3v-I2-uXY" customClass="STTableViewController" customModule="TimerSwipe" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="80" sectionHeaderHeight="28" sectionFooterHeight="28" id="Rac-Mk-hEI">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="80" sectionHeaderHeight="18" sectionFooterHeight="18" id="Rac-Mk-hEI">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <label key="tableFooterView" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Mark a timer ♥︎ to open it by default." textAlignment="center" lineBreakMode="wordWrap" baselineAdjustment="none" enabled="NO" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" id="5QI-Sw-C7Z" userLabel="Footer">
-                            <rect key="frame" x="0.0" y="108" width="320" height="44"/>
+                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <view key="tableFooterView" contentMode="scaleToFill" id="iOO-Fb-4CL" userLabel="Footer Container">
+                            <rect key="frame" x="0.0" y="153.5" width="320" height="44"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <accessibility key="accessibilityConfiguration">
-                                <bool key="isElement" value="NO"/>
-                            </accessibility>
-                            <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                            <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                            <nil key="highlightedColor"/>
-                        </label>
+                            <subviews>
+                                <label userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Mark a timer ♥︎ to open it by default." textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="none" enabled="NO" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5QI-Sw-C7Z" userLabel="Footer">
+                                    <rect key="frame" x="8" y="8" width="304" height="28"/>
+                                    <accessibility key="accessibilityConfiguration">
+                                        <bool key="isElement" value="NO"/>
+                                    </accessibility>
+                                    <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                            </subviews>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <constraints>
+                                <constraint firstAttribute="trailingMargin" secondItem="5QI-Sw-C7Z" secondAttribute="trailing" id="L4e-9h-b0d"/>
+                                <constraint firstItem="5QI-Sw-C7Z" firstAttribute="leading" secondItem="iOO-Fb-4CL" secondAttribute="leadingMargin" id="iFP-KV-20I"/>
+                                <constraint firstItem="5QI-Sw-C7Z" firstAttribute="top" secondItem="iOO-Fb-4CL" secondAttribute="topMargin" id="wQc-e9-4AP"/>
+                                <constraint firstAttribute="bottomMargin" secondItem="5QI-Sw-C7Z" secondAttribute="bottom" id="y33-mv-dD6"/>
+                            </constraints>
+                        </view>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="STTableViewCell" id="Tkz-t1-8aP" customClass="STTableViewCell" customModule="TimerSwipe" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="28" width="320" height="80"/>
+                                <rect key="frame" x="0.0" y="55.5" width="320" height="80"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Tkz-t1-8aP" id="hQt-XQ-0tT">
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="79.5"/>
@@ -165,6 +177,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="footer" destination="5QI-Sw-C7Z" id="y9Q-Gy-aeI"/>
+                        <outlet property="footerContainer" destination="iOO-Fb-4CL" id="AFI-EG-bvj"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="glh-9n-EK2" userLabel="First Responder" sceneMemberID="firstResponder"/>
