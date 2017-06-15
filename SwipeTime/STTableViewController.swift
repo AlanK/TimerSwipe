@@ -53,19 +53,18 @@ class STTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: constants.cellID, for: indexPath) as! STTableViewCell
-        let cellTimer = modelController!.model[indexPath.row]
-
-        cell.delegate = self
-        cell.setupCell(with: cellTimer)
-
+        let cell = tableView.dequeueReusableCell(withIdentifier: constants.cellID, for: indexPath)
+        if let cell = cell as? STTableViewCell, let cellTimer = modelController?.model[indexPath.row] {
+            cell.delegate = self
+            cell.setupCell(with: cellTimer)
+        }
         return cell
     }
 
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         guard editingStyle == .delete else {return}
         _ = modelController?.model.remove(at: indexPath.row)
-        tableView.deleteRows(at: [indexPath], with: .fade)
+        tableView.deleteRows(at: [indexPath], with: .automatic)
     }
 
     override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to toIndexPath: IndexPath) {
