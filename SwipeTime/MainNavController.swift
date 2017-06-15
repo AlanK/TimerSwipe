@@ -22,12 +22,13 @@ class MainNavController: UINavigationController {
         }
         
         // Navigate to the correct entry point
-        let tableView = self.storyboard!.instantiateViewController(withIdentifier: StoryboardID.tableView.rawValue)
+        guard let storyboard = self.storyboard else {return}
+        let tableView = storyboard.instantiateViewController(withIdentifier: StoryboardID.tableView.rawValue)
         guard model?.favorite() != nil else {
             self.setViewControllers([tableView], animated: false)
             return
         }
-        self.setViewControllers([tableView, self.storyboard!.instantiateViewController(withIdentifier: StoryboardID.mainView.rawValue)], animated: false)
+        self.setViewControllers([tableView, storyboard.instantiateViewController(withIdentifier: StoryboardID.mainView.rawValue)], animated: false)
     }
 }
 

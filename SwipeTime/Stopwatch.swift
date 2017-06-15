@@ -29,9 +29,9 @@ class Stopwatch {
     var timer: Timer?
     var unlocked = true
     
-    init(delegate: StopwatchDelegate, duration: Int? = nil) {
+    init(delegate: StopwatchDelegate, duration: Int) {
         self.delegate = delegate
-        self.duration = duration ?? K.defaultDurationInCentiseconds
+        self.duration = duration
     }
     
     func clearTimer() {
@@ -53,12 +53,12 @@ class Stopwatch {
     
     @objc func tick() {
         let currentTime = Date.init()
-        guard currentTime < endTime! else {
+        guard let endTime = endTime, currentTime < endTime else {
             clearTimer()
             delegate.timerDidEnd()
             return
         }
-        let timeRemaining = Int(endTime!.timeIntervalSince(currentTime) * K.centisecondsPerSecondDouble)
+        let timeRemaining = Int(endTime.timeIntervalSince(currentTime) * K.centisecondsPerSecondDouble)
         delegate.updateDisplay(with: timeRemaining)
     }
     

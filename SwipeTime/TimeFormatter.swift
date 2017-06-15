@@ -17,11 +17,11 @@ struct TimeFormatter {
     }
     
     func formatTime(_ time: Int) -> (String) {
-        var timeAsString = ["", "", ""]
+        var timeAsString = [String]()
         let timeBlocks = [time / K.centisecondsPerMinute, (time / K.centisecondsPerSecond) % K.secondsPerMinute, time % K.centisecondsPerSecond]
         
         for index in 0...2 {
-            timeAsString[index] = numberFormatter.string(from: NSNumber(value: timeBlocks[index]))!
+            timeAsString.append(numberFormatter.string(from: NSNumber(value: timeBlocks[index])) ?? "00")
         }
         return timeAsString[0] + ":" + timeAsString[1] + "." + timeAsString[2]
     }

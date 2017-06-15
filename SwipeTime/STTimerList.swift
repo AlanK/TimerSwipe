@@ -116,8 +116,8 @@ class STTimerList: NSObject, NSCoding {
     
     func encode(with aCoder: NSCoder) {aCoder.encode(timers, forKey: K.timersKey)}
     
-    required convenience init(coder aDecoder: NSCoder) {
-        let timers = aDecoder.decodeObject(forKey: K.timersKey) as! [STSavedTimer]
+    required convenience init?(coder aDecoder: NSCoder) {
+        guard let timers = aDecoder.decodeObject(forKey: K.timersKey) as? [STSavedTimer] else {return nil}
         self.init(timers: timers)
     }    
 }
