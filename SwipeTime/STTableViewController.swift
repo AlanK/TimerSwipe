@@ -107,8 +107,8 @@ class STTableViewController: UITableViewController {
         let newIndexPath = IndexPath(row: modelController!.model.count(), section: 0)
         
         modelController?.model.append(timer: newTimer)
-        tableView.insertRows(at: [newIndexPath], with: .bottom)
         modelController?.model.saveData()
+        tableView.insertRows(at: [newIndexPath], with: .automatic)
     }
 }
 
