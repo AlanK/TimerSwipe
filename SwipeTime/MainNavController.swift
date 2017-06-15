@@ -23,10 +23,6 @@ class MainNavController: UINavigationController {
         }
         self.setViewControllers([tableView, self.storyboard!.instantiateViewController(withIdentifier: StoryboardID.mainView.rawValue)], animated: false)
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-    }
 }
 
 extension MainNavController: ModelController {}
