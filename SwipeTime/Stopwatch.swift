@@ -14,47 +14,47 @@ enum ChangeButtonValue: String {
 }
 
 protocol StopwatchDelegate {
+    var unlocked: Bool {get}
+
     func updateDisplay(with: Int)
-    func setButton(to: ChangeButtonValue)
+    
     func timerDidStart()
     func timerDidEnd()
     func timerDidCancel()
+    
+    func lock()
+    func unlock()
 }
 
-class Stopwatch {
-    let delegate: StopwatchDelegate
-    let duration: Int
-    
-    var endTime: Date?
-    var timer: Timer?
-    var unlocked = true
+struct Stopwatch {
+    private let delegate: StopwatchDelegate
+    private let duration: Int
     
     init(delegate: StopwatchDelegate, duration: Int) {
         self.delegate = delegate
         self.duration = duration
     }
     
-    func clearTimer() {
-        unlocked = true
-        timer?.invalidate()
-        delegate.updateDisplay(with: duration)
-        delegate.setButton(to: .change)
-    }
-    
     func startTimer() {
-        guard unlocked else {return}
-        unlocked = false
+        guard delegate.unlocked else {return}
+        delegate.lock()
         let startTime = Date.init()
-        endTime = Date.init(timeInterval: (Double(duration)/K.centisecondsPerSecondDouble), since: startTime)
-        timer = Timer.scheduledTimer(timeInterval: K.hundredthOfASecond, target:self, selector: #selector(Stopwatch.tick), userInfo: nil, repeats: true)
+        let endTime = Date.init(timeInterval: (Double(duration)/K.centisecondsPerSecondDouble), since: startTime)
+        Timer.scheduledTimer(withTimeInterval: K.hundredthOfASecond, repeats: true) {timer in
+            self.tick(timer, until: endTime)
+        }
         delegate.timerDidStart()
-        delegate.setButton(to: .cancel)
     }
     
-    @objc func tick() {
+    private func tick(_ timer: Timer, until endTime: Date) {
+        guard delegate.unlocked == false else {
+            clear(timer: timer)
+            delegate.timerDidCancel()
+            return
+        }
         let currentTime = Date.init()
-        guard let endTime = endTime, currentTime < endTime else {
-            clearTimer()
+        guard currentTime < endTime else {
+            clear(timer: timer)
             delegate.timerDidEnd()
             return
         }
@@ -62,8 +62,10 @@ class Stopwatch {
         delegate.updateDisplay(with: timeRemaining)
     }
     
-    func cancel() {
-        clearTimer()
-        delegate.timerDidCancel()
+    func clear(timer: Timer? = nil) {
+        timer?.invalidate()
+        delegate.unlock()
+        delegate.updateDisplay(with: duration)
     }
+
 }

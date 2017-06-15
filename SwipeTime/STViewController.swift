@@ -10,12 +10,12 @@ import UIKit
 
 class STViewController: UIViewController {
     
-    var timeFormatter = TimeFormatter()
+    private var timeFormatter = TimeFormatter()
     let soundController = SoundController()
     
     var buttonStatus = ChangeButtonValue.change
     
-    var stopwatch: Stopwatch?
+    private var stopwatch: Stopwatch?
     var providedDuration: Int?
     
     // MARK: - Labels & Buttons
@@ -57,7 +57,7 @@ class STViewController: UIViewController {
         }
         guard let providedDuration = providedDuration else {return}
         stopwatch = Stopwatch.init(delegate: self, duration: providedDuration)
-        stopwatch?.clearTimer()
+        stopwatch?.clear()
         changeButton.accessibilityLabel = "\(providedDuration/100)-second timer, changes timer"
         changeButton.accessibilityHint = "Two-finger double-tap starts or cancels timer."
     }
@@ -79,21 +79,14 @@ class STViewController: UIViewController {
     
     // MARK: - Convenience
     
-    func start() {stopwatch?.startTimer()}
+    private func start() {stopwatch?.startTimer()}
     
     func buttonActions() {
         switch buttonStatus {
         case .change: self.navigationController?.popViewController(animated: true)
-        case .cancel: stopwatch?.cancel()
+        case .cancel:
+            setButton(to: .change)
         }
-    }
-}
-
-// MARK: - STViewController Extensions
-
-extension STViewController: StopwatchDelegate {
-    func updateDisplay(with integer: Int) {
-        displayInt(integer)
     }
     
     func setButton(to buttonValue: ChangeButtonValue) {
@@ -104,6 +97,21 @@ extension STViewController: StopwatchDelegate {
             self.changeButton.setTitle(buttonStatus.rawValue, for: UIControlState())
             self.changeButton.layoutIfNeeded()
         }
+    }
+}
+
+// MARK: - STViewController Extensions
+
+extension STViewController: StopwatchDelegate {
+    var unlocked: Bool {
+        switch buttonStatus {
+        case .change: return true
+        case .cancel: return false
+        }
+    }
+    
+    func updateDisplay(with integer: Int) {
+        displayInt(integer)
     }
     
     func timerDidStart() {
@@ -124,5 +132,13 @@ extension STViewController: StopwatchDelegate {
         UIAccessibilityPostNotification(UIAccessibilityAnnouncementNotification, "Cancelled timer")
         guard let providedDuration = providedDuration else {return}
         changeButton.accessibilityLabel = "\(providedDuration/100)-second timer, changes timer"
+    }
+    
+    func lock() {
+        setButton(to: .cancel)
+    }
+    
+    func unlock() {
+        setButton(to: .change)
     }
 }
