@@ -8,7 +8,7 @@
 
 import AudioToolbox
 
-class SoundController {
+struct SoundController {
     var firstSound: SystemSoundID = 0
     var secondSound: SystemSoundID = 1
     
