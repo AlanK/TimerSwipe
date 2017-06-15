@@ -8,14 +8,14 @@
 
 import Foundation
 
-enum ChangeButtonValues: String {
-    case Cancel = "Cancel"
-    case Change = "Change"
+enum ChangeButtonValue: String {
+    case cancel = "Cancel"
+    case change = "Change"
 }
 
 protocol StopwatchDelegate {
     func updateDisplay(with: Int)
-    func setButton(to: ChangeButtonValues)
+    func setButton(to: ChangeButtonValue)
     func timerDidStart()
     func timerDidEnd()
     func timerDidCancel()
@@ -31,24 +31,24 @@ class Stopwatch {
     
     init(delegate: StopwatchDelegate, duration: Int? = nil) {
         self.delegate = delegate
-        self.duration = duration ?? constants.defaultDurationInCentiseconds
+        self.duration = duration ?? K.defaultDurationInCentiseconds
     }
     
     func clearTimer() {
         unlocked = true
         timer?.invalidate()
         delegate.updateDisplay(with: duration)
-        delegate.setButton(to: .Change)
+        delegate.setButton(to: .change)
     }
     
     func startTimer() {
         guard unlocked else {return}
         unlocked = false
         let startTime = Date.init()
-        endTime = Date.init(timeInterval: (Double(duration)/constants.centisecondsPerSecond), since: startTime)
-        timer = Timer.scheduledTimer(timeInterval: constants.hundredthOfASecond, target:self, selector: #selector(Stopwatch.tick), userInfo: nil, repeats: true)
+        endTime = Date.init(timeInterval: (Double(duration)/K.centisecondsPerSecondDouble), since: startTime)
+        timer = Timer.scheduledTimer(timeInterval: K.hundredthOfASecond, target:self, selector: #selector(Stopwatch.tick), userInfo: nil, repeats: true)
         delegate.timerDidStart()
-        delegate.setButton(to: .Cancel)
+        delegate.setButton(to: .cancel)
     }
     
     @objc func tick() {
@@ -58,7 +58,7 @@ class Stopwatch {
             delegate.timerDidEnd()
             return
         }
-        let timeRemaining = Int(endTime!.timeIntervalSince(currentTime) * constants.centisecondsPerSecond)
+        let timeRemaining = Int(endTime!.timeIntervalSince(currentTime) * K.centisecondsPerSecondDouble)
         delegate.updateDisplay(with: timeRemaining)
     }
     

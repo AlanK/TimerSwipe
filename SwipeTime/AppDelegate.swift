@@ -14,7 +14,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     
     func applicationDidFinishLaunching(_ application: UIApplication) {
-        self.window?.tintColor = constants.tintColor
+        self.window?.tintColor = K.tintColor
     }
 }
 

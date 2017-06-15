@@ -46,14 +46,14 @@ class STTableViewController: UITableViewController {
 
     // MARK: - Table view data source
 
-    override func numberOfSections(in tableView: UITableView) -> Int {return constants.sectionsInTableView}
+    override func numberOfSections(in tableView: UITableView) -> Int {return K.sectionsInTableView}
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return modelController!.model.count()
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: constants.cellID, for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: K.cellID, for: indexPath)
         if let cell = cell as? STTableViewCell, let cellTimer = modelController?.model[indexPath.row] {
             cell.delegate = self
             cell.setupCell(with: cellTimer)
@@ -104,7 +104,7 @@ class STTableViewController: UITableViewController {
         guard let sourceViewController = sender.source as? STModalViewController,
             let userSelectedTime = sourceViewController.userSelectedTime else {return}
         let newTimer = STSavedTimer(centiseconds: userSelectedTime)
-        let newIndexPath = IndexPath(row: modelController!.model.count(), section: constants.mainSection)
+        let newIndexPath = IndexPath(row: modelController!.model.count(), section: K.mainSection)
         
         modelController?.model.append(timer: newTimer)
         modelController?.model.saveData()

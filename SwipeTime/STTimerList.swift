@@ -109,34 +109,30 @@ class STTimerList: NSObject, NSCoding {
     
     // MARK: - NSCoding
     
-    func encode(with aCoder: NSCoder) {aCoder.encode(timers, forKey: constants.timersKey)}
+    func encode(with aCoder: NSCoder) {aCoder.encode(timers, forKey: K.timersKey)}
     
     required convenience init(coder aDecoder: NSCoder) {
-        let timers = aDecoder.decodeObject(forKey: constants.timersKey) as! [STSavedTimer]
+        let timers = aDecoder.decodeObject(forKey: K.timersKey) as! [STSavedTimer]
         self.init(timers: timers)
     }
 }
 
 extension STTimerList {
     func loadSampleTimers() {
-        let timer1 = STSavedTimer(centiseconds: 6000)
-        let timer2 = STSavedTimer(centiseconds: 3000, isFavorite: true)
-        let timer3 = STSavedTimer(centiseconds: 1500)
-        let timers = [timer1, timer2, timer3]
         self.clear()
-        self.append(timerArray: timers)
+        self.append(timerArray: [STSavedTimer(centiseconds: 6000), STSavedTimer(centiseconds: 3000, isFavorite: true), STSavedTimer(centiseconds: 1500)])
     }
 }
 
 extension STTimerList {
     func saveData() {
         let persistentList = NSKeyedArchiver.archivedData(withRootObject: self)
-        UserDefaults.standard.set(persistentList, forKey: constants.persistedList)
+        UserDefaults.standard.set(persistentList, forKey: K.persistedList)
         print("Saved data!")
     }
     
     func readData() {
-        guard let persistentList = UserDefaults.standard.object(forKey: constants.persistedList) else {
+        guard let persistentList = UserDefaults.standard.object(forKey: K.persistedList) else {
             self.loadSampleTimers()
             return
         }

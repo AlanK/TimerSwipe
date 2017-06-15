@@ -27,7 +27,7 @@ class STSavedTimer: NSObject, NSCoding {
     }
     
     override init() {
-        self.centiseconds = 3000
+        self.centiseconds = K.defaultDurationInCentiseconds
         self.isFavorite = true
     }
     

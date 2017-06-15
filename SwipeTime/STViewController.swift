@@ -14,7 +14,7 @@ class STViewController: UIViewController {
     let soundController = SoundController()
     
     var stopwatch: Stopwatch?
-    var buttonStatus = ChangeButtonValues.Change
+    var buttonStatus = ChangeButtonValue.change
     
     /// The duration in centiseconds provided by the segue from STTableViewController.
     var providedDuration: Int?
@@ -42,9 +42,9 @@ class STViewController: UIViewController {
     @IBAction func swipeDown(_ sender: AnyObject) {start()}
     override func accessibilityPerformMagicTap() -> Bool {
         switch buttonStatus {
-        case .Change:
+        case .change:
             start()
-        case .Cancel:
+        case .cancel:
             buttonActions()
         }
         return true
@@ -86,8 +86,8 @@ class STViewController: UIViewController {
     
     func buttonActions() {
         switch buttonStatus {
-        case .Change: self.navigationController?.popViewController(animated: true)
-        case .Cancel: stopwatch?.cancel()
+        case .change: self.navigationController?.popViewController(animated: true)
+        case .cancel: stopwatch?.cancel()
         }
     }
 }
@@ -99,7 +99,7 @@ extension STViewController: StopwatchDelegate {
         displayInt(integer)
     }
     
-    func setButton(to buttonValue: ChangeButtonValues) {
+    func setButton(to buttonValue: ChangeButtonValue) {
         buttonStatus = buttonValue
         
         // Use performWithoutAnimation to prevent weird flashing as button text animates.
