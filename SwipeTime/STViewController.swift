@@ -104,7 +104,7 @@ extension STViewController: StopwatchDelegate {
         
         // Use performWithoutAnimation to prevent weird flashing as button text animates.
         UIView.performWithoutAnimation {
-            self.changeButton.setTitle(buttonStatus.text, for: UIControlState())
+            self.changeButton.setTitle(buttonStatus.rawValue, for: UIControlState())
             self.changeButton.layoutIfNeeded()
         }
     }

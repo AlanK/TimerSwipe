@@ -8,16 +8,9 @@
 
 import Foundation
 
-enum ChangeButtonValues {
-    case Cancel
-    case Change
-    
-    var text: String {
-        switch self {
-        case .Cancel: return "Cancel"
-        case .Change: return "Change"
-        }
-    }
+enum ChangeButtonValues: String {
+    case Cancel = "Cancel"
+    case Change = "Change"
 }
 
 protocol StopwatchDelegate {
