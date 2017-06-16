@@ -21,7 +21,7 @@ enum StoryboardID: String {
     case modalView = "modalView"
 }
 
-/// TimerSwipe constants
+/// Common constants
 struct K {
     
     // MARK: App Appearance
@@ -44,8 +44,13 @@ struct K {
     static let centisecondsPerSecond = 100
     static let secondsPerMinute = 60
     
-    // MARK: Model Keys
+    // MARK: List Keys
     
     static let timersKey = "timers"
     static let persistedList = "persistedList"
+    
+    // MARK: Item Keys
+    
+    static let centisecondsKey = "centiseconds"
+    static let isFavoriteKey = "isFavorite"
 }

@@ -31,23 +31,16 @@ class STSavedTimer: NSObject, NSCoding {
         self.isFavorite = true
     }
     
-    // MARK: - Types
-    
-    struct PropertyKey {
-        static let centisecondsKey = "centiseconds"
-        static let isFavoriteKey = "isFavorite"
-    }
-    
     // MARK: - NSCoding
     
     func encode(with aCoder: NSCoder) {
-        aCoder.encode(centiseconds, forKey: PropertyKey.centisecondsKey)
-        aCoder.encode(isFavorite, forKey: PropertyKey.isFavoriteKey)
+        aCoder.encode(centiseconds, forKey: K.centisecondsKey)
+        aCoder.encode(isFavorite, forKey: K.isFavoriteKey)
     }
     
     required convenience init(coder aDecoder: NSCoder) {
-        let centiseconds = aDecoder.decodeInteger(forKey: PropertyKey.centisecondsKey)
-        let isFavorite = aDecoder.decodeBool(forKey: PropertyKey.isFavoriteKey)
+        let centiseconds = aDecoder.decodeInteger(forKey: K.centisecondsKey)
+        let isFavorite = aDecoder.decodeBool(forKey: K.isFavoriteKey)
         
         self.init(centiseconds: centiseconds, isFavorite: isFavorite)
     }
