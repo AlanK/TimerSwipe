@@ -36,18 +36,18 @@ class STTableViewCell: UITableViewCell {
     
     /// Do layout on the cell
     func setupCell(with timer: STSavedTimer) {
-        secondsLabel.text = String(timer.centiseconds/K.centisecondsPerSecond) + " seconds"
+        secondsLabel.text = NSLocalizedString("numberOfSeconts", value: "\(timer.centiseconds/K.centisecondsPerSecond) seconds", comment: "{whole number} seconds")
         secondsLabel.accessibilityTraits = UIAccessibilityTraitButton
         
-        favoriteIcon.accessibilityLabel = "Favorite"
+        favoriteIcon.accessibilityLabel = NSLocalizedString("favButton", value: "Favorite", comment: "Will be marked on or off to indicate whether or not an item is the user’s favorite")
         // Set heart icon based on isFavorite
         switch timer.isFavorite {
         case true:
             favoriteIcon.setImage(UIImage(named: K.fullHeart)?.withRenderingMode(.alwaysTemplate), for: UIControlState())
-            favoriteIcon.accessibilityValue = "On"
+            favoriteIcon.accessibilityValue = NSLocalizedString("switchOn", value: "On", comment: "An on/off switch in the on position")
         case false:
             favoriteIcon.setImage(UIImage(named: K.emptyHeart)?.withRenderingMode(.alwaysTemplate), for: UIControlState())
-            favoriteIcon.accessibilityValue = "Off"
+            favoriteIcon.accessibilityValue = NSLocalizedString("switchOff", value: "Off", comment: "An on/off switch in the off position")
         }
     }
 }

@@ -24,7 +24,7 @@ class STModalViewController: UIViewController, UITextFieldDelegate {
         // Bring up the keyboard and prepare to accept text
         timeField.delegate = self
         timeField.becomeFirstResponder()
-        timeField.accessibilityLabel = "Duration of timer in seconds"
+        timeField.accessibilityLabel = NSLocalizedString("descriptionOfTextField", value: "Duration of timer in seconds", comment: "")
     }
     
     // Protect against text-related crashes

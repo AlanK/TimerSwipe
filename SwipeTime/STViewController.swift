@@ -58,8 +58,8 @@ class STViewController: UIViewController {
         guard let providedDuration = providedDuration else {return}
         stopwatch = Stopwatch.init(delegate: self, duration: providedDuration)
         stopwatch?.clear()
-        changeButton.accessibilityLabel = "\(providedDuration/100)-second timer, changes timer"
-        changeButton.accessibilityHint = "Two-finger double-tap starts or cancels timer."
+        changeButton.accessibilityLabel = NSLocalizedString("timerReady", value: "\(providedDuration/100)-second timer, changes timer", comment: "{Whole number}-second timer (When activated, this button) changes timer")
+        changeButton.accessibilityHint = NSLocalizedString("magicTap", value: "Two-finger double-tap starts or cancels timer.", comment: "Tapping twice with two fingers starts or cancels the timer")
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -116,22 +116,22 @@ extension STViewController: StopwatchDelegate {
     
     func timerDidStart() {
         soundController.playFirstSound()
-        UIAccessibilityPostNotification(UIAccessibilityAnnouncementNotification, "Started timer")
+        UIAccessibilityPostNotification(UIAccessibilityAnnouncementNotification, NSLocalizedString("startedTimer", value: "Started timer", comment: "The timer has started"))
         guard let providedDuration = providedDuration else {return}
-        changeButton.accessibilityLabel = "Running \(providedDuration/100)-second timer, cancels timer"
+        changeButton.accessibilityLabel = NSLocalizedString("runningTimer", value: "Running \(providedDuration/100)-second timer, cancels timer", comment: "Running {whole number}-second timer (When activated, this button) cancels the timer")
     }
     
     func timerDidEnd() {
         soundController.playSecondSound()
-        UIAccessibilityPostNotification(UIAccessibilityAnnouncementNotification, "Timer finished")
+        UIAccessibilityPostNotification(UIAccessibilityAnnouncementNotification, NSLocalizedString("timerFinished", value: "Timer finished", comment: "The timer has finished"))
         guard let providedDuration = providedDuration else {return}
-        changeButton.accessibilityLabel = "\(providedDuration/100)-second timer, changes timer"
+        changeButton.accessibilityLabel = NSLocalizedString("changesTimer", value: "\(providedDuration/100)-second timer, changes timer", comment: "{Whole number}-second timer (When activated, this button} changes the timer")
     }
     
     func timerDidCancel() {
-        UIAccessibilityPostNotification(UIAccessibilityAnnouncementNotification, "Cancelled timer")
+        UIAccessibilityPostNotification(UIAccessibilityAnnouncementNotification, NSLocalizedString("canceldTimer", value: "Cancelled timer", comment: "The timer has been cancelled"))
         guard let providedDuration = providedDuration else {return}
-        changeButton.accessibilityLabel = "\(providedDuration/100)-second timer, changes timer"
+        changeButton.accessibilityLabel = NSLocalizedString("changesTimer", value: "\(providedDuration/100)-second timer, changes timer", comment: "{Whole number}-second timer (When activated, this button} changes the timer")
     }
     
     func lock() {
