@@ -8,26 +8,30 @@
 
 import UIKit
 
+/// The modal view for creating new timers
 class STModalViewController: UIViewController, UITextFieldDelegate {
+    /// Time value accessible to other objects
     var userSelectedTime: Int?
-
+    /// Text field in which the user types
     @IBOutlet var timeField: UITextField!
+    /// Right nav bar button for submitting selected time
     @IBOutlet var doneButton: UIBarButtonItem!
-    
+    /// Left nav bar button for cancelling time selection
     @IBAction func cancel(_ sender: UIBarButtonItem) {escape()}
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        // Bring up the keyboard and prepare to accept text
         timeField.delegate = self
         timeField.becomeFirstResponder()
-        
         timeField.accessibilityLabel = "Duration of timer in seconds"
     }
     
+    // Protect against text-related crashes
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        // This is taken from the Internet. The first bit prevents a crash-on-undo that happens when iOS tries to undo to a change that was blocked by shouldChangeCharactersInRange = false. The second bit only allows characters to be added to the text field if the current number of characters plus the number to be added (minus the range of characters being replaced) is <= 0.
+        // Prevent crash-on-undo when iOS tries to undo a change that was blocked by shouldChangeCharactersInRange = false
         let currentCharacterCount = textField.text?.characters.count ?? 0
-        
+        // Prevent more than three characters from being put in the text field
         guard (range.length + range.location <= currentCharacterCount) else {return false}
         let newLength = currentCharacterCount + string.characters.count - range.length
         return newLength <= 3
@@ -36,7 +40,6 @@ class STModalViewController: UIViewController, UITextFieldDelegate {
     // MARK: - Navigation
     
     override func accessibilityPerformEscape() -> Bool {
-        print("Escaped.")
         escape()
         return true
     }
@@ -48,9 +51,12 @@ class STModalViewController: UIViewController, UITextFieldDelegate {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        // Make sure to get rid of the keyboard before dismissing the view controller
         timeField.resignFirstResponder()
-        
-        guard let userTime = timeField.text, let userTimeInCentiseconds = Int(userTime + "00"), userTimeInCentiseconds > 0 else {return}
+        // Create a valid userSelectedTime or exit early
+        guard let text = timeField.text, let userTime = Int(text) else {return}
+        let userTimeInCentiseconds = userTime * K.centisecondsPerSecond
+        guard userTimeInCentiseconds > 0 else {return}
         userSelectedTime = userTimeInCentiseconds
     }
 }
