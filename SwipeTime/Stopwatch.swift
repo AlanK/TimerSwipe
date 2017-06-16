@@ -8,10 +8,12 @@
 
 import Foundation
 
+/// Controls the value of the Change/Cancel button
 enum ChangeButtonValue {
     case cancel
     case change
     
+    /// Returns a localized string with text for the Change/Cancel button
     var text: String {
         switch self {
         case .cancel: return NSLocalizedString("cancelButton", value: "Cancel", comment: "Cancel the timer that is currently running")
@@ -20,19 +22,28 @@ enum ChangeButtonValue {
     }
 }
 
-protocol StopwatchDelegate {
-    var unlocked: Bool {get}
-
-    func updateDisplay(with: Int)
-    
-    func timerDidStart()
-    func timerDidEnd()
-    func timerDidCancel()
-    
-    func lock()
-    func unlock()
+/// Message announcing changes in timer status
+enum TimerStatus {
+    case start
+    case end
+    case cancel
 }
 
+/// Responsible for providing a locking system (to prevent concurrency), timer completion handlers, and a display updater
+protocol StopwatchDelegate {
+    /// Controls whether or not the stopwatch can start a new timer
+    var unlocked: Bool {get}
+    /// Locks to prevent starting a new timer
+    func lock()
+    /// Unlocks to allow starting a new timer
+    func unlock()
+    /// Handles changes in timer status
+    func timerDid(_: TimerStatus)
+    /// Updates the stopwatch display
+    func updateDisplay(with: Int)
+}
+
+/// The object that runs timers
 struct Stopwatch {
     private let delegate: StopwatchDelegate
     private let duration: Int
@@ -50,23 +61,7 @@ struct Stopwatch {
         Timer.scheduledTimer(withTimeInterval: K.hundredthOfASecond, repeats: true) {timer in
             self.tick(timer, until: endTime)
         }
-        delegate.timerDidStart()
-    }
-    
-    private func tick(_ timer: Timer, until endTime: Date) {
-        guard delegate.unlocked == false else {
-            clear(timer: timer)
-            delegate.timerDidCancel()
-            return
-        }
-        let currentTime = Date.init()
-        guard currentTime < endTime else {
-            clear(timer: timer)
-            delegate.timerDidEnd()
-            return
-        }
-        let timeRemaining = Int(endTime.timeIntervalSince(currentTime) * K.centisecondsPerSecondDouble)
-        delegate.updateDisplay(with: timeRemaining)
+        delegate.timerDid(.start)
     }
     
     func clear(timer: Timer? = nil) {
@@ -74,5 +69,20 @@ struct Stopwatch {
         delegate.unlock()
         delegate.updateDisplay(with: duration)
     }
-
+    
+    private func tick(_ timer: Timer, until endTime: Date) {
+        guard delegate.unlocked == false else {
+            clear(timer: timer)
+            delegate.timerDid(.cancel)
+            return
+        }
+        let currentTime = Date.init()
+        guard currentTime < endTime else {
+            clear(timer: timer)
+            delegate.timerDid(.end)
+            return
+        }
+        let timeRemaining = Int(endTime.timeIntervalSince(currentTime) * K.centisecondsPerSecondDouble)
+        delegate.updateDisplay(with: timeRemaining)
+    }
 }

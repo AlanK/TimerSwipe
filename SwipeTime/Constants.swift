@@ -34,6 +34,10 @@ struct K {
     static let sectionsInTableView = 1
     static let mainSection = 0
     
+    // MARK: Main View
+    
+    static let timerDisplaySize: CGFloat = 64
+    
     // MARK: Heart Icon
     
     static let fullHeart = "Full heart"

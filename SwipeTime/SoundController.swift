@@ -8,14 +8,14 @@
 
 import AudioToolbox
 
+/// Handles sounds for the main view of the app
 struct SoundController {
-    private var firstSound: SystemSoundID = 0
-    private var secondSound: SystemSoundID = 1
+    // Create two system sound IDs
+    private var firstSound: SystemSoundID = 0, secondSound: SystemSoundID = 1
+    // Create the CFStrings for getting the sound files
+    private let firstSoundName = "AudioCue_01" as CFString, secondSoundName = "AudioCue_02" as CFString, fileExtension = "aif" as CFString
     
-    private let firstSoundName = "AudioCue_01" as CFString
-    private let secondSoundName = "AudioCue_02" as CFString
-    private let fileExtension = "aif" as CFString
-    
+    /// Create two system sound objects
     init() {
         if let firstSoundURLRef = CFBundleCopyResourceURL(CFBundleGetMainBundle(), firstSoundName, fileExtension, nil) {
             AudioServicesCreateSystemSoundID(firstSoundURLRef, &firstSound)
@@ -25,11 +25,13 @@ struct SoundController {
         }
     }
     
-    func playFirstSound() {
+    /// Plays the "timer start" sound
+    func playStartSound() {
         AudioServicesPlayAlertSound(firstSound)
     }
     
-    func playSecondSound() {
+    /// Plays the "timer end" sound
+    func playEndSound() {
         AudioServicesPlayAlertSound(secondSound)
     }
 }
