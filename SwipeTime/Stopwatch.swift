@@ -8,9 +8,16 @@
 
 import Foundation
 
-enum ChangeButtonValue: String {
-    case cancel = "Cancel"
-    case change = "Change"
+enum ChangeButtonValue {
+    case cancel
+    case change
+    
+    var text: String {
+        switch self {
+        case .cancel: return NSLocalizedString("cancelButton", value: "Cancel", comment: "Cancel the timer that is currently running")
+        case .change: return NSLocalizedString("changeButton", value: "Change", comment: "Change which timer is displayed")
+        }
+    }
 }
 
 protocol StopwatchDelegate {
