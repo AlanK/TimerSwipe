@@ -34,6 +34,11 @@ struct K {
     static let sectionsInTableView = 1
     static let mainSection = 0
     
+    // MARK: Heart Icon
+    
+    static let fullHeart = "Full heart"
+    static let emptyHeart = "Empty heart"
+    
     // MARK: Time
     
     static let defaultDurationInCentiseconds = 3000

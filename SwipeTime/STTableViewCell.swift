@@ -8,16 +8,22 @@
 
 import UIKit
 
+/// Handle actions for the table view cell
 protocol STTableViewCellDelegate {
+    /// Handle taps on the table view cell’s custom accessory view
     func cellButtonTapped(cell: STTableViewCell)
 }
 
+/// Custom table view cell with heart icon accessory view
 class STTableViewCell: UITableViewCell {
+    /// Table view cell delegate
     var delegate: STTableViewCellDelegate?
     
     // MARK: Properties
     
+    /// Text label
     @IBOutlet var secondsLabel: UILabel!
+    /// Heart icon button
     @IBOutlet var favoriteIcon: UIButton!
     
     // MARK: Actions
@@ -28,19 +34,20 @@ class STTableViewCell: UITableViewCell {
 
     // MARK: Setup
     
+    /// Do layout on the cell
     func setupCell(with timer: STSavedTimer) {
-        self.secondsLabel.text = String(timer.centiseconds/100) + " seconds"
+        secondsLabel.text = String(timer.centiseconds/K.centisecondsPerSecond) + " seconds"
+        secondsLabel.accessibilityTraits = UIAccessibilityTraitButton
         
-        self.secondsLabel.accessibilityTraits = UIAccessibilityTraitButton
-        self.favoriteIcon.accessibilityLabel = "Favorite"
-        
+        favoriteIcon.accessibilityLabel = "Favorite"
+        // Set heart icon based on isFavorite
         switch timer.isFavorite {
         case true:
-            self.favoriteIcon.setImage(UIImage(named: "Full heart")?.withRenderingMode(.alwaysTemplate), for: UIControlState())
-            self.favoriteIcon.accessibilityValue = "On"
+            favoriteIcon.setImage(UIImage(named: K.fullHeart)?.withRenderingMode(.alwaysTemplate), for: UIControlState())
+            favoriteIcon.accessibilityValue = "On"
         case false:
-            self.favoriteIcon.setImage(UIImage(named: "Empty heart")?.withRenderingMode(.alwaysTemplate), for: UIControlState())
-            self.favoriteIcon.accessibilityValue = "Off"
-}
+            favoriteIcon.setImage(UIImage(named: K.emptyHeart)?.withRenderingMode(.alwaysTemplate), for: UIControlState())
+            favoriteIcon.accessibilityValue = "Off"
+        }
     }
 }
