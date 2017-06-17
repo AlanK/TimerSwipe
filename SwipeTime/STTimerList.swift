@@ -43,7 +43,7 @@ class STTimerList: NSObject, NSCoding {
         }
     }
     
-    // MARK: - Add
+    // MARK: - Add & Remove
     
     /// Append a timer
     func append(timer: STSavedTimer) {
@@ -51,18 +51,10 @@ class STTimerList: NSObject, NSCoding {
         validate()
     }
 
-    /// Append an array of timers
-    private func append(timerArray: [STSavedTimer]) {
-        for timer in timerArray {
-            timers.append(timer)
-        }
-        validate()
-    }
-    
     /// Replace the existing array of timers with a new array
     func load(timerArray: [STSavedTimer]) {
-        clear()
-        append(timerArray: timerArray)
+        timers = timerArray
+        validate()
     }
     
     /// Insert a new timer at a specified index
@@ -71,17 +63,10 @@ class STTimerList: NSObject, NSCoding {
         validate()
     }
 
-    // MARK: - Remove
-    
     /// Remove and return a timer from a specified index
     func remove(at: Int) -> STSavedTimer {
         let timer = timers.remove(at: at)
         return timer
-    }
-    
-    /// Replace the current array of timers with an empty array
-    private func clear() {
-        timers = [STSavedTimer]()
     }
     
     // MARK: - Validate
