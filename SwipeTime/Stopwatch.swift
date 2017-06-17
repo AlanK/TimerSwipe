@@ -46,6 +46,7 @@ protocol StopwatchDelegate {
 /// The object that runs timers
 struct Stopwatch {
     private let delegate: StopwatchDelegate
+    /// Duration in centiseconds
     private let duration: Int
     
     init(delegate: StopwatchDelegate, duration: Int) {
@@ -70,18 +71,22 @@ struct Stopwatch {
         delegate.updateDisplay(with: duration)
     }
     
+    /// Called every time the `NSTimer` fires
     private func tick(_ timer: Timer, until endTime: Date) {
         guard delegate.unlocked == false else {
+            // If the flag has been set by the delegate, cancel the timer
             clear(timer: timer)
             delegate.timerDid(.cancel)
             return
         }
         let currentTime = Date.init()
         guard currentTime < endTime else {
+            // If the current time >= the end time, end the timer
             clear(timer: timer)
             delegate.timerDid(.end)
             return
         }
+        // Update the stopwatch display
         let timeRemaining = Int(endTime.timeIntervalSince(currentTime) * K.centisecondsPerSecondDouble)
         delegate.updateDisplay(with: timeRemaining)
     }
