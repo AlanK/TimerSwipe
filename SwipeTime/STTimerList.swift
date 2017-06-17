@@ -8,45 +8,56 @@
 
 import Foundation
 
+/// The model on which the app is based
 class STTimerList: NSObject, NSCoding {
+    /// Array of timers
     private var timers = [STSavedTimer]()
     
     // MARK: - Initializers
     
+    /// Memberwise initializer
     init(timers: [STSavedTimer]) {
         super.init()
         self.timers = timers
         self.validate()
     }
     
+    /// Initialize with no timers
     override init() {
         super.init()
-        validate()
     }
     
     // MARK: - Favorites
     
+    /// Mark a specific timer favorite
     func markFavorite(at index: Int) {
+        // Remove all existing favorites
         for timer in timers {
             timer.isFavorite = false
         }
+        // Mark the timer at the provided index favorite
         timers[index].isFavorite = true
     }
     
+    /// Toggle favorite status of a specific timer
     func toggleFavorite(at index: Int) {
         switch timers[index].isFavorite {
+        // When unfavoriting a timer, just do it
         case true: timers[index].isFavorite = false
+        // When favoriting a timer, make sure to validate
         case false: markFavorite(at: index)
         }
     }
     
     // MARK: - Add
     
+    /// Append a timer
     func append(timer: STSavedTimer) {
         timers.append(timer)
         validate()
     }
 
+    /// Append an array of timers
     func append(timerArray: [STSavedTimer]) {
         for timer in timerArray {
             timers.append(timer)
@@ -54,11 +65,13 @@ class STTimerList: NSObject, NSCoding {
         validate()
     }
     
+    /// Replace the existing array of timers with a new array
     func load(timerArray: [STSavedTimer]) {
         clear()
         append(timerArray: timerArray)
     }
     
+    /// Insert a new timer at a specified index
     func insert(_ newElement: STSavedTimer, at index: Int) {
         timers.insert(newElement, at: index)
         validate()
@@ -66,31 +79,36 @@ class STTimerList: NSObject, NSCoding {
 
     // MARK: - Remove
     
+    /// Remove and return a timer from a specified index
     func remove(at: Int) -> STSavedTimer {
         let timer = timers.remove(at: at)
         return timer
     }
     
+    /// Replace the current array of timers with an empty array
     func clear() {
         timers = [STSavedTimer]()
     }
     
     // MARK: - Validate
     
+    /// Enforce <= 1 favorite timer
     func validate() {
-        // Confirm there are <= 1 favorites.
         guard timers.isEmpty == false else {return}
         var foundAFavorite = false
         for timer in timers {
             switch foundAFavorite {
-            case true: timer.isFavorite = false
+            // Set flag once a favorite has been found
             case false: if timer.isFavorite {foundAFavorite = true}
+            // Once the flag has been set, all other timers must not be favorite
+            case true: timer.isFavorite = false
             }
         }
     }
     
     // MARK: - Properties
     
+    /// Return the timer marked `isFavorite`
     func favorite() -> STSavedTimer? {
         for timer in timers {
             if timer.isFavorite {return timer}
@@ -123,12 +141,14 @@ class STTimerList: NSObject, NSCoding {
 }
 
 extension STTimerList {
+    /// Set the timer array to a developer-chosen default set of timers
     func loadSampleTimers() {
         load(timerArray: [STSavedTimer(centiseconds: 6000), STSavedTimer(centiseconds: 3000, isFavorite: true), STSavedTimer(centiseconds: 1500)])
     }
 }
 
 extension STTimerList {
+    /// Archive the STTimerList
     func saveData() {
         let persistentList = NSKeyedArchiver.archivedData(withRootObject: self)
         UserDefaults.standard.set(persistentList, forKey: K.persistedList)
