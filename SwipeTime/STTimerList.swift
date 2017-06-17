@@ -29,23 +29,17 @@ class STTimerList: NSObject, NSCoding {
     
     // MARK: - Favorites
     
-    /// Mark a specific timer favorite
-    func markFavorite(at index: Int) {
-        // Remove all existing favorites
-        for timer in timers {
-            timer.isFavorite = false
-        }
-        // Mark the timer at the provided index favorite
-        timers[index].isFavorite = true
-    }
-    
     /// Toggle favorite status of a specific timer
     func toggleFavorite(at index: Int) {
         switch timers[index].isFavorite {
-        // When unfavoriting a timer, just do it
         case true: timers[index].isFavorite = false
-        // When favoriting a timer, make sure to validate
-        case false: markFavorite(at: index)
+        case false:
+            // Remove all existing favorites
+            for timer in timers {
+                timer.isFavorite = false
+            }
+            // Mark the timer at the provided index favorite
+            timers[index].isFavorite = true
         }
     }
     
@@ -58,7 +52,7 @@ class STTimerList: NSObject, NSCoding {
     }
 
     /// Append an array of timers
-    func append(timerArray: [STSavedTimer]) {
+    private func append(timerArray: [STSavedTimer]) {
         for timer in timerArray {
             timers.append(timer)
         }
@@ -86,14 +80,14 @@ class STTimerList: NSObject, NSCoding {
     }
     
     /// Replace the current array of timers with an empty array
-    func clear() {
+    private func clear() {
         timers = [STSavedTimer]()
     }
     
     // MARK: - Validate
     
     /// Enforce <= 1 favorite timer
-    func validate() {
+    private func validate() {
         guard timers.isEmpty == false else {return}
         var foundAFavorite = false
         for timer in timers {
