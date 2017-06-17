@@ -9,19 +9,19 @@
 import UIKit
 
 struct TimeFormatter {
+    // Can't use DateComponentsFormatter because we need formatting of hundredths of seconds
     private let numberFormatter = NumberFormatter()
-    private var timeAsString = ["", "", ""]
-    private var timeAsInts = [0, 0, 0]
     
     init() {
         numberFormatter.formatWidth = 2
         numberFormatter.paddingCharacter = "0"
     }
     
-    mutating func formatTime(_ time: Int) -> String {
-        timeAsInts = [time / K.centisecondsPerMinute, (time / K.centisecondsPerSecond) % K.secondsPerMinute, time % K.centisecondsPerSecond]
+    func formatTime(_ centiseconds: Int) -> String {
+        var timeAsString = ["", "", ""]
+        var integerComponents = [centiseconds / K.centisecondsPerMinute, (centiseconds / K.centisecondsPerSecond) % K.secondsPerMinute, centiseconds % K.centisecondsPerSecond]
         for index in 0...2 {
-            timeAsString[index] = numberFormatter.string(from: NSNumber(value: timeAsInts[index])) ?? "00"
+            timeAsString[index] = numberFormatter.string(from: NSNumber(value: integerComponents[index])) ?? "00"
         }
         return timeAsString[0] + ":" + timeAsString[1] + "." + timeAsString[2]
     }
