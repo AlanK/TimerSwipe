@@ -94,6 +94,16 @@ class STViewController: UIViewController {
     /// Updates the timer display with an integer in centiseconds
     func displayInt(_ integer: Int) {timeDisplay.text = timeFormatter.formatTime(integer)}
     
+    /// Hides the "Swipe to Start" instructions when a timer is running
+    func hideInstructions() {
+        UIView.animate(withDuration: 0.1, delay: 0, options: .curveLinear, animations: {self.instructionsDisplay.alpha = 0}, completion: nil)
+    }
+    
+    /// Shows the "Swipe to Start" instructions when a timer is not running
+    func showInstructions() {
+        UIView.animate(withDuration: 0.1, delay: 0, options: .curveLinear, animations: {self.instructionsDisplay.alpha = 1}, completion: nil)
+    }
+    
     // MARK: - Convenience
     
     /// Tells the Stopwatch to start the timer
@@ -149,6 +159,7 @@ extension STViewController: StopwatchDelegate {
             guard let providedDuration = providedDuration else {return}
             // Update the one accessible element on this screen with accessibility info describing the running timer and how to cancel it
             changeButton.accessibilityLabel = NSLocalizedString("runningTimer", value: "Running \(providedDuration/100)-second timer, cancels timer", comment: "Running {whole number}-second timer (When activated, this button) cancels the timer")
+            hideInstructions()
         case .end:
             soundController.playEndSound()
             // Make an accessibility announcement that the timer has ended
@@ -156,12 +167,14 @@ extension STViewController: StopwatchDelegate {
             guard let providedDuration = providedDuration else {return}
             // Update the one accessible element on this screen with accessibility info describing the available timer and how to change it
             changeButton.accessibilityLabel = NSLocalizedString("changesTimer", value: "\(providedDuration/100)-second timer, changes timer", comment: "{Whole number}-second timer (When activated, this button} changes the timer")
+            showInstructions()
         case .cancel:
             // Make an accessibility announcement that the timer was cancelled
             UIAccessibilityPostNotification(UIAccessibilityAnnouncementNotification, NSLocalizedString("canceldTimer", value: "Cancelled timer", comment: "The timer has been cancelled"))
             guard let providedDuration = providedDuration else {return}
             // Update the one accessible element on this screen with accessibility info describing the available timer and how to change it
             changeButton.accessibilityLabel = NSLocalizedString("changesTimer", value: "\(providedDuration/100)-second timer, changes timer", comment: "{Whole number}-second timer (When activated, this button} changes the timer")
+            showInstructions()
         }
     }
     
