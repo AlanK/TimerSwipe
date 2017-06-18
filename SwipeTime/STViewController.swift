@@ -61,7 +61,7 @@ class STViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Make the timer display huge with monospaced numbers
-        timeDisplay.font = UIFont.monospacedDigitSystemFont(ofSize: K.timerDisplaySize, weight: UIFontWeightRegular)
+        timeDisplay.font = UIFont.monospacedDigitSystemFont(ofSize: K.timerDisplaySize, weight: UIFont.Weight.regular)
         // Use providedDuration, then the favorite timer, then the default timer
         if providedDuration == nil {
             let modelController = self.navigationController as? ModelController
