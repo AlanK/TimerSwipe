@@ -17,7 +17,9 @@ class STModalViewController: UIViewController, UITextFieldDelegate {
     /// Right nav bar button for submitting selected time
     @IBOutlet var doneButton: UIBarButtonItem!
     /// Left nav bar button for cancelling time selection
-    @IBAction func cancel(_ sender: UIBarButtonItem) {escape()}
+    @IBAction func cancel(_ sender: UIBarButtonItem) {
+        escape()
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -54,8 +56,8 @@ class STModalViewController: UIViewController, UITextFieldDelegate {
         // Make sure to get rid of the keyboard before dismissing the view controller
         timeField.resignFirstResponder()
         // Create a valid userSelectedTime or exit early
-        guard let text = timeField.text, let userTime = Int(text) else {return}
-        let userTimeInCentiseconds = userTime * K.centisecondsPerSecond
+        guard let text = timeField.text, let userTimeInSeconds = Int(text) else {return}
+        let userTimeInCentiseconds = userTimeInSeconds * K.centisecondsPerSecond
         guard userTimeInCentiseconds > 0 else {return}
         userSelectedTime = userTimeInCentiseconds
     }

@@ -37,7 +37,7 @@ class STTableViewController: UITableViewController {
         guard let footerView = tableView.tableFooterView else {return}
         let height = footerView.systemLayoutSizeFitting(UILayoutFittingCompressedSize).height
         var frame = footerView.frame
-        // If the correct height doesn't match the frame, apply the correct height and reattach the footer
+        // If the correct height doesn't match the frame, apply the correct height and re-attach the footer
         guard height != frame.size.height else {return}
         frame.size.height = height
         footerView.frame = frame
@@ -54,9 +54,7 @@ class STTableViewController: UITableViewController {
     // This table has one section
     override func numberOfSections(in tableView: UITableView) -> Int {return K.sectionsInTableView}
 
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return modelController?.model?.count() ?? 0
-    }
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {return modelController?.model?.count() ?? 0}
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: K.cellID, for: indexPath)

@@ -21,6 +21,28 @@ enum StoryboardID: String {
     case modalView = "modalView"
 }
 
+/// Controls the value of the Change/Cancel button
+enum ChangeButtonValue {
+    case cancel
+    case change
+    
+    /// Returns a localized string with text for the Change/Cancel button
+    var text: String {
+        switch self {
+        case .cancel: return NSLocalizedString("cancelButton", value: "Cancel", comment: "Cancel the timer that is currently running")
+        case .change: return NSLocalizedString("changeButton", value: "Change", comment: "Change which timer is displayed")
+        }
+    }
+}
+
+/// Message announcing changes in timer status
+enum TimerStatus {
+    case start
+    case end
+    case cancel
+}
+
+
 /// Common constants
 struct K {
     

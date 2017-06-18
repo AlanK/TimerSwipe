@@ -13,7 +13,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     
     func applicationDidFinishLaunching(_ application: UIApplication) {
-        // Apply TimerSwipe trade dress color
         self.window?.tintColor = K.tintColor
     }
 }
