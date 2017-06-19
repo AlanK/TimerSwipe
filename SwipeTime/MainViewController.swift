@@ -1,5 +1,5 @@
 //
-//  STViewController.swift
+//  MainViewController.swift
 //  SwipeTime
 //
 //  Created by Alan Kantz on 6/26/16.
@@ -9,7 +9,7 @@
 import UIKit
 
 /// Primary view controller—displays the selected timer
-class STViewController: UIViewController {
+class MainViewController: UIViewController {
     /// Object that takes an integer in centiseconds and outputs a string for display
     private var timeFormatter = TimeFormatter()
     /// Plays the timer start and finish sounds
@@ -134,7 +134,7 @@ class STViewController: UIViewController {
 
 // MARK: - STViewController Extensions
 
-extension STViewController: StopwatchDelegate {
+extension MainViewController: StopwatchDelegate {
     /// Unlocks and locks the stopwatch to prevent multiple timers from running at once
     var unlocked: Bool {
         // Map unlock status to buttonStatus (.change = unlocked)

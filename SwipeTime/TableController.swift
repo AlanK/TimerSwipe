@@ -1,5 +1,5 @@
 //
-//  STTableViewController.swift
+//  TableController.swift
 //  SwipeTime
 //
 //  Created by Alan Kantz on 8/9/16.
@@ -14,7 +14,7 @@ protocol ModelController {
     var model: STTimerList? {get}
 }
 
-class STTableViewController: UITableViewController {
+class TableController: UITableViewController {
     /// Controller holding the app model
     var modelController: ModelController?
     /// The UIView containing the table footer
@@ -59,7 +59,7 @@ class STTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: K.cellID, for: indexPath)
         // Pass delegate and timer to cell so it can complete its own setup
-        if let cell = cell as? STTableViewCell,
+        if let cell = cell as? TableCell,
             let cellTimer = modelController?.model?[indexPath.row] {
             cell.delegate = self
             cell.setupCell(with: cellTimer)
@@ -95,8 +95,8 @@ class STTableViewController: UITableViewController {
     
     /// Prepare for segue to the primary/timer view
     private func segueToSTViewController(via segue: UIStoryboardSegue, from sender: Any?) {
-        guard let controller = segue.destination as? STViewController,
-            let selectedCell = sender as? STTableViewCell,
+        guard let controller = segue.destination as? MainViewController,
+            let selectedCell = sender as? TableCell,
             let indexPath = tableView.indexPath(for: selectedCell),
             let model = modelController?.model else {return}
         let timer = model[indexPath.row]
@@ -107,7 +107,7 @@ class STTableViewController: UITableViewController {
     /// Handle the return to the table view from the modal time entry view
     @IBAction func unwindToSTTVC(_ sender: UIStoryboardSegue) {
         // Ensure we're arriving from the right source and extract useful info
-        guard let sourceViewController = sender.source as? STModalViewController,
+        guard let sourceViewController = sender.source as? InputController,
             let userSelectedTime = sourceViewController.userSelectedTime,
             let model = modelController?.model else {return}
         let newTimer = STSavedTimer(centiseconds: userSelectedTime)
@@ -119,9 +119,9 @@ class STTableViewController: UITableViewController {
     }
 }
 
-extension STTableViewController: STTableViewCellDelegate {
+extension TableController: STTableViewCellDelegate {
     /// Handles taps on the custom accessory view on the table view cells
-    func cellButtonTapped(cell: STTableViewCell) {
+    func cellButtonTapped(cell: TableCell) {
         // Indirectly get the cell index path by finding the index path for the cell located where the cell that was tapped was located…
         let indexPath = self.tableView.indexPathForRow(at: cell.center)
         

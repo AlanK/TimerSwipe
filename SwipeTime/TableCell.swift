@@ -1,5 +1,5 @@
 //
-//  STTableViewCell.swift
+//  TableCell.swift
 //  SwipeTime
 //
 //  Created by Alan Kantz on 8/25/16.
@@ -11,11 +11,11 @@ import UIKit
 /// Handle actions for the table view cell
 protocol STTableViewCellDelegate {
     /// Handle taps on the table view cell’s custom accessory view
-    func cellButtonTapped(cell: STTableViewCell)
+    func cellButtonTapped(cell: TableCell)
 }
 
 /// Custom table view cell with heart icon accessory view
-class STTableViewCell: UITableViewCell {
+class TableCell: UITableViewCell {
     /// Table view cell delegate
     var delegate: STTableViewCellDelegate?
     

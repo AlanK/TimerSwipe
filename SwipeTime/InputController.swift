@@ -1,5 +1,5 @@
 //
-//  STModalViewController.swift
+//  InputController.swift
 //  SwipeTime
 //
 //  Created by Alan Kantz on 7/3/16.
@@ -9,7 +9,7 @@
 import UIKit
 
 /// The modal view for creating new timers
-class STModalViewController: UIViewController, UITextFieldDelegate {
+class InputController: UIViewController, UITextFieldDelegate {
     /// Time value accessible to other objects
     var userSelectedTime: Int?
     /// Text field in which the user types

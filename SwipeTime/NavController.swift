@@ -1,5 +1,5 @@
 //
-//  MainNavController.swift
+//  NavController.swift
 //  SwipeTime
 //
 //  Created by Alan Kantz on 6/12/17.
@@ -8,7 +8,7 @@
 
 import UIKit
 /// Root navigation controller for app
-class MainNavController: UINavigationController {
+class NavController: UINavigationController {
     /// Underlying model for app
     var model: STTimerList?
 
@@ -37,4 +37,4 @@ class MainNavController: UINavigationController {
 }
 
 // Make the model available to other objects
-extension MainNavController: ModelController {}
+extension NavController: ModelController {}

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="nxx-IB-3vs">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13122.17" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="nxx-IB-3vs">
     <device id="retina4_0" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13104.14"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -14,17 +14,17 @@
         <!--New Timer-->
         <scene sceneID="DiQ-Xy-7Qb">
             <objects>
-                <viewController id="4mk-ba-roI" customClass="STModalViewController" customModule="TimerSwipe" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="4mk-ba-roI" customClass="InputController" customModule="TimerSwipe" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="fqc-mj-wj2"/>
                         <viewControllerLayoutGuide type="bottom" id="K5O-pt-ruv"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="N7v-Kv-bVu">
-                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="center" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="EBw-ms-KRz">
-                                <rect key="frame" x="77" y="218" width="166.5" height="34"/>
+                                <rect key="frame" x="78" y="250" width="164.5" height="34"/>
                                 <subviews>
                                     <textField opaque="NO" contentMode="bottom" contentHorizontalAlignment="right" contentVerticalAlignment="bottom" text="888" textAlignment="right" clearsOnBeginEditing="YES" adjustsFontSizeToFit="NO" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ca7-if-Q5u">
                                         <rect key="frame" x="0.0" y="0.0" width="56" height="34"/>
@@ -32,7 +32,7 @@
                                         <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
                                     </textField>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" seconds" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qgT-9m-flz">
-                                        <rect key="frame" x="56" y="0.0" width="110.5" height="33.5"/>
+                                        <rect key="frame" x="56" y="0.0" width="108.5" height="33.5"/>
                                         <accessibility key="accessibilityConfiguration">
                                             <bool key="isElement" value="NO"/>
                                         </accessibility>
@@ -83,7 +83,7 @@
         <!--Saved Timers-->
         <scene sceneID="EQS-1j-nI2">
             <objects>
-                <tableViewController storyboardIdentifier="tableView" useStoryboardIdentifierAsRestorationIdentifier="YES" id="l3v-I2-uXY" customClass="STTableViewController" customModule="TimerSwipe" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="tableView" useStoryboardIdentifierAsRestorationIdentifier="YES" id="l3v-I2-uXY" customClass="TableController" customModule="TimerSwipe" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="80" sectionHeaderHeight="18" sectionFooterHeight="18" id="Rac-Mk-hEI">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -111,7 +111,7 @@
                             </constraints>
                         </view>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="STTableViewCell" id="Tkz-t1-8aP" customClass="STTableViewCell" customModule="TimerSwipe" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="STTableViewCell" id="Tkz-t1-8aP" customClass="TableCell" customModule="TimerSwipe" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="55.5" width="320" height="80"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Tkz-t1-8aP" id="hQt-XQ-0tT">
@@ -119,7 +119,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="seconds" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lv9-sQ-pS8" userLabel="Seconds">
-                                            <rect key="frame" x="16" y="8" width="104" height="63.5"/>
+                                            <rect key="frame" x="16" y="8" width="102.5" height="63.5"/>
                                             <gestureRecognizers/>
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -200,10 +200,10 @@
             </objects>
             <point key="canvasLocation" x="286" y="322"/>
         </scene>
-        <!--View Controller-->
+        <!--Main View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController storyboardIdentifier="mainView" useStoryboardIdentifierAsRestorationIdentifier="YES" id="BYZ-38-t0r" customClass="STViewController" customModule="TimerSwipe" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="mainView" useStoryboardIdentifierAsRestorationIdentifier="YES" id="BYZ-38-t0r" customClass="MainViewController" customModule="TimerSwipe" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -216,7 +216,7 @@
                                 <rect key="frame" x="27" y="208" width="266" height="152.5"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" text="Swipe to Start" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="74y-S5-5gr" userLabel="Top Label">
-                                        <rect key="frame" x="70.5" y="0.0" width="125.5" height="24"/>
+                                        <rect key="frame" x="72.5" y="0.0" width="121.5" height="24"/>
                                         <accessibility key="accessibilityConfiguration">
                                             <accessibilityTraits key="traits" staticText="YES" notEnabled="YES"/>
                                             <bool key="isElement" value="NO"/>
@@ -245,7 +245,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="center" horizontalCompressionResistancePriority="752" verticalCompressionResistancePriority="752" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yum-AW-GvH" userLabel="Bottom Button">
-                                        <rect key="frame" x="97.5" y="116.5" width="71" height="36"/>
+                                        <rect key="frame" x="98.5" y="116.5" width="69" height="36"/>
                                         <accessibility key="accessibilityConfiguration">
                                             <accessibilityTraits key="traits" button="YES" updatesFrequently="YES"/>
                                         </accessibility>
@@ -327,10 +327,10 @@
             </objects>
             <point key="canvasLocation" x="286" y="1148"/>
         </scene>
-        <!--Main Nav Controller-->
+        <!--Nav Controller-->
         <scene sceneID="2fh-Z3-vSW">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="nxx-IB-3vs" customClass="MainNavController" customModule="TimerSwipe" customModuleProvider="target" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="nxx-IB-3vs" customClass="NavController" customModule="TimerSwipe" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="VwB-dG-MWg">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
