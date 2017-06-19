@@ -119,7 +119,7 @@ class TableController: UITableViewController {
     }
 }
 
-extension TableController: STTableViewCellDelegate {
+extension TableController: TableCellDelegate {
     /// Handles taps on the custom accessory view on the table view cells
     func cellButtonTapped(cell: TableCell) {
         // Indirectly get the cell index path by finding the index path for the cell located where the cell that was tapped was located…

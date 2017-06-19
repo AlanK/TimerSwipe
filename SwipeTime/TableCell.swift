@@ -9,7 +9,7 @@
 import UIKit
 
 /// Handle actions for the table view cell
-protocol STTableViewCellDelegate {
+protocol TableCellDelegate {
     /// Handle taps on the table view cell’s custom accessory view
     func cellButtonTapped(cell: TableCell)
 }
@@ -17,7 +17,7 @@ protocol STTableViewCellDelegate {
 /// Custom table view cell with heart icon accessory view
 class TableCell: UITableViewCell {
     /// Table view cell delegate
-    var delegate: STTableViewCellDelegate?
+    var delegate: TableCellDelegate?
     
     // MARK: Properties
     
