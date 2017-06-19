@@ -52,7 +52,7 @@ class STTimerList: NSObject, NSCoding {
     }
 
     /// Replace the existing array of timers with a new array
-    func load(timerArray: [STSavedTimer]) {
+    private func load(timerArray: [STSavedTimer]) {
         timers = timerArray
         validate()
     }

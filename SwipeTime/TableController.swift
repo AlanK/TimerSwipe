@@ -16,7 +16,7 @@ protocol ModelController {
 
 class TableController: UITableViewController {
     /// Controller holding the app model
-    var modelController: ModelController?
+    private var modelController: ModelController?
     /// The UIView containing the table footer
     @IBOutlet var footerContainer: UIView!
     /// The label serving as the table footer

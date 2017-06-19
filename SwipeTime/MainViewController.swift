@@ -10,16 +10,16 @@ import UIKit
 
 /// Primary view controller—displays the selected timer
 class MainViewController: UIViewController {
+    /// The duration of the selected timer
+    var providedDuration: Int?
     /// Object that takes an integer in centiseconds and outputs a string for display
     private var timeFormatter = TimeFormatter()
     /// Plays the timer start and finish sounds
-    let soundController = SoundController()
+    private let soundController = SoundController()
     /// Controls the text for the change/cancel button (and cancels a running timer)
-    var buttonStatus = ChangeButtonValue.change
+    private var buttonStatus = ChangeButtonValue.change
     /// The object that runs the selected timer
     private var stopwatch: Stopwatch?
-    /// The duration of the selected timer
-    var providedDuration: Int?
     
     // MARK: - Labels & Buttons
     
@@ -92,15 +92,15 @@ class MainViewController: UIViewController {
     // MARK: - Display Updating
     
     /// Updates the timer display with an integer in centiseconds
-    func displayInt(_ integer: Int) {timeDisplay.text = timeFormatter.formatTime(integer)}
+    private func displayInt(_ integer: Int) {timeDisplay.text = timeFormatter.formatTime(integer)}
     
     /// Hides the "Swipe to Start" instructions when a timer is running
-    func hideInstructions() {
+    private func hideInstructions() {
         UIView.animate(withDuration: 0.1, delay: 0, options: .curveLinear, animations: {self.instructionsDisplay.alpha = 0}, completion: nil)
     }
     
     /// Shows the "Swipe to Start" instructions when a timer is not running
-    func showInstructions() {
+    private func showInstructions() {
         UIView.animate(withDuration: 0.1, delay: 0, options: .curveLinear, animations: {self.instructionsDisplay.alpha = 1}, completion: nil)
     }
     
@@ -110,7 +110,7 @@ class MainViewController: UIViewController {
     private func start() {stopwatch?.startTimer()}
     
     /// Handles taps on the Change/Cancel button
-    func buttonActions() {
+    private func buttonActions() {
         switch buttonStatus {
         // If the change button is tapped, go back one level in the view hierarchy
         case .change: self.navigationController?.popViewController(animated: true)
@@ -121,7 +121,7 @@ class MainViewController: UIViewController {
     }
     
     /// Sets the enum that controls the value of the Change/Cancel button and interrupts the running timer
-    func setButton(to buttonValue: ChangeButtonValue) {
+    private func setButton(to buttonValue: ChangeButtonValue) {
         buttonStatus = buttonValue
         
         // Use performWithoutAnimation to prevent weird flashing as button text animates.
