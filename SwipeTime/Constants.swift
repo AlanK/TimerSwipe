@@ -59,6 +59,9 @@ struct K {
     // MARK: Main View
     
     static let timerDisplaySize: CGFloat = 64
+    static let instructionsAnimationDuration: TimeInterval = 0.2
+    static let instructionsShowAlpha: CGFloat = 1.0
+    static let instructionsHideAlpha: CGFloat = 0.2
     
     // MARK: Heart Icon
     

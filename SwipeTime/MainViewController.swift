@@ -72,7 +72,7 @@ class MainViewController: UIViewController {
         // Ready the stopwatch
         stopwatch?.clear()
         // Provide accessible instructions for this timer
-        changeButton.accessibilityLabel = NSLocalizedString("timerReady", value: "\(providedDuration/100)-second timer, changes timer", comment: "{Whole number}-second timer (When activated, this button) changes timer")
+        changeButton.accessibilityLabel = NSLocalizedString("timerReady",value: "\(providedDuration/100)-second timer, changes timer",comment: "{Whole number}-second timer (When activated, this button) changes timer")
         changeButton.accessibilityHint = NSLocalizedString("magicTap", value: "Two-finger double-tap starts or cancels timer.", comment: "Tapping twice with two fingers starts or cancels the timer")
     }
     
@@ -96,12 +96,12 @@ class MainViewController: UIViewController {
     
     /// Hides the "Swipe to Start" instructions when a timer is running
     private func hideInstructions() {
-        UIView.animate(withDuration: 0.1, delay: 0, options: .curveLinear, animations: {self.instructionsDisplay.alpha = 0}, completion: nil)
+        UIView.animate(withDuration: K.instructionsAnimationDuration, delay: 0, options: .curveLinear, animations: {self.instructionsDisplay.alpha = K.instructionsHideAlpha}, completion: nil)
     }
     
     /// Shows the "Swipe to Start" instructions when a timer is not running
     private func showInstructions() {
-        UIView.animate(withDuration: 0.1, delay: 0, options: .curveLinear, animations: {self.instructionsDisplay.alpha = 1}, completion: nil)
+        UIView.animate(withDuration: K.instructionsAnimationDuration, delay: 0, options: .curveLinear, animations: {self.instructionsDisplay.alpha = K.instructionsShowAlpha}, completion: nil)
     }
     
     // MARK: - Convenience
