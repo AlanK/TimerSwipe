@@ -34,7 +34,13 @@ class TableCell: UITableViewCell {
 
     // MARK: Setup
     
-    /// Do layout on the cell
+    /**
+     Sets up the cell with the standard layout.
+     
+     - Parameters:
+         - timer: an `STSavedTimer` with a duration and a favorite status
+     
+     */
     func setupCell(with timer: STSavedTimer) {
         secondsLabel.text = NSLocalizedString("numberOfSeconts", value: "\(timer.centiseconds/K.centisecondsPerSecond) seconds", comment: "{whole number} seconds")
         secondsLabel.accessibilityTraits = UIAccessibilityTraitButton
@@ -43,10 +49,10 @@ class TableCell: UITableViewCell {
         // Set heart icon based on isFavorite
         switch timer.isFavorite {
         case true:
-            favoriteIcon.setImage(UIImage(named: K.fullHeart)?.withRenderingMode(.alwaysTemplate), for: UIControlState())
+            favoriteIcon.setImage(UIImage(named: K.fullHeartIconName)?.withRenderingMode(.alwaysTemplate), for: UIControlState())
             favoriteIcon.accessibilityValue = NSLocalizedString("switchOn", value: "On", comment: "An on/off switch in the on position")
         case false:
-            favoriteIcon.setImage(UIImage(named: K.emptyHeart)?.withRenderingMode(.alwaysTemplate), for: UIControlState())
+            favoriteIcon.setImage(UIImage(named: K.emptyHeartIconName)?.withRenderingMode(.alwaysTemplate), for: UIControlState())
             favoriteIcon.accessibilityValue = NSLocalizedString("switchOff", value: "Off", comment: "An on/off switch in the off position")
         }
     }

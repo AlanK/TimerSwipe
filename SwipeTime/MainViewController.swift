@@ -21,7 +21,7 @@ class MainViewController: UIViewController {
     /// The object that runs the selected timer
     private var stopwatch: Stopwatch?
     
-    // MARK: - Labels & Buttons
+    // MARK: Labels & Buttons
     
     /// The "Swipe to Start" label
     @IBOutlet var instructionsDisplay: UILabel!
@@ -30,7 +30,7 @@ class MainViewController: UIViewController {
     /// The Change/Cancel button
     @IBOutlet var changeButton: UIButton!
     
-    // MARK: - Actions
+    // MARK: Actions
     
     // Trigger buttonActions() when tapping the Change/Cancel button
     @IBAction func changeButton(_ sender: AnyObject) {buttonActions()}
@@ -56,7 +56,7 @@ class MainViewController: UIViewController {
         return true
     }
     
-    // MARK: - View Loading and Lifecycle
+    // MARK: View controller
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -89,7 +89,7 @@ class MainViewController: UIViewController {
         UIApplication.shared.isIdleTimerDisabled = false
     }
     
-    // MARK: - Display Updating
+    // MARK: Display updating
     
     /// Updates the timer display with an integer in centiseconds
     private func displayInt(_ integer: Int) {timeDisplay.text = timeFormatter.formatTime(integer)}
@@ -104,7 +104,7 @@ class MainViewController: UIViewController {
         UIView.animate(withDuration: K.instructionsAnimationDuration, delay: 0, options: .curveLinear, animations: {self.instructionsDisplay.alpha = K.instructionsShowAlpha}, completion: nil)
     }
     
-    // MARK: - Convenience
+    // MARK: Convenience
     
     /// Tells the Stopwatch to start the timer
     private func start() {stopwatch?.startTimer()}
@@ -132,10 +132,10 @@ class MainViewController: UIViewController {
     }
 }
 
-// MARK: - STViewController Extensions
+// MARK: - Stopwatch delegate
 
 extension MainViewController: StopwatchDelegate {
-    /// Unlocks and locks the stopwatch to prevent multiple timers from running at once
+    ///Reports lock status to the stopwatch to prevent multiple timers from running at once
     var unlocked: Bool {
         // Map unlock status to buttonStatus (.change = unlocked)
         switch buttonStatus {
@@ -144,7 +144,12 @@ extension MainViewController: StopwatchDelegate {
         }
     }
     
-    /// Updates the timer display with an integer in centiseconds
+    /**
+     Updates the timer display with an integer in centiseconds.
+     
+     - parameters:
+         - integer: time remaining in centiseconds
+     */
     func updateDisplay(with integer: Int) {
         displayInt(integer)
     }

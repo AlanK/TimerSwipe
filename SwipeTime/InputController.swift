@@ -21,6 +21,8 @@ class InputController: UIViewController, UITextFieldDelegate {
         escape()
     }
     
+    // MARK: View controller
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Bring up the keyboard and prepare to accept text
@@ -29,6 +31,7 @@ class InputController: UIViewController, UITextFieldDelegate {
         timeField.accessibilityLabel = NSLocalizedString("descriptionOfTextField", value: "Duration of timer in seconds", comment: "")
     }
     
+    // MARK: Text field delegate
     // Protect against text-related crashes
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         // Prevent crash-on-undo when iOS tries to undo a change that was blocked by shouldChangeCharactersInRange = false
@@ -39,13 +42,14 @@ class InputController: UIViewController, UITextFieldDelegate {
         return newLength <= 3
     }
     
-    // MARK: - Navigation
+    // MARK: Navigation
     
     override func accessibilityPerformEscape() -> Bool {
         escape()
         return true
     }
     
+    /// Dismisses this view controller safely
     private func escape() {
         // Make sure to get rid of the keyboard before dismissing the view controller
         timeField.resignFirstResponder()

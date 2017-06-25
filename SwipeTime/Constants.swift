@@ -26,6 +26,7 @@ enum ChangeButtonValue {
     case cancel
     case change
     
+    // rawValue can't return an NSLocalizedString
     /// Returns a localized string with text for the Change/Cancel button
     var text: String {
         switch self {
@@ -65,8 +66,8 @@ struct K {
     
     // MARK: Heart Icon
     
-    static let fullHeart = "Full heart"
-    static let emptyHeart = "Empty heart"
+    static let fullHeartIconName = "Full heart"
+    static let emptyHeartIconName = "Empty heart"
     
     // MARK: Time
     

@@ -14,6 +14,7 @@ protocol ModelController {
     var model: STTimerList? {get}
 }
 
+/// The main table in the app
 class TableController: UITableViewController {
     /// Controller holding the app model
     private var modelController: ModelController?
@@ -21,6 +22,8 @@ class TableController: UITableViewController {
     @IBOutlet var footerContainer: UIView!
     /// The label serving as the table footer
     @IBOutlet var footer: UILabel!
+    
+    // MARK: View controller
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -49,7 +52,7 @@ class TableController: UITableViewController {
         self.navigationController?.setNavigationBarHidden(false, animated: animated)
     }
 
-    // MARK: - Table view data source
+    // MARK: Table view data source
 
     // This table has one section
     override func numberOfSections(in tableView: UITableView) -> Int {return K.sectionsInTableView}
@@ -85,16 +88,22 @@ class TableController: UITableViewController {
         super.setEditing(editing, animated: animated)
     }
 
-    // MARK: - Navigation
+    // MARK: Navigation
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        // More segues might exist in the future, so let's keep this short and factor out the realy work
         if segue.identifier == SegueID.tableToTimer.rawValue {
-            segueToSTViewController(via: segue, from: sender)
+            segueToMainViewController(for: segue, sender: sender)
         }
     }
     
-    /// Prepare for segue to the primary/timer view
-    private func segueToSTViewController(via segue: UIStoryboardSegue, from sender: Any?) {
+    /**
+     Prepare for segue to the main view controller specifically. This has the same signature as `prepare(for:sender:)` for convenience.
+     - parameters:
+         - segue: The `TableToTimer` storyboard segue
+         - sender: A `TableCell`
+     */
+    private func segueToMainViewController(for segue: UIStoryboardSegue, sender: Any?) {
         guard let controller = segue.destination as? MainViewController,
             let selectedCell = sender as? TableCell,
             let indexPath = tableView.indexPath(for: selectedCell),
@@ -104,7 +113,7 @@ class TableController: UITableViewController {
         controller.providedDuration = timer.centiseconds
     }
     
-    /// Handle the return to the table view from the modal time entry view
+    /// Handle the return to the table view from the main view controller
     @IBAction func unwindToSTTVC(_ sender: UIStoryboardSegue) {
         // Ensure we're arriving from the right source and extract useful info
         guard let sourceViewController = sender.source as? InputController,
@@ -119,6 +128,7 @@ class TableController: UITableViewController {
     }
 }
 
+// MARK: - TableCellDelegate
 extension TableController: TableCellDelegate {
     /// Handles taps on the custom accessory view on the table view cells
     func cellButtonTapped(cell: TableCell) {
