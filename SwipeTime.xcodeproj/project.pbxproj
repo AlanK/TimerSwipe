@@ -86,10 +86,18 @@
 				5AA3E3A91EEF34F700FB5F1D /* Storyboards */,
 				5A03B9AE1D1DDB9800E245C9 /* Assets.xcassets */,
 				5A03B9B31D1DDB9800E245C9 /* Info.plist */,
+				5A66EB7A1F099E5900225C38 /* Sounds */,
+			);
+			path = SwipeTime;
+			sourceTree = "<group>";
+		};
+		5A66EB7A1F099E5900225C38 /* Sounds */ = {
+			isa = PBXGroup;
+			children = (
 				5A9563E31D313BB100313EEF /* AudioCue_01.aif */,
 				5A9563E41D313BB100313EEF /* AudioCue_02.aif */,
 			);
-			path = SwipeTime;
+			name = Sounds;
 			sourceTree = "<group>";
 		};
 		5AA3E3A81EEF34E900FB5F1D /* Model */ = {

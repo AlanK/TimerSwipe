@@ -36,6 +36,11 @@ enum ChangeButtonValue {
     }
 }
 
+enum AudioCue: String {
+    case start = "AudioCue_01.aif"
+    case end = "AudioCue_02.aif"
+}
+
 /// Message announcing changes in timer status
 enum TimerStatus {
     case start

@@ -6,32 +6,72 @@
 //  Copyright © 2016 Alan Kantz. All rights reserved.
 //
 
-import AudioToolbox
+import AVFoundation
 
 /// Handles sounds for the main view of the app
 struct SoundController {
-    // Create two system sound IDs
-    private var firstSound: SystemSoundID = 0, secondSound: SystemSoundID = 1
-    // Create the CFStrings for getting the sound files
-    private let firstSoundName = "AudioCue_01" as CFString, secondSoundName = "AudioCue_02" as CFString, fileExtension = "aif" as CFString
+    /// Singleton AVAudioSession
+    private let audioSession = AVAudioSession()
+    private let startSound: AVAudioPlayer?, endSound: AVAudioPlayer?
     
-    /// Create two system sound objects
     init() {
-        if let firstSoundURLRef = CFBundleCopyResourceURL(CFBundleGetMainBundle(), firstSoundName, fileExtension, nil) {
-            AudioServicesCreateSystemSoundID(firstSoundURLRef, &firstSound)
+       // Configure audio session to mix with background music
+        do {
+            try audioSession.setCategory(AVAudioSessionCategoryAmbient, mode: AVAudioSessionModeDefault, options: [])
         }
-        if let secondSoundURLRef = CFBundleCopyResourceURL(CFBundleGetMainBundle(), secondSoundName, fileExtension, nil) {
-            AudioServicesCreateSystemSoundID(secondSoundURLRef, &secondSound)
+        catch {
+            print("Could not set AVAudioSession category, mode, route sharing, or options: \(error)")
         }
+        // Initialize sounds
+        if let startPath = Bundle.main.path(forResource: AudioCue.start.rawValue, ofType: nil) {
+            startSound = try? AVAudioPlayer(contentsOf: URL(fileURLWithPath: startPath))
+        } else {
+            startSound = nil
+            print("Could not initialize startSound.")
+        }
+        if let endPath = Bundle.main.path(forResource: AudioCue.end.rawValue, ofType: nil) {
+            endSound  = try? AVAudioPlayer(contentsOf: URL(fileURLWithPath: endPath))
+        } else {
+            endSound = nil
+            print("Could not initialize endSound.")
+        }
+    }
+    
+    /**
+     Activate or deactivate the audio session
+     
+     When activating the audio session, it is nice to prepare the sounds proactively.
+     
+     - parameter active: Whether the audio session should be activated or deactivated
+     */
+    func setActive(_ active: Bool) {
+        do {
+            try audioSession.setActive(active)
+        }
+        catch {
+            print("Could not activate/deactivate AVAudioSession: \(error)")
+        }
+        guard active else {return}
+        startSound?.prepareToPlay()
+        endSound?.prepareToPlay()
+    }
+    
+    /// Vibrate without playing a sound
+    private func vibrate() {
+        AudioServicesPlaySystemSound(kSystemSoundID_Vibrate)
     }
     
     /// Plays the "timer start" sound
     func playStartSound() {
-        AudioServicesPlayAlertSound(firstSound)
+        startSound?.play()
+        vibrate()
+        startSound?.prepareToPlay()
     }
     
     /// Plays the "timer end" sound
     func playEndSound() {
-        AudioServicesPlayAlertSound(secondSound)
-    }
+        endSound?.play()
+        vibrate()
+        endSound?.prepareToPlay()
+     }
 }
