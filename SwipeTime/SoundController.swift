@@ -10,30 +10,34 @@ import AVFoundation
 
 /// Handles sounds for the main view of the app
 struct SoundController {
-    /// Singleton AVAudioSession
+    /// Singleton `AVAudioSession`
     private let audioSession = AVAudioSession()
-    private let startSound: AVAudioPlayer?, endSound: AVAudioPlayer?
+    // Initializing an AVAudioPlayer is failable, so these need to be optionals
+    private let timerDidStartCue: AVAudioPlayer?, timerDidEndCue: AVAudioPlayer?
     
     init() {
-       // Configure audio session to mix with background music
+        /**
+         Create an `AVAudioPlayer` from a filename
+         - parameter file: A filename for a file in the main bundle
+         - returns: An `AVAudioPlayer` configured to play the named file
+         */
+        func initializePlayer(with file: String) -> AVAudioPlayer? {
+            guard let path = Bundle.main.path(forResource: file, ofType: nil), let player = try? AVAudioPlayer(contentsOf: URL(fileURLWithPath: path)) else {
+                print("Could not initialize \(file).")
+                return nil
+            }
+            return player
+        }
+        
+        // Initialize the audio players
+        timerDidStartCue = initializePlayer(with: AudioCue.start.rawValue)
+        timerDidEndCue = initializePlayer(with: AudioCue.end.rawValue)
+        // Configure audio session to mix with background music
         do {
             try audioSession.setCategory(AVAudioSessionCategoryAmbient, mode: AVAudioSessionModeDefault, options: [])
         }
         catch {
-            print("Could not set AVAudioSession category, mode, route sharing, or options: \(error)")
-        }
-        // Initialize sounds
-        if let startPath = Bundle.main.path(forResource: AudioCue.start.rawValue, ofType: nil) {
-            startSound = try? AVAudioPlayer(contentsOf: URL(fileURLWithPath: startPath))
-        } else {
-            startSound = nil
-            print("Could not initialize startSound.")
-        }
-        if let endPath = Bundle.main.path(forResource: AudioCue.end.rawValue, ofType: nil) {
-            endSound  = try? AVAudioPlayer(contentsOf: URL(fileURLWithPath: endPath))
-        } else {
-            endSound = nil
-            print("Could not initialize endSound.")
+            print("Could not set AVAudioSession category, mode, or options: \(error)")
         }
     }
     
@@ -41,7 +45,6 @@ struct SoundController {
      Activate or deactivate the audio session
      
      When activating the audio session, it is nice to prepare the sounds proactively.
-     
      - parameter active: Whether the audio session should be activated or deactivated
      */
     func setActive(_ active: Bool) {
@@ -52,8 +55,8 @@ struct SoundController {
             print("Could not activate/deactivate AVAudioSession: \(error)")
         }
         guard active else {return}
-        startSound?.prepareToPlay()
-        endSound?.prepareToPlay()
+        timerDidStartCue?.prepareToPlay()
+        timerDidEndCue?.prepareToPlay()
     }
     
     /// Vibrate without playing a sound
@@ -63,15 +66,15 @@ struct SoundController {
     
     /// Plays the "timer start" sound
     func playStartSound() {
-        startSound?.play()
+        timerDidStartCue?.play()
         vibrate()
-        startSound?.prepareToPlay()
+        timerDidStartCue?.prepareToPlay()
     }
     
     /// Plays the "timer end" sound
     func playEndSound() {
-        endSound?.play()
+        timerDidEndCue?.play()
         vibrate()
-        endSound?.prepareToPlay()
+        timerDidEndCue?.prepareToPlay()
      }
 }
