@@ -50,7 +50,9 @@ class TableController: UITableViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.setNavigationBarHidden(false, animated: animated)
-    }
+        guard let model = modelController?.model else {return}
+        self.navigationItem.rightBarButtonItem?.isEnabled = (model.count() > 0)
+}
 
     // MARK: Table view data source
 
@@ -72,10 +74,18 @@ class TableController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         // Don't delete the row if the model can't be updated
-        guard editingStyle == .delete,
-            let _ = modelController?.model?.remove(at: indexPath.row) else {return}
+        guard editingStyle == .delete, let model = modelController?.model else {return}
+        let _ = model.remove(at: indexPath.row)
         tableView.deleteRows(at: [indexPath], with: .automatic)
-    }
+        self.navigationItem.rightBarButtonItem?.isEnabled = (model.count() > 0)
+        if model.count() == 0 {
+            let nearFuture = DispatchTime.now() + K.editButtonDelay
+            let work = DispatchWorkItem {
+                self.setEditing(false, animated: false)
+            }
+            DispatchQueue.main.asyncAfter(deadline: nearFuture, execute: work)
+        }
+}
 
     override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to toIndexPath: IndexPath) {
         guard let model = modelController?.model else {return}
@@ -125,6 +135,7 @@ class TableController: UITableViewController {
         model.append(timer: newTimer)
         model.saveData()
         tableView.insertRows(at: [newIndexPath], with: .automatic)
+        self.navigationItem.rightBarButtonItem?.isEnabled = (model.count() > 0)
     }
 }
 

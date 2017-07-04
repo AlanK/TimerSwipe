@@ -60,6 +60,7 @@ struct K {
     static let cellID = "STTableViewCell"
     static let sectionsInTableView = 1
     static let mainSection = 0
+    static let editButtonDelay: TimeInterval = 0.5
     
     // MARK: Main View
     
