@@ -33,7 +33,7 @@ class STSavedTimer: NSObject, NSCoding {
         self.init(centiseconds: K.defaultDurationInCentiseconds)
     }
     
-    // MARK: - NSCoding
+    // MARK: NSCoding
     
     func encode(with aCoder: NSCoder) {
         aCoder.encode(centiseconds, forKey: K.centisecondsKey)

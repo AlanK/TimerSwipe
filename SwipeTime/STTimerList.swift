@@ -13,7 +13,7 @@ class STTimerList: NSObject, NSCoding {
     /// Array of timers
     private var timers = [STSavedTimer]()
     
-    // MARK: - Initializers
+    // MARK: Initializers
     
     /// Memberwise initializer
     init(timers: [STSavedTimer]) {
@@ -27,7 +27,7 @@ class STTimerList: NSObject, NSCoding {
         super.init()
     }
     
-    // MARK: - Favorites
+    // MARK: Favorites
     
     /// Toggle favorite status of a specific timer
     func toggleFavorite(at index: Int) {
@@ -43,7 +43,7 @@ class STTimerList: NSObject, NSCoding {
         }
     }
     
-    // MARK: - Add & Remove
+    // MARK: Add & Remove
     
     /// Append a timer
     func append(timer: STSavedTimer) {
@@ -69,7 +69,7 @@ class STTimerList: NSObject, NSCoding {
         return timer
     }
     
-    // MARK: - Validate
+    // MARK: Validate
     
     /// Enforce <= 1 favorite timer
     private func validate() {
@@ -85,7 +85,7 @@ class STTimerList: NSObject, NSCoding {
         }
     }
     
-    // MARK: - Properties
+    // MARK: Properties
     
     /// Return the timer marked `isFavorite`
     func favorite() -> STSavedTimer? {
@@ -99,7 +99,7 @@ class STTimerList: NSObject, NSCoding {
         return timers.count
     }
     
-    // MARK: - Subscript
+    // MARK: Subscript
     
     subscript(index: Int) -> STSavedTimer {
         get {return timers[index]}
@@ -109,7 +109,7 @@ class STTimerList: NSObject, NSCoding {
         }
     }
     
-    // MARK: - NSCoding
+    // MARK: NSCoding
     
     func encode(with aCoder: NSCoder) {aCoder.encode(timers, forKey: K.timersKey)}
     
@@ -119,12 +119,16 @@ class STTimerList: NSObject, NSCoding {
     }    
 }
 
+// MARK: - Sample Timers
+
 extension STTimerList {
     /// Set the timer array to a developer-chosen default set of timers
     func loadSampleTimers() {
         load(timerArray: [STSavedTimer(centiseconds: 6000), STSavedTimer(centiseconds: 3000, isFavorite: true), STSavedTimer(centiseconds: 1500)])
     }
 }
+
+// MARK: - Save to Disk
 
 extension STTimerList {
     /// Archive the STTimerList

@@ -11,6 +11,7 @@ import UIKit
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
+    /// Records when the app last entered the background; set to nil after returning to foreground
     var enteredBackground: Date?
     
     func applicationDidFinishLaunching(_ application: UIApplication) {

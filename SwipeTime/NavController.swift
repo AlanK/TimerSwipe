@@ -35,6 +35,7 @@ class NavController: UINavigationController {
         self.setViewControllers([tableView, storyboard.instantiateViewController(withIdentifier: StoryboardID.mainView.rawValue)], animated: false)
     }
     
+    /// Make any necessary changes to views after being in the background for a long time
     func refreshViews() {
         // Animate changes in views
         var animate = true
@@ -51,5 +52,6 @@ class NavController: UINavigationController {
     }
 }
 
+// MARK: - Model Controller
 // Make the model available to other objects
 extension NavController: ModelController {}

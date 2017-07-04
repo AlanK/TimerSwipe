@@ -128,7 +128,7 @@ class TableController: UITableViewController {
     }
 }
 
-// MARK: - TableCellDelegate
+// MARK: - Table Cell Delegate
 extension TableController: TableCellDelegate {
     /// Handles taps on the custom accessory view on the table view cells
     func cellButtonTapped(cell: TableCell) {
