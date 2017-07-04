@@ -49,7 +49,7 @@ struct K {
     
     // MARK: App Appearance
     
-    static let tintColor = UIColor(red: 0.60, green: 0.28, blue: 0.95, alpha: 1.0)
+    static let tintColor = UIColor(red: 0.93, green: 0.33, blue: 0.87, alpha: 1.0)
     
     // MARK: Main Table
     
