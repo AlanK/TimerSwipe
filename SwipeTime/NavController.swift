@@ -26,13 +26,28 @@ class NavController: UINavigationController {
         // Navigate to the correct entry point
         guard let storyboard = self.storyboard else {return}
         let tableView = storyboard.instantiateViewController(withIdentifier: StoryboardID.tableView.rawValue)
-        guard model?.favorite() != nil else {
+        guard let _ = model?.favorite() else {
             // No favorite timer; give up and load the table view
             self.setViewControllers([tableView], animated: false)
             return
         }
         // Navigate to the favorite timer with the table view in the nav stack
         self.setViewControllers([tableView, storyboard.instantiateViewController(withIdentifier: StoryboardID.mainView.rawValue)], animated: false)
+    }
+    
+    func refreshViews() {
+        // Animate changes in views
+        var animate = true
+        // Ensure there is a storyboard and a favorite timer
+        guard let storyboard = self.storyboard, let _ = model?.favorite() else {return}
+        if self.topViewController is MainViewController {
+            // Don't animate going from one timer to another; it looks weird
+            animate = false
+        }
+        let tableView = storyboard.instantiateViewController(withIdentifier: StoryboardID.tableView.rawValue)
+        // Navigate to the favorite timer with the table view in the nav stack
+        self.setViewControllers([tableView, storyboard.instantiateViewController(withIdentifier: StoryboardID.mainView.rawValue)], animated: animate)
+        
     }
 }
 

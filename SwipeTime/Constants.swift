@@ -51,6 +51,10 @@ struct K {
     
     static let tintColor = UIColor(red: 0.933, green: 0.333, blue: 0.867, alpha: 1.0)
     
+    // MARK: App Behavior
+    
+    static let timeout: TimeInterval = 300.0
+    
     // MARK: Main Table
     
     static let cellID = "STTableViewCell"
