@@ -11,14 +11,16 @@
 		5A03B9AD1D1DDB9800E245C9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5A03B9AB1D1DDB9800E245C9 /* Main.storyboard */; };
 		5A03B9AF1D1DDB9800E245C9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5A03B9AE1D1DDB9800E245C9 /* Assets.xcassets */; };
 		5A03B9B21D1DDB9800E245C9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5A03B9B01D1DDB9800E245C9 /* LaunchScreen.storyboard */; };
-		5A10A2A91F0AD0E100491727 /* TS_Outro.aif in Resources */ = {isa = PBXBuildFile; fileRef = 5A10A2A71F0AD0E100491727 /* TS_Outro.aif */; };
-		5A10A2AA1F0AD0E100491727 /* TS_Intro.aif in Resources */ = {isa = PBXBuildFile; fileRef = 5A10A2A81F0AD0E100491727 /* TS_Intro.aif */; };
 		5A12267C1D5A80BA006D49F1 /* TableController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A12267B1D5A80BA006D49F1 /* TableController.swift */; };
 		5A12267E1D5A94C3006D49F1 /* STTimerList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A12267D1D5A94C3006D49F1 /* STTimerList.swift */; };
 		5A4536841D298CA300E62273 /* InputController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A4536831D298CA300E62273 /* InputController.swift */; };
 		5A4DC9181D596D460009446B /* STSavedTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A4DC9171D596D460009446B /* STSavedTimer.swift */; };
 		5A591CE71D3A9F6100B9BD3D /* TimeFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A591CE61D3A9F6100B9BD3D /* TimeFormatter.swift */; };
 		5A591CE91D3AA18E00B9BD3D /* SoundController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A591CE81D3AA18E00B9BD3D /* SoundController.swift */; };
+		5A7D12CC1F0B293800C9B51A /* TS_Outro.aif in Resources */ = {isa = PBXBuildFile; fileRef = 5A7D12C81F0B293800C9B51A /* TS_Outro.aif */; };
+		5A7D12CD1F0B293800C9B51A /* TS_Intro.aif in Resources */ = {isa = PBXBuildFile; fileRef = 5A7D12C91F0B293800C9B51A /* TS_Intro.aif */; };
+		5A7D12D01F0B2ADC00C9B51A /* TS_short_in.aif in Resources */ = {isa = PBXBuildFile; fileRef = 5A7D12CE1F0B2ADC00C9B51A /* TS_short_in.aif */; };
+		5A7D12D11F0B2ADC00C9B51A /* TS_short_out.aif in Resources */ = {isa = PBXBuildFile; fileRef = 5A7D12CF1F0B2ADC00C9B51A /* TS_short_out.aif */; };
 		5A871FFA1D6FC68900B08A05 /* TableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A871FF91D6FC68900B08A05 /* TableCell.swift */; };
 		5A90785D1EEB8C24006BCDD3 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A90785C1EEB8C24006BCDD3 /* Constants.swift */; };
 		5A9563E51D313BB100313EEF /* AudioCue_01.aif in Resources */ = {isa = PBXBuildFile; fileRef = 5A9563E31D313BB100313EEF /* AudioCue_01.aif */; };
@@ -35,14 +37,16 @@
 		5A03B9AE1D1DDB9800E245C9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		5A03B9B11D1DDB9800E245C9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		5A03B9B31D1DDB9800E245C9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		5A10A2A71F0AD0E100491727 /* TS_Outro.aif */ = {isa = PBXFileReference; lastKnownFileType = file; name = TS_Outro.aif; path = ../../../../Desktop/TS_Outro.aif; sourceTree = "<group>"; };
-		5A10A2A81F0AD0E100491727 /* TS_Intro.aif */ = {isa = PBXFileReference; lastKnownFileType = file; name = TS_Intro.aif; path = ../../../../Desktop/TS_Intro.aif; sourceTree = "<group>"; };
 		5A12267B1D5A80BA006D49F1 /* TableController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableController.swift; sourceTree = "<group>"; };
 		5A12267D1D5A94C3006D49F1 /* STTimerList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STTimerList.swift; sourceTree = "<group>"; };
 		5A4536831D298CA300E62273 /* InputController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputController.swift; sourceTree = "<group>"; };
 		5A4DC9171D596D460009446B /* STSavedTimer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STSavedTimer.swift; sourceTree = "<group>"; };
 		5A591CE61D3A9F6100B9BD3D /* TimeFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeFormatter.swift; sourceTree = "<group>"; };
 		5A591CE81D3AA18E00B9BD3D /* SoundController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoundController.swift; sourceTree = "<group>"; };
+		5A7D12C81F0B293800C9B51A /* TS_Outro.aif */ = {isa = PBXFileReference; lastKnownFileType = file; name = TS_Outro.aif; path = "../../TS Sounds/TS_Outro.aif"; sourceTree = "<group>"; };
+		5A7D12C91F0B293800C9B51A /* TS_Intro.aif */ = {isa = PBXFileReference; lastKnownFileType = file; name = TS_Intro.aif; path = "../../TS Sounds/TS_Intro.aif"; sourceTree = "<group>"; };
+		5A7D12CE1F0B2ADC00C9B51A /* TS_short_in.aif */ = {isa = PBXFileReference; lastKnownFileType = file; name = TS_short_in.aif; path = "../../TS Sounds/TS_short_in.aif"; sourceTree = "<group>"; };
+		5A7D12CF1F0B2ADC00C9B51A /* TS_short_out.aif */ = {isa = PBXFileReference; lastKnownFileType = file; name = TS_short_out.aif; path = "../../TS Sounds/TS_short_out.aif"; sourceTree = "<group>"; };
 		5A871FF91D6FC68900B08A05 /* TableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableCell.swift; sourceTree = "<group>"; };
 		5A8C4C0F1EF449D6000058B7 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Main.strings; sourceTree = "<group>"; };
 		5A90785C1EEB8C24006BCDD3 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
@@ -98,8 +102,10 @@
 		5A66EB7A1F099E5900225C38 /* Sounds */ = {
 			isa = PBXGroup;
 			children = (
-				5A10A2A81F0AD0E100491727 /* TS_Intro.aif */,
-				5A10A2A71F0AD0E100491727 /* TS_Outro.aif */,
+				5A7D12C91F0B293800C9B51A /* TS_Intro.aif */,
+				5A7D12C81F0B293800C9B51A /* TS_Outro.aif */,
+				5A7D12CE1F0B2ADC00C9B51A /* TS_short_in.aif */,
+				5A7D12CF1F0B2ADC00C9B51A /* TS_short_out.aif */,
 				5A9563E31D313BB100313EEF /* AudioCue_01.aif */,
 				5A9563E41D313BB100313EEF /* AudioCue_02.aif */,
 			);
@@ -216,12 +222,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				5A9563E51D313BB100313EEF /* AudioCue_01.aif in Resources */,
+				5A7D12D01F0B2ADC00C9B51A /* TS_short_in.aif in Resources */,
+				5A7D12D11F0B2ADC00C9B51A /* TS_short_out.aif in Resources */,
+				5A7D12CD1F0B293800C9B51A /* TS_Intro.aif in Resources */,
+				5A7D12CC1F0B293800C9B51A /* TS_Outro.aif in Resources */,
 				5A03B9B21D1DDB9800E245C9 /* LaunchScreen.storyboard in Resources */,
 				5A9563E61D313BB100313EEF /* AudioCue_02.aif in Resources */,
 				5A03B9AF1D1DDB9800E245C9 /* Assets.xcassets in Resources */,
 				5A03B9AD1D1DDB9800E245C9 /* Main.storyboard in Resources */,
-				5A10A2A91F0AD0E100491727 /* TS_Outro.aif in Resources */,
-				5A10A2AA1F0AD0E100491727 /* TS_Intro.aif in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -30,8 +30,8 @@ struct SoundController {
         }
         
         // Initialize the audio players
-        timerDidStartCue = initializePlayer(with: Sound.windStart.rawValue)
-        timerDidEndCue = initializePlayer(with: Sound.windEnd.rawValue)
+        timerDidStartCue = initializePlayer(with: Sound.shortWindStart.rawValue)
+        timerDidEndCue = initializePlayer(with: Sound.shortWindEnd.rawValue)
         // Configure audio session to mix with background music
         do {
             try audioSession.setCategory(AVAudioSessionCategoryAmbient, mode: AVAudioSessionModeDefault, options: [])
