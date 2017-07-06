@@ -19,10 +19,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func applicationDidEnterBackground(_ application: UIApplication) {
+        // Background timeout start time
         enteredBackground = Date()
     }
     
     func applicationDidBecomeActive(_ application: UIApplication) {
+        // Background timeout logic
         defer {
             enteredBackground = nil
         }
