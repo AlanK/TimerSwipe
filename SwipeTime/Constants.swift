@@ -25,7 +25,6 @@ enum StoryboardID: String {
 enum ChangeButtonValue {
     case cancel
     case change
-    
     // rawValue can't return an NSLocalizedString
     /// Returns a localized string with text for the Change/Cancel button
     var text: String {
@@ -34,6 +33,16 @@ enum ChangeButtonValue {
         case .change: return NSLocalizedString("changeButton", value: "Change", comment: "Change which timer is displayed")
         }
     }
+}
+
+/// Audio file names (with extensions)
+enum Sound: String {
+    case shortWindStart = "TS_short_in.aif"
+    case shortWindEnd = "TS_short_out.aif"
+    case windStart = "TS_Intro.aif"
+    case windEnd = "TS_Outro.aif"
+    case legacyStart = "AudioCue_01.aif"
+    case legacyEnd = "AudioCue_02.aif"
 }
 
 /// Message announcing changes in timer status
@@ -56,26 +65,22 @@ struct K {
     static let timeout: TimeInterval = 300.0
     
     // MARK: Main Table
-    
     static let cellID = "STTableViewCell"
     static let sectionsInTableView = 1
     static let mainSection = 0
     static let editButtonDelay: TimeInterval = 0.5
     
     // MARK: Main View
-    
     static let timerDisplaySize: CGFloat = 64
     static let instructionsAnimationDuration: TimeInterval = 0.2
     static let instructionsShowAlpha: CGFloat = 1.0
     static let instructionsHideAlpha: CGFloat = 0.2
     
     // MARK: Heart Icon
-    
     static let fullHeartIconName = "Full heart"
     static let emptyHeartIconName = "Empty heart"
     
     // MARK: Time
-    
     static let defaultDurationInCentiseconds = 3000
     static let centisecondsPerSecondDouble = 100.0
     static let hundredthOfASecond = 0.01
@@ -85,12 +90,10 @@ struct K {
     static let secondsPerMinute = 60
     
     // MARK: List Keys
-    
     static let timersKey = "timers"
     static let persistedList = "persistedList"
     
     // MARK: Item Keys
-    
     static let centisecondsKey = "centiseconds"
     static let isFavoriteKey = "isFavorite"
 }

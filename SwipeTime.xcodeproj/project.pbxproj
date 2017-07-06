@@ -17,6 +17,10 @@
 		5A4DC9181D596D460009446B /* STSavedTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A4DC9171D596D460009446B /* STSavedTimer.swift */; };
 		5A591CE71D3A9F6100B9BD3D /* TimeFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A591CE61D3A9F6100B9BD3D /* TimeFormatter.swift */; };
 		5A591CE91D3AA18E00B9BD3D /* SoundController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A591CE81D3AA18E00B9BD3D /* SoundController.swift */; };
+		5A7D12CC1F0B293800C9B51A /* TS_Outro.aif in Resources */ = {isa = PBXBuildFile; fileRef = 5A7D12C81F0B293800C9B51A /* TS_Outro.aif */; };
+		5A7D12CD1F0B293800C9B51A /* TS_Intro.aif in Resources */ = {isa = PBXBuildFile; fileRef = 5A7D12C91F0B293800C9B51A /* TS_Intro.aif */; };
+		5A7D12D01F0B2ADC00C9B51A /* TS_short_in.aif in Resources */ = {isa = PBXBuildFile; fileRef = 5A7D12CE1F0B2ADC00C9B51A /* TS_short_in.aif */; };
+		5A7D12D11F0B2ADC00C9B51A /* TS_short_out.aif in Resources */ = {isa = PBXBuildFile; fileRef = 5A7D12CF1F0B2ADC00C9B51A /* TS_short_out.aif */; };
 		5A871FFA1D6FC68900B08A05 /* TableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A871FF91D6FC68900B08A05 /* TableCell.swift */; };
 		5A90785D1EEB8C24006BCDD3 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A90785C1EEB8C24006BCDD3 /* Constants.swift */; };
 		5A9563E51D313BB100313EEF /* AudioCue_01.aif in Resources */ = {isa = PBXBuildFile; fileRef = 5A9563E31D313BB100313EEF /* AudioCue_01.aif */; };
@@ -39,6 +43,10 @@
 		5A4DC9171D596D460009446B /* STSavedTimer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STSavedTimer.swift; sourceTree = "<group>"; };
 		5A591CE61D3A9F6100B9BD3D /* TimeFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeFormatter.swift; sourceTree = "<group>"; };
 		5A591CE81D3AA18E00B9BD3D /* SoundController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoundController.swift; sourceTree = "<group>"; };
+		5A7D12C81F0B293800C9B51A /* TS_Outro.aif */ = {isa = PBXFileReference; lastKnownFileType = file; name = TS_Outro.aif; path = "../../TS Sounds/TS_Outro.aif"; sourceTree = "<group>"; };
+		5A7D12C91F0B293800C9B51A /* TS_Intro.aif */ = {isa = PBXFileReference; lastKnownFileType = file; name = TS_Intro.aif; path = "../../TS Sounds/TS_Intro.aif"; sourceTree = "<group>"; };
+		5A7D12CE1F0B2ADC00C9B51A /* TS_short_in.aif */ = {isa = PBXFileReference; lastKnownFileType = file; name = TS_short_in.aif; path = "../../TS Sounds/TS_short_in.aif"; sourceTree = "<group>"; };
+		5A7D12CF1F0B2ADC00C9B51A /* TS_short_out.aif */ = {isa = PBXFileReference; lastKnownFileType = file; name = TS_short_out.aif; path = "../../TS Sounds/TS_short_out.aif"; sourceTree = "<group>"; };
 		5A871FF91D6FC68900B08A05 /* TableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableCell.swift; sourceTree = "<group>"; };
 		5A8C4C0F1EF449D6000058B7 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Main.strings; sourceTree = "<group>"; };
 		5A90785C1EEB8C24006BCDD3 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
@@ -86,10 +94,22 @@
 				5AA3E3A91EEF34F700FB5F1D /* Storyboards */,
 				5A03B9AE1D1DDB9800E245C9 /* Assets.xcassets */,
 				5A03B9B31D1DDB9800E245C9 /* Info.plist */,
+				5A66EB7A1F099E5900225C38 /* Sounds */,
+			);
+			path = SwipeTime;
+			sourceTree = "<group>";
+		};
+		5A66EB7A1F099E5900225C38 /* Sounds */ = {
+			isa = PBXGroup;
+			children = (
+				5A7D12C91F0B293800C9B51A /* TS_Intro.aif */,
+				5A7D12C81F0B293800C9B51A /* TS_Outro.aif */,
+				5A7D12CE1F0B2ADC00C9B51A /* TS_short_in.aif */,
+				5A7D12CF1F0B2ADC00C9B51A /* TS_short_out.aif */,
 				5A9563E31D313BB100313EEF /* AudioCue_01.aif */,
 				5A9563E41D313BB100313EEF /* AudioCue_02.aif */,
 			);
-			path = SwipeTime;
+			name = Sounds;
 			sourceTree = "<group>";
 		};
 		5AA3E3A81EEF34E900FB5F1D /* Model */ = {
@@ -202,6 +222,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				5A9563E51D313BB100313EEF /* AudioCue_01.aif in Resources */,
+				5A7D12D01F0B2ADC00C9B51A /* TS_short_in.aif in Resources */,
+				5A7D12D11F0B2ADC00C9B51A /* TS_short_out.aif in Resources */,
+				5A7D12CD1F0B293800C9B51A /* TS_Intro.aif in Resources */,
+				5A7D12CC1F0B293800C9B51A /* TS_Outro.aif in Resources */,
 				5A03B9B21D1DDB9800E245C9 /* LaunchScreen.storyboard in Resources */,
 				5A9563E61D313BB100313EEF /* AudioCue_02.aif in Resources */,
 				5A03B9AF1D1DDB9800E245C9 /* Assets.xcassets in Resources */,

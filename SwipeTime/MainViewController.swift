@@ -81,12 +81,14 @@ class MainViewController: UIViewController {
         // Turn off idle lock on this screen
         UIApplication.shared.isIdleTimerDisabled = true
         self.navigationController?.setNavigationBarHidden(true, animated: false)
+        soundController.setActive(true)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         // Turn on idle lock when leaving this screen
         UIApplication.shared.isIdleTimerDisabled = false
+        soundController.setActive(false)
     }
     
     // MARK: Display updating
