@@ -41,6 +41,10 @@ class NavController: UINavigationController {
         var animate = true
         // Ensure there is a storyboard and a favorite timer
         guard let storyboard = self.storyboard, let _ = model?.favorite() else {return}
+        // Don't disrupt an active edit session
+        if let vc = self.topViewController as? TableController {
+            guard vc.isEditing == false else {return}
+        }
         if self.topViewController is MainViewController {
             // Don't animate going from one timer to another; it looks weird
             animate = false
