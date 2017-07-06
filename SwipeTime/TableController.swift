@@ -85,7 +85,7 @@ class TableController: UITableViewController {
             }
             DispatchQueue.main.asyncAfter(deadline: nearFuture, execute: work)
         }
-}
+    }
 
     override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to toIndexPath: IndexPath) {
         guard let model = modelController?.model else {return}
