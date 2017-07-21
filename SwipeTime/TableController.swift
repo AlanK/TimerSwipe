@@ -52,7 +52,7 @@ class TableController: UITableViewController {
         self.navigationController?.setNavigationBarHidden(false, animated: animated)
         guard let model = modelController?.model else {return}
         self.navigationItem.rightBarButtonItem?.isEnabled = (model.count() > 0)
-}
+    }
 
     // MARK: Table view data source
 

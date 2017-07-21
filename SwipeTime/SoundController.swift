@@ -36,9 +36,7 @@ struct SoundController {
         do {
             try audioSession.setCategory(AVAudioSessionCategoryAmbient, mode: AVAudioSessionModeDefault, options: [])
         }
-        catch {
-            print("Could not set AVAudioSession category, mode, or options: \(error)")
-        }
+        catch {print("Could not set AVAudioSession category, mode, or options: \(error)")}
     }
     
     /**
@@ -48,12 +46,9 @@ struct SoundController {
      - parameter active: Whether the audio session should be activated or deactivated
      */
     func setActive(_ active: Bool) {
-        do {
-            try audioSession.setActive(active)
-        }
-        catch {
-            print("Could not activate/deactivate AVAudioSession: \(error)")
-        }
+        do {try audioSession.setActive(active)}
+        catch {print("Could not activate/deactivate AVAudioSession: \(error)")}
+        
         guard active else {return}
         timerDidStartCue?.prepareToPlay()
         timerDidEndCue?.prepareToPlay()

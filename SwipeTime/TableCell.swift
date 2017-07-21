@@ -39,7 +39,6 @@ class TableCell: UITableViewCell {
      
      - Parameters:
          - timer: an `STSavedTimer` with a duration and a favorite status
-     
      */
     func setupCell(with timer: STSavedTimer) {
         secondsLabel.text = NSLocalizedString("numberOfSeconds", value: "\(Int(timer.seconds)) seconds", comment: "{whole number} seconds")

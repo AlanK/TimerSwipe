@@ -10,9 +10,9 @@ import Foundation
 
 /// Model representation of a user-created timer
 class STSavedTimer: NSObject, NSCoding {
-    // Timer duration in seconds
+    /// Timer duration in seconds
     let seconds: TimeInterval
-    // Whether or not the timer is the user’s favorite
+    /// Whether or not the timer is the user’s favorite
     var isFavorite: Bool
     
     // Memberwise initializer enables NSCoding required convenience initializer

@@ -52,7 +52,6 @@ enum TimerStatus {
     case cancel
 }
 
-
 /// Common constants
 struct K {
     

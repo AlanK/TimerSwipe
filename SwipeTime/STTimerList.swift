@@ -23,9 +23,7 @@ class STTimerList: NSObject, NSCoding {
     }
     
     /// Initialize with no timers
-    override init() {
-        super.init()
-    }
+    override init() {super.init()}
     
     // MARK: Favorites
     
