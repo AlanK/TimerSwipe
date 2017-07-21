@@ -124,7 +124,7 @@ class STTimerList: NSObject, NSCoding {
 extension STTimerList {
     /// Set the timer array to a developer-chosen default set of timers
     func loadSampleTimers() {
-        load(timerArray: [STSavedTimer(centiseconds: 6000), STSavedTimer(centiseconds: 3000, isFavorite: true), STSavedTimer(centiseconds: 1500)])
+        load(timerArray: [STSavedTimer(seconds: 60.0), STSavedTimer(seconds: 30.0, isFavorite: true), STSavedTimer(seconds: 15.0)])
     }
 }
 

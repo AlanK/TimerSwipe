@@ -65,8 +65,7 @@ class MainViewController: UIViewController {
         // Use providedDuration, then the favorite timer, then the default timer
         if duration == nil {
             let modelController = self.navigationController as? ModelController
-            let centiseconds = modelController?.model?.favorite()?.centiseconds ?? K.defaultDurationInCentiseconds
-            duration = Double(centiseconds)/K.centisecondsPerSecondDouble
+            duration = modelController?.model?.favorite()?.seconds ?? Double(K.defaultDurationInCentiseconds)/K.centisecondsPerSecondDouble
         }
         guard let duration = duration else {return}
         stopwatch = Stopwatch.init(delegate: self, duration: duration)

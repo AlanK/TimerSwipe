@@ -120,7 +120,7 @@ class TableController: UITableViewController {
             let model = modelController?.model else {return}
         let timer = model[indexPath.row]
         // Set the destination view controller's providedDuration to the timer value
-        controller.duration = Double(timer.centiseconds)/K.centisecondsPerSecondDouble
+        controller.duration = timer.seconds
     }
     
     /// Handle the return to the table view from the main view controller
@@ -129,7 +129,7 @@ class TableController: UITableViewController {
         guard let sourceViewController = sender.source as? InputController,
             let userSelectedTime = sourceViewController.userSelectedTime,
             let model = modelController?.model else {return}
-        let newTimer = STSavedTimer(centiseconds: userSelectedTime)
+        let newTimer = STSavedTimer(seconds: Double(userSelectedTime)/K.centisecondsPerSecondDouble)
         let newIndexPath = IndexPath(row: model.count(), section: K.mainSection)
         // Append, save, and update view
         model.append(timer: newTimer)
