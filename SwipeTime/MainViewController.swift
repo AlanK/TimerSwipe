@@ -94,7 +94,10 @@ class MainViewController: UIViewController {
     // MARK: Display updating
     
     /// Updates the timer display with an integer in centiseconds
-    private func displayInt(_ integer: Int) {timeDisplay.text = timeFormatter.formatTime(integer)}
+    private func displayInt(_ centiseconds: Int) {
+        let seconds = Double(centiseconds)/K.centisecondsPerSecondDouble
+        timeDisplay.text = timeFormatter.formatTime(seconds)
+    }
     
     /// Hides the "Swipe to Start" instructions when a timer is running
     private func hideInstructions() {

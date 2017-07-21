@@ -17,13 +17,6 @@ struct TimeFormatter {
         dateFormatter.dateFormat = "mm:ss.SS"
     }
     
-    /// Takes a centisecond integer and returns a string in "00:00.00" format
-    func formatTime(_ centiseconds: Int) -> String {
-        let timeInterval = Double(centiseconds)/K.centisecondsPerSecondDouble
-        return formatTime(timeInterval)
-    }
-    
-    // We're handling time internally using TimeInterval in the hopes of migrating to TimeInterval app-wide in the future.
     /**
      Formats time for display
      
