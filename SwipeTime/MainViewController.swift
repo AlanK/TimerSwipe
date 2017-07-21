@@ -68,7 +68,7 @@ class MainViewController: UIViewController {
             providedDuration = modelController?.model?.favorite()?.centiseconds ?? K.defaultDurationInCentiseconds
         }
         guard let providedDuration = providedDuration else {return}
-        stopwatch = Stopwatch.init(delegate: self, duration: providedDuration)
+        stopwatch = Stopwatch.init(delegate: self, duration: Double(providedDuration)/K.centisecondsPerSecondDouble)
         // Ready the stopwatch
         stopwatch?.clear()
         // Provide accessible instructions for this timer
@@ -93,9 +93,8 @@ class MainViewController: UIViewController {
     
     // MARK: Display updating
     
-    /// Updates the timer display with an integer in centiseconds
-    private func displayInt(_ centiseconds: Int) {
-        let seconds = Double(centiseconds)/K.centisecondsPerSecondDouble
+    /// Updates the timer display with a time interval
+    private func display(seconds: TimeInterval) {
         timeDisplay.text = timeFormatter.formatTime(seconds)
     }
     
@@ -150,13 +149,13 @@ extension MainViewController: StopwatchDelegate {
     }
     
     /**
-     Updates the timer display with an integer in centiseconds.
+     Updates the timer display with a time interval.
      
      - parameters:
-         - integer: time remaining in centiseconds
+     - seconds: time remaining in `TimeInterval`
      */
-    func updateDisplay(with integer: Int) {
-        displayInt(integer)
+    func updateDisplay(with seconds: TimeInterval) {
+        display(seconds: seconds)
     }
     
     /// Handle changes in timer status

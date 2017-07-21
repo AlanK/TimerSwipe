@@ -18,17 +18,17 @@ protocol StopwatchDelegate {
     func unlock()
     /// Handles changes in timer status
     func timerDid(_: TimerStatus)
-    /// Updates the stopwatch display
-    func updateDisplay(with: Int)
+    /// Updates the stopwatch display with a value in seconds
+    func updateDisplay(with: TimeInterval)
 }
 
 /// The object that runs timers
 struct Stopwatch {
     private let delegate: StopwatchDelegate
-    /// Duration in centiseconds
-    private let duration: Int
+    /// Duration in seconds
+    private let duration: TimeInterval
     
-    init(delegate: StopwatchDelegate, duration: Int) {
+    init(delegate: StopwatchDelegate, duration: TimeInterval) {
         self.delegate = delegate
         self.duration = duration
     }
@@ -37,7 +37,7 @@ struct Stopwatch {
         guard delegate.unlocked else {return}
         delegate.lock()
         let startTime = Date.init()
-        let endTime = Date.init(timeInterval: (Double(duration)/K.centisecondsPerSecondDouble), since: startTime)
+        let endTime = Date.init(timeInterval: duration, since: startTime)
         Timer.scheduledTimer(withTimeInterval: K.hundredthOfASecond, repeats: true) {timer in
             self.tick(timer, until: endTime)
         }
@@ -66,7 +66,6 @@ struct Stopwatch {
             return
         }
         // Update the stopwatch display
-        let timeRemaining = Int(endTime.timeIntervalSince(currentTime) * K.centisecondsPerSecondDouble)
-        delegate.updateDisplay(with: timeRemaining)
+        delegate.updateDisplay(with: endTime.timeIntervalSince(currentTime))
     }
 }
