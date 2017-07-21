@@ -16,7 +16,7 @@ class STSavedTimer: NSObject, NSCoding {
     var isFavorite: Bool
     
     // Memberwise initializer enables NSCoding required convenience initializer
-    /// Create a timer of the specified centiseconds and favorite status
+    /// Create a timer of the specified centiseconds and favorite status (obsolete)
     private init(centiseconds: Int, isFavorite: Bool) {
         self.seconds = Double(centiseconds)/K.centisecondsPerSecondDouble
         self.isFavorite = isFavorite
