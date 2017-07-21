@@ -79,13 +79,9 @@ struct K {
     static let emptyHeartIconName = "Empty heart"
     
     // MARK: Time
-    static let defaultDurationInCentiseconds = 3000
-    static let centisecondsPerSecondDouble = 100.0
-    static let hundredthOfASecond = 0.01
-    
-    static let centisecondsPerMinute = 6000
-    static let centisecondsPerSecond = 100
-    static let secondsPerMinute = 60
+    static let defaultDuration: TimeInterval = 30.0
+    static let centisecondsPerSecond = 100.0
+    static let hundredthOfASecond: TimeInterval = 0.01
     
     // MARK: List Keys
     static let timersKey = "timers"

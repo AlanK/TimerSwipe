@@ -18,7 +18,7 @@ class STSavedTimer: NSObject, NSCoding {
     // Memberwise initializer enables NSCoding required convenience initializer
     /// Create a timer of the specified centiseconds and favorite status (obsolete)
     private init(centiseconds: Int, isFavorite: Bool) {
-        self.seconds = Double(centiseconds)/K.centisecondsPerSecondDouble
+        self.seconds = Double(centiseconds)/K.centisecondsPerSecond
         self.isFavorite = isFavorite
     }
     
@@ -36,13 +36,13 @@ class STSavedTimer: NSObject, NSCoding {
     
     /// Create a timer of the default duration
     override convenience init() {
-        self.init(seconds: Double(K.defaultDurationInCentiseconds)/K.centisecondsPerSecondDouble)
+        self.init(seconds: K.defaultDuration)
     }
     
     // MARK: NSCoding
     
     func encode(with aCoder: NSCoder) {
-        aCoder.encode(Int(seconds)*K.centisecondsPerSecond, forKey: K.centisecondsKey)
+        aCoder.encode(Int(seconds*K.centisecondsPerSecond), forKey: K.centisecondsKey)
         aCoder.encode(isFavorite, forKey: K.isFavoriteKey)
     }
     
