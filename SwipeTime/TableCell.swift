@@ -42,7 +42,7 @@ class TableCell: UITableViewCell {
      
      */
     func setupCell(with timer: STSavedTimer) {
-        secondsLabel.text = NSLocalizedString("numberOfSeconts", value: "\(Int(timer.seconds)) seconds", comment: "{whole number} seconds")
+        secondsLabel.text = NSLocalizedString("numberOfSeconds", value: "\(Int(timer.seconds)) seconds", comment: "{whole number} seconds")
         secondsLabel.accessibilityTraits = UIAccessibilityTraitButton
         
         favoriteIcon.accessibilityLabel = NSLocalizedString("favButton", value: "Favorite", comment: "Will be marked on or off to indicate whether or not an item is the user’s favorite")
