@@ -16,12 +16,6 @@ class STSavedTimer: NSObject, NSCoding {
     var isFavorite: Bool
     
     // Memberwise initializer enables NSCoding required convenience initializer
-    /// Create a timer of the specified centiseconds and favorite status (obsolete)
-    private init(centiseconds: Int, isFavorite: Bool) {
-        self.seconds = Double(centiseconds)/K.centisecondsPerSecond
-        self.isFavorite = isFavorite
-    }
-    
     /// Create a timer of the specified seconds and favorite status
     init(seconds: TimeInterval, isFavorite: Bool) {
         self.seconds = seconds
@@ -40,15 +34,18 @@ class STSavedTimer: NSObject, NSCoding {
     }
     
     // MARK: NSCoding
+    // This class serializes centiseconds as Int instead of seconds as TimeInterval. This is the result of bad model design when the app was first created and released. For now, centisecond-related legacy code has been quarantined in this part of the app. In the future, the model should be rewritten to serialize seconds as TimeInterval and legacy model objects should be migrated.
     
     func encode(with aCoder: NSCoder) {
-        aCoder.encode(Int(seconds*K.centisecondsPerSecond), forKey: K.centisecondsKey)
+        let centisecondsPerSecond = 100.0
+        aCoder.encode(Int(seconds*centisecondsPerSecond), forKey: K.centisecondsKey)
         aCoder.encode(isFavorite, forKey: K.isFavoriteKey)
     }
     
     required convenience init(coder aDecoder: NSCoder) {
+        let centisecondsPerSecond = 100.0
         let centiseconds = aDecoder.decodeInteger(forKey: K.centisecondsKey)
         let isFavorite = aDecoder.decodeBool(forKey: K.isFavoriteKey)
-        self.init(centiseconds: centiseconds, isFavorite: isFavorite)
+        self.init(seconds: Double(centiseconds)/centisecondsPerSecond, isFavorite: isFavorite)
     }
 }

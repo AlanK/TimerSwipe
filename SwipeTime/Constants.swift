@@ -80,7 +80,6 @@ struct K {
     
     // MARK: Time
     static let defaultDuration: TimeInterval = 30.0
-    static let centisecondsPerSecond = 100.0
     static let hundredthOfASecond: TimeInterval = 0.01
     
     // MARK: List Keys
