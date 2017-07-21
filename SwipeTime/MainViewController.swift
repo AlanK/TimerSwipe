@@ -10,8 +10,8 @@ import UIKit
 
 /// Primary view controller—displays the selected timer
 class MainViewController: UIViewController {
-    /// The duration of the selected timer
-    var providedDuration: Int?
+    /// The duration of the selected timer in seconds
+    var duration: TimeInterval?
     /// Object that takes an integer in centiseconds and outputs a string for display
     private var timeFormatter = TimeFormatter()
     /// Plays the timer start and finish sounds
@@ -63,16 +63,17 @@ class MainViewController: UIViewController {
         // Make the timer display huge with monospaced numbers
         timeDisplay.font = UIFont.monospacedDigitSystemFont(ofSize: K.timerDisplaySize, weight: UIFont.Weight.regular)
         // Use providedDuration, then the favorite timer, then the default timer
-        if providedDuration == nil {
+        if duration == nil {
             let modelController = self.navigationController as? ModelController
-            providedDuration = modelController?.model?.favorite()?.centiseconds ?? K.defaultDurationInCentiseconds
+            let centiseconds = modelController?.model?.favorite()?.centiseconds ?? K.defaultDurationInCentiseconds
+            duration = Double(centiseconds)/K.centisecondsPerSecondDouble
         }
-        guard let providedDuration = providedDuration else {return}
-        stopwatch = Stopwatch.init(delegate: self, duration: Double(providedDuration)/K.centisecondsPerSecondDouble)
+        guard let duration = duration else {return}
+        stopwatch = Stopwatch.init(delegate: self, duration: duration)
         // Ready the stopwatch
         stopwatch?.clear()
         // Provide accessible instructions for this timer
-        changeButton.accessibilityLabel = NSLocalizedString("timerReady",value: "\(providedDuration/K.centisecondsPerSecond)-second timer, changes timer",comment: "{Whole number}-second timer (When activated, this button) changes timer")
+        changeButton.accessibilityLabel = NSLocalizedString("timerReady",value: "\(Int(duration))-second timer, changes timer",comment: "{Whole number}-second timer (When activated, this button) changes timer")
         changeButton.accessibilityHint = NSLocalizedString("magicTap", value: "Two-finger double-tap starts or cancels timer.", comment: "Tapping twice with two fingers starts or cancels the timer")
     }
     
@@ -165,24 +166,24 @@ extension MainViewController: StopwatchDelegate {
             soundController.playStartSound()
             // Make an accessibility announcement that the timer has started
             UIAccessibilityPostNotification(UIAccessibilityAnnouncementNotification, NSLocalizedString("startedTimer", value: "Started timer", comment: "The timer has started"))
-            guard let providedDuration = providedDuration else {return}
+            guard let duration = duration else {return}
             // Update the one accessible element on this screen with accessibility info describing the running timer and how to cancel it
-            changeButton.accessibilityLabel = NSLocalizedString("runningTimer", value: "Running \(providedDuration/K.centisecondsPerSecond)-second timer, cancels timer", comment: "Running {whole number}-second timer (When activated, this button) cancels the timer")
+            changeButton.accessibilityLabel = NSLocalizedString("runningTimer", value: "Running \(Int(duration))-second timer, cancels timer", comment: "Running {whole number}-second timer (When activated, this button) cancels the timer")
             hideInstructions()
         case .end:
             soundController.playEndSound()
             // Make an accessibility announcement that the timer has ended
             UIAccessibilityPostNotification(UIAccessibilityAnnouncementNotification, NSLocalizedString("timerFinished", value: "Timer finished", comment: "The timer has finished"))
-            guard let providedDuration = providedDuration else {return}
+            guard let duration = duration else {return}
             // Update the one accessible element on this screen with accessibility info describing the available timer and how to change it
-            changeButton.accessibilityLabel = NSLocalizedString("changesTimer", value: "\(providedDuration/K.centisecondsPerSecond)-second timer, changes timer", comment: "{Whole number}-second timer (When activated, this button} changes the timer")
+            changeButton.accessibilityLabel = NSLocalizedString("changesTimer", value: "\(Int(duration))-second timer, changes timer", comment: "{Whole number}-second timer (When activated, this button} changes the timer")
             showInstructions()
         case .cancel:
             // Make an accessibility announcement that the timer was cancelled
             UIAccessibilityPostNotification(UIAccessibilityAnnouncementNotification, NSLocalizedString("canceldTimer", value: "Cancelled timer", comment: "The timer has been cancelled"))
-            guard let providedDuration = providedDuration else {return}
+            guard let duration = duration else {return}
             // Update the one accessible element on this screen with accessibility info describing the available timer and how to change it
-            changeButton.accessibilityLabel = NSLocalizedString("changesTimer", value: "\(providedDuration/K.centisecondsPerSecond)-second timer, changes timer", comment: "{Whole number}-second timer (When activated, this button} changes the timer")
+            changeButton.accessibilityLabel = NSLocalizedString("changesTimer", value: "\(Int(duration))-second timer, changes timer", comment: "{Whole number}-second timer (When activated, this button} changes the timer")
             showInstructions()
         }
     }

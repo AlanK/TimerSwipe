@@ -120,7 +120,7 @@ class TableController: UITableViewController {
             let model = modelController?.model else {return}
         let timer = model[indexPath.row]
         // Set the destination view controller's providedDuration to the timer value
-        controller.providedDuration = timer.centiseconds
+        controller.duration = Double(timer.centiseconds)/K.centisecondsPerSecondDouble
     }
     
     /// Handle the return to the table view from the main view controller
