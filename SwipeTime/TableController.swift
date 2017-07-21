@@ -129,7 +129,7 @@ class TableController: UITableViewController {
         guard let sourceViewController = sender.source as? InputController,
             let userSelectedTime = sourceViewController.userSelectedTime,
             let model = modelController?.model else {return}
-        let newTimer = STSavedTimer(seconds: Double(userSelectedTime)/K.centisecondsPerSecondDouble)
+        let newTimer = STSavedTimer(seconds: userSelectedTime)
         let newIndexPath = IndexPath(row: model.count(), section: K.mainSection)
         // Append, save, and update view
         model.append(timer: newTimer)

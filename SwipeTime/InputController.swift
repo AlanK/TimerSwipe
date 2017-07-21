@@ -11,7 +11,7 @@ import UIKit
 /// The modal view for creating new timers
 class InputController: UIViewController, UITextFieldDelegate {
     /// Time value accessible to other objects
-    var userSelectedTime: Int?
+    var userSelectedTime: TimeInterval?
     /// Text field in which the user types
     @IBOutlet var timeField: UITextField!
     /// Right nav bar button for submitting selected time
@@ -61,8 +61,6 @@ class InputController: UIViewController, UITextFieldDelegate {
         timeField.resignFirstResponder()
         // Create a valid userSelectedTime or exit early
         guard let text = timeField.text, let userTimeInSeconds = Int(text) else {return}
-        let userTimeInCentiseconds = userTimeInSeconds * K.centisecondsPerSecond
-        guard userTimeInCentiseconds > 0 else {return}
-        userSelectedTime = userTimeInCentiseconds
+        userSelectedTime = TimeInterval(userTimeInSeconds)
     }
 }
