@@ -11,7 +11,7 @@ import UIKit
 /// The controller that holds the app model
 protocol ModelController {
     /// The app model
-    var model: STTimerList? {get}
+    var model: STTimerList {get}
 }
 
 /// The main table in the app
@@ -59,13 +59,13 @@ class TableController: UITableViewController {
     // This table has one section
     override func numberOfSections(in tableView: UITableView) -> Int {return K.sectionsInTableView}
 
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {return modelController?.model?.count() ?? 0}
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {return modelController?.model.count() ?? 0}
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: K.cellID, for: indexPath)
         // Pass delegate and timer to cell so it can complete its own setup
         if let cell = cell as? TableCell,
-            let cellTimer = modelController?.model?[indexPath.row] {
+            let cellTimer = modelController?.model[indexPath.row] {
             cell.delegate = self
             cell.setupCell(with: cellTimer)
         }
@@ -94,7 +94,7 @@ class TableController: UITableViewController {
     }
     
     override func setEditing(_ editing: Bool, animated: Bool) {
-        modelController?.model?.saveData()
+        modelController?.model.saveData()
         super.setEditing(editing, animated: animated)
     }
 

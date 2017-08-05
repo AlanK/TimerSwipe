@@ -65,7 +65,7 @@ class MainViewController: UIViewController {
         // Use providedDuration, then the favorite timer, then the default timer
         if duration == nil {
             let modelController = self.navigationController as? ModelController
-            duration = modelController?.model?.favorite()?.seconds ?? K.defaultDuration
+            duration = modelController?.model.favorite()?.seconds ?? K.defaultDuration
         }
         
         guard let duration = duration else {return}
