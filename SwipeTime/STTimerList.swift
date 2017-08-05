@@ -11,19 +11,22 @@ import Foundation
 /// The model on which the app is based
 class STTimerList: NSObject, NSCoding {
     /// Array of timers
-    private var timers = [STSavedTimer]()
+    private var timers: [STSavedTimer]
     
     // MARK: Initializers
     
     /// Memberwise initializer
     init(timers: [STSavedTimer]) {
-        super.init()
         self.timers = timers
+        super.init()
         self.validate()
     }
     
     /// Initialize with no timers
-    override init() {super.init()}
+    override init() {
+        self.timers = [STSavedTimer]()
+        super.init()
+    }
     
     // MARK: Favorites
     
