@@ -72,6 +72,7 @@ struct K {
     static let instructionsAnimationDuration: TimeInterval = 0.2
     static let instructionsShowAlpha: CGFloat = 1.0
     static let instructionsHideAlpha: CGFloat = 0.2
+    static let defaultDisplay: String = "00:00.00"
     
     // MARK: Heart Icon
     static let fullHeartIconName = "Full heart"
