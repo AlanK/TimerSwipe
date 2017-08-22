@@ -13,6 +13,7 @@ class NavController: UINavigationController {
     let model: STTimerList = {
         // Try to load the model from UserDefaults
         guard let archivedData = UserDefaults.standard.object(forKey: K.persistedList) as? Data, let extractedModel = NSKeyedUnarchiver.unarchiveObject(with: archivedData) as? STTimerList else {
+            // No model extracted; give up and load the default model
             let model = STTimerList()
             model.loadSampleTimers()
             return model
