@@ -9,7 +9,7 @@
 import UIKit
 
 /// The modal view for creating new timers
-class InputController: UIViewController, UITextFieldDelegate {
+class InputController: UIViewController {
     /// Time value accessible to other objects
     var userSelectedTime: TimeInterval?
     /// Text field in which the user types
@@ -29,17 +29,6 @@ class InputController: UIViewController, UITextFieldDelegate {
         timeField.delegate = self
         timeField.becomeFirstResponder()
         timeField.accessibilityLabel = NSLocalizedString("descriptionOfTextField", value: "Duration of timer in seconds", comment: "")
-    }
-    
-    // MARK: Text field delegate
-    // Protect against text-related crashes
-    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        // Prevent crash-on-undo when iOS tries to undo a change that was blocked by shouldChangeCharactersInRange = false
-        let currentCharacterCount = textField.text?.characters.count ?? 0
-        // Prevent more than three characters from being put in the text field
-        guard (range.length + range.location <= currentCharacterCount) else {return false}
-        let newLength = currentCharacterCount + string.characters.count - range.length
-        return newLength <= 3
     }
     
     // MARK: Navigation
@@ -62,5 +51,17 @@ class InputController: UIViewController, UITextFieldDelegate {
         // Create a valid userSelectedTime or exit early
         guard let text = timeField.text, let userTimeInSeconds = Int(text) else {return}
         userSelectedTime = TimeInterval(userTimeInSeconds)
+    }
+}
+
+extension InputController: UITextFieldDelegate {
+    // Protect against text-related crashes
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        // Prevent crash-on-undo when iOS tries to undo a change that was blocked by shouldChangeCharactersInRange = false
+        let currentCharacterCount = textField.text?.characters.count ?? 0
+        // Prevent more than three characters from being put in the text field
+        guard (range.length + range.location <= currentCharacterCount) else {return false}
+        let newLength = currentCharacterCount + string.characters.count - range.length
+        return newLength <= 3
     }
 }
