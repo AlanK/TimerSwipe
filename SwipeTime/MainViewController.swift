@@ -163,7 +163,7 @@ extension MainViewController: StopwatchDelegate {
     func timerDid(_ status: TimerStatus) {
         /// String of the timer duration (or "Unknown" if duration is unavailable)
         var textDuration: String {
-            guard let duration = duration else {return "Unknown"}
+            guard let duration = duration else {return K.defaultDisplay}
             return String(Int(duration))
         }
         
