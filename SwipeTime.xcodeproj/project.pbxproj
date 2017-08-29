@@ -28,6 +28,7 @@
 		5AA3E3AE1EEF36C400FB5F1D /* NavController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AA3E3AD1EEF36C400FB5F1D /* NavController.swift */; };
 		5AB18AFA1D2058CA007B9D9F /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AB18AF91D2058CA007B9D9F /* MainViewController.swift */; };
 		5AB69EBF1EC799370078DDA5 /* Stopwatch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AB69EBE1EC799370078DDA5 /* Stopwatch.swift */; };
+		5ADB6A181F561562006BEE1B /* InputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ADB6A171F561562006BEE1B /* InputView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -55,6 +56,7 @@
 		5AA3E3AD1EEF36C400FB5F1D /* NavController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavController.swift; sourceTree = "<group>"; };
 		5AB18AF91D2058CA007B9D9F /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		5AB69EBE1EC799370078DDA5 /* Stopwatch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Stopwatch.swift; sourceTree = "<group>"; };
+		5ADB6A171F561562006BEE1B /* InputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -155,6 +157,7 @@
 			children = (
 				5AA3E3AD1EEF36C400FB5F1D /* NavController.swift */,
 				5A4536831D298CA300E62273 /* InputController.swift */,
+				5ADB6A171F561562006BEE1B /* InputView.swift */,
 				5AA3E3AB1EEF356600FB5F1D /* Table */,
 				5AA3E3AA1EEF354300FB5F1D /* Main */,
 			);
@@ -240,6 +243,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5ADB6A181F561562006BEE1B /* InputView.swift in Sources */,
 				5A12267E1D5A94C3006D49F1 /* STTimerList.swift in Sources */,
 				5A90785D1EEB8C24006BCDD3 /* Constants.swift in Sources */,
 				5A03B9A81D1DDB9800E245C9 /* AppDelegate.swift in Sources */,
