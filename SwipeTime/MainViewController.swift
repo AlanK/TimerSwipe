@@ -56,7 +56,7 @@ class MainViewController: UIViewController {
         return true
     }
     
-    // MARK: View controller
+    // MARK: View lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -70,7 +70,7 @@ class MainViewController: UIViewController {
         
         guard let duration = duration else {return}
         stopwatch = Stopwatch.init(delegate: self, duration: duration)
-        // Ready the stopwatch
+        // Ensure the stopwatch and delegate are ready; set the display to the current timer
         stopwatch?.clear()
         // Provide accessible instructions for this timer
         changeButton.accessibilityLabel = NSLocalizedString("timerReady",value: "\(Int(duration))-second timer, changes timer",comment: "{Whole number}-second timer (When activated, this button) changes timer")
@@ -79,7 +79,7 @@ class MainViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        // Turn off idle lock on this screen
+        // Turn off idle lock for this view
         UIApplication.shared.isIdleTimerDisabled = true
         self.navigationController?.setNavigationBarHidden(true, animated: false)
         soundController.setActive(true)
@@ -87,7 +87,7 @@ class MainViewController: UIViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        // Turn on idle lock when leaving this screen
+        // Turn on idle lock when leaving this view
         UIApplication.shared.isIdleTimerDisabled = false
         soundController.setActive(false)
     }
