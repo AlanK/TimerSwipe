@@ -22,7 +22,8 @@ class InputView: UIInputView {
     /// Send button
     let addButton: UIButton = {
         let button = UIButton(type: .system)
-        button.setTitle("Add", for: .normal)
+        button.tintColor = K.tintColor
+        button.setTitle("Save", for: .normal)
         return button
     }()
 
