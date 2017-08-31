@@ -177,7 +177,7 @@ class TableController: UITableViewController {
         case .add: self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addTimer(_:)))
         case .cancel: self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancelAdd))
         }
-        
+        self.navigationItem.leftBarButtonItem?.accessibilityLabel = buttonState.text
     }
 }
 
