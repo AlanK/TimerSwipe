@@ -17,7 +17,7 @@ class InputView: UIInputView {
     /// Send button
     let sendButton: UIButton = {
         let button = UIButton(type: .system)
-        button.setTitle("Send", for: .normal)
+        button.setTitle("Add", for: .normal)
         return button
     }()
 
