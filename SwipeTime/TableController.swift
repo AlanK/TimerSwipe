@@ -22,6 +22,14 @@ class TableController: UITableViewController {
     @IBOutlet var footerContainer: UIView!
     /// The label serving as the table footer
     @IBOutlet var footer: UILabel!
+    /// The view which can create new timers
+    let keyboardAccessoryView: InputView = {
+        let view = InputView(frame: .zero, inputViewStyle: .default)
+        
+        // Wire up actions here
+        
+        return view
+    }()
     
     // MARK: View controller
     
@@ -31,6 +39,9 @@ class TableController: UITableViewController {
         modelController = self.navigationController as? ModelController
         // Display an Edit button in the navigation bar for this view controller.
         self.navigationItem.rightBarButtonItem = self.editButtonItem
+        
+        keyboardAccessoryView.textField.delegate = self
+        // Be prepared to show keyboard accessory view
     }
     
     override func viewDidLayoutSubviews() {
@@ -123,19 +134,50 @@ class TableController: UITableViewController {
         controller.duration = timer.seconds
     }
     
-    /// Handle the return to the table view from the main view controller
-    @IBAction func unwindToSTTVC(_ sender: UIStoryboardSegue) {
-        // Ensure we're arriving from the right source and extract useful info
-        guard let sourceViewController = sender.source as? InputController,
-            let userSelectedTime = sourceViewController.userSelectedTime,
-            let model = modelController?.model else {return}
-        let newTimer = STSavedTimer(seconds: userSelectedTime)
-        let newIndexPath = IndexPath(row: model.count(), section: K.mainSection)
-        // Append, save, and update view
-        model.append(timer: newTimer)
-        model.saveData()
-        tableView.insertRows(at: [newIndexPath], with: .automatic)
-        self.navigationItem.rightBarButtonItem?.isEnabled = (model.count() > 0)
+//    /// Handle the return to the table view from the main view controller
+//    @IBAction func unwindToSTTVC(_ sender: UIStoryboardSegue) {
+//        // Ensure we're arriving from the right source and extract useful info
+//        guard let sourceViewController = sender.source as? InputController,
+//            let userSelectedTime = sourceViewController.userSelectedTime,
+//            let model = modelController?.model else {return}
+//        let newTimer = STSavedTimer(seconds: userSelectedTime)
+//        let newIndexPath = IndexPath(row: model.count(), section: K.mainSection)
+//        // Append, save, and update view
+//        model.append(timer: newTimer)
+//        model.saveData()
+//        tableView.insertRows(at: [newIndexPath], with: .automatic)
+//        self.navigationItem.rightBarButtonItem?.isEnabled = (model.count() > 0)
+//    }
+    
+    override var canBecomeFirstResponder: Bool {
+        return true
+    }
+    
+    override func becomeFirstResponder() -> Bool {
+        return super.becomeFirstResponder()
+    }
+    
+    @IBAction func addTimer(_ sender: Any) {
+        keyboardAccessoryView.textField.becomeFirstResponder()
+        toggleAddButton(to: .cancel)
+    }
+    
+    override var inputAccessoryView: UIInputView? {
+        return keyboardAccessoryView
+    }
+    
+    @objc func cancelAdd() {
+        // Insert something to cancel adding a timer
+        keyboardAccessoryView.textField.resignFirstResponder()
+        toggleAddButton(to: .add)
+    }
+    
+    func toggleAddButton(to buttonState: addButtonState) {
+        switch buttonState {
+        case .add: self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addTimer(_:)))
+        case .cancel: self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancelAdd))
+        }
+        
     }
 }
 
@@ -151,5 +193,17 @@ extension TableController: TableCellDelegate {
         model.toggleFavorite(at: index)
         model.saveData()
         tableView.reloadData()
+    }
+}
+
+extension TableController: UITextFieldDelegate {
+    // Protect against text-related crashes
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        // Prevent crash-on-undo when iOS tries to undo a change that was blocked by shouldChangeCharactersInRange = false
+        let currentCharacterCount = textField.text?.characters.count ?? 0
+        // Prevent more than three characters from being put in the text field
+        guard (range.length + range.location <= currentCharacterCount) else {return false}
+        let newLength = currentCharacterCount + string.characters.count - range.length
+        return newLength <= 3
     }
 }
