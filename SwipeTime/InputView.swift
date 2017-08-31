@@ -13,9 +13,14 @@ class InputView: UIInputView {
     /// View containing text view and send button
     let wrapper = UIView()
     /// Text input view
-    let textView = UITextView()
+    let textField: UITextField = {
+        let view = UITextField()
+        view.borderStyle = UITextBorderStyle.roundedRect
+        view.keyboardType = .numberPad
+        return view
+    }()
     /// Send button
-    let sendButton: UIButton = {
+    let addButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("Add", for: .normal)
         return button
@@ -29,8 +34,8 @@ class InputView: UIInputView {
         super.init(frame: frame, inputViewStyle: inputViewStyle)
         
         addSubview(wrapper)
-        wrapper.addSubview(textView)
-        wrapper.addSubview(sendButton)
+        wrapper.addSubview(textField)
+        wrapper.addSubview(addButton)
         
         translatesAutoresizingMaskIntoConstraints = false
         backgroundColor = UIColor.white
@@ -43,18 +48,17 @@ class InputView: UIInputView {
         wrapper.leadingAnchor.constraint(equalTo: margin.leadingAnchor).isActive = true
         wrapper.trailingAnchor.constraint(equalTo: margin.trailingAnchor).isActive = true
         
-        textView.translatesAutoresizingMaskIntoConstraints = false
-        textView.isScrollEnabled = false
-        textView.topAnchor.constraint(equalTo: wrapper.topAnchor, constant: gap).isActive = true
-        textView.bottomAnchor.constraint(equalTo: wrapper.bottomAnchor, constant: -gap).isActive = true
-        textView.leadingAnchor.constraint(equalTo: wrapper.leadingAnchor, constant: gap).isActive = true
-        textView.trailingAnchor.constraint(equalTo: sendButton.leadingAnchor, constant: -gap).isActive = true
+        textField.translatesAutoresizingMaskIntoConstraints = false
+        textField.topAnchor.constraint(equalTo: wrapper.topAnchor, constant: gap).isActive = true
+        textField.bottomAnchor.constraint(equalTo: wrapper.bottomAnchor, constant: -gap).isActive = true
+        textField.leadingAnchor.constraint(equalTo: wrapper.leadingAnchor, constant: gap).isActive = true
+        textField.trailingAnchor.constraint(equalTo: addButton.leadingAnchor, constant: -gap).isActive = true
         
-        sendButton.translatesAutoresizingMaskIntoConstraints = false
-        sendButton.setContentHuggingPriority(.defaultHigh, for: .horizontal)
-        sendButton.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
-        sendButton.lastBaselineAnchor.constraint(equalTo: textView.lastBaselineAnchor).isActive = true
-        sendButton.trailingAnchor.constraint(equalTo: wrapper.trailingAnchor).isActive = true
+        addButton.translatesAutoresizingMaskIntoConstraints = false
+        addButton.setContentHuggingPriority(.defaultHigh, for: .horizontal)
+        addButton.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
+        addButton.lastBaselineAnchor.constraint(equalTo: textField.lastBaselineAnchor).isActive = true
+        addButton.trailingAnchor.constraint(equalTo: wrapper.trailingAnchor).isActive = true
     }
-    
 }
+
