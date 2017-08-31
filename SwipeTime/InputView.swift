@@ -26,6 +26,14 @@ class InputView: UIInputView {
         return button
     }()
 
+    override func sizeThatFits(_ size: CGSize) -> CGSize {
+        return CGSize(width: size.width, height: 54.0)
+    }
+    
+    override var intrinsicContentSize: CGSize {
+        return bounds.size
+    }
+    
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
