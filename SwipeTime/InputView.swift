@@ -60,7 +60,7 @@ class InputView: UIInputView {
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.topAnchor.constraint(equalTo: wrapper.topAnchor, constant: gap).isActive = true
         textField.bottomAnchor.constraint(equalTo: wrapper.bottomAnchor, constant: -gap).isActive = true
-        textField.leadingAnchor.constraint(equalTo: wrapper.leadingAnchor, constant: gap).isActive = true
+        textField.leadingAnchor.constraint(equalTo: wrapper.leadingAnchor).isActive = true
         textField.trailingAnchor.constraint(equalTo: addButton.leadingAnchor, constant: -gap).isActive = true
         
         addButton.translatesAutoresizingMaskIntoConstraints = false
