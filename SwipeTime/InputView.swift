@@ -16,6 +16,7 @@ class InputView: UIInputView {
     let textField: UITextField = {
         let view = UITextField()
         view.borderStyle = UITextBorderStyle.roundedRect
+        view.textAlignment = .right
         view.keyboardType = .numberPad
         return view
     }()
