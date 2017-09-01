@@ -26,6 +26,21 @@ class InputView: UIInputView {
         button.setTitle("Save", for: .normal)
         return button
     }()
+    /// Dictionary keys
+    enum SavedConstraints {
+        case wrapperTop
+        case wrapperBottom
+        case wrapperLeading
+        case wrapperTrailing
+        case textFieldTop
+        case textFieldBottom
+        case textFieldLeading
+        case textFieldTrailing
+        case buttonHugging
+        case buttonCompression
+        case buttonBaseline
+        case buttonTrailing
+    }
 
     override func sizeThatFits(_ size: CGSize) -> CGSize {
         return CGSize(width: size.width, height: size.height)
