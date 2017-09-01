@@ -36,8 +36,6 @@ class InputView: UIInputView {
         case textFieldBottom
         case textFieldLeading
         case textFieldTrailing
-        case buttonHugging
-        case buttonCompression
         case buttonBaseline
         case buttonTrailing
     }
@@ -68,7 +66,10 @@ class InputView: UIInputView {
         wrapper.translatesAutoresizingMaskIntoConstraints = false
         textField.translatesAutoresizingMaskIntoConstraints = false
         addButton.translatesAutoresizingMaskIntoConstraints = false
-                
+        
+        addButton.setContentHuggingPriority(.defaultHigh, for: .horizontal)
+        addButton.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
+
         wrapper.topAnchor.constraint(equalTo: margin.topAnchor).isActive = true
         wrapper.bottomAnchor.constraint(equalTo: margin.bottomAnchor).isActive = true
         wrapper.leadingAnchor.constraint(equalTo: margin.leadingAnchor).isActive = true
@@ -79,8 +80,6 @@ class InputView: UIInputView {
         textField.leadingAnchor.constraint(equalTo: wrapper.leadingAnchor).isActive = true
         textField.trailingAnchor.constraint(equalTo: addButton.leadingAnchor, constant: -gap).isActive = true
         
-        addButton.setContentHuggingPriority(.defaultHigh, for: .horizontal)
-        addButton.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
         addButton.lastBaselineAnchor.constraint(equalTo: textField.lastBaselineAnchor).isActive = true
         addButton.trailingAnchor.constraint(equalTo: wrapper.trailingAnchor).isActive = true
     }
