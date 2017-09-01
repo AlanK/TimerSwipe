@@ -56,29 +56,29 @@ class InputView: UIInputView {
 
     override init(frame: CGRect, inputViewStyle: UIInputViewStyle) {
         super.init(frame: frame, inputViewStyle: inputViewStyle)
-        
+        let margin = layoutMarginsGuide, gap: CGFloat = 10.0
+
+        backgroundColor = UIColor.white
+
         addSubview(wrapper)
         wrapper.addSubview(textField)
         wrapper.addSubview(addButton)
         
         translatesAutoresizingMaskIntoConstraints = false
-        backgroundColor = UIColor.white
-        
-        let margin = layoutMarginsGuide, gap: CGFloat = 10.0
-        
         wrapper.translatesAutoresizingMaskIntoConstraints = false
+        textField.translatesAutoresizingMaskIntoConstraints = false
+        addButton.translatesAutoresizingMaskIntoConstraints = false
+                
         wrapper.topAnchor.constraint(equalTo: margin.topAnchor).isActive = true
         wrapper.bottomAnchor.constraint(equalTo: margin.bottomAnchor).isActive = true
         wrapper.leadingAnchor.constraint(equalTo: margin.leadingAnchor).isActive = true
         wrapper.trailingAnchor.constraint(equalTo: margin.trailingAnchor).isActive = true
         
-        textField.translatesAutoresizingMaskIntoConstraints = false
         textField.topAnchor.constraint(equalTo: wrapper.topAnchor, constant: gap).isActive = true
         textField.bottomAnchor.constraint(equalTo: wrapper.bottomAnchor, constant: -gap).isActive = true
         textField.leadingAnchor.constraint(equalTo: wrapper.leadingAnchor).isActive = true
         textField.trailingAnchor.constraint(equalTo: addButton.leadingAnchor, constant: -gap).isActive = true
         
-        addButton.translatesAutoresizingMaskIntoConstraints = false
         addButton.setContentHuggingPriority(.defaultHigh, for: .horizontal)
         addButton.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
         addButton.lastBaselineAnchor.constraint(equalTo: textField.lastBaselineAnchor).isActive = true
