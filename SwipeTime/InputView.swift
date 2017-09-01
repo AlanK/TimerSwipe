@@ -27,31 +27,31 @@ class InputView: UIInputView {
         button.setTitle("Save", for: .normal)
         return button
     }()
-    /// Activating this constraint hides this view
-    private var constraintToHideView = Set<NSLayoutConstraint>()
-    /// Activating this constraint shows this view
-    private var constraintToShowView = Set<NSLayoutConstraint>()
-    
+    /// Activating these constraints hides this view
+    private var constraintsToHideView = Set<NSLayoutConstraint>()
+    /// Activating these constraints shows this view
+    private var constraintsToShowView = Set<NSLayoutConstraint>()
+    /// Report whether the constraints are set to make the view visible and toggle visibility
     var isVisible: Bool {
         get {
-            guard let isVisible = constraintToShowView.first?.isActive else {return false}
+            guard let isVisible = constraintsToShowView.first?.isActive else {return false}
             return isVisible
         }
         set {
             // Always deactivate constraints before activating conflicting ones (or else this could be a lot less verbose)
             switch newValue {
             case true:
-                for constraint in constraintToHideView {
+                for constraint in constraintsToHideView {
                     constraint.isActive = false
                 }
-                for constraint in constraintToShowView {
+                for constraint in constraintsToShowView {
                     constraint.isActive = true
                 }
             case false:
-                for constraint in constraintToShowView {
+                for constraint in constraintsToShowView {
                     constraint.isActive = false
                 }
-                for constraint in constraintToHideView {
+                for constraint in constraintsToHideView {
                     constraint.isActive = true
                 }
             }
@@ -107,14 +107,14 @@ class InputView: UIInputView {
         addButton.trailingAnchor.constraint(equalTo: wrapper.trailingAnchor).isActive = true
         
         // Constraints for showing this view
-        constraintToShowView.insert(wrapper.bottomAnchor.constraint(equalTo: margin.bottomAnchor))
-        constraintToShowView.insert(textField.bottomAnchor.constraint(equalTo: wrapper.bottomAnchor, constant: -gap))
+        constraintsToShowView.insert(wrapper.bottomAnchor.constraint(equalTo: margin.bottomAnchor))
+        constraintsToShowView.insert(textField.bottomAnchor.constraint(equalTo: wrapper.bottomAnchor, constant: -gap))
         
         // Constraint for hiding this view
-        constraintToHideView.insert(wrapper.bottomAnchor.constraint(equalTo: wrapper.topAnchor))
+        constraintsToHideView.insert(wrapper.bottomAnchor.constraint(equalTo: wrapper.topAnchor))
         
         // Start with the view hidden
-        for constraint in constraintToHideView {
+        for constraint in constraintsToHideView {
             constraint.isActive = true
         }
     }
