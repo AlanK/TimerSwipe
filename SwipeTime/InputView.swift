@@ -28,7 +28,7 @@ class InputView: UIInputView {
     }()
 
     override func sizeThatFits(_ size: CGSize) -> CGSize {
-        return CGSize(width: size.width, height: 54.0)
+        return CGSize(width: size.width, height: size.height)
     }
     
     override var intrinsicContentSize: CGSize {
