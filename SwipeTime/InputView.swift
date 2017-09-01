@@ -86,9 +86,6 @@ class InputView: UIInputView {
         constraintToHideView.insert(wrapper.bottomAnchor.constraint(equalTo: wrapper.topAnchor))
         
         // Start with the view hidden
-        for constraint in constraintToShowView {
-            constraint.isActive = false
-        }
         for constraint in constraintToHideView {
             constraint.isActive = true
         }
