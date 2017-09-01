@@ -158,16 +158,9 @@ class TableController: UITableViewController {
     }
     
     @IBAction func addTimer(_ sender: Any) {
-        for constraint in self.keyboardAccessoryView.constraintToHideView {
-            constraint.isActive = false
-        }
-        for constraint in self.keyboardAccessoryView.constraintToShowView {
-            constraint.isActive = true
-        }
-        self.keyboardAccessoryView.layoutIfNeeded()
-        
-        self.keyboardAccessoryView.textField.becomeFirstResponder()
-        self.toggleAddButton(to: .cancel)
+        keyboardAccessoryView.isVisible = true
+        keyboardAccessoryView.textField.becomeFirstResponder()
+        toggleAddButton(to: .cancel)
     }
     
     override var inputAccessoryView: UIInputView? {
@@ -178,13 +171,7 @@ class TableController: UITableViewController {
         // Insert something to cancel adding a timer
         keyboardAccessoryView.textField.resignFirstResponder()
         toggleAddButton(to: .add)
-        for constraint in self.keyboardAccessoryView.constraintToShowView {
-            constraint.isActive = false
-        }
-        for constraint in self.keyboardAccessoryView.constraintToHideView {
-            constraint.isActive = true
-        }
-        self.keyboardAccessoryView.layoutIfNeeded()
+        keyboardAccessoryView.isVisible = false
     }
     
     func toggleAddButton(to buttonState: addButtonState) {

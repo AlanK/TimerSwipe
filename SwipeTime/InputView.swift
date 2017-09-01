@@ -28,9 +28,37 @@ class InputView: UIInputView {
         return button
     }()
     /// Activating this constraint hides this view
-    var constraintToHideView = Set<NSLayoutConstraint>()
+    private var constraintToHideView = Set<NSLayoutConstraint>()
     /// Activating this constraint shows this view
-    var constraintToShowView = Set<NSLayoutConstraint>()
+    private var constraintToShowView = Set<NSLayoutConstraint>()
+    
+    var isVisible: Bool {
+        get {
+            guard let isVisible = constraintToShowView.first?.isActive else {return false}
+            return isVisible
+        }
+        set {
+            // Always deactivate constraints before activating conflicting ones (or else this could be a lot less verbose)
+            switch newValue {
+            case true:
+                for constraint in constraintToHideView {
+                    constraint.isActive = false
+                }
+                for constraint in constraintToShowView {
+                    constraint.isActive = true
+                }
+            case false:
+                for constraint in constraintToShowView {
+                    constraint.isActive = false
+                }
+                for constraint in constraintToHideView {
+                    constraint.isActive = true
+                }
+            }
+            // Don't forget to do layout at the end
+            layoutIfNeeded()
+        }
+    }
 
     override func sizeThatFits(_ size: CGSize) -> CGSize {
         return CGSize(width: size.width, height: size.height)
