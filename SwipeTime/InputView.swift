@@ -11,7 +11,7 @@ import UIKit
 class InputView: UIInputView {
     // Based on the CatChat app from https://developer.apple.com/videos/play/wwdc2017/242/
     /// View containing text view and send button
-    let wrapper = UIView()
+    private let wrapper = UIView()
     /// Text input view
     let textField: UITextField = {
         let view = UITextField()
