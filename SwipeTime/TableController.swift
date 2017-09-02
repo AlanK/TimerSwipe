@@ -25,9 +25,7 @@ class TableController: UITableViewController {
     /// The view which can create new timers
     let keyboardAccessoryView: InputView = {
         let view = InputView(frame: .zero, inputViewStyle: .default)
-        
-        // Wire up actions here
-        
+        view.addButton.addTarget(self, action: #selector(commitNewTimer), for: .touchUpInside)
         return view
     }()
     
@@ -165,21 +163,6 @@ extension TableController: UITextFieldDelegate {
 // MARK: - Input Accessory Controller
 extension TableController {
     
-    //    /// Handle the return to the table view from the main view controller
-    //    @IBAction func unwindToSTTVC(_ sender: UIStoryboardSegue) {
-    //        // Ensure we're arriving from the right source and extract useful info
-    //        guard let sourceViewController = sender.source as? InputController,
-    //            let userSelectedTime = sourceViewController.userSelectedTime,
-    //            let model = modelController?.model else {return}
-    //        let newTimer = STSavedTimer(seconds: userSelectedTime)
-    //        let newIndexPath = IndexPath(row: model.count(), section: K.mainSection)
-    //        // Append, save, and update view
-    //        model.append(timer: newTimer)
-    //        model.saveData()
-    //        tableView.insertRows(at: [newIndexPath], with: .automatic)
-    //        self.navigationItem.rightBarButtonItem?.isEnabled = (model.count() > 0)
-    //    }
-    
     override var canBecomeFirstResponder: Bool {
         return true
     }
@@ -198,7 +181,7 @@ extension TableController {
         return keyboardAccessoryView
     }
     
-    @objc func cancelAdd() {
+    @objc func exitKeyboardAccessoryView() {
         // Insert something to cancel adding a timer
         keyboardAccessoryView.textField.resignFirstResponder()
         toggleAddButton(to: .add)
@@ -208,8 +191,32 @@ extension TableController {
     func toggleAddButton(to buttonState: addButtonState) {
         switch buttonState {
         case .add: self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addTimer(_:)))
-        case .cancel: self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancelAdd))
+        case .cancel: self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(exitKeyboardAccessoryView))
         }
         self.navigationItem.leftBarButtonItem?.accessibilityLabel = buttonState.text
+    }
+    
+    override func accessibilityPerformEscape() -> Bool {
+        exitKeyboardAccessoryView()
+        return true
+    }
+    
+    @objc func commitNewTimer() {
+        defer {
+            exitKeyboardAccessoryView()
+        }
+        // Create a valid userSelectedTime or exit early
+        guard let text = keyboardAccessoryView.textField.text, let userTimeInSeconds = Int(text) else {return}
+        let userSelectedTime = TimeInterval(userTimeInSeconds)
+        
+        // Create a new timer
+        guard let model = modelController?.model else {return}
+        let newTimer = STSavedTimer(seconds: userSelectedTime)
+        let newIndexPath = IndexPath(row: model.count(), section: K.mainSection)
+        // Append, save, and update view
+        model.append(timer: newTimer)
+        model.saveData()
+        tableView.insertRows(at: [newIndexPath], with: .automatic)
+        self.navigationItem.rightBarButtonItem?.isEnabled = (model.count() > 0)
     }
 }

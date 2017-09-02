@@ -18,6 +18,7 @@ class InputView: UIInputView {
         view.borderStyle = UITextBorderStyle.roundedRect
         view.textAlignment = .right
         view.keyboardType = .numberPad
+        view.accessibilityLabel = NSLocalizedString("descriptionOfTextField", value: "Duration of timer in seconds", comment: "")
         return view
     }()
     /// Send button
