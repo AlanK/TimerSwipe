@@ -39,9 +39,8 @@ class TableController: UITableViewController {
         modelController = self.navigationController as? ModelController
         // Display an Edit button in the navigation bar for this view controller.
         self.navigationItem.rightBarButtonItem = self.editButtonItem
-        
+        // Ready input accessory
         keyboardAccessoryView.textField.delegate = self
-        // Be prepared to show keyboard accessory view
     }
     
     override func viewDidLayoutSubviews() {
@@ -133,21 +132,53 @@ class TableController: UITableViewController {
         // Set the destination view controller's providedDuration to the timer value
         controller.duration = timer.seconds
     }
+}
+
+// MARK: - Table Cell Delegate
+extension TableController: TableCellDelegate {
+    /// Handles taps on the custom accessory view on the table view cells
+    func cellButtonTapped(cell: TableCell) {
+        // Indirectly get the cell index path by finding the index path for the cell located where the cell that was tapped was located…
+        let indexPath = self.tableView.indexPathForRow(at: cell.center)
+        
+        guard let index = indexPath?.row, let model = modelController?.model else {return}
+        // Update favorite timer, save, and reload the view
+        model.toggleFavorite(at: index)
+        model.saveData()
+        tableView.reloadData()
+    }
+}
+
+// MARK: - Text Field Delegate
+extension TableController: UITextFieldDelegate {
+    // Protect against text-related crashes
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        // Prevent crash-on-undo when iOS tries to undo a change that was blocked by shouldChangeCharactersInRange = false
+        let currentCharacterCount = textField.text?.characters.count ?? 0
+        // Prevent more than three characters from being put in the text field
+        guard (range.length + range.location <= currentCharacterCount) else {return false}
+        let newLength = currentCharacterCount + string.characters.count - range.length
+        return newLength <= 3
+    }
+}
+
+// MARK: - Input Accessory Controller
+extension TableController {
     
-//    /// Handle the return to the table view from the main view controller
-//    @IBAction func unwindToSTTVC(_ sender: UIStoryboardSegue) {
-//        // Ensure we're arriving from the right source and extract useful info
-//        guard let sourceViewController = sender.source as? InputController,
-//            let userSelectedTime = sourceViewController.userSelectedTime,
-//            let model = modelController?.model else {return}
-//        let newTimer = STSavedTimer(seconds: userSelectedTime)
-//        let newIndexPath = IndexPath(row: model.count(), section: K.mainSection)
-//        // Append, save, and update view
-//        model.append(timer: newTimer)
-//        model.saveData()
-//        tableView.insertRows(at: [newIndexPath], with: .automatic)
-//        self.navigationItem.rightBarButtonItem?.isEnabled = (model.count() > 0)
-//    }
+    //    /// Handle the return to the table view from the main view controller
+    //    @IBAction func unwindToSTTVC(_ sender: UIStoryboardSegue) {
+    //        // Ensure we're arriving from the right source and extract useful info
+    //        guard let sourceViewController = sender.source as? InputController,
+    //            let userSelectedTime = sourceViewController.userSelectedTime,
+    //            let model = modelController?.model else {return}
+    //        let newTimer = STSavedTimer(seconds: userSelectedTime)
+    //        let newIndexPath = IndexPath(row: model.count(), section: K.mainSection)
+    //        // Append, save, and update view
+    //        model.append(timer: newTimer)
+    //        model.saveData()
+    //        tableView.insertRows(at: [newIndexPath], with: .automatic)
+    //        self.navigationItem.rightBarButtonItem?.isEnabled = (model.count() > 0)
+    //    }
     
     override var canBecomeFirstResponder: Bool {
         return true
@@ -180,32 +211,5 @@ class TableController: UITableViewController {
         case .cancel: self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancelAdd))
         }
         self.navigationItem.leftBarButtonItem?.accessibilityLabel = buttonState.text
-    }
-}
-
-// MARK: - Table Cell Delegate
-extension TableController: TableCellDelegate {
-    /// Handles taps on the custom accessory view on the table view cells
-    func cellButtonTapped(cell: TableCell) {
-        // Indirectly get the cell index path by finding the index path for the cell located where the cell that was tapped was located…
-        let indexPath = self.tableView.indexPathForRow(at: cell.center)
-        
-        guard let index = indexPath?.row, let model = modelController?.model else {return}
-        // Update favorite timer, save, and reload the view
-        model.toggleFavorite(at: index)
-        model.saveData()
-        tableView.reloadData()
-    }
-}
-
-extension TableController: UITextFieldDelegate {
-    // Protect against text-related crashes
-    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        // Prevent crash-on-undo when iOS tries to undo a change that was blocked by shouldChangeCharactersInRange = false
-        let currentCharacterCount = textField.text?.characters.count ?? 0
-        // Prevent more than three characters from being put in the text field
-        guard (range.length + range.location <= currentCharacterCount) else {return false}
-        let newLength = currentCharacterCount + string.characters.count - range.length
-        return newLength <= 3
     }
 }
