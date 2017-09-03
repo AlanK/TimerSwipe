@@ -86,6 +86,7 @@ class TableController: UITableViewController {
         let _ = model.remove(at: indexPath.row)
         tableView.deleteRows(at: [indexPath], with: .automatic)
         self.navigationItem.rightBarButtonItem?.isEnabled = (model.count() > 0)
+        // You shouldn't toggle setEditing within this method, so GCD to the rescue
         if model.count() == 0 {
             let nearFuture = DispatchTime.now() + K.editButtonDelay
             let work = DispatchWorkItem {
