@@ -181,8 +181,11 @@ extension TableController {
         return keyboardAccessoryView
     }
     
+    /// Resets and hides the input accessory
     @objc func exitKeyboardAccessoryView() {
-        // Insert something to cancel adding a timer
+        // Clear the text field
+        keyboardAccessoryView.textField.text?.removeAll()
+        // Ditch the keyboard, reset the add button, and hide
         keyboardAccessoryView.textField.resignFirstResponder()
         toggleAddButton(to: .add)
         keyboardAccessoryView.isVisible = false
