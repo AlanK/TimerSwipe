@@ -206,7 +206,7 @@ extension TableController {
             exitKeyboardAccessoryView()
         }
         // Create a valid userSelectedTime or exit early
-        guard let text = keyboardAccessoryView.textField.text, let userTimeInSeconds = Int(text) else {return}
+        guard let text = keyboardAccessoryView.textField.text, let userTimeInSeconds = Int(text), userTimeInSeconds > 0 else {return}
         let userSelectedTime = TimeInterval(userTimeInSeconds)
         
         // Create a new timer
