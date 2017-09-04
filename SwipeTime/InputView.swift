@@ -25,7 +25,7 @@ class InputView: UIInputView {
     let addButton: UIButton = {
         let button = UIButton(type: .system)
         button.tintColor = K.tintColor
-        button.setTitle("Save", for: .normal)
+        button.setTitle(NSLocalizedString("titleOfAddButton", value: "Save", comment: "Save a timer with the current value"), for: .normal)
         return button
     }()
     /// Activating these constraints hides this view
