@@ -112,16 +112,16 @@ class InputView: UIInputView {
         thinLine.bottomAnchor.constraint(equalTo: thinLine.topAnchor, constant: 1.0).isActive = true
         
         wrapper.topAnchor.constraint(equalTo: thinLine.bottomAnchor).isActive = true
-        wrapper.leadingAnchor.constraint(equalTo: margin.leadingAnchor).isActive = true
-        wrapper.trailingAnchor.constraint(equalTo: margin.trailingAnchor).isActive = true
+        wrapper.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
+        wrapper.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
         
         textField.topAnchor.constraint(equalTo: thinLine.bottomAnchor, constant: gap).isActive = true
         
-        textField.leadingAnchor.constraint(equalTo: wrapper.leadingAnchor).isActive = true
+        textField.leadingAnchor.constraint(equalTo: wrapper.leadingAnchor, constant: 2*gap).isActive = true
         textField.trailingAnchor.constraint(equalTo: addButton.leadingAnchor, constant: -gap).isActive = true
         
         addButton.lastBaselineAnchor.constraint(equalTo: textField.lastBaselineAnchor).isActive = true
-        addButton.trailingAnchor.constraint(equalTo: wrapper.trailingAnchor, constant: -gap).isActive = true
+        addButton.trailingAnchor.constraint(equalTo: wrapper.trailingAnchor, constant: -2*gap).isActive = true
         
         // Constraints for showing this view
         constraintsToShowView.insert(wrapper.bottomAnchor.constraint(equalTo: margin.bottomAnchor))
