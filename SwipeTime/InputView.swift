@@ -12,6 +12,12 @@ class InputView: UIInputView {
     // Based on the CatChat app from https://developer.apple.com/videos/play/wwdc2017/242/
     /// View containing text view and send button
     private let wrapper = UIView()
+    /// Thin line to differentiate wrapper from any table cells that may be behind it
+    private let thinLine: UIView = {
+        let view = UIView()
+        view.backgroundColor = UIColor(hue: 0.0, saturation: 0.0, brightness: 0.9, alpha: 1.0)
+        return view
+    }()
     /// Text input view
     let textField: UITextField = {
         let view = UITextField()
@@ -85,11 +91,13 @@ class InputView: UIInputView {
 
         // Assemble the subviews
         addSubview(wrapper)
+        addSubview(thinLine)
         wrapper.addSubview(textField)
         wrapper.addSubview(addButton)
         // No, do not translate autoresizing mask into constraints for anything…
         translatesAutoresizingMaskIntoConstraints = false
         wrapper.translatesAutoresizingMaskIntoConstraints = false
+        thinLine.translatesAutoresizingMaskIntoConstraints = false
         textField.translatesAutoresizingMaskIntoConstraints = false
         addButton.translatesAutoresizingMaskIntoConstraints = false
         // Use these priorities for the button
@@ -98,11 +106,16 @@ class InputView: UIInputView {
 
         // Set constraints for the subviews
         
-        wrapper.topAnchor.constraint(equalTo: margin.topAnchor).isActive = true
+        thinLine.topAnchor.constraint(equalTo: margin.topAnchor).isActive = true
+        thinLine.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
+        thinLine.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
+        thinLine.bottomAnchor.constraint(equalTo: thinLine.topAnchor, constant: 1.0).isActive = true
+        
+        wrapper.topAnchor.constraint(equalTo: thinLine.bottomAnchor).isActive = true
         wrapper.leadingAnchor.constraint(equalTo: margin.leadingAnchor).isActive = true
         wrapper.trailingAnchor.constraint(equalTo: margin.trailingAnchor).isActive = true
         
-        textField.topAnchor.constraint(equalTo: wrapper.topAnchor, constant: gap).isActive = true
+        textField.topAnchor.constraint(equalTo: thinLine.bottomAnchor, constant: gap).isActive = true
         
         textField.leadingAnchor.constraint(equalTo: wrapper.leadingAnchor).isActive = true
         textField.trailingAnchor.constraint(equalTo: addButton.leadingAnchor, constant: -gap).isActive = true
