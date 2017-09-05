@@ -16,6 +16,8 @@ class InputView: UIInputView {
     let textField: UITextField = {
         let view = UITextField()
         view.borderStyle = UITextBorderStyle.roundedRect
+        view.font = K.font
+        view.adjustsFontForContentSizeCategory = true
         view.textAlignment = .right
         view.keyboardType = .numberPad
         view.accessibilityLabel = NSLocalizedString("descriptionOfTextField", value: "Duration of timer in seconds", comment: "")
@@ -26,6 +28,7 @@ class InputView: UIInputView {
         let button = UIButton(type: .system)
         button.tintColor = K.tintColor
         button.setTitle(NSLocalizedString("titleOfAddButton", value: "Save", comment: "Save a timer with the current value"), for: .normal)
+        button.titleLabel?.font = K.font
         return button
     }()
     /// Activating these constraints hides this view
@@ -105,7 +108,7 @@ class InputView: UIInputView {
         textField.trailingAnchor.constraint(equalTo: addButton.leadingAnchor, constant: -gap).isActive = true
         
         addButton.lastBaselineAnchor.constraint(equalTo: textField.lastBaselineAnchor).isActive = true
-        addButton.trailingAnchor.constraint(equalTo: wrapper.trailingAnchor).isActive = true
+        addButton.trailingAnchor.constraint(equalTo: wrapper.trailingAnchor, constant: -gap).isActive = true
         
         // Constraints for showing this view
         constraintsToShowView.insert(wrapper.bottomAnchor.constraint(equalTo: margin.bottomAnchor))
