@@ -11,7 +11,11 @@ import UIKit
 class InputView: UIInputView {
     // Based on the CatChat app from https://developer.apple.com/videos/play/wwdc2017/242/
     /// View containing text view and send button
-    private let wrapper = UIView()
+    private let wrapper: UIView = {
+        let view = UIView()
+        view.backgroundColor = UIColor.white
+        return view
+    }()
     /// Thin line to differentiate wrapper from any table cells that may be behind it
     private let thinLine: UIView = {
         let view = UIView()
@@ -86,8 +90,6 @@ class InputView: UIInputView {
         super.init(frame: frame, inputViewStyle: inputViewStyle)
         // Useful shorthand
         let margin = layoutMarginsGuide, gap: CGFloat = 10.0
-        // Make it look nice
-        backgroundColor = UIColor.white
 
         // Assemble the subviews
         addSubview(wrapper)
