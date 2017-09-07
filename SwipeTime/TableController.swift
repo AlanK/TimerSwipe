@@ -40,6 +40,7 @@ class TableController: UITableViewController {
         self.navigationItem.rightBarButtonItem = self.editButtonItem
         // Ready input accessory
         keyboardAccessoryView.textField.delegate = self
+        keyboardAccessoryView.textField.addTarget(self, action: #selector(textInTextFieldChanged(_:)), for: UIControlEvents.editingChanged)
     }
     
     override func viewDidLayoutSubviews() {
@@ -193,6 +194,16 @@ extension TableController {
     override var inputAccessoryView: UIInputView? {
         return keyboardAccessoryView
     }
+    
+    /// Enable and disable the add button based on whether there is text in the text field
+    @objc func textInTextFieldChanged(_ textField: UITextField) {
+        guard let text = textField.text, text.characters.count > 0 else {
+            keyboardAccessoryView.addButton.isEnabled = false
+            return
+        }
+        keyboardAccessoryView.addButton.isEnabled = true
+    }
+
     
     /// Resets and hides the input accessory
     @objc func exitKeyboardAccessoryView() {

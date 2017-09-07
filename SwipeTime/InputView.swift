@@ -57,6 +57,7 @@ class InputView: UIInputView {
         button.tintColor = K.tintColor
         button.setTitle(NSLocalizedString("titleOfAddButton", value: "Save", comment: "Save a timer with the current value"), for: .normal)
         button.titleLabel?.font = K.font
+        button.isEnabled = false
         return button
     }()
     /// Activating these constraints hides this view
