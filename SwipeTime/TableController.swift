@@ -183,7 +183,7 @@ extension TableController {
         return true
     }
     
-    @IBAction func addTimer(_ sender: Any) {
+    @IBAction func inputNewTimer(_ sender: Any) {
         keyboardAccessoryView.isVisible = true
         keyboardAccessoryView.textField.becomeFirstResponder()
         navigationItem.leftBarButtonItem?.isEnabled = false
