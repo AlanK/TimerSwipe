@@ -22,10 +22,12 @@ class InputView: UIInputView {
         view.backgroundColor = UIColor(white: 0.8, alpha: 1.0)
         return view
     }()
+    /// Inner wrapper containing the text field and seconds label
+    let innerWrapper = UIView()
     /// Text input view
     let textField: UITextField = {
         let view = UITextField()
-        view.borderStyle = UITextBorderStyle.roundedRect
+        view.borderStyle = UITextBorderStyle.none
         view.font = K.font
         view.placeholder = "0"
         view.adjustsFontForContentSizeCategory = true
@@ -33,6 +35,13 @@ class InputView: UIInputView {
         view.keyboardType = .numberPad
         view.accessibilityLabel = NSLocalizedString("descriptionOfTextField", value: "Duration of timer in seconds", comment: "")
         return view
+    }()
+    /// "Seconds" label
+    let secondsLabel: UILabel = {
+        let label = UILabel()
+        label.font = K.font
+        label.text = NSLocalizedString("secondsLabel", value: " seconds", comment: "A space followed by the word seconds, so it can be concatenated with an integer to form a phrase like '20 seconds'")
+        return label
     }()
     /// Send button
     let addButton: UIButton = {
@@ -95,17 +104,25 @@ class InputView: UIInputView {
         // Assemble the subviews
         addSubview(wrapper)
         addSubview(thinLine)
-        wrapper.addSubview(textField)
+        wrapper.addSubview(innerWrapper)
+        innerWrapper.addSubview(textField)
+        innerWrapper.addSubview(secondsLabel)
         wrapper.addSubview(addButton)
         // No, do not translate autoresizing mask into constraints for anything…
         translatesAutoresizingMaskIntoConstraints = false
         wrapper.translatesAutoresizingMaskIntoConstraints = false
         thinLine.translatesAutoresizingMaskIntoConstraints = false
+        innerWrapper.translatesAutoresizingMaskIntoConstraints = false
         textField.translatesAutoresizingMaskIntoConstraints = false
+        secondsLabel.translatesAutoresizingMaskIntoConstraints = false
         addButton.translatesAutoresizingMaskIntoConstraints = false
         // Use these priorities for the button
         addButton.setContentHuggingPriority(.defaultHigh, for: .horizontal)
         addButton.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
+        // …and the inner wrapper
+        innerWrapper.setContentHuggingPriority(.defaultHigh, for: .vertical)
+        // …and the text field
+        textField.setContentHuggingPriority(.defaultHigh, for: .horizontal)
 
         // Set constraints for the subviews
         
@@ -118,10 +135,16 @@ class InputView: UIInputView {
         wrapper.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
         wrapper.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
         
+        innerWrapper.topAnchor.constraint(equalTo: wrapper.topAnchor).isActive = true
+        innerWrapper.centerXAnchor.constraint(equalTo: wrapper.centerXAnchor).isActive = true
+        
         textField.topAnchor.constraint(equalTo: thinLine.bottomAnchor, constant: gap).isActive = true
         
-        textField.leadingAnchor.constraint(equalTo: wrapper.leadingAnchor, constant: 2*gap).isActive = true
-        textField.trailingAnchor.constraint(equalTo: addButton.leadingAnchor, constant: -gap).isActive = true
+        textField.leadingAnchor.constraint(equalTo: innerWrapper.leadingAnchor).isActive = true
+        textField.trailingAnchor.constraint(equalTo: secondsLabel.leadingAnchor).isActive = true
+        
+        secondsLabel.lastBaselineAnchor.constraint(equalTo: textField.lastBaselineAnchor).isActive = true
+        secondsLabel.trailingAnchor.constraint(equalTo: innerWrapper.trailingAnchor).isActive = true
         
         addButton.lastBaselineAnchor.constraint(equalTo: textField.lastBaselineAnchor).isActive = true
         addButton.trailingAnchor.constraint(equalTo: wrapper.trailingAnchor, constant: -2*gap).isActive = true
