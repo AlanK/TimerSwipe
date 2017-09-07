@@ -186,7 +186,7 @@ extension TableController {
     @IBAction func addTimer(_ sender: Any) {
         keyboardAccessoryView.isVisible = true
         keyboardAccessoryView.textField.becomeFirstResponder()
-        toggleAddButton(to: .cancel)
+        navigationItem.leftBarButtonItem?.isEnabled = false
     }
     
     override var inputAccessoryView: UIInputView? {
@@ -199,16 +199,8 @@ extension TableController {
         keyboardAccessoryView.textField.text?.removeAll()
         // Ditch the keyboard, reset the add button, and hide
         keyboardAccessoryView.textField.resignFirstResponder()
-        toggleAddButton(to: .add)
+        navigationItem.leftBarButtonItem?.isEnabled = true
         keyboardAccessoryView.isVisible = false
-    }
-    
-    func toggleAddButton(to buttonState: addButtonState) {
-        switch buttonState {
-        case .add: self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addTimer(_:)))
-        case .cancel: self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(exitKeyboardAccessoryView))
-        }
-        self.navigationItem.leftBarButtonItem?.accessibilityLabel = buttonState.text
     }
     
     override func accessibilityPerformEscape() -> Bool {
