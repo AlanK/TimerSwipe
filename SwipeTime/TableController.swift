@@ -25,6 +25,7 @@ class TableController: UITableViewController {
     /// The view which can create new timers
     let keyboardAccessoryView: InputView = {
         let view = InputView(frame: .zero, inputViewStyle: .default)
+        view.cancelButton.addTarget(self, action: #selector(exitKeyboardAccessoryView), for: .touchUpInside)
         view.addButton.addTarget(self, action: #selector(commitNewTimer), for: .touchUpInside)
         return view
     }()
