@@ -40,6 +40,7 @@ class InputView: UIInputView {
         view.placeholder = "0"
         view.adjustsFontForContentSizeCategory = true
         view.textAlignment = .right
+        view.returnKeyType = .done
         view.keyboardType = .numberPad
         view.accessibilityLabel = NSLocalizedString("descriptionOfTextField", value: "Duration of timer in seconds", comment: "")
         return view

@@ -176,6 +176,11 @@ extension TableController: UITextFieldDelegate {
         }
         return true
     }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        commitNewTimer()
+        return false
+    }
 }
 
 // MARK: - Input Accessory Controller
