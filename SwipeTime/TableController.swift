@@ -61,6 +61,14 @@ class TableController: UITableViewController {
         guard let model = modelController?.model else {return}
         self.navigationItem.rightBarButtonItem?.isEnabled = (model.count() > 0)
     }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        if keyboardAccessoryView.isVisible {
+            // This ensures we don't return to this view and find an input accessory at the bottom of the screen and a cancel button where there should be an add button
+            exitKeyboardAccessoryView()
+        }
+        super.viewWillDisappear(animated)
+    }
 
     // MARK: Table view data source
 
