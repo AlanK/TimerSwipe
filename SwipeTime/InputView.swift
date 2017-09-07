@@ -22,6 +22,14 @@ class InputView: UIInputView {
         view.backgroundColor = UIColor(white: 0.8, alpha: 1.0)
         return view
     }()
+    /// Cancel button
+    let cancelButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.tintColor = K.tintColor
+        button.setTitle(NSLocalizedString("cancelAddButton", value: "Cancel", comment: "Cancel the user-initiated action of adding a new timer"), for: .normal)
+        button.titleLabel?.font = K.font
+        return button
+    }()
     /// Inner wrapper containing the text field and seconds label
     let innerWrapper = UIView()
     /// Text input view
@@ -104,6 +112,7 @@ class InputView: UIInputView {
         // Assemble the subviews
         addSubview(wrapper)
         addSubview(thinLine)
+        addSubview(cancelButton)
         wrapper.addSubview(innerWrapper)
         innerWrapper.addSubview(textField)
         innerWrapper.addSubview(secondsLabel)
@@ -112,11 +121,15 @@ class InputView: UIInputView {
         translatesAutoresizingMaskIntoConstraints = false
         wrapper.translatesAutoresizingMaskIntoConstraints = false
         thinLine.translatesAutoresizingMaskIntoConstraints = false
+        cancelButton.translatesAutoresizingMaskIntoConstraints = false
         innerWrapper.translatesAutoresizingMaskIntoConstraints = false
         textField.translatesAutoresizingMaskIntoConstraints = false
         secondsLabel.translatesAutoresizingMaskIntoConstraints = false
         addButton.translatesAutoresizingMaskIntoConstraints = false
-        // Use these priorities for the button
+        // Use these priorities for the cancel button
+        cancelButton.setContentHuggingPriority(.defaultHigh, for: .horizontal)
+        cancelButton.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
+        // Use these priorities for the add button
         addButton.setContentHuggingPriority(.defaultHigh, for: .horizontal)
         addButton.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
         // …and the inner wrapper
@@ -134,6 +147,9 @@ class InputView: UIInputView {
         wrapper.topAnchor.constraint(equalTo: thinLine.bottomAnchor).isActive = true
         wrapper.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
         wrapper.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
+        
+        cancelButton.leadingAnchor.constraint(equalTo: wrapper.leadingAnchor, constant: 2*gap).isActive = true
+        cancelButton.lastBaselineAnchor.constraint(equalTo: textField.lastBaselineAnchor).isActive = true
         
         innerWrapper.topAnchor.constraint(equalTo: wrapper.topAnchor).isActive = true
         innerWrapper.centerXAnchor.constraint(equalTo: wrapper.centerXAnchor).isActive = true
