@@ -176,10 +176,6 @@ extension TableController {
         return true
     }
     
-    override func becomeFirstResponder() -> Bool {
-        return super.becomeFirstResponder()
-    }
-    
     @IBAction func addTimer(_ sender: Any) {
         keyboardAccessoryView.isVisible = true
         keyboardAccessoryView.textField.becomeFirstResponder()
