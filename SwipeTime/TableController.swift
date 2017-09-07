@@ -158,13 +158,21 @@ extension TableController: TableCellDelegate {
 
 // MARK: - Text Field Delegate
 extension TableController: UITextFieldDelegate {
-    // Protect against text-related crashes
+    // Protect against text-related problems
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        let currentCharacterCount = textField.text?.characters.count ?? 0
-        // Prevent more than three characters from being put in the text field
-        guard (range.length + range.location <= currentCharacterCount) else {return false}
-        let newLength = currentCharacterCount + string.characters.count - range.length
-        return newLength <= 3
+        let charCount = textField.text?.characters.count ?? 0
+        let invalidCharacters = CharacterSet(charactersIn: "0123456789").inverted
+        let maxLength = 3
+        
+        // Prevent crash-on-undo when a text insertion was blocked by this code
+        guard range.length + range.location <= charCount,
+            // Prevent non-number characters from being inserted
+            string.rangeOfCharacter(from: invalidCharacters) == nil,
+            // Prevent too many characters from being inserted
+            charCount + string.characters.count - range.length <= maxLength else {
+                return false
+        }
+        return true
     }
 }
 
