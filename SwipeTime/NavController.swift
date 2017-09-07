@@ -23,6 +23,9 @@ class NavController: UINavigationController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        if #available(iOS 11.0, *) {
+            navigationBar.prefersLargeTitles = true
+        }
         
         // Navigate to the correct entry point
         guard let storyboard = self.storyboard else {return}
