@@ -160,7 +160,6 @@ extension TableController: TableCellDelegate {
 extension TableController: UITextFieldDelegate {
     // Protect against text-related crashes
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        // Prevent crash-on-undo when iOS tries to undo a change that was blocked by shouldChangeCharactersInRange = false
         let currentCharacterCount = textField.text?.characters.count ?? 0
         // Prevent more than three characters from being put in the text field
         guard (range.length + range.location <= currentCharacterCount) else {return false}
