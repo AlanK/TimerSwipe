@@ -22,6 +22,12 @@ class TableController: UITableViewController {
     @IBOutlet var footerContainer: UIView!
     /// The label serving as the table footer
     @IBOutlet var footer: UILabel!
+    /// The view which can create new timers
+    let keyboardAccessoryView: InputView = {
+        let view = InputView(frame: .zero, inputViewStyle: .default)
+        view.addButton.addTarget(self, action: #selector(commitNewTimer), for: .touchUpInside)
+        return view
+    }()
     
     // MARK: View controller
     
@@ -31,6 +37,8 @@ class TableController: UITableViewController {
         modelController = self.navigationController as? ModelController
         // Display an Edit button in the navigation bar for this view controller.
         self.navigationItem.rightBarButtonItem = self.editButtonItem
+        // Ready input accessory
+        keyboardAccessoryView.textField.delegate = self
     }
     
     override func viewDidLayoutSubviews() {
@@ -52,6 +60,14 @@ class TableController: UITableViewController {
         self.navigationController?.setNavigationBarHidden(false, animated: animated)
         guard let model = modelController?.model else {return}
         self.navigationItem.rightBarButtonItem?.isEnabled = (model.count() > 0)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        if keyboardAccessoryView.isVisible {
+            // This ensures we don't return to this view and find an input accessory at the bottom of the screen and a cancel button where there should be an add button
+            exitKeyboardAccessoryView()
+        }
+        super.viewWillDisappear(animated)
     }
 
     // MARK: Table view data source
@@ -78,6 +94,7 @@ class TableController: UITableViewController {
         let _ = model.remove(at: indexPath.row)
         tableView.deleteRows(at: [indexPath], with: .automatic)
         self.navigationItem.rightBarButtonItem?.isEnabled = (model.count() > 0)
+        // You shouldn't toggle setEditing within this method, so GCD to the rescue
         if model.count() == 0 {
             let nearFuture = DispatchTime.now() + K.editButtonDelay
             let work = DispatchWorkItem {
@@ -122,21 +139,6 @@ class TableController: UITableViewController {
         // Set the destination view controller's providedDuration to the timer value
         controller.duration = timer.seconds
     }
-    
-    /// Handle the return to the table view from the main view controller
-    @IBAction func unwindToSTTVC(_ sender: UIStoryboardSegue) {
-        // Ensure we're arriving from the right source and extract useful info
-        guard let sourceViewController = sender.source as? InputController,
-            let userSelectedTime = sourceViewController.userSelectedTime,
-            let model = modelController?.model else {return}
-        let newTimer = STSavedTimer(seconds: userSelectedTime)
-        let newIndexPath = IndexPath(row: model.count(), section: K.mainSection)
-        // Append, save, and update view
-        model.append(timer: newTimer)
-        model.saveData()
-        tableView.insertRows(at: [newIndexPath], with: .automatic)
-        self.navigationItem.rightBarButtonItem?.isEnabled = (model.count() > 0)
-    }
 }
 
 // MARK: - Table Cell Delegate
@@ -151,5 +153,85 @@ extension TableController: TableCellDelegate {
         model.toggleFavorite(at: index)
         model.saveData()
         tableView.reloadData()
+    }
+}
+
+// MARK: - Text Field Delegate
+extension TableController: UITextFieldDelegate {
+    // Protect against text-related problems
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        let charCount = textField.text?.characters.count ?? 0
+        let invalidCharacters = CharacterSet(charactersIn: "0123456789").inverted
+        let maxLength = 3
+        
+        // Prevent crash-on-undo when a text insertion was blocked by this code
+        guard range.length + range.location <= charCount,
+            // Prevent non-number characters from being inserted
+            string.rangeOfCharacter(from: invalidCharacters) == nil,
+            // Prevent too many characters from being inserted
+            charCount + string.characters.count - range.length <= maxLength else {
+                return false
+        }
+        return true
+    }
+}
+
+// MARK: - Input Accessory Controller
+extension TableController {
+    
+    override var canBecomeFirstResponder: Bool {
+        return true
+    }
+    
+    @IBAction func addTimer(_ sender: Any) {
+        keyboardAccessoryView.isVisible = true
+        keyboardAccessoryView.textField.becomeFirstResponder()
+        toggleAddButton(to: .cancel)
+    }
+    
+    override var inputAccessoryView: UIInputView? {
+        return keyboardAccessoryView
+    }
+    
+    /// Resets and hides the input accessory
+    @objc func exitKeyboardAccessoryView() {
+        // Clear the text field
+        keyboardAccessoryView.textField.text?.removeAll()
+        // Ditch the keyboard, reset the add button, and hide
+        keyboardAccessoryView.textField.resignFirstResponder()
+        toggleAddButton(to: .add)
+        keyboardAccessoryView.isVisible = false
+    }
+    
+    func toggleAddButton(to buttonState: addButtonState) {
+        switch buttonState {
+        case .add: self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addTimer(_:)))
+        case .cancel: self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(exitKeyboardAccessoryView))
+        }
+        self.navigationItem.leftBarButtonItem?.accessibilityLabel = buttonState.text
+    }
+    
+    override func accessibilityPerformEscape() -> Bool {
+        exitKeyboardAccessoryView()
+        return true
+    }
+    
+    @objc func commitNewTimer() {
+        defer {
+            exitKeyboardAccessoryView()
+        }
+        // Create a valid userSelectedTime or exit early
+        guard let text = keyboardAccessoryView.textField.text, let userTimeInSeconds = Int(text), userTimeInSeconds > 0 else {return}
+        let userSelectedTime = TimeInterval(userTimeInSeconds)
+        
+        // Create a new timer
+        guard let model = modelController?.model else {return}
+        let newTimer = STSavedTimer(seconds: userSelectedTime)
+        let newIndexPath = IndexPath(row: model.count(), section: K.mainSection)
+        // Append, save, and update view
+        model.append(timer: newTimer)
+        model.saveData()
+        tableView.insertRows(at: [newIndexPath], with: .automatic)
+        self.navigationItem.rightBarButtonItem?.isEnabled = (model.count() > 0)
     }
 }

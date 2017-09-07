@@ -35,6 +35,18 @@ enum ChangeButtonValue {
     }
 }
 
+enum addButtonState {
+    case add
+    case cancel
+    
+    var text: String {
+        switch self {
+        case .add: return NSLocalizedString("addButton", value: "Add", comment: "Add a new timer")
+        case .cancel: return NSLocalizedString("cancelAddButton", value: "Cancel", comment: "Cancel the user-initiated action of adding a new timer")
+        }
+    }
+}
+
 /// Audio file names (with extensions)
 enum Sound: String {
     case shortWindStart = "TS_short_in.aif"
@@ -66,6 +78,9 @@ struct K {
     static let sectionsInTableView = 1
     static let mainSection = 0
     static let editButtonDelay: TimeInterval = 0.5
+    
+    // MARK: Input Accessory
+    static let font = UIFont.preferredFont(forTextStyle: .title3)
     
     // MARK: Main View
     static let timerDisplaySize: CGFloat = 64
