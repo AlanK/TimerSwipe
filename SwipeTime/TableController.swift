@@ -60,6 +60,7 @@ class TableController: UITableViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.setNavigationBarHidden(false, animated: animated)
+        self.navigationController?.setToolbarHidden(false, animated: animated)
         guard let model = modelController?.model else {return}
         self.navigationItem.rightBarButtonItem?.isEnabled = (model.count() > 0)
     }
@@ -193,7 +194,6 @@ extension TableController {
     @IBAction func inputNewTimer(_ sender: Any) {
         keyboardAccessoryView.isVisible = true
         keyboardAccessoryView.textField.becomeFirstResponder()
-        navigationItem.leftBarButtonItem?.isEnabled = false
     }
     
     override var inputAccessoryView: UIInputView? {
@@ -216,7 +216,6 @@ extension TableController {
         keyboardAccessoryView.textField.text?.removeAll()
         // Ditch the keyboard, reset the add button, and hide
         keyboardAccessoryView.textField.resignFirstResponder()
-        navigationItem.leftBarButtonItem?.isEnabled = true
         keyboardAccessoryView.isVisible = false
     }
     

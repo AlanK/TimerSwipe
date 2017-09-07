@@ -82,6 +82,7 @@ class MainViewController: UIViewController {
         // Turn off idle lock for this view
         UIApplication.shared.isIdleTimerDisabled = true
         self.navigationController?.setNavigationBarHidden(true, animated: false)
+        self.navigationController?.setToolbarHidden(true, animated: false)
         soundController.setActive(true)
     }
     
