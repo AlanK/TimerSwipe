@@ -56,7 +56,7 @@ enum TimerStatus {
 struct K {
     
     // MARK: App Appearance
-    static let tintColor = UIColor(red: 1.0, green: 0.333, blue: 0.733, alpha: 1.0)
+    static let tintColor = UIColor(red: 1.0, green: 25.0/255.0, blue: 163.0/255.0, alpha: 1.0)
     
     // MARK: App Behavior
     static let timeout: TimeInterval = 300.0
