@@ -192,6 +192,7 @@ extension TableController {
     }
     
     @IBAction func inputNewTimer(_ sender: Any) {
+        keyboardAccessoryView.addButton.isEnabled = false
         keyboardAccessoryView.isVisible = true
         keyboardAccessoryView.textField.becomeFirstResponder()
     }
