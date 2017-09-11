@@ -68,7 +68,7 @@ struct K {
     static let editButtonDelay: TimeInterval = 0.5
     
     // MARK: Input Accessory
-    static let font = UIFont.preferredFont(forTextStyle: .title3)
+    static let font = UIFont.preferredFont(forTextStyle: .title1)
     
     // MARK: Main View
     static let timerDisplaySize: CGFloat = 64

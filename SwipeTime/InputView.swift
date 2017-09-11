@@ -26,8 +26,8 @@ class InputView: UIInputView {
     let cancelButton: UIButton = {
         let button = UIButton(type: .system)
         button.tintColor = K.tintColor
-        button.setTitle(NSLocalizedString("cancelAddButton", value: "Cancel", comment: "Cancel the user-initiated action of adding a new timer"), for: .normal)
-        button.titleLabel?.font = K.font
+        button.accessibilityLabel = NSLocalizedString("cancelAddButton", value: "Cancel", comment: "Cancel the user-initiated action of adding a new timer")
+        button.setImage(UIImage(named: "Cancel X"), for: .normal)
         return button
     }()
     /// Inner wrapper containing the text field and seconds label
@@ -56,8 +56,8 @@ class InputView: UIInputView {
     let addButton: UIButton = {
         let button = UIButton(type: .system)
         button.tintColor = K.tintColor
-        button.setTitle(NSLocalizedString("titleOfAddButton", value: "Save", comment: "Save a timer with the current value"), for: .normal)
-        button.titleLabel?.font = K.font
+        button.accessibilityLabel = NSLocalizedString("titleOfAddButton", value: "Save", comment: "Save a timer with the current value")
+        button.setImage(UIImage(named: "Save Arrow"), for: .normal)
         button.isEnabled = false
         return button
     }()
@@ -151,7 +151,7 @@ class InputView: UIInputView {
         wrapper.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
         
         cancelButton.leadingAnchor.constraint(equalTo: wrapper.leadingAnchor, constant: 2*gap).isActive = true
-        cancelButton.lastBaselineAnchor.constraint(equalTo: textField.lastBaselineAnchor).isActive = true
+        cancelButton.centerYAnchor.constraint(equalTo: textField.centerYAnchor).isActive = true
         
         innerWrapper.topAnchor.constraint(equalTo: wrapper.topAnchor).isActive = true
         innerWrapper.centerXAnchor.constraint(equalTo: wrapper.centerXAnchor).isActive = true
@@ -164,7 +164,7 @@ class InputView: UIInputView {
         secondsLabel.lastBaselineAnchor.constraint(equalTo: textField.lastBaselineAnchor).isActive = true
         secondsLabel.trailingAnchor.constraint(equalTo: innerWrapper.trailingAnchor).isActive = true
         
-        addButton.lastBaselineAnchor.constraint(equalTo: textField.lastBaselineAnchor).isActive = true
+        addButton.centerYAnchor.constraint(equalTo: textField.centerYAnchor).isActive = true
         addButton.trailingAnchor.constraint(equalTo: wrapper.trailingAnchor, constant: -2*gap).isActive = true
         
         // Constraints for showing this view
