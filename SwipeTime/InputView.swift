@@ -161,12 +161,12 @@ class InputView: UIInputView {
         innerWrapper.topAnchor.constraint(equalTo: wrapper.topAnchor).isActive = true
         innerWrapper.centerXAnchor.constraint(equalTo: wrapper.centerXAnchor).isActive = true
         
-        textField.topAnchor.constraint(equalTo: thinLine.bottomAnchor, constant: gap).isActive = true
+        textField.topAnchor.constraint(equalTo: wrapper.topAnchor, constant: gap).isActive = true
         
         textField.leadingAnchor.constraint(equalTo: innerWrapper.leadingAnchor).isActive = true
         textField.trailingAnchor.constraint(equalTo: secondsLabel.leadingAnchor).isActive = true
         
-        secondsLabel.lastBaselineAnchor.constraint(equalTo: textField.lastBaselineAnchor).isActive = true
+        secondsLabel.firstBaselineAnchor.constraint(equalTo: textField.firstBaselineAnchor).isActive = true
         secondsLabel.trailingAnchor.constraint(equalTo: innerWrapper.trailingAnchor).isActive = true
         
         addButton.topAnchor.constraint(equalTo: wrapper.topAnchor).isActive = true
