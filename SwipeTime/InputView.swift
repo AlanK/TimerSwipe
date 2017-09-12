@@ -9,6 +9,7 @@
 import UIKit
 /// Input accessory view that accepts an integer seconds value
 class InputView: UIInputView {
+    private let gap: CGFloat = 10.0
     // Based on the CatChat app from https://developer.apple.com/videos/play/wwdc2017/242/
     /// View containing text view and send button
     private let wrapper: UIView = {
@@ -28,6 +29,7 @@ class InputView: UIInputView {
         button.tintColor = K.tintColor
         button.accessibilityLabel = NSLocalizedString("cancelAddButton", value: "Cancel", comment: "Cancel the user-initiated action of adding a new timer")
         button.setImage(UIImage(named: "Cancel X"), for: .normal)
+        button.contentEdgeInsets = UIEdgeInsetsMake(0.0, 16.0, 0.0, 32.0)
         return button
     }()
     /// Inner wrapper containing the text field and seconds label
@@ -56,8 +58,10 @@ class InputView: UIInputView {
     let addButton: UIButton = {
         let button = UIButton(type: .system)
         button.tintColor = K.tintColor
+        button.backgroundColor = UIColor.white
         button.accessibilityLabel = NSLocalizedString("titleOfAddButton", value: "Save", comment: "Save a timer with the current value")
         button.setImage(UIImage(named: "Save Arrow"), for: .normal)
+        button.contentEdgeInsets = UIEdgeInsetsMake(0.0, 32.0, 0.0, 16.0)
         button.isEnabled = false
         return button
     }()
@@ -109,7 +113,7 @@ class InputView: UIInputView {
     override init(frame: CGRect, inputViewStyle: UIInputViewStyle) {
         super.init(frame: frame, inputViewStyle: inputViewStyle)
         // Useful shorthand
-        let margin = layoutMarginsGuide, gap: CGFloat = 10.0
+        let margin = layoutMarginsGuide
 
         // Assemble the subviews
         addSubview(wrapper)
@@ -150,9 +154,10 @@ class InputView: UIInputView {
         wrapper.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
         wrapper.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
         
-        cancelButton.leadingAnchor.constraint(equalTo: wrapper.leadingAnchor, constant: 2*gap).isActive = true
-        cancelButton.centerYAnchor.constraint(equalTo: textField.centerYAnchor).isActive = true
-        
+        cancelButton.leadingAnchor.constraint(equalTo: wrapper.leadingAnchor).isActive = true
+        cancelButton.topAnchor.constraint(equalTo: wrapper.topAnchor).isActive = true
+        cancelButton.bottomAnchor.constraint(equalTo: wrapper.bottomAnchor).isActive = true
+
         innerWrapper.topAnchor.constraint(equalTo: wrapper.topAnchor).isActive = true
         innerWrapper.centerXAnchor.constraint(equalTo: wrapper.centerXAnchor).isActive = true
         
@@ -164,8 +169,9 @@ class InputView: UIInputView {
         secondsLabel.lastBaselineAnchor.constraint(equalTo: textField.lastBaselineAnchor).isActive = true
         secondsLabel.trailingAnchor.constraint(equalTo: innerWrapper.trailingAnchor).isActive = true
         
-        addButton.centerYAnchor.constraint(equalTo: textField.centerYAnchor).isActive = true
-        addButton.trailingAnchor.constraint(equalTo: wrapper.trailingAnchor, constant: -2*gap).isActive = true
+        addButton.topAnchor.constraint(equalTo: wrapper.topAnchor).isActive = true
+        addButton.bottomAnchor.constraint(equalTo: wrapper.bottomAnchor).isActive = true
+        addButton.trailingAnchor.constraint(equalTo: wrapper.trailingAnchor).isActive = true
         
         // Constraints for showing this view
         constraintsToShowView.insert(wrapper.bottomAnchor.constraint(equalTo: margin.bottomAnchor))
