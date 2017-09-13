@@ -113,7 +113,9 @@ class InputView: UIInputView {
     override init(frame: CGRect, inputViewStyle: UIInputViewStyle) {
         super.init(frame: frame, inputViewStyle: inputViewStyle)
         // Useful shorthand
-        let margin = layoutMarginsGuide
+        let margin = layoutMarginsGuide, wrapperMargin = wrapper.layoutMarginsGuide
+        
+        backgroundColor = UIColor.white
 
         // Assemble the subviews
         addSubview(wrapper)
@@ -149,10 +151,10 @@ class InputView: UIInputView {
         thinLine.bottomAnchor.constraint(equalTo: thinLine.topAnchor, constant: 0.5).isActive = true
         
         wrapper.topAnchor.constraint(equalTo: thinLine.bottomAnchor).isActive = true
-        wrapper.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
-        wrapper.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
+        wrapper.leadingAnchor.constraint(equalTo: margin.leadingAnchor).isActive = true
+        wrapper.trailingAnchor.constraint(equalTo: margin.trailingAnchor).isActive = true
         
-        cancelButton.leadingAnchor.constraint(equalTo: wrapper.leadingAnchor).isActive = true
+        cancelButton.leadingAnchor.constraint(equalTo: wrapper.leadingAnchor, constant: -16).isActive = true
         cancelButton.topAnchor.constraint(equalTo: wrapper.topAnchor).isActive = true
         cancelButton.bottomAnchor.constraint(equalTo: wrapper.bottomAnchor).isActive = true
 
@@ -169,7 +171,7 @@ class InputView: UIInputView {
         
         addButton.topAnchor.constraint(equalTo: wrapper.topAnchor).isActive = true
         addButton.bottomAnchor.constraint(equalTo: wrapper.bottomAnchor).isActive = true
-        addButton.trailingAnchor.constraint(equalTo: wrapper.trailingAnchor).isActive = true
+        addButton.trailingAnchor.constraint(equalTo: wrapper.trailingAnchor, constant: 16).isActive = true
         
         // Handle silly iOS 10 layout issue
         if #available(iOS 11, *) {}
