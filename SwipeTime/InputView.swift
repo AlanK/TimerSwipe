@@ -20,7 +20,6 @@ class InputView: UIInputView {
     private let thinLine: UIView = {
         let view = UIView()
         view.backgroundColor = UIColor(white: 2.0/3.0, alpha: 1.0)
-        let color = UIColor()
         return view
     }()
     /// Cancel button
