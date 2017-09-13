@@ -14,7 +14,6 @@ class InputView: UIInputView {
     /// View containing text view and send button
     private let wrapper: UIView = {
         let view = UIView()
-        view.backgroundColor = UIColor.white
         return view
     }()
     /// Thin line to differentiate wrapper from any table cells that may be behind it
@@ -58,7 +57,6 @@ class InputView: UIInputView {
     let addButton: UIButton = {
         let button = UIButton(type: .system)
         button.tintColor = K.tintColor
-        button.backgroundColor = UIColor.white
         button.accessibilityLabel = NSLocalizedString("titleOfAddButton", value: "Save", comment: "Save a timer with the current value")
         button.setImage(UIImage(named: "Save Arrow"), for: .normal)
         button.contentEdgeInsets = UIEdgeInsetsMake(0.0, 32.0, 0.0, 16.0)
@@ -148,7 +146,7 @@ class InputView: UIInputView {
         thinLine.topAnchor.constraint(equalTo: margin.topAnchor).isActive = true
         thinLine.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
         thinLine.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
-        thinLine.bottomAnchor.constraint(equalTo: thinLine.topAnchor, constant: 0.5).isActive = true
+        thinLine.bottomAnchor.constraint(equalTo: thinLine.topAnchor, constant: 1.0).isActive = true
         
         wrapper.topAnchor.constraint(equalTo: thinLine.bottomAnchor).isActive = true
         wrapper.leadingAnchor.constraint(equalTo: margin.leadingAnchor).isActive = true
