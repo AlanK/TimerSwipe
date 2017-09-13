@@ -140,8 +140,6 @@ class InputView: UIInputView {
         addButton.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
         // …and the inner wrapper
         innerWrapper.setContentHuggingPriority(.defaultHigh, for: .vertical)
-        // …and the text field
-        textField.setContentHuggingPriority(.defaultHigh, for: .horizontal)
 
         // Set constraints for the subviews
         
@@ -172,6 +170,12 @@ class InputView: UIInputView {
         addButton.topAnchor.constraint(equalTo: wrapper.topAnchor).isActive = true
         addButton.bottomAnchor.constraint(equalTo: wrapper.bottomAnchor).isActive = true
         addButton.trailingAnchor.constraint(equalTo: wrapper.trailingAnchor).isActive = true
+        
+        // Handle silly iOS 10 layout issue
+        if #available(iOS 11, *) {}
+        else {
+            textField.widthAnchor.constraint(equalTo: textField.heightAnchor, multiplier: 2.5).isActive = true
+        }
         
         // Constraints for showing this view
         constraintsToShowView.insert(wrapper.bottomAnchor.constraint(equalTo: margin.bottomAnchor))
