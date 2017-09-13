@@ -26,7 +26,7 @@ class InputView: UIInputView {
     let cancelButton: UIButton = {
         let button = UIButton(type: .system)
         button.tintColor = K.tintColor
-        button.accessibilityLabel = NSLocalizedString("cancelAddButton", value: "Cancel", comment: "Cancel the user-initiated action of adding a new timer")
+        button.accessibilityLabel = NSLocalizedString("cancelAddButton", value: "Cancel new timer", comment: "Cancel the user-initiated action of adding a new timer")
         button.setImage(UIImage(named: "Cancel X"), for: .normal)
         button.contentEdgeInsets = UIEdgeInsetsMake(0.0, 16.0, 0.0, 32.0)
         return button
@@ -43,7 +43,7 @@ class InputView: UIInputView {
         view.textAlignment = .right
         view.returnKeyType = .done
         view.keyboardType = .numberPad
-        view.accessibilityLabel = NSLocalizedString("descriptionOfTextField", value: "Duration of timer in seconds", comment: "")
+        view.accessibilityLabel = NSLocalizedString("descriptionOfTextField", value: "Timer duration in seconds", comment: "")
         return view
     }()
     /// "Seconds" label
@@ -57,7 +57,7 @@ class InputView: UIInputView {
     let addButton: UIButton = {
         let button = UIButton(type: .system)
         button.tintColor = K.tintColor
-        button.accessibilityLabel = NSLocalizedString("titleOfAddButton", value: "Save", comment: "Save a timer with the current value")
+        button.accessibilityLabel = NSLocalizedString("titleOfAddButton", value: "Create new timer", comment: "")
         button.setImage(UIImage(named: "Save Arrow"), for: .normal)
         button.contentEdgeInsets = UIEdgeInsetsMake(0.0, 32.0, 0.0, 16.0)
         button.isEnabled = false
