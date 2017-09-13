@@ -154,7 +154,7 @@ class InputView: UIInputView {
         wrapper.leadingAnchor.constraint(equalTo: margin.leadingAnchor).isActive = true
         wrapper.trailingAnchor.constraint(equalTo: margin.trailingAnchor).isActive = true
         
-        cancelButton.leadingAnchor.constraint(equalTo: wrapper.leadingAnchor, constant: -16).isActive = true
+        cancelButton.leadingAnchor.constraint(equalTo: wrapper.leadingAnchor, constant: -18).isActive = true
         cancelButton.topAnchor.constraint(equalTo: wrapper.topAnchor).isActive = true
         cancelButton.bottomAnchor.constraint(equalTo: wrapper.bottomAnchor).isActive = true
 
@@ -171,7 +171,7 @@ class InputView: UIInputView {
         
         addButton.topAnchor.constraint(equalTo: wrapper.topAnchor).isActive = true
         addButton.bottomAnchor.constraint(equalTo: wrapper.bottomAnchor).isActive = true
-        addButton.trailingAnchor.constraint(equalTo: wrapper.trailingAnchor, constant: 16).isActive = true
+        addButton.trailingAnchor.constraint(equalTo: wrapper.trailingAnchor, constant: 18).isActive = true
         
         // Handle silly iOS 10 layout issue
         if #available(iOS 11, *) {}
