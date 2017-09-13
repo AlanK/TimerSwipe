@@ -188,6 +188,9 @@ class InputView: UIInputView {
         for constraint in constraintsToHideView {
             constraint.isActive = true
         }
+        
+        // Set the order of elements for accessibility to prevent the parent view from stealing accessibility focus
+        accessibilityElements = [cancelButton, textField, addButton]
     }
 }
 
