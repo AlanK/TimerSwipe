@@ -111,7 +111,7 @@ class InputView: UIInputView {
     override init(frame: CGRect, inputViewStyle: UIInputViewStyle) {
         super.init(frame: frame, inputViewStyle: inputViewStyle)
         // Useful shorthand
-        let margin = layoutMarginsGuide, wrapperMargin = wrapper.layoutMarginsGuide
+        let margin = layoutMarginsGuide
         
         backgroundColor = UIColor.white
 
