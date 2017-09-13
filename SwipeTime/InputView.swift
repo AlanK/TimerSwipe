@@ -19,7 +19,8 @@ class InputView: UIInputView {
     /// Thin line to differentiate wrapper from any table cells that may be behind it
     private let thinLine: UIView = {
         let view = UIView()
-        view.backgroundColor = UIColor(white: 0.8, alpha: 1.0)
+        view.backgroundColor = UIColor(white: 2.0/3.0, alpha: 1.0)
+        let color = UIColor()
         return view
     }()
     /// Cancel button
@@ -146,7 +147,7 @@ class InputView: UIInputView {
         thinLine.topAnchor.constraint(equalTo: margin.topAnchor).isActive = true
         thinLine.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
         thinLine.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
-        thinLine.bottomAnchor.constraint(equalTo: thinLine.topAnchor, constant: 1.0).isActive = true
+        thinLine.bottomAnchor.constraint(equalTo: thinLine.topAnchor, constant: 0.5).isActive = true
         
         wrapper.topAnchor.constraint(equalTo: thinLine.bottomAnchor).isActive = true
         wrapper.leadingAnchor.constraint(equalTo: margin.leadingAnchor).isActive = true
