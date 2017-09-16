@@ -28,6 +28,7 @@ class InputView: UIInputView {
         button.tintColor = K.tintColor
         button.accessibilityLabel = NSLocalizedString("cancelAddButton", value: "Cancel new timer", comment: "Cancel the user-initiated action of adding a new timer")
         button.setImage(UIImage(named: "Cancel X"), for: .normal)
+        // Add some padding to make the buttons bigger tap targets. More padding on the medial side
         button.contentEdgeInsets = UIEdgeInsetsMake(0.0, 16.0, 0.0, 32.0)
         return button
     }()
@@ -59,6 +60,7 @@ class InputView: UIInputView {
         button.tintColor = K.tintColor
         button.accessibilityLabel = NSLocalizedString("titleOfAddButton", value: "Create new timer", comment: "")
         button.setImage(UIImage(named: "Save Arrow"), for: .normal)
+        // Add some padding to make the buttons bigger tap targets. More padding on the medial side
         button.contentEdgeInsets = UIEdgeInsetsMake(0.0, 32.0, 0.0, 16.0)
         button.isEnabled = false
         return button
@@ -132,13 +134,12 @@ class InputView: UIInputView {
         textField.translatesAutoresizingMaskIntoConstraints = false
         secondsLabel.translatesAutoresizingMaskIntoConstraints = false
         addButton.translatesAutoresizingMaskIntoConstraints = false
-        // Use these priorities for the cancel button
+        // No squash or stretch on the buttons
         cancelButton.setContentHuggingPriority(.defaultHigh, for: .horizontal)
         cancelButton.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
-        // Use these priorities for the add button
         addButton.setContentHuggingPriority(.defaultHigh, for: .horizontal)
         addButton.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
-        // …and the inner wrapper
+        // Make sure the text isn’t any taller than it needs to be
         innerWrapper.setContentHuggingPriority(.defaultHigh, for: .vertical)
 
         // Set constraints for the subviews
@@ -171,7 +172,7 @@ class InputView: UIInputView {
         addButton.bottomAnchor.constraint(equalTo: wrapper.bottomAnchor).isActive = true
         addButton.trailingAnchor.constraint(equalTo: wrapper.trailingAnchor, constant: 18).isActive = true
         
-        // Handle silly iOS 10 layout issue
+        // iOS 10 won’t dynamically resize the text field, so give it a sufficient width based on aspect ratio
         if #available(iOS 11, *) {}
         else {
             textField.widthAnchor.constraint(equalTo: textField.heightAnchor, multiplier: 2.5).isActive = true
