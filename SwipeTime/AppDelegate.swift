@@ -12,7 +12,15 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     /// Records when the app last entered the background; set to nil after returning to foreground
-    var enteredBackground: Date?
+    private var enteredBackground: Date?
+    
+    private var timerIsActive: Bool {
+        if let nav = window?.rootViewController as? NavController,let timer = nav.topViewController as? StopwatchDelegate,
+            timer.unlocked == false {
+            return true
+        }
+        return false
+    }
     
     func applicationDidFinishLaunching(_ application: UIApplication) {
         self.window?.tintColor = K.tintColor
@@ -21,8 +29,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func applicationDidEnterBackground(_ application: UIApplication) {
-        // Background timeout start time
-        enteredBackground = Date()
+        // Don’t start the background timeout if there’s a running timer
+        if timerIsActive == false {
+            enteredBackground = Date()
+        }
     }
     
     func applicationDidBecomeActive(_ application: UIApplication) {
