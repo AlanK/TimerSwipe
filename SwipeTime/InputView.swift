@@ -10,17 +10,10 @@ import UIKit
 /// Input accessory view that accepts an integer seconds value
 class InputView: UIInputView {
     // Based on the CatChat app from https://developer.apple.com/videos/play/wwdc2017/242/
-    /// Wrapper view containing buttons, label, and text field
-    private let wrapper: UIView = {
-        let view = UIView()
-        return view
-    }()
-    /// Thin gray line to visually separate inputview from any table cells that may be behind it
-    private let thinLine: UIView = {
-        let view = UIView()
-        view.backgroundColor = K.thinLineColor
-        return view
-    }()
+
+    private let wrapper = UIView(), innerWrapper = UIView(), thinLine = UIView()
+    private var constraintsToHideView = Set<NSLayoutConstraint>(), constraintsToShowView = Set<NSLayoutConstraint>()
+
     /// Cancel button
     let cancelButton: UIButton = {
         let button = UIButton(type: .system)
@@ -31,8 +24,21 @@ class InputView: UIInputView {
         button.contentEdgeInsets = UIEdgeInsetsMake(ButtonInset.vertical.rawValue, ButtonInset.lateral.rawValue, ButtonInset.vertical.rawValue, ButtonInset.medial.rawValue)
         return button
     }()
-    /// Inner wrapper containing the text field and seconds label
-    let innerWrapper = UIView()
+    
+    /// Send button
+    let addButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.tintColor = K.tintColor
+        button.accessibilityLabel = NSLocalizedString("titleOfAddButton", value: "Create new timer", comment: "")
+        button.setImage(UIImage(named: "Save Arrow"), for: .normal)
+        // Add some padding to make the buttons bigger tap targets. More padding on the medial side
+        button.contentEdgeInsets = UIEdgeInsetsMake(ButtonInset.vertical.rawValue, ButtonInset.medial.rawValue, ButtonInset.vertical.rawValue, ButtonInset.lateral.rawValue)
+        // Can’t add a timer until it has a valid time
+        button.isEnabled = false
+        return button
+    }()
+
+    
     /// Text input view
     let textField: UITextField = {
         let view = UITextField()
@@ -46,6 +52,7 @@ class InputView: UIInputView {
         view.accessibilityLabel = NSLocalizedString("descriptionOfTextField", value: "Timer duration in seconds", comment: "")
         return view
     }()
+    
     /// "Seconds" label
     let secondsLabel: UILabel = {
         let label = UILabel()
@@ -53,22 +60,7 @@ class InputView: UIInputView {
         label.text = NSLocalizedString("secondsLabel", value: " seconds", comment: "A space followed by the word seconds, so it can be concatenated with an integer to form a phrase like '20 seconds'")
         return label
     }()
-    /// Send button
-    let addButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.tintColor = K.tintColor
-        button.accessibilityLabel = NSLocalizedString("titleOfAddButton", value: "Create new timer", comment: "")
-        button.setImage(UIImage(named: "Save Arrow"), for: .normal)
-        // Add some padding to make the buttons bigger tap targets. More padding on the medial side
-        button.contentEdgeInsets = UIEdgeInsetsMake(ButtonInset.vertical.rawValue, ButtonInset.medial.rawValue, ButtonInset.vertical.rawValue, ButtonInset.lateral.rawValue)
-        // Can’t add a timer until it has a valid time
-        button.isEnabled = false
-        return button
-    }()
-    /// Activating these constraints hides this view
-    private var constraintsToHideView = Set<NSLayoutConstraint>()
-    /// Activating these constraints shows this view
-    private var constraintsToShowView = Set<NSLayoutConstraint>()
+    
     /// Report whether the constraints are set to make the view visible and toggle visibility
     var isVisible: Bool {
         get {
@@ -112,12 +104,8 @@ class InputView: UIInputView {
 
     override init(frame: CGRect, inputViewStyle: UIInputViewStyle) {
         super.init(frame: frame, inputViewStyle: inputViewStyle)
-        let verticalGap: CGFloat = 10.0, horizontalGap: CGFloat = 18.0, thinLineHeight: CGFloat = 0.5
-        // Useful shorthand
-        let margin = layoutMarginsGuide
+        let verticalGap: CGFloat = 10.0, horizontalGap: CGFloat = 18.0, thinLineHeight: CGFloat = 0.5, fallbackTextFieldAspectRatio: CGFloat = 2.5, margin = layoutMarginsGuide
         
-        backgroundColor = UIColor.white
-
         // Assemble the subviews
         addSubview(wrapper)
         addSubview(thinLine)
@@ -126,6 +114,11 @@ class InputView: UIInputView {
         innerWrapper.addSubview(textField)
         innerWrapper.addSubview(secondsLabel)
         wrapper.addSubview(addButton)
+        
+        // Add colors
+        backgroundColor = UIColor.white
+        thinLine.backgroundColor = K.thinLineColor
+        
         // No, do not translate autoresizing mask into constraints for anything…
         translatesAutoresizingMaskIntoConstraints = false
         wrapper.translatesAutoresizingMaskIntoConstraints = false
@@ -135,16 +128,18 @@ class InputView: UIInputView {
         textField.translatesAutoresizingMaskIntoConstraints = false
         secondsLabel.translatesAutoresizingMaskIntoConstraints = false
         addButton.translatesAutoresizingMaskIntoConstraints = false
+        
         // No squash or stretch on the buttons
         cancelButton.setContentHuggingPriority(.defaultHigh, for: .horizontal)
         cancelButton.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
         addButton.setContentHuggingPriority(.defaultHigh, for: .horizontal)
         addButton.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
+        
         // Make sure the text isn’t any taller than it needs to be
         innerWrapper.setContentHuggingPriority(.defaultHigh, for: .vertical)
 
         // Set constraints for the subviews
-        
+
         thinLine.topAnchor.constraint(equalTo: margin.topAnchor).isActive = true
         thinLine.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
         thinLine.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
@@ -175,20 +170,17 @@ class InputView: UIInputView {
         // iOS 10 won’t dynamically resize the text field, so give it a sufficient width based on aspect ratio
         if #available(iOS 11, *) {}
         else {
-            textField.widthAnchor.constraint(equalTo: textField.heightAnchor, multiplier: 2.5).isActive = true
+            textField.widthAnchor.constraint(equalTo: textField.heightAnchor, multiplier: fallbackTextFieldAspectRatio).isActive = true
         }
         
         // Constraints for showing this view
         constraintsToShowView.insert(wrapper.bottomAnchor.constraint(equalTo: margin.bottomAnchor))
         constraintsToShowView.insert(textField.bottomAnchor.constraint(equalTo: wrapper.bottomAnchor, constant: -verticalGap))
         
-        // Constraint for hiding this view
-        constraintsToHideView.insert(wrapper.bottomAnchor.constraint(equalTo: wrapper.topAnchor))
-        
-        // Start with the view hidden
-        for constraint in constraintsToHideView {
-            constraint.isActive = true
-        }
+        // Constraint for hiding this view (make active because this view should start hidden)
+        let constraintToHideView = wrapper.bottomAnchor.constraint(equalTo: wrapper.topAnchor)
+        constraintToHideView.isActive = true
+        constraintsToHideView.insert(constraintToHideView)
         
         // Set the order of elements for accessibility to prevent the parent view from stealing accessibility focus
         accessibilityElements = [cancelButton, textField, addButton]
