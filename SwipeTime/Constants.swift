@@ -52,12 +52,6 @@ enum TimerStatus {
     case cancel
 }
 
-enum ButtonInset: CGFloat {
-    case vertical = 0.0
-    case medial = 32.0
-    case lateral = 16.0
-}
-
 /// Common constants
 struct K {
     
