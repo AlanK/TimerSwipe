@@ -9,7 +9,6 @@
 import UIKit
 /// Input accessory view that accepts an integer seconds value
 class InputView: UIInputView {
-    private let gap: CGFloat = 10.0
     // Based on the CatChat app from https://developer.apple.com/videos/play/wwdc2017/242/
     /// Wrapper view containing buttons, label, and text field
     private let wrapper: UIView = {
@@ -19,7 +18,7 @@ class InputView: UIInputView {
     /// Thin gray line to visually separate inputview from any table cells that may be behind it
     private let thinLine: UIView = {
         let view = UIView()
-        view.backgroundColor = UIColor(white: 2.0/3.0, alpha: 1.0)
+        view.backgroundColor = K.thinLineColor
         return view
     }()
     /// Cancel button
@@ -29,7 +28,7 @@ class InputView: UIInputView {
         button.accessibilityLabel = NSLocalizedString("cancelAddButton", value: "Cancel new timer", comment: "Cancel the user-initiated action of adding a new timer")
         button.setImage(UIImage(named: "Cancel X"), for: .normal)
         // Add some padding to make the buttons bigger tap targets. More padding on the medial side
-        button.contentEdgeInsets = UIEdgeInsetsMake(0.0, 16.0, 0.0, 32.0)
+        button.contentEdgeInsets = UIEdgeInsetsMake(ButtonInset.vertical.rawValue, ButtonInset.lateral.rawValue, ButtonInset.vertical.rawValue, ButtonInset.medial.rawValue)
         return button
     }()
     /// Inner wrapper containing the text field and seconds label
@@ -61,7 +60,7 @@ class InputView: UIInputView {
         button.accessibilityLabel = NSLocalizedString("titleOfAddButton", value: "Create new timer", comment: "")
         button.setImage(UIImage(named: "Save Arrow"), for: .normal)
         // Add some padding to make the buttons bigger tap targets. More padding on the medial side
-        button.contentEdgeInsets = UIEdgeInsetsMake(0.0, 32.0, 0.0, 16.0)
+        button.contentEdgeInsets = UIEdgeInsetsMake(ButtonInset.vertical.rawValue, ButtonInset.medial.rawValue, ButtonInset.vertical.rawValue, ButtonInset.lateral.rawValue)
         // Can’t add a timer until it has a valid time
         button.isEnabled = false
         return button
@@ -113,6 +112,7 @@ class InputView: UIInputView {
 
     override init(frame: CGRect, inputViewStyle: UIInputViewStyle) {
         super.init(frame: frame, inputViewStyle: inputViewStyle)
+        let verticalGap: CGFloat = 10.0, horizontalGap: CGFloat = 18.0, thinLineHeight: CGFloat = 0.5
         // Useful shorthand
         let margin = layoutMarginsGuide
         
@@ -148,20 +148,20 @@ class InputView: UIInputView {
         thinLine.topAnchor.constraint(equalTo: margin.topAnchor).isActive = true
         thinLine.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
         thinLine.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
-        thinLine.bottomAnchor.constraint(equalTo: thinLine.topAnchor, constant: 0.5).isActive = true
+        thinLine.bottomAnchor.constraint(equalTo: thinLine.topAnchor, constant: thinLineHeight).isActive = true
         
         wrapper.topAnchor.constraint(equalTo: thinLine.bottomAnchor).isActive = true
         wrapper.leadingAnchor.constraint(equalTo: margin.leadingAnchor).isActive = true
         wrapper.trailingAnchor.constraint(equalTo: margin.trailingAnchor).isActive = true
         
-        cancelButton.leadingAnchor.constraint(equalTo: wrapper.leadingAnchor, constant: -18).isActive = true
+        cancelButton.leadingAnchor.constraint(equalTo: wrapper.leadingAnchor, constant: -horizontalGap).isActive = true
         cancelButton.topAnchor.constraint(equalTo: wrapper.topAnchor).isActive = true
         cancelButton.bottomAnchor.constraint(equalTo: wrapper.bottomAnchor).isActive = true
 
         innerWrapper.topAnchor.constraint(equalTo: wrapper.topAnchor).isActive = true
         innerWrapper.centerXAnchor.constraint(equalTo: wrapper.centerXAnchor).isActive = true
         
-        textField.topAnchor.constraint(equalTo: wrapper.topAnchor, constant: gap).isActive = true
+        textField.topAnchor.constraint(equalTo: wrapper.topAnchor, constant: verticalGap).isActive = true
         textField.leadingAnchor.constraint(equalTo: innerWrapper.leadingAnchor).isActive = true
         textField.trailingAnchor.constraint(equalTo: secondsLabel.leadingAnchor).isActive = true
         
@@ -170,7 +170,7 @@ class InputView: UIInputView {
         
         addButton.topAnchor.constraint(equalTo: wrapper.topAnchor).isActive = true
         addButton.bottomAnchor.constraint(equalTo: wrapper.bottomAnchor).isActive = true
-        addButton.trailingAnchor.constraint(equalTo: wrapper.trailingAnchor, constant: 18).isActive = true
+        addButton.trailingAnchor.constraint(equalTo: wrapper.trailingAnchor, constant: horizontalGap).isActive = true
         
         // iOS 10 won’t dynamically resize the text field, so give it a sufficient width based on aspect ratio
         if #available(iOS 11, *) {}
@@ -180,7 +180,7 @@ class InputView: UIInputView {
         
         // Constraints for showing this view
         constraintsToShowView.insert(wrapper.bottomAnchor.constraint(equalTo: margin.bottomAnchor))
-        constraintsToShowView.insert(textField.bottomAnchor.constraint(equalTo: wrapper.bottomAnchor, constant: -gap))
+        constraintsToShowView.insert(textField.bottomAnchor.constraint(equalTo: wrapper.bottomAnchor, constant: -verticalGap))
         
         // Constraint for hiding this view
         constraintsToHideView.insert(wrapper.bottomAnchor.constraint(equalTo: wrapper.topAnchor))

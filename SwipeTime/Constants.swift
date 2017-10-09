@@ -52,6 +52,12 @@ enum TimerStatus {
     case cancel
 }
 
+enum ButtonInset: CGFloat {
+    case vertical = 0.0
+    case medial = 32.0
+    case lateral = 16.0
+}
+
 /// Common constants
 struct K {
     
@@ -69,6 +75,7 @@ struct K {
     
     // MARK: Input Accessory
     static let font = UIFont.preferredFont(forTextStyle: .title1)
+    static let thinLineColor = UIColor(white: 2.0/3.0, alpha: 1.0)
     
     // MARK: Main View
     static let timerDisplaySize: CGFloat = 64
