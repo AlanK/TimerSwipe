@@ -22,7 +22,6 @@ class InputView: UIInputView {
     private let wrapper = UIView(), innerWrapper = UIView(), thinLine = UIView()
     private var constraintsToHideView = Set<NSLayoutConstraint>(), constraintsToShowView = Set<NSLayoutConstraint>()
 
-    /// Cancel button
     let cancelButton: UIButton = {
         let button = UIButton(type: .system)
         button.tintColor = K.tintColor
@@ -33,7 +32,6 @@ class InputView: UIInputView {
         return button
     }()
     
-    /// Send button
     let addButton: UIButton = {
         let button = UIButton(type: .system)
         button.tintColor = K.tintColor
@@ -45,9 +43,7 @@ class InputView: UIInputView {
         button.isEnabled = false
         return button
     }()
-
     
-    /// Text input view
     let textField: UITextField = {
         let view = UITextField()
         view.borderStyle = UITextBorderStyle.none
@@ -61,7 +57,6 @@ class InputView: UIInputView {
         return view
     }()
     
-    /// "Seconds" label
     let secondsLabel: UILabel = {
         let label = UILabel()
         label.font = K.font
