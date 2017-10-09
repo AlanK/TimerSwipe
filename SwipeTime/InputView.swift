@@ -14,6 +14,13 @@ class InputView: UIInputView {
     private let wrapper = UIView(), innerWrapper = UIView(), thinLine = UIView()
     private var constraintsToHideView = Set<NSLayoutConstraint>(), constraintsToShowView = Set<NSLayoutConstraint>()
 
+    private let secondsLabel: UILabel = {
+        let label = UILabel()
+        label.font = K.font
+        label.text = NSLocalizedString("secondsLabel", value: " seconds", comment: "A space followed by the word seconds, so it can be concatenated with an integer to form a phrase like '20 seconds'")
+        return label
+    }()
+    
     let cancelButton: UIButton = {
         let button = UIButton(type: .system)
         button.setImage(UIImage(named: "Cancel X"), for: .normal)
@@ -43,13 +50,6 @@ class InputView: UIInputView {
         view.keyboardType = .numberPad
         view.accessibilityLabel = NSLocalizedString("descriptionOfTextField", value: "Timer duration in seconds", comment: "")
         return view
-    }()
-    
-    let secondsLabel: UILabel = {
-        let label = UILabel()
-        label.font = K.font
-        label.text = NSLocalizedString("secondsLabel", value: " seconds", comment: "A space followed by the word seconds, so it can be concatenated with an integer to form a phrase like '20 seconds'")
-        return label
     }()
     
     /// Report whether the constraints are set to make the view visible and toggle visibility
