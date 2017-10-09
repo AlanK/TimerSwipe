@@ -11,12 +11,12 @@ import UIKit
 class InputView: UIInputView {
     private let gap: CGFloat = 10.0
     // Based on the CatChat app from https://developer.apple.com/videos/play/wwdc2017/242/
-    /// View containing text view and send button
+    /// Wrapper view containing buttons, label, and text field
     private let wrapper: UIView = {
         let view = UIView()
         return view
     }()
-    /// Thin line to differentiate wrapper from any table cells that may be behind it
+    /// Thin gray line to visually separate inputview from any table cells that may be behind it
     private let thinLine: UIView = {
         let view = UIView()
         view.backgroundColor = UIColor(white: 2.0/3.0, alpha: 1.0)
@@ -62,6 +62,7 @@ class InputView: UIInputView {
         button.setImage(UIImage(named: "Save Arrow"), for: .normal)
         // Add some padding to make the buttons bigger tap targets. More padding on the medial side
         button.contentEdgeInsets = UIEdgeInsetsMake(0.0, 32.0, 0.0, 16.0)
+        // Can’t add a timer until it has a valid time
         button.isEnabled = false
         return button
     }()
@@ -161,7 +162,6 @@ class InputView: UIInputView {
         innerWrapper.centerXAnchor.constraint(equalTo: wrapper.centerXAnchor).isActive = true
         
         textField.topAnchor.constraint(equalTo: wrapper.topAnchor, constant: gap).isActive = true
-        
         textField.leadingAnchor.constraint(equalTo: innerWrapper.leadingAnchor).isActive = true
         textField.trailingAnchor.constraint(equalTo: secondsLabel.leadingAnchor).isActive = true
         
