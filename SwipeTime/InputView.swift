@@ -59,6 +59,7 @@ class InputView: UIInputView {
             return isVisible
         }
         set {
+            defer {layoutIfNeeded()}
             // Always deactivate constraints before activating conflicting ones (or else this could be a lot less verbose)
             switch newValue {
             case true:
@@ -76,8 +77,6 @@ class InputView: UIInputView {
                     constraint.isActive = true
                 }
             }
-            // Don't forget to do layout at the end
-            layoutIfNeeded()
         }
     }
 
