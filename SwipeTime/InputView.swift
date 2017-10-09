@@ -8,37 +8,25 @@
 
 import UIKit
 
-/// Content edge insets used by the cancel and add buttons in the input accessory view to enlarge their tap targets
-enum Inset: CGFloat {
-    case vertical = 0.0
-    case medial = 32.0
-    case lateral = 16.0
-}
-
+// Based on the CatChat app from https://developer.apple.com/videos/play/wwdc2017/242/
 /// Input accessory view that accepts an integer seconds value
 class InputView: UIInputView {
-    // Based on the CatChat app from https://developer.apple.com/videos/play/wwdc2017/242/
-
     private let wrapper = UIView(), innerWrapper = UIView(), thinLine = UIView()
     private var constraintsToHideView = Set<NSLayoutConstraint>(), constraintsToShowView = Set<NSLayoutConstraint>()
 
     let cancelButton: UIButton = {
         let button = UIButton(type: .system)
+        button.setImage(UIImage(named: "Cancel X"), for: .normal)
         button.tintColor = K.tintColor
         button.accessibilityLabel = NSLocalizedString("cancelAddButton", value: "Cancel new timer", comment: "Cancel the user-initiated action of adding a new timer")
-        button.setImage(UIImage(named: "Cancel X"), for: .normal)
-        // Add some padding to make the buttons bigger tap targets. More padding on the medial side
-        button.contentEdgeInsets = UIEdgeInsetsMake(Inset.vertical.rawValue, Inset.lateral.rawValue, Inset.vertical.rawValue, Inset.medial.rawValue)
         return button
     }()
     
     let addButton: UIButton = {
         let button = UIButton(type: .system)
+        button.setImage(UIImage(named: "Save Arrow"), for: .normal)
         button.tintColor = K.tintColor
         button.accessibilityLabel = NSLocalizedString("titleOfAddButton", value: "Create new timer", comment: "")
-        button.setImage(UIImage(named: "Save Arrow"), for: .normal)
-        // Add some padding to make the buttons bigger tap targets. More padding on the medial side
-        button.contentEdgeInsets = UIEdgeInsetsMake(Inset.vertical.rawValue, Inset.medial.rawValue, Inset.vertical.rawValue, Inset.lateral.rawValue)
         // Can’t add a timer until it has a valid time
         button.isEnabled = false
         return button
@@ -107,6 +95,14 @@ class InputView: UIInputView {
 
     override init(frame: CGRect, inputViewStyle: UIInputViewStyle) {
         super.init(frame: frame, inputViewStyle: inputViewStyle)
+        
+        /// Content edge insets used by the cancel and add buttons in the input accessory view to enlarge their tap targets
+        enum Inset: CGFloat {
+            case vertical = 0.0
+            case medial = 32.0
+            case lateral = 16.0
+        }
+        
         let verticalGap: CGFloat = 10.0, horizontalGap: CGFloat = 18.0, thinLineHeight: CGFloat = 0.5, fallbackTextFieldAspectRatio: CGFloat = 2.5, margin = layoutMarginsGuide
         
         // Assemble the subviews
@@ -137,6 +133,10 @@ class InputView: UIInputView {
         cancelButton.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
         addButton.setContentHuggingPriority(.defaultHigh, for: .horizontal)
         addButton.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
+        
+        // Add some padding to the buttons to make them bigger tap targets
+        cancelButton.contentEdgeInsets = UIEdgeInsetsMake(Inset.vertical.rawValue, Inset.lateral.rawValue, Inset.vertical.rawValue, Inset.medial.rawValue)
+        addButton.contentEdgeInsets = UIEdgeInsetsMake(Inset.vertical.rawValue, Inset.medial.rawValue, Inset.vertical.rawValue, Inset.lateral.rawValue)
         
         // Make sure the text isn’t any taller than it needs to be
         innerWrapper.setContentHuggingPriority(.defaultHigh, for: .vertical)
