@@ -11,6 +11,9 @@ import UIKit
 // Based on the CatChat app from https://developer.apple.com/videos/play/wwdc2017/242/
 /// Input accessory view that accepts an integer seconds value
 class InputView: UIInputView {
+    
+    // MARK: Private properties
+    
     private let wrapper = UIView(), innerWrapper = UIView(), thinLine = UIView()
     private var constraintsToHideView = Set<NSLayoutConstraint>(), constraintsToShowView = Set<NSLayoutConstraint>()
 
@@ -20,6 +23,8 @@ class InputView: UIInputView {
         label.text = NSLocalizedString("secondsLabel", value: " seconds", comment: "A space followed by the word seconds, so it can be concatenated with an integer to form a phrase like '20 seconds'")
         return label
     }()
+    
+    // MARK: Public properties
     
     let cancelButton: UIButton = {
         let button = UIButton(type: .system)
@@ -79,6 +84,8 @@ class InputView: UIInputView {
             }
         }
     }
+    
+    // MARK: Sizing
 
     override func sizeThatFits(_ size: CGSize) -> CGSize {
         return CGSize(width: size.width, height: size.height)
@@ -87,6 +94,8 @@ class InputView: UIInputView {
     override var intrinsicContentSize: CGSize {
         return bounds.size
     }
+    
+    // MARK: Initializers
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
