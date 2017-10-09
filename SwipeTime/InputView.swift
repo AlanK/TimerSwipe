@@ -96,23 +96,19 @@ class InputView: UIInputView {
     override init(frame: CGRect, inputViewStyle: UIInputViewStyle) {
         super.init(frame: frame, inputViewStyle: inputViewStyle)
         
-        /// Content edge insets used by the cancel and add buttons in the input accessory view to enlarge their tap targets
-        enum Inset: CGFloat {
-            case vertical = 0.0
-            case medial = 32.0
-            case lateral = 16.0
-        }
-        
-        let verticalGap: CGFloat = 10.0, horizontalGap: CGFloat = 18.0, thinLineHeight: CGFloat = 0.5, fallbackTextFieldAspectRatio: CGFloat = 2.5, margin = layoutMarginsGuide
+        let verticalGap: CGFloat = 10.0, horizontalGap: CGFloat = 18.0
+        let thinLineHeight: CGFloat = 0.5
+        let verticalInset: CGFloat = 0.0, medialInset: CGFloat = 32.0, lateralInset: CGFloat = 16.0
+        let margin = layoutMarginsGuide
         
         // Assemble the subviews
         addSubview(wrapper)
         addSubview(thinLine)
         addSubview(cancelButton)
         wrapper.addSubview(innerWrapper)
+        wrapper.addSubview(addButton)
         innerWrapper.addSubview(textField)
         innerWrapper.addSubview(secondsLabel)
-        wrapper.addSubview(addButton)
         
         // Add colors
         backgroundColor = UIColor.white
@@ -135,8 +131,8 @@ class InputView: UIInputView {
         addButton.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
         
         // Add some padding to the buttons to make them bigger tap targets
-        cancelButton.contentEdgeInsets = UIEdgeInsetsMake(Inset.vertical.rawValue, Inset.lateral.rawValue, Inset.vertical.rawValue, Inset.medial.rawValue)
-        addButton.contentEdgeInsets = UIEdgeInsetsMake(Inset.vertical.rawValue, Inset.medial.rawValue, Inset.vertical.rawValue, Inset.lateral.rawValue)
+        cancelButton.contentEdgeInsets = UIEdgeInsetsMake(verticalInset, lateralInset, verticalInset, medialInset)
+        addButton.contentEdgeInsets = UIEdgeInsetsMake(verticalInset, medialInset, verticalInset, lateralInset)
         
         // Make sure the text isn’t any taller than it needs to be
         innerWrapper.setContentHuggingPriority(.defaultHigh, for: .vertical)
@@ -173,6 +169,7 @@ class InputView: UIInputView {
         // iOS 10 won’t dynamically resize the text field, so give it a sufficient width based on aspect ratio
         if #available(iOS 11, *) {}
         else {
+            let fallbackTextFieldAspectRatio: CGFloat = 2.5
             textField.widthAnchor.constraint(equalTo: textField.heightAnchor, multiplier: fallbackTextFieldAspectRatio).isActive = true
         }
         
@@ -189,4 +186,3 @@ class InputView: UIInputView {
         accessibilityElements = [cancelButton, textField, addButton]
     }
 }
-
