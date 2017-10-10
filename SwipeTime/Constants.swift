@@ -31,13 +31,11 @@ struct K {
     
     // MARK: App Appearance
     static let tintColor = UIColor(red: 255.0/255.0, green: 35.0/255.0, blue: 180.0/255.0, alpha: 1.0)
-    
+    static let fineLineColor = UIColor(white: 2.0/3.0, alpha: 1.0)
+    static let largeFont = UIFont.preferredFont(forTextStyle: .title1)
+
     // MARK: Main Table
     static let editButtonDelay: TimeInterval = 0.5
-    
-    // MARK: Input Accessory
-    static let font = UIFont.preferredFont(forTextStyle: .title1)
-    static let fineLineColor = UIColor(white: 2.0/3.0, alpha: 1.0)
     
     // MARK: Main View
     static let timerDisplaySize: CGFloat = 64

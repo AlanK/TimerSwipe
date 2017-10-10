@@ -19,7 +19,7 @@ class InputView: UIInputView {
 
     private let secondsLabel: UILabel = {
         let label = UILabel()
-        label.font = K.font
+        label.font = K.largeFont
         label.text = NSLocalizedString("secondsLabel", value: " seconds", comment: "A space followed by the word seconds, so it can be concatenated with an integer to form a phrase like '20 seconds'")
         return label
     }()
@@ -47,7 +47,7 @@ class InputView: UIInputView {
     let textField: UITextField = {
         let view = UITextField()
         view.borderStyle = UITextBorderStyle.none
-        view.font = K.font
+        view.font = K.largeFont
         view.placeholder = "0"
         view.adjustsFontForContentSizeCategory = true
         view.textAlignment = .right
