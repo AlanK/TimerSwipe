@@ -13,7 +13,7 @@ struct SoundController {
     /// Singleton `AVAudioSession`
     private let audioSession = AVAudioSession()
     // Initializing an AVAudioPlayer is failable, so these need to be optionals
-    private let timerDidStartCue: AVAudioPlayer?, timerDidEndCue: AVAudioPlayer?
+    private let timerDidStartCue: AVAudioPlayer?, timerDidEndCue: AVAudioPlayer?, timerWillDieCue: AVAudioPlayer?
     
     init() {
         /**
@@ -32,6 +32,7 @@ struct SoundController {
         // Initialize the audio players
         timerDidStartCue = initializePlayer(with: Sound.shortWindStart.rawValue)
         timerDidEndCue = initializePlayer(with: Sound.shortWindEnd.rawValue)
+        timerWillDieCue = initializePlayer(with: Sound.shortWindWarn.rawValue)
         // Configure audio session to mix with background music
         do {
             try audioSession.setCategory(AVAudioSessionCategoryAmbient, mode: AVAudioSessionModeDefault, options: [])
@@ -72,4 +73,14 @@ struct SoundController {
         vibrate()
         timerDidEndCue?.prepareToPlay()
      }
+    
+    /// Attempts to warn the user that a running timer is about to be killed by the OS
+    func warn() {
+        timerWillDieCue?.play()
+        vibrate()
+        timerWillDieCue?.prepareToPlay()
+        Timer.scheduledTimer(withTimeInterval: 1.0, repeats: false) {timer in
+            self.vibrate()
+        }
+    }
 }

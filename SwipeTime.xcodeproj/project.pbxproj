@@ -42,6 +42,7 @@
 		5A4DC9171D596D460009446B /* STSavedTimer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STSavedTimer.swift; sourceTree = "<group>"; };
 		5A591CE61D3A9F6100B9BD3D /* TimeFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeFormatter.swift; sourceTree = "<group>"; };
 		5A591CE81D3AA18E00B9BD3D /* SoundController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoundController.swift; sourceTree = "<group>"; };
+		5A6E07951F8C443200B7062A /* TS_short_warn.aif */ = {isa = PBXFileReference; lastKnownFileType = file; path = TS_short_warn.aif; sourceTree = "<group>"; };
 		5A7D12C81F0B293800C9B51A /* TS_Outro.aif */ = {isa = PBXFileReference; lastKnownFileType = file; name = TS_Outro.aif; path = "../../TS Sounds/TS_Outro.aif"; sourceTree = "<group>"; };
 		5A7D12C91F0B293800C9B51A /* TS_Intro.aif */ = {isa = PBXFileReference; lastKnownFileType = file; name = TS_Intro.aif; path = "../../TS Sounds/TS_Intro.aif"; sourceTree = "<group>"; };
 		5A7D12CE1F0B2ADC00C9B51A /* TS_short_in.aif */ = {isa = PBXFileReference; lastKnownFileType = file; name = TS_short_in.aif; path = "../../TS Sounds/TS_short_in.aif"; sourceTree = "<group>"; };
@@ -106,6 +107,7 @@
 				5A7D12C81F0B293800C9B51A /* TS_Outro.aif */,
 				5A7D12CE1F0B2ADC00C9B51A /* TS_short_in.aif */,
 				5A7D12CF1F0B2ADC00C9B51A /* TS_short_out.aif */,
+				5A6E07951F8C443200B7062A /* TS_short_warn.aif */,
 				5A9563E31D313BB100313EEF /* AudioCue_01.aif */,
 				5A9563E41D313BB100313EEF /* AudioCue_02.aif */,
 			);

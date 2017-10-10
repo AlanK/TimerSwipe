@@ -14,12 +14,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     /// Records when the app last entered the background; set to nil after returning to foreground
     private var enteredBackground: Date?
     
+    private var nav: NavController? {
+        return window?.rootViewController as? NavController
+    }
+    
     private var timerIsActive: Bool {
-        if let nav = window?.rootViewController as? NavController,let timer = nav.topViewController as? StopwatchDelegate,
-            timer.unlocked == false {
-            return true
-        }
+        if nav?.unlocked == false {return true}
         return false
+    }
+    
+    func killTimer() {
+        guard timerIsActive else {return}
+        nav?.killTimer()
     }
     
     func applicationDidFinishLaunching(_ application: UIApplication) {
@@ -41,8 +47,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             enteredBackground = nil
         }
         guard let enteredBackground = enteredBackground,
-            let nav = window?.rootViewController as? NavController,
             K.timeout < Date().timeIntervalSince(enteredBackground) else {return}
-        nav.refreshViews()
+        nav?.refreshViews()
+    }
+    
+    func applicationWillTerminate(_ application: UIApplication) {
+        killTimer()
     }
 }

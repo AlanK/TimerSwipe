@@ -20,6 +20,11 @@ class NavController: UINavigationController {
         }
         return extractedModel
     }()
+    
+    var unlocked: Bool {
+        guard let watch = topViewController as? StopwatchDelegate else {return true}
+        return watch.unlocked
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -56,6 +61,11 @@ class NavController: UINavigationController {
         let tableView = storyboard.instantiateViewController(withIdentifier: StoryboardID.tableView.rawValue)
         // Navigate to the favorite timer with the table view in the nav stack
         self.setViewControllers([tableView, storyboard.instantiateViewController(withIdentifier: StoryboardID.mainView.rawValue)], animated: animate)
+    }
+    
+    func killTimer() {
+        guard let main = topViewController as? MainViewController else {return}
+        main.killTimer()
     }
 }
 

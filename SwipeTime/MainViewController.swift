@@ -112,6 +112,11 @@ class MainViewController: UIViewController {
     
     // MARK: Convenience
     
+    func killTimer() {
+        soundController.warn()
+        buttonActions()
+    }
+    
     /// Tells the Stopwatch to start the timer
     private func start() {stopwatch?.startTimer()}
     
