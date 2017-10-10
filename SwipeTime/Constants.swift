@@ -11,14 +11,12 @@ import UIKit
 /// Exhaustive list of storyboard segue identifiers
 enum SegueID: String {
     case tableToTimer = "tableToTimer"
-    case tableToNew = "tableToModal"
 }
 
 /// Exhaustive list of storyboard identifiers
 enum StoryboardID: String {
     case mainView = "mainView"
     case tableView = "tableView"
-    case modalView = "modalView"
 }
 
 /// Controls the value of the Change/Cancel button
