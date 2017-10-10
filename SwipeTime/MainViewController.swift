@@ -10,6 +10,19 @@ import UIKit
 
 /// Primary view controller—displays the selected timer
 class MainViewController: UIViewController {
+    /// Controls the value of the Change/Cancel button
+    private enum ChangeButtonValue {
+        case cancel
+        case change
+        // rawValue can't return an NSLocalizedString
+        /// Returns a localized string with text for the Change/Cancel button
+        var text: String {
+            switch self {
+            case .cancel: return NSLocalizedString("cancelButton", value: "Cancel", comment: "Cancel the timer that is currently running")
+            case .change: return NSLocalizedString("changeButton", value: "Change", comment: "Change which timer is displayed")
+            }
+        }
+    }
     /// The duration of the selected timer in seconds
     var duration: TimeInterval?
     /// Object that takes an integer in centiseconds and outputs a string for display
@@ -102,12 +115,12 @@ class MainViewController: UIViewController {
     
     /// Hides the "Swipe to Start" instructions when a timer is running
     private func hideInstructions() {
-        UIView.animate(withDuration: K.instructionsAnimationDuration, delay: 0, options: .curveLinear, animations: {self.instructionsDisplay.alpha = K.instructionsHideAlpha}, completion: nil)
+        UIView.animate(withDuration: K.instructionsAnimationDuration, delay: 0, options: .curveLinear, animations: {self.instructionsDisplay.alpha = K.disabledAlpha}, completion: nil)
     }
     
     /// Shows the "Swipe to Start" instructions when a timer is not running
     private func showInstructions() {
-        UIView.animate(withDuration: K.instructionsAnimationDuration, delay: 0, options: .curveLinear, animations: {self.instructionsDisplay.alpha = K.instructionsShowAlpha}, completion: nil)
+        UIView.animate(withDuration: K.instructionsAnimationDuration, delay: 0, options: .curveLinear, animations: {self.instructionsDisplay.alpha = K.enabledAlpha}, completion: nil)
     }
     
     // MARK: Convenience
@@ -167,9 +180,10 @@ extension MainViewController: StopwatchDelegate {
     
     /// Handle changes in timer status
     func timerDid(_ status: TimerStatus) {
+        let defaultDisplay: String = "00:00.00"
         /// String of the timer duration (or "Unknown" if duration is unavailable)
         var textDuration: String {
-            guard let duration = duration else {return K.defaultDisplay}
+            guard let duration = duration else {return defaultDisplay}
             return String(Int(duration))
         }
         

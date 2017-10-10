@@ -14,6 +14,16 @@ struct SoundController {
     private let audioSession = AVAudioSession()
     // Initializing an AVAudioPlayer is failable, so these need to be optionals
     private let timerDidStartCue: AVAudioPlayer?, timerDidEndCue: AVAudioPlayer?, timerWillDieCue: AVAudioPlayer?
+    /// Audio file names (with extensions)
+    private enum Sound: String {
+        case shortWindStart = "TS_short_in.aif"
+        case shortWindEnd = "TS_short_out.aif"
+        case shortWindWarn = "TS_short_warn.aif"
+        case windStart = "TS_Intro.aif"
+        case windEnd = "TS_Outro.aif"
+        case legacyStart = "AudioCue_01.aif"
+        case legacyEnd = "AudioCue_02.aif"
+    }
     
     init() {
         /**

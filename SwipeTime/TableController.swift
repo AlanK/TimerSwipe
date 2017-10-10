@@ -30,6 +30,10 @@ class TableController: UITableViewController {
         return view
     }()
     
+    private let cellID = "STTableViewCell"
+    private let sectionsInTableView = 1, mainSection = 0
+
+    
     // MARK: View controller
     
     override func viewDidLoad() {
@@ -76,12 +80,12 @@ class TableController: UITableViewController {
     // MARK: Table view data source
 
     // This table has one section
-    override func numberOfSections(in tableView: UITableView) -> Int {return K.sectionsInTableView}
+    override func numberOfSections(in tableView: UITableView) -> Int {return sectionsInTableView}
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {return modelController?.model.count() ?? 0}
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: K.cellID, for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellID, for: indexPath)
         // Pass delegate and timer to cell so it can complete its own setup
         if let cell = cell as? TableCell,
             let cellTimer = modelController?.model[indexPath.row] {
@@ -236,7 +240,7 @@ extension TableController {
         // Create a new timer
         guard let model = modelController?.model else {return}
         let newTimer = STSavedTimer(seconds: userSelectedTime)
-        let newIndexPath = IndexPath(row: model.count(), section: K.mainSection)
+        let newIndexPath = IndexPath(row: model.count(), section: mainSection)
         // Append, save, and update view
         model.append(timer: newTimer)
         model.saveData()

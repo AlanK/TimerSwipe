@@ -120,7 +120,7 @@ class InputView: UIInputView {
         
         // Add colors
         backgroundColor = UIColor.white
-        thinLine.backgroundColor = K.thinLineColor
+        thinLine.backgroundColor = K.fineLineColor
         
         // No, do not translate autoresizing mask into constraints for anything…
         translatesAutoresizingMaskIntoConstraints = false

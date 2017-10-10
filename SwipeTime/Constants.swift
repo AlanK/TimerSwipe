@@ -19,31 +19,6 @@ enum StoryboardID: String {
     case tableView = "tableView"
 }
 
-/// Controls the value of the Change/Cancel button
-enum ChangeButtonValue {
-    case cancel
-    case change
-    // rawValue can't return an NSLocalizedString
-    /// Returns a localized string with text for the Change/Cancel button
-    var text: String {
-        switch self {
-        case .cancel: return NSLocalizedString("cancelButton", value: "Cancel", comment: "Cancel the timer that is currently running")
-        case .change: return NSLocalizedString("changeButton", value: "Change", comment: "Change which timer is displayed")
-        }
-    }
-}
-
-/// Audio file names (with extensions)
-enum Sound: String {
-    case shortWindStart = "TS_short_in.aif"
-    case shortWindEnd = "TS_short_out.aif"
-    case shortWindWarn = "TS_short_warn.aif"
-    case windStart = "TS_Intro.aif"
-    case windEnd = "TS_Outro.aif"
-    case legacyStart = "AudioCue_01.aif"
-    case legacyEnd = "AudioCue_02.aif"
-}
-
 /// Message announcing changes in timer status
 enum TimerStatus {
     case start
@@ -57,25 +32,18 @@ struct K {
     // MARK: App Appearance
     static let tintColor = UIColor(red: 255.0/255.0, green: 35.0/255.0, blue: 180.0/255.0, alpha: 1.0)
     
-    // MARK: App Behavior
-    static let timeout: TimeInterval = 300.0
-    
     // MARK: Main Table
-    static let cellID = "STTableViewCell"
-    static let sectionsInTableView = 1
-    static let mainSection = 0
     static let editButtonDelay: TimeInterval = 0.5
     
     // MARK: Input Accessory
     static let font = UIFont.preferredFont(forTextStyle: .title1)
-    static let thinLineColor = UIColor(white: 2.0/3.0, alpha: 1.0)
+    static let fineLineColor = UIColor(white: 2.0/3.0, alpha: 1.0)
     
     // MARK: Main View
     static let timerDisplaySize: CGFloat = 64
     static let instructionsAnimationDuration: TimeInterval = 0.2
-    static let instructionsShowAlpha: CGFloat = 1.0
-    static let instructionsHideAlpha: CGFloat = 0.2
-    static let defaultDisplay: String = "00:00.00"
+    static let enabledAlpha: CGFloat = 1.0
+    static let disabledAlpha: CGFloat = 0.2
     
     // MARK: Heart Icon
     static let fullHeartIconName = "Full heart"

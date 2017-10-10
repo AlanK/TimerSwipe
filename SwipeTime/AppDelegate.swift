@@ -13,7 +13,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     /// Records when the app last entered the background; set to nil after returning to foreground
     private var enteredBackground: Date?
-    
+    private let timeout: TimeInterval = 300.0
+
     private var nav: NavController? {
         return window?.rootViewController as? NavController
     }
@@ -47,7 +48,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             enteredBackground = nil
         }
         guard let enteredBackground = enteredBackground,
-            K.timeout < Date().timeIntervalSince(enteredBackground) else {return}
+            timeout < Date().timeIntervalSince(enteredBackground) else {return}
         nav?.refreshViews()
     }
     
