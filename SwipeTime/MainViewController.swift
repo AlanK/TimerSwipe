@@ -26,7 +26,7 @@ class MainViewController: UIViewController {
     /// The duration of the selected timer in seconds
     var duration: TimeInterval?
     /// Object that takes an integer in centiseconds and outputs a string for display
-    private var timeFormatter = TimeFormatter()
+    private let timeFormatter = TimeFormatter()
     /// Plays the timer start and finish sounds
     private let soundController = SoundController()
     /// Controls the text for the change/cancel button (and cancels a running timer)
