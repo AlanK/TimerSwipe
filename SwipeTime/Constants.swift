@@ -43,10 +43,6 @@ struct K {
     static let enabledAlpha: CGFloat = 1.0
     static let disabledAlpha: CGFloat = 0.2
     
-    // MARK: Heart Icon
-    static let fullHeartIconName = "Full heart"
-    static let emptyHeartIconName = "Empty heart"
-    
     // MARK: Time
     static let defaultDuration: TimeInterval = 30.0
     static let hundredthOfASecond: TimeInterval = 0.01
