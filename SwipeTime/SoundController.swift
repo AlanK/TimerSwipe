@@ -59,6 +59,7 @@ struct SoundController {
         guard active else {return}
         timerDidStartCue?.prepareToPlay()
         timerDidEndCue?.prepareToPlay()
+        timerWillDieCue?.prepareToPlay()
     }
     
     /// Vibrate without playing a sound
