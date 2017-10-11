@@ -10,6 +10,7 @@ import Foundation
 
 /// Model representation of a user-created timer
 class STSavedTimer: NSObject, NSCoding {
+    private static let centisecondsPerSecond = 100.0
     /// Timer duration in seconds
     let seconds: TimeInterval
     /// Whether or not the timer is the user’s favorite
@@ -37,15 +38,13 @@ class STSavedTimer: NSObject, NSCoding {
     // This class serializes centiseconds as Int instead of seconds as TimeInterval. This is the result of bad model design when the app was first created and released. For now, centisecond-related legacy code has been quarantined in this part of the app. In the future, the model should be rewritten to serialize seconds as TimeInterval and legacy model objects should be migrated.
     
     func encode(with aCoder: NSCoder) {
-        let centisecondsPerSecond = 100.0
-        aCoder.encode(Int(seconds*centisecondsPerSecond), forKey: K.centisecondsKey)
+        aCoder.encode(Int(seconds*STSavedTimer.centisecondsPerSecond), forKey: K.centisecondsKey)
         aCoder.encode(isFavorite, forKey: K.isFavoriteKey)
     }
     
     required convenience init(coder aDecoder: NSCoder) {
-        let centisecondsPerSecond = 100.0
         let centiseconds = aDecoder.decodeInteger(forKey: K.centisecondsKey)
         let isFavorite = aDecoder.decodeBool(forKey: K.isFavoriteKey)
-        self.init(seconds: Double(centiseconds)/centisecondsPerSecond, isFavorite: isFavorite)
+        self.init(seconds: Double(centiseconds)/STSavedTimer.centisecondsPerSecond, isFavorite: isFavorite)
     }
 }
