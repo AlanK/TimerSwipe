@@ -65,6 +65,7 @@ class TableController: UITableViewController {
         super.viewWillAppear(animated)
         self.navigationController?.setNavigationBarHidden(false, animated: animated)
         self.navigationController?.setToolbarHidden(false, animated: animated)
+        
         guard let model = modelController?.model else {return}
         self.navigationItem.rightBarButtonItem?.isEnabled = (model.count() > 0)
     }
@@ -87,8 +88,7 @@ class TableController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellID, for: indexPath)
         // Pass delegate and timer to cell so it can complete its own setup
-        if let cell = cell as? TableCell,
-            let cellTimer = modelController?.model[indexPath.row] {
+        if let cell = cell as? TableCell, let cellTimer = modelController?.model[indexPath.row] {
             cell.delegate = self
             cell.setupCell(with: cellTimer)
         }
