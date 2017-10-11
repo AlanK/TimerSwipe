@@ -11,11 +11,11 @@ import UIKit
 /// Formats a quantity of time into a "00:00.00" string ready to display
 struct TimeFormatter {
     // DateFormatter supports hundredths of a second, so we don't have to use NumberFormatter
-    private let dateFormatter = DateFormatter()
-    
-    init() {
-        dateFormatter.dateFormat = "mm:ss.SS"
-    }
+    private let dateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "mm:ss.SS"
+        return formatter
+    }()
     
     /**
      Formats time for display
