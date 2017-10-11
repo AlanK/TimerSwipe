@@ -16,23 +16,21 @@ protocol TableCellDelegate {
 
 /// Custom table view cell with heart icon accessory view
 class TableCell: UITableViewCell {
-    /// Table view cell delegate
+    // MARK: Type
+    private static let fullHeart = #imageLiteral(resourceName: "Full heart"), emptyHeart = #imageLiteral(resourceName: "Empty heart")
+    private static let isFavorite = NSLocalizedString("fav", value: "Favorite", comment: "this is my favorite timer"),
+    makeFavorite = NSLocalizedString("makeFav", value: "Make favorite", comment: "make this timer my favorite timer"),
+    makeNotFavorite = NSLocalizedString("unfav", value: "Make not favorite", comment: "make this not be my favorite timer")
+
+    // MARK: Instance
     var delegate: TableCellDelegate?
-    
-    // MARK: Properties
-    
-    /// Text label
+
     @IBOutlet var secondsLabel: UILabel!
-    /// Heart icon button
     @IBOutlet var favoriteIcon: UIButton!
-    
-    // MARK: Actions
     
     @IBAction func favoriteButton(_ sender: UIButton) {
         delegate?.cellButtonTapped(cell: self)
     }
-
-    // MARK: Setup
     
     /**
      Sets up the cell with the standard layout.
@@ -41,18 +39,32 @@ class TableCell: UITableViewCell {
          - timer: an `STSavedTimer` with a duration and a favorite status
      */
     func setupCell(with timer: STSavedTimer) {
-        secondsLabel.text = NSLocalizedString("numberOfSeconds", value: "\(Int(timer.seconds)) seconds", comment: "{whole number} seconds")
-        secondsLabel.accessibilityTraits = UIAccessibilityTraitButton
+        let label = NSLocalizedString("numberOfSeconds", value: "\(Int(timer.seconds)) seconds", comment: "{whole number} seconds")
         
-        favoriteIcon.accessibilityLabel = NSLocalizedString("favButton", value: "Favorite", comment: "Will be marked on or off to indicate whether or not an item is the user’s favorite")
-        // Set heart icon based on isFavorite
+        let buttonImage: UIImage
+        let accessLabel: String, buttonDescription: String
+        
+        // Configure based on isFavorite status
         switch timer.isFavorite {
         case true:
-            favoriteIcon.setImage(UIImage(named: K.fullHeartIconName)?.withRenderingMode(.alwaysTemplate), for: UIControlState())
-            favoriteIcon.accessibilityValue = NSLocalizedString("switchOn", value: "On", comment: "An on/off switch in the on position")
+            buttonImage = TableCell.fullHeart
+            accessLabel = label + ", " + TableCell.isFavorite
+            buttonDescription = TableCell.makeNotFavorite
         case false:
-            favoriteIcon.setImage(UIImage(named: K.emptyHeartIconName)?.withRenderingMode(.alwaysTemplate), for: UIControlState())
-            favoriteIcon.accessibilityValue = NSLocalizedString("switchOff", value: "Off", comment: "An on/off switch in the off position")
+            buttonImage = TableCell.emptyHeart
+            accessLabel = label
+            buttonDescription = TableCell.makeFavorite
         }
+
+        let toggleFavorite = UIAccessibilityCustomAction.init(name: buttonDescription, target: self, selector: #selector(favoriteButton(_:)) )
+
+        // Set visible state of cell
+        secondsLabel.text = label
+        favoriteIcon.setImage(buttonImage.withRenderingMode(.alwaysTemplate), for: UIControlState())
+        
+        // Set accessibility state of cell
+        isAccessibilityElement = true
+        accessibilityLabel = accessLabel
+        accessibilityCustomActions = [toggleFavorite]
     }
 }
