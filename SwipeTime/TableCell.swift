@@ -17,7 +17,6 @@ protocol TableCellDelegate {
 /// Custom table view cell with heart icon accessory view
 class TableCell: UITableViewCell {
     // MARK: Type
-    private static let fullHeart = #imageLiteral(resourceName: "Full heart"), emptyHeart = #imageLiteral(resourceName: "Empty heart")
     private static let isFavorite = NSLocalizedString("fav", value: "Favorite", comment: "this is my favorite timer"),
     makeFavorite = NSLocalizedString("makeFav", value: "Make favorite", comment: "make this timer my favorite timer"),
     makeNotFavorite = NSLocalizedString("unfav", value: "Make not favorite", comment: "make this not be my favorite timer")
@@ -47,11 +46,11 @@ class TableCell: UITableViewCell {
         // Configure based on isFavorite status
         switch timer.isFavorite {
         case true:
-            buttonImage = TableCell.fullHeart
+            buttonImage = #imageLiteral(resourceName: "Full heart")
             accessLabel = label + ", " + TableCell.isFavorite
             buttonDescription = TableCell.makeNotFavorite
         case false:
-            buttonImage = TableCell.emptyHeart
+            buttonImage = #imageLiteral(resourceName: "Empty heart")
             accessLabel = label
             buttonDescription = TableCell.makeFavorite
         }

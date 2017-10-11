@@ -28,7 +28,7 @@ class InputView: UIInputView {
     
     let cancelButton: UIButton = {
         let button = UIButton(type: .system)
-        button.setImage(UIImage(named: "Cancel X"), for: .normal)
+        button.setImage(#imageLiteral(resourceName: "Cancel X").withRenderingMode(.alwaysTemplate), for: .normal)
         button.tintColor = K.tintColor
         button.accessibilityLabel = NSLocalizedString("cancelAddButton", value: "Cancel new timer", comment: "Cancel the user-initiated action of adding a new timer")
         return button
@@ -36,7 +36,7 @@ class InputView: UIInputView {
     
     let addButton: UIButton = {
         let button = UIButton(type: .system)
-        button.setImage(UIImage(named: "Save Arrow"), for: .normal)
+        button.setImage(#imageLiteral(resourceName: "Save Arrow").withRenderingMode(.alwaysTemplate), for: .normal)
         button.tintColor = K.tintColor
         button.accessibilityLabel = NSLocalizedString("titleOfAddButton", value: "Create new timer", comment: "")
         // Can’t add a timer until it has a valid time
