@@ -70,12 +70,10 @@ extension NavController: ModelController {}
 
 extension NavController {
     var unlocked: Bool {
-        guard let watch = topViewController as? StopwatchDelegate else {return true}
-        return watch.unlocked
+        return (topViewController as? StopwatchDelegate)?.unlocked ?? true
     }
     
     func killTimer() {
-        guard let main = topViewController as? MainViewController else {return}
-        main.killTimer()
+        (topViewController as? MainViewController)?.killTimer()
     }
 }
