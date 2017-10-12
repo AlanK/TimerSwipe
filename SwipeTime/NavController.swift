@@ -21,11 +21,6 @@ class NavController: UINavigationController {
         return extractedModel
     }()
     
-    var unlocked: Bool {
-        guard let watch = topViewController as? StopwatchDelegate else {return true}
-        return watch.unlocked
-    }
-
     override func viewDidLoad() {
         super.viewDidLoad()
         if #available(iOS 11.0, *) {
@@ -65,13 +60,22 @@ class NavController: UINavigationController {
         // Navigate to the favorite timer with the table view in the nav stack
         self.setViewControllers([tableView, storyboard.instantiateViewController(withIdentifier: StoryboardID.mainView.rawValue)], animated: animate)
     }
+}
+
+// MARK: - Model Controller
+// Make the model available to other objects
+extension NavController: ModelController {}
+
+// MARK: - Timeout Handler
+
+extension NavController {
+    var unlocked: Bool {
+        guard let watch = topViewController as? StopwatchDelegate else {return true}
+        return watch.unlocked
+    }
     
     func killTimer() {
         guard let main = topViewController as? MainViewController else {return}
         main.killTimer()
     }
 }
-
-// MARK: - Model Controller
-// Make the model available to other objects
-extension NavController: ModelController {}
