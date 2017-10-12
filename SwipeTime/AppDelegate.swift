@@ -19,13 +19,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return window?.rootViewController as? NavController
     }
     
-    private var timerIsActive: Bool {
-        if nav?.unlocked == false {return true}
-        return false
+    private var timerNotRunning: Bool {
+        return nav?.timerNotRunning ?? true
     }
     
     func killTimer() {
-        guard timerIsActive else {return}
         nav?.killTimer()
     }
     
@@ -37,7 +35,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func applicationDidEnterBackground(_ application: UIApplication) {
         // Don’t start the background timeout if there’s a running timer
-        if timerIsActive == false {
+        if timerNotRunning {
             enteredBackground = Date()
         }
     }
