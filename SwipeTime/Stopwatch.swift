@@ -11,7 +11,7 @@ import Foundation
 /// Responsible for providing a locking system (to prevent concurrency), timer completion handlers, and a display updater
 protocol StopwatchDelegate {
     // NOTE: The indirection in timerNotRunning/lock/unlock allows Stopwatch to be a struct. Don't collapse it all into an unlocked {get set} unless you're prepared to make Stopwatch a class.
-    /// Controls whether or not the stopwatch can start a new timer
+    /// Controls whether the stopwatch can start or continue a timer
     var timerNotRunning: Bool {get}
     /// Locks to prevent starting a new timer
     func lock()
