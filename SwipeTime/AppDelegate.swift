@@ -11,16 +11,11 @@ import UIKit
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
-    /// Records when the app last entered the background; set to nil after returning to foreground
-    private var enteredBackground: Date?
+    private var lastEnteredBackground: Date?
     private let timeout: TimeInterval = 300.0
 
     private var nav: NavController? {
         return window?.rootViewController as? NavController
-    }
-    
-    func killTimer() {
-        nav?.killTimer()
     }
     
     func applicationDidFinishLaunching(_ application: UIApplication) {
@@ -30,20 +25,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func applicationDidEnterBackground(_ application: UIApplication) {
-        enteredBackground = Date()
+        lastEnteredBackground = Date()
     }
     
     func applicationDidBecomeActive(_ application: UIApplication) {
-        // Background timeout logic
-        defer {
-            enteredBackground = nil
+        if let date = lastEnteredBackground, timeout < Date().timeIntervalSince(date) {
+            nav?.refreshViews()
         }
-        guard let enteredBackground = enteredBackground,
-            timeout < Date().timeIntervalSince(enteredBackground) else {return}
-        nav?.refreshViews()
+        lastEnteredBackground = nil
     }
     
     func applicationWillTerminate(_ application: UIApplication) {
-        killTimer()
+        nav?.killTimer()
     }
 }
