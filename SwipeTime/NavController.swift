@@ -42,23 +42,23 @@ class NavController: UINavigationController {
     
     /// Make any necessary changes to views after being in the background for a long time
     func refreshViews() {
-        // Animate changes in views
-        let animate: Bool
-        // Ensure there is a storyboard and a favorite timer
-        guard let storyboard = self.storyboard, let _ = model.favorite() else {return}
+        // Don’t change views if there’s no favorite to change to
+        guard let storyboard = storyboard, let _ = model.favorite() else {return}
         // Don't disrupt an active edit session
-        if let vc = self.topViewController as? TableController {
-            guard vc.isEditing == false else {return}
-        }
-        if self.topViewController is MainViewController {
-            // Don't animate going from one timer to another; it looks weird
-            animate = false
-        } else {
-            animate = true
-        }
-        let tableView = storyboard.instantiateViewController(withIdentifier: StoryboardID.tableView.rawValue)
+        if (topViewController as? TableController)?.isEditing == true {return}
+
         // Navigate to the favorite timer with the table view in the nav stack
-        self.setViewControllers([tableView, storyboard.instantiateViewController(withIdentifier: StoryboardID.mainView.rawValue)], animated: animate)
+        let tableVC = storyboard.instantiateViewController(withIdentifier: StoryboardID.tableView.rawValue)
+        let mainVC = storyboard.instantiateViewController(withIdentifier: StoryboardID.mainView.rawValue)
+
+        let animate: Bool
+        switch (topViewController is MainViewController) {
+        // Don't animate going from one timer to another; it looks weird
+        case true: animate = false
+        case false: animate = true
+        }
+        
+        setViewControllers([tableVC, mainVC], animated: animate)
     }
 }
 
