@@ -27,7 +27,7 @@ class NavController: UINavigationController {
             navigationBar.prefersLargeTitles = true
         }
         
-        guard let storyboard = self.storyboard else {return}
+        guard let storyboard = storyboard else {return}
         // Make sure the table view is in the view hierarchy
         let tableVC = storyboard.instantiateViewController(withIdentifier: StoryboardID.tableView.rawValue)
         var navHierarchy = [tableVC]
@@ -37,7 +37,7 @@ class NavController: UINavigationController {
             let mainVC = storyboard.instantiateViewController(withIdentifier: StoryboardID.mainView.rawValue)
             navHierarchy.append(mainVC)
         }
-        self.setViewControllers(navHierarchy, animated: false)
+        setViewControllers(navHierarchy, animated: false)
     }
     
     /// Make any necessary changes to views after being in the background for a long time
