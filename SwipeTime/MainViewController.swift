@@ -164,8 +164,8 @@ class MainViewController: UIViewController {
 
 extension MainViewController: StopwatchDelegate {
     ///Reports lock status to the stopwatch to prevent multiple timers from running at once
-    var unlocked: Bool {
-        // Map unlock status to buttonStatus (.change = unlocked)
+    var timerNotRunning: Bool {
+        // Map unlock status to buttonStatus (.change = timerNotRunning)
         switch buttonStatus {
         case .change: return true
         case .cancel: return false

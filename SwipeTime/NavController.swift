@@ -70,7 +70,7 @@ extension NavController: ModelController {}
 
 extension NavController {
     var timerNotRunning: Bool {
-        return (topViewController as? StopwatchDelegate)?.unlocked ?? true
+        return (topViewController as? StopwatchDelegate)?.timerNotRunning ?? true
     }
     
     func killTimer() {
