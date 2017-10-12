@@ -32,16 +32,17 @@ class NavController: UINavigationController {
             navigationBar.prefersLargeTitles = true
         }
         
-        // Navigate to the correct entry point
         guard let storyboard = self.storyboard else {return}
-        let tableView = storyboard.instantiateViewController(withIdentifier: StoryboardID.tableView.rawValue)
-        guard let _ = model.favorite() else {
-            // No favorite timer; give up and load the table view
-            self.setViewControllers([tableView], animated: false)
-            return
+        // Make sure the table view is in the view hierarchy
+        let tableVC = storyboard.instantiateViewController(withIdentifier: StoryboardID.tableView.rawValue)
+        var navHierarchy = [tableVC]
+        
+        if let _ = model.favorite() {
+            // If a favorite exists, navigate to the favorite timer
+            let mainVC = storyboard.instantiateViewController(withIdentifier: StoryboardID.mainView.rawValue)
+            navHierarchy.append(mainVC)
         }
-        // Navigate to the favorite timer with the table view in the nav stack
-        self.setViewControllers([tableView, storyboard.instantiateViewController(withIdentifier: StoryboardID.mainView.rawValue)], animated: false)
+        self.setViewControllers(navHierarchy, animated: false)
     }
     
     /// Make any necessary changes to views after being in the background for a long time
