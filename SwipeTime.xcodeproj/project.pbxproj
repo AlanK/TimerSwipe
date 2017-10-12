@@ -14,7 +14,6 @@
 		5A12267C1D5A80BA006D49F1 /* TableController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A12267B1D5A80BA006D49F1 /* TableController.swift */; };
 		5A12267E1D5A94C3006D49F1 /* STTimerList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A12267D1D5A94C3006D49F1 /* STTimerList.swift */; };
 		5A4DC9181D596D460009446B /* STSavedTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A4DC9171D596D460009446B /* STSavedTimer.swift */; };
-		5A591CE71D3A9F6100B9BD3D /* TimeFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A591CE61D3A9F6100B9BD3D /* TimeFormatter.swift */; };
 		5A591CE91D3AA18E00B9BD3D /* SoundController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A591CE81D3AA18E00B9BD3D /* SoundController.swift */; };
 		5A7D12D01F0B2ADC00C9B51A /* TS_short_in.aif in Resources */ = {isa = PBXBuildFile; fileRef = 5A7D12CE1F0B2ADC00C9B51A /* TS_short_in.aif */; };
 		5A7D12D11F0B2ADC00C9B51A /* TS_short_out.aif in Resources */ = {isa = PBXBuildFile; fileRef = 5A7D12CF1F0B2ADC00C9B51A /* TS_short_out.aif */; };
@@ -36,7 +35,6 @@
 		5A12267B1D5A80BA006D49F1 /* TableController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableController.swift; sourceTree = "<group>"; };
 		5A12267D1D5A94C3006D49F1 /* STTimerList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STTimerList.swift; sourceTree = "<group>"; };
 		5A4DC9171D596D460009446B /* STSavedTimer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STSavedTimer.swift; sourceTree = "<group>"; };
-		5A591CE61D3A9F6100B9BD3D /* TimeFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeFormatter.swift; sourceTree = "<group>"; };
 		5A591CE81D3AA18E00B9BD3D /* SoundController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoundController.swift; sourceTree = "<group>"; };
 		5A6E07951F8C443200B7062A /* TS_short_warn.aif */ = {isa = PBXFileReference; lastKnownFileType = file; path = TS_short_warn.aif; sourceTree = "<group>"; };
 		5A7D12CE1F0B2ADC00C9B51A /* TS_short_in.aif */ = {isa = PBXFileReference; lastKnownFileType = file; name = TS_short_in.aif; path = "../../TS Sounds/TS_short_in.aif"; sourceTree = "<group>"; };
@@ -125,7 +123,6 @@
 			children = (
 				5AB18AF91D2058CA007B9D9F /* MainViewController.swift */,
 				5AB69EBE1EC799370078DDA5 /* Stopwatch.swift */,
-				5A591CE61D3A9F6100B9BD3D /* TimeFormatter.swift */,
 				5A591CE81D3AA18E00B9BD3D /* SoundController.swift */,
 			);
 			name = Main;
@@ -235,7 +232,6 @@
 				5A4DC9181D596D460009446B /* STSavedTimer.swift in Sources */,
 				5A591CE91D3AA18E00B9BD3D /* SoundController.swift in Sources */,
 				5A871FFA1D6FC68900B08A05 /* TableCell.swift in Sources */,
-				5A591CE71D3A9F6100B9BD3D /* TimeFormatter.swift in Sources */,
 				5AB69EBF1EC799370078DDA5 /* Stopwatch.swift in Sources */,
 				5A12267C1D5A80BA006D49F1 /* TableController.swift in Sources */,
 			);

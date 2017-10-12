@@ -25,8 +25,12 @@ class MainViewController: UIViewController {
     }
     /// The duration of the selected timer in seconds
     var duration: TimeInterval?
-    /// Object that takes an integer in centiseconds and outputs a string for display
-    private let timeFormatter = TimeFormatter()
+    /// Formats time as a string for display
+    private let timeFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "mm:ss.SS"
+        return formatter
+    }()
     /// Plays the timer start and finish sounds
     private let soundController = SoundController()
     /// Controls the text for the change/cancel button (and cancels a running timer)
@@ -110,7 +114,7 @@ class MainViewController: UIViewController {
     
     /// Updates the timer display with a time interval
     private func display(seconds: TimeInterval) {
-        timeDisplay.text = timeFormatter.formatTime(seconds)
+        timeDisplay.text = timeFormatter.string(from: Date(timeIntervalSinceReferenceDate: seconds))
     }
     
     /// Hides the "Swipe to Start" instructions when a timer is running
