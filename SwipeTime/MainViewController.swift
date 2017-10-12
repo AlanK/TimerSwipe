@@ -96,7 +96,7 @@ class MainViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        // Turn off idle lock for this view
+        // The display shouldn’t sleep while this view is visible since the user expects to start a timer when they can’t see the screen
         UIApplication.shared.isIdleTimerDisabled = true
         self.navigationController?.setNavigationBarHidden(true, animated: false)
         self.navigationController?.setToolbarHidden(true, animated: false)
@@ -105,7 +105,7 @@ class MainViewController: UIViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        // Turn on idle lock when leaving this view
+        // The display should sleep in other views in the app
         UIApplication.shared.isIdleTimerDisabled = false
         soundController.setActive(false)
     }
