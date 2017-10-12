@@ -195,7 +195,7 @@
                                             </fragment>
                                         </attributedString>
                                         <connections>
-                                            <action selector="changeButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ceb-WU-pa9"/>
+                                            <action selector="button:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ceb-WU-pa9"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -215,7 +215,7 @@
                         </connections>
                     </view>
                     <connections>
-                        <outlet property="changeButton" destination="yum-AW-GvH" id="XN3-PN-cy0"/>
+                        <outlet property="button" destination="yum-AW-GvH" id="XN3-PN-cy0"/>
                         <outlet property="instructionsDisplay" destination="74y-S5-5gr" id="Mwc-fu-1O6"/>
                         <outlet property="timeDisplay" destination="Kn3-O2-ymo" id="drX-9g-UjM"/>
                     </connections>

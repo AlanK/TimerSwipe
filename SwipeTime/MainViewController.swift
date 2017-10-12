@@ -11,7 +11,7 @@ import UIKit
 /// Primary view controller—displays the selected timer
 class MainViewController: UIViewController {
     /// Controls the value of the Change/Cancel button
-    private enum ChangeButtonValue {
+    private enum ButtonValue {
         case cancel
         case change
         // rawValue can't return an NSLocalizedString
@@ -34,7 +34,7 @@ class MainViewController: UIViewController {
     /// Plays the timer start and finish sounds
     private let soundController = SoundController()
     /// Controls the text for the change/cancel button (and cancels a running timer)
-    private var buttonStatus = ChangeButtonValue.change
+    private var buttonStatus = ButtonValue.change
     /// The object that runs the selected timer
     private var stopwatch: Stopwatch?
     
@@ -45,12 +45,12 @@ class MainViewController: UIViewController {
     /// The "00:00.00" label
     @IBOutlet var timeDisplay: UILabel!
     /// The Change/Cancel button
-    @IBOutlet var changeButton: UIButton!
+    @IBOutlet var button: UIButton!
     
     // MARK: Actions
     
     // Trigger buttonActions() when tapping the Change/Cancel button
-    @IBAction func changeButton(_ sender: AnyObject) {buttonActions()}
+    @IBAction func button(_ sender: AnyObject) {buttonActions()}
     // Map the two-finger z-shaped "escape" accessibility command to the Change/Cancel button
     override func accessibilityPerformEscape() -> Bool {
         buttonActions()
@@ -90,8 +90,8 @@ class MainViewController: UIViewController {
         // Ensure the stopwatch and delegate are ready; set the display to the current timer
         stopwatch?.clear()
         // Provide accessible instructions for this timer
-        changeButton.accessibilityLabel = NSLocalizedString("timerReady",value: "\(Int(duration))-second timer, changes timer",comment: "{Whole number}-second timer (When activated, this button) changes timer")
-        changeButton.accessibilityHint = NSLocalizedString("magicTap", value: "Two-finger double-tap starts or cancels timer.", comment: "Tapping twice with two fingers starts or cancels the timer")
+        button.accessibilityLabel = NSLocalizedString("timerReady",value: "\(Int(duration))-second timer, changes timer",comment: "{Whole number}-second timer (When activated, this button) changes timer")
+        button.accessibilityHint = NSLocalizedString("magicTap", value: "Two-finger double-tap starts or cancels timer.", comment: "Tapping twice with two fingers starts or cancels the timer")
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -149,13 +149,13 @@ class MainViewController: UIViewController {
     }
     
     /// Sets the enum that controls the value of the Change/Cancel button and interrupts the running timer
-    private func setButton(to buttonValue: ChangeButtonValue) {
+    private func setButton(to buttonValue: ButtonValue) {
         buttonStatus = buttonValue
         
         // Use performWithoutAnimation to prevent weird flashing as button text animates.
         UIView.performWithoutAnimation {
-            self.changeButton.setTitle(buttonStatus.text, for: UIControlState())
-            self.changeButton.layoutIfNeeded()
+            self.button.setTitle(buttonStatus.text, for: UIControlState())
+            self.button.layoutIfNeeded()
         }
     }
 }
@@ -193,7 +193,7 @@ extension MainViewController: StopwatchDelegate {
         
         /// Reset the Change Button accessibility label and instructions
         func resetView() {
-            changeButton.accessibilityLabel = NSLocalizedString("changesTimer", value: "\(textDuration)-second timer, changes timer", comment: "{Whole number}-second timer (When activated, this button) changes the timer")
+            button.accessibilityLabel = NSLocalizedString("changesTimer", value: "\(textDuration)-second timer, changes timer", comment: "{Whole number}-second timer (When activated, this button) changes the timer")
             showInstructions()
         }
         
@@ -201,7 +201,7 @@ extension MainViewController: StopwatchDelegate {
         case .start:
             soundController.playStartSound()
             UIAccessibilityPostNotification(UIAccessibilityAnnouncementNotification, NSLocalizedString("startedTimer", value: "Started timer", comment: "The timer has started"))
-            changeButton.accessibilityLabel = NSLocalizedString("runningTimer", value: "Running \(textDuration)-second timer, cancels timer", comment: "Running {whole number}-second timer (When activated, this button) cancels the timer")
+            button.accessibilityLabel = NSLocalizedString("runningTimer", value: "Running \(textDuration)-second timer, cancels timer", comment: "Running {whole number}-second timer (When activated, this button) cancels the timer")
             hideInstructions()
         case .end:
             soundController.playEndSound()
