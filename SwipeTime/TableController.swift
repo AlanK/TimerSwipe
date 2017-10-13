@@ -38,10 +38,9 @@ class TableController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        /// The root navigation controller serving as the home of the app model
         modelController = self.navigationController as? ModelController
-        // Display an Edit button in the navigation bar for this view controller.
         self.navigationItem.rightBarButtonItem = self.editButtonItem
+        
         // Ready input accessory
         keyboardAccessoryView.textField.delegate = self
         keyboardAccessoryView.textField.addTarget(self, action: #selector(textInTextFieldChanged(_:)), for: UIControlEvents.editingChanged)
@@ -49,11 +48,13 @@ class TableController: UITableViewController {
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
+        
         // Apply layout to the footer
-        // Get the auto layout-determined height of the footer and its actual frame
         guard let footerView = tableView.tableFooterView else {return}
+        // Get the auto layout-determined height of the footer and its actual frame
         let height = footerView.systemLayoutSizeFitting(UILayoutFittingCompressedSize).height
         var frame = footerView.frame
+        
         // If the correct height doesn't match the frame, apply the correct height and re-attach the footer
         guard height != frame.size.height else {return}
         frame.size.height = height
@@ -63,6 +64,7 @@ class TableController: UITableViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        // This view should have a navigation bar and toolbar
         self.navigationController?.setNavigationBarHidden(false, animated: animated)
         self.navigationController?.setToolbarHidden(false, animated: animated)
         
