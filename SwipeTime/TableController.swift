@@ -182,14 +182,11 @@ extension TableController: UITextFieldDelegate {
         let maxLength = 3
         
         // Prevent crash-on-undo when a text insertion was blocked by this code
-        guard range.length + range.location <= charCount,
-            // Prevent non-number characters from being inserted
-            string.rangeOfCharacter(from: invalidCharacters) == nil,
-            // Prevent too many characters from being inserted
-            charCount + string.characters.count - range.length <= maxLength else {
-                return false
-        }
-        return true
+        // Prevent non-number characters from being inserted
+        // Prevent too many characters from being inserted
+        return (range.length + range.location <= charCount &&
+            string.rangeOfCharacter(from: invalidCharacters) == nil &&
+            charCount + string.characters.count - range.length <= maxLength)
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -217,11 +214,13 @@ extension TableController {
     
     /// Enable and disable the add button based on whether there is text in the text field
     @objc func textInTextFieldChanged(_ textField: UITextField) {
-        guard let text = textField.text, text.characters.count > 0 else {
-            keyboardAccessoryView.addButton.isEnabled = false
-            return
+        let isEnabled: Bool
+        if let text = textField.text, text.characters.count > 0 {
+            isEnabled = true
+        } else {
+            isEnabled = false
         }
-        keyboardAccessoryView.addButton.isEnabled = true
+        keyboardAccessoryView.addButton.isEnabled = isEnabled
     }
 
     
@@ -229,7 +228,7 @@ extension TableController {
     @objc func exitKeyboardAccessoryView() {
         // Clear the text field
         keyboardAccessoryView.textField.text?.removeAll()
-        // Ditch the keyboard, reset the add button, and hide
+        // Ditch the keyboard and hide
         keyboardAccessoryView.textField.resignFirstResponder()
         keyboardAccessoryView.isVisible = false
     }
