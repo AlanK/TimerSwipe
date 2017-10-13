@@ -69,14 +69,14 @@ class TableController: UITableViewController {
         self.navigationController?.setToolbarHidden(false, animated: animated)
         
         guard let model = modelController?.model else {return}
+        // Enable the Edit button when the table has one or more rows
         self.navigationItem.rightBarButtonItem?.isEnabled = (model.count() > 0)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-        if keyboardAccessoryView.isVisible {
-            // This ensures we don't return to this view and find an input accessory at the bottom of the screen and a cancel button where there should be an add button
-            exitKeyboardAccessoryView()
-        }
+        // Make sure keyboard accessory view isn’t stuck to the bottom of the screen when we unwind to this view
+        if keyboardAccessoryView.isVisible {exitKeyboardAccessoryView()}
+        
         super.viewWillDisappear(animated)
     }
 
