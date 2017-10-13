@@ -80,7 +80,6 @@ class TableController: UITableViewController {
 
     // MARK: Table view data source
 
-    // This table has one section
     override func numberOfSections(in tableView: UITableView) -> Int {return sectionsInTableView}
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {return modelController?.model.count() ?? 0}
