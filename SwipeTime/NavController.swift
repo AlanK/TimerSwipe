@@ -72,10 +72,10 @@ extension NavController: ModelController {}
 
 extension NavController: StopwatchController {
     var timerNotRunning: Bool {
-        return (topViewController as? StopwatchDelegate)?.timerNotRunning ?? true
+        return (topViewController as? StopwatchController)?.timerNotRunning ?? true
     }
     
     func killTimer() {
-        (topViewController as? MainViewController)?.killTimer()
+        (topViewController as? StopwatchController)?.killTimer()
     }
 }
