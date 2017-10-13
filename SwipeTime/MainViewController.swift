@@ -8,6 +8,11 @@
 
 import UIKit
 
+protocol StopwatchController {
+    var timerNotRunning: Bool {get}
+    func killTimer()
+}
+
 /// Primary view controller—displays the selected timer
 class MainViewController: UIViewController {
     /// Controls the value of the Change/Cancel button
@@ -62,6 +67,7 @@ class MainViewController: UIViewController {
     @IBAction func swipeLeft(_ sender: AnyObject) {start()}
     @IBAction func swipeUp(_ sender: AnyObject) {start()}
     @IBAction func swipeDown(_ sender: AnyObject) {start()}
+    
     // A two-finger double-tap "magic tap" accessibility command starts/cancels the timer
     override func accessibilityPerformMagicTap() -> Bool {
         switch buttonStatus {
@@ -128,11 +134,6 @@ class MainViewController: UIViewController {
     }
     
     // MARK: Convenience
-    
-    func killTimer() {
-        soundController.warn()
-        buttonActions()
-    }
     
     /// Tells the Stopwatch to start the timer
     private func start() {stopwatch?.startTimer()}
@@ -223,5 +224,14 @@ extension MainViewController: StopwatchDelegate {
     func unlock() {
         // Set the Change/Cancel button to change
         setButton(to: .change)
+    }
+}
+
+// MARK: - StopwatchController
+
+extension MainViewController: StopwatchController {
+    func killTimer() {
+        soundController.warn()
+        buttonActions()
     }
 }

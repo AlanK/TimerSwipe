@@ -18,6 +18,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return window?.rootViewController as? NavController
     }
     
+    private var stopwatchController: StopwatchController? {
+        return window?.rootViewController as? StopwatchController
+    }
+    
     func applicationDidFinishLaunching(_ application: UIApplication) {
         self.window?.tintColor = K.tintColor
         // Shake-to-undo is too fiddly for a three-digit numbers-only text field, so lets turn it off
@@ -36,6 +40,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func applicationWillTerminate(_ application: UIApplication) {
-        nav?.killTimer()
+        stopwatchController?.killTimer()
     }
 }

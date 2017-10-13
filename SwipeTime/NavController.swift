@@ -68,9 +68,9 @@ class NavController: UINavigationController {
 // Make the model available to other objects
 extension NavController: ModelController {}
 
-// MARK: - Timer Handler
+// MARK: - StopwatchController
 
-extension NavController {
+extension NavController: StopwatchController {
     var timerNotRunning: Bool {
         return (topViewController as? StopwatchDelegate)?.timerNotRunning ?? true
     }
