@@ -42,8 +42,8 @@ class NavController: UINavigationController {
     
     /// Make any necessary changes to views after being in the background for a long time
     func refreshViews() {
-        // Don’t change views if there’s no favorite to change to
-        guard let storyboard = storyboard, let _ = model.favorite(), !timerNotRunning else {return}
+        // Don’t change views if a timer is running or there’s no favorite to change to
+        guard timerNotRunning, let storyboard = storyboard, let _ = model.favorite() else {return}
         // Don't disrupt an active edit session
         if (topViewController as? TableController)?.isEditing == true {return}
 
