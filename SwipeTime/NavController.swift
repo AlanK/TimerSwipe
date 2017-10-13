@@ -11,14 +11,16 @@ import UIKit
 class NavController: UINavigationController {
     /// Underlying model for app
     let model: STTimerList = {
+        let model: STTimerList
         // Try to load the model from UserDefaults
-        guard let archivedData = UserDefaults.standard.object(forKey: K.persistedList) as? Data, let extractedModel = NSKeyedUnarchiver.unarchiveObject(with: archivedData) as? STTimerList else {
+        if let archivedData = UserDefaults.standard.object(forKey: K.persistedList) as? Data, let extractedModel = NSKeyedUnarchiver.unarchiveObject(with: archivedData) as? STTimerList {
+            model = extractedModel
+        } else {
             // No model extracted; give up and load the default model
-            let model = STTimerList()
+            model = STTimerList()
             model.loadSampleTimers()
-            return model
         }
-        return extractedModel
+        return model
     }()
     
     override func viewDidLoad() {
