@@ -68,9 +68,7 @@ class TableController: UITableViewController {
         self.navigationController?.setNavigationBarHidden(false, animated: animated)
         self.navigationController?.setToolbarHidden(false, animated: animated)
         
-        guard let model = modelController?.model else {return}
-        // Enable the Edit button when the table has one or more rows
-        self.navigationItem.rightBarButtonItem?.isEnabled = (model.count() > 0)
+        refreshEditButton()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -102,7 +100,7 @@ class TableController: UITableViewController {
         guard editingStyle == .delete, let model = modelController?.model else {return}
         let _ = model.remove(at: indexPath.row)
         tableView.deleteRows(at: [indexPath], with: .automatic)
-        self.navigationItem.rightBarButtonItem?.isEnabled = (model.count() > 0)
+        refreshEditButton()
         // You shouldn't toggle setEditing within this method, so GCD to the rescue
         if model.count() == 0 {
             let nearFuture = DispatchTime.now() + K.editButtonDelay
@@ -122,6 +120,17 @@ class TableController: UITableViewController {
     override func setEditing(_ editing: Bool, animated: Bool) {
         modelController?.model.saveData()
         super.setEditing(editing, animated: animated)
+    }
+    
+    /// Enable the Edit button when the table has one or more rows
+    func refreshEditButton() {
+        let isEnabled: Bool
+        if let model = modelController?.model {
+            isEnabled = (model.count() > 0)
+        } else {
+            isEnabled = false
+        }
+        self.navigationItem.rightBarButtonItem?.isEnabled = isEnabled
     }
 
     // MARK: Navigation
@@ -247,6 +256,6 @@ extension TableController {
         model.append(timer: newTimer)
         model.saveData()
         tableView.insertRows(at: [newIndexPath], with: .automatic)
-        self.navigationItem.rightBarButtonItem?.isEnabled = (model.count() > 0)
+        refreshEditButton()
     }
 }
