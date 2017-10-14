@@ -8,8 +8,11 @@
 
 import UIKit
 
+/// Enables other parts of the app to check for and kill running timers
 protocol StopwatchController {
+    /// Reports whether a timer is active
     var timerNotRunning: Bool {get}
+    /// Causes any active timer to die with an audible warning to the user
     func killTimer()
 }
 
