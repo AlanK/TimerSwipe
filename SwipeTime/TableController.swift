@@ -215,8 +215,8 @@ extension TableController {
     /// Enable and disable the add button based on whether there is text in the text field
     @objc func textInTextFieldChanged(_ textField: UITextField) {
         let isEnabled: Bool
-        if let text = textField.text, text.characters.count > 0 {
-            isEnabled = true
+        if let text = textField.text {
+            isEnabled = (text.characters.count > 0)
         } else {
             isEnabled = false
         }

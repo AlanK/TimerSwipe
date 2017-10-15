@@ -52,13 +52,8 @@ class NavController: UINavigationController {
         // Navigate to the favorite timer with the table view in the nav stack
         let tableVC = storyboard.instantiateViewController(withIdentifier: StoryboardID.tableView.rawValue)
         let mainVC = storyboard.instantiateViewController(withIdentifier: StoryboardID.mainView.rawValue)
-
-        let animate: Bool
-        switch (topViewController is MainViewController) {
         // Don't animate going from one timer to another; it looks weird
-        case true: animate = false
-        case false: animate = true
-        }
+        let animate = !(topViewController is MainViewController)
         
         setViewControllers([tableVC, mainVC], animated: animate)
     }
