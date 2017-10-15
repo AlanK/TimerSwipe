@@ -9,7 +9,7 @@
 import UIKit
 
 /// The controller that holds the app model
-protocol ModelController {
+protocol ModelIntermediary {
     /// The app model
     var model: STTimerList {get}
 }
@@ -17,7 +17,7 @@ protocol ModelController {
 /// The main table in the app
 class TableController: UITableViewController {
     /// Controller holding the app model
-    private var modelController: ModelController?
+    private var modelIntermediary: ModelIntermediary?
     /// The UIView containing the table footer
     @IBOutlet var footerContainer: UIView!
     /// The label serving as the table footer
@@ -38,7 +38,7 @@ class TableController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        modelController = self.navigationController as? ModelController
+        modelIntermediary = self.navigationController as? ModelIntermediary
         self.navigationItem.rightBarButtonItem = self.editButtonItem
         
         // Ready input accessory
@@ -82,12 +82,12 @@ class TableController: UITableViewController {
 
     override func numberOfSections(in tableView: UITableView) -> Int {return sectionsInTableView}
 
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {return modelController?.model.count() ?? 0}
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {return modelIntermediary?.model.count() ?? 0}
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellID, for: indexPath)
         // Pass delegate and timer to cell so it can complete its own setup
-        if let cell = cell as? TableCell, let cellTimer = modelController?.model[indexPath.row] {
+        if let cell = cell as? TableCell, let cellTimer = modelIntermediary?.model[indexPath.row] {
             cell.delegate = self
             cell.setupCell(with: cellTimer)
         }
@@ -96,7 +96,7 @@ class TableController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         // Don't delete the row if the model can't be updated
-        guard editingStyle == .delete, let model = modelController?.model else {return}
+        guard editingStyle == .delete, let model = modelIntermediary?.model else {return}
         let _ = model.remove(at: indexPath.row)
         tableView.deleteRows(at: [indexPath], with: .automatic)
         refreshEditButton()
@@ -111,20 +111,20 @@ class TableController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to toIndexPath: IndexPath) {
-        guard let model = modelController?.model else {return}
+        guard let model = modelIntermediary?.model else {return}
         let timer = model.remove(at: fromIndexPath.row)
         model.insert(timer, at: toIndexPath.row)
     }
     
     override func setEditing(_ editing: Bool, animated: Bool) {
-        modelController?.model.saveData()
+        modelIntermediary?.model.saveData()
         super.setEditing(editing, animated: animated)
     }
     
     /// Enable the Edit button when the table has one or more rows
     func refreshEditButton() {
         let isEnabled: Bool
-        if let model = modelController?.model {
+        if let model = modelIntermediary?.model {
             isEnabled = (model.count() > 0)
         } else {
             isEnabled = false
@@ -151,7 +151,7 @@ class TableController: UITableViewController {
         guard let controller = segue.destination as? MainViewController,
             let selectedCell = sender as? TableCell,
             let indexPath = tableView.indexPath(for: selectedCell),
-            let model = modelController?.model else {return}
+            let model = modelIntermediary?.model else {return}
         let timer = model[indexPath.row]
         // Set the destination view controller's providedDuration to the timer value
         controller.duration = timer.seconds
@@ -165,7 +165,7 @@ extension TableController: TableCellDelegate {
         // Indirectly get the cell index path by finding the index path for the cell located where the cell that was tapped was located…
         let indexPath = self.tableView.indexPathForRow(at: cell.center)
         
-        guard let index = indexPath?.row, let model = modelController?.model else {return}
+        guard let index = indexPath?.row, let model = modelIntermediary?.model else {return}
         // Update favorite timer, save, and reload the view
         model.toggleFavorite(at: index)
         model.saveData()
@@ -247,7 +247,7 @@ extension TableController {
         let userSelectedTime = TimeInterval(userTimeInSeconds)
         
         // Create a new timer
-        guard let model = modelController?.model else {return}
+        guard let model = modelIntermediary?.model else {return}
         let newTimer = STSavedTimer(seconds: userSelectedTime)
         let newIndexPath = IndexPath(row: model.count(), section: mainSection)
         // Append, save, and update view

@@ -59,18 +59,18 @@ class NavController: UINavigationController {
     }
 }
 
-// MARK: - Model Controller
+// MARK: - Model Intermediary
 // Make the model available to other objects
-extension NavController: ModelController {}
+extension NavController: ModelIntermediary {}
 
-// MARK: - StopwatchController
+// MARK: - StopwatchIntermediary
 
-extension NavController: StopwatchController {
+extension NavController: StopwatchIntermediary {
     var timerNotRunning: Bool {
-        return (topViewController as? StopwatchController)?.timerNotRunning ?? true
+        return (topViewController as? StopwatchIntermediary)?.timerNotRunning ?? true
     }
     
     func killTimer() {
-        (topViewController as? StopwatchController)?.killTimer()
+        (topViewController as? StopwatchIntermediary)?.killTimer()
     }
 }

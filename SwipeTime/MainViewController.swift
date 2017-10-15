@@ -9,7 +9,7 @@
 import UIKit
 
 /// Enables other parts of the app to check for and kill running timers
-protocol StopwatchController {
+protocol StopwatchIntermediary {
     /// Reports whether a timer is active
     var timerNotRunning: Bool {get}
     /// Causes any active timer to die with an audible warning to the user
@@ -90,7 +90,7 @@ class MainViewController: UIViewController {
         timeDisplay.font = UIFont.monospacedDigitSystemFont(ofSize: K.timerDisplaySize, weight: UIFont.Weight.regular)
         // Use providedDuration, then the favorite timer, then the default timer
         if duration == nil {
-            let modelController = self.navigationController as? ModelController
+            let modelController = self.navigationController as? ModelIntermediary
             duration = modelController?.model.favorite()?.seconds ?? K.defaultDuration
         }
         
@@ -230,9 +230,9 @@ extension MainViewController: StopwatchDelegate {
     }
 }
 
-// MARK: - StopwatchController
+// MARK: - StopwatchIntermediary
 
-extension MainViewController: StopwatchController {
+extension MainViewController: StopwatchIntermediary {
     func killTimer() {
         soundController.warn()
         buttonActions()
