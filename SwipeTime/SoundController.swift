@@ -17,7 +17,6 @@ enum AudioCue: String {
 
 /// Handles sounds for the main view of the app
 struct SoundController {
-    /// Singleton `AVAudioSession`
     private let audioSession = AVAudioSession()
     // Initializing an AVAudioPlayer is failable, so these need to be optionals
     private var sounds = [AudioCue : AVAudioPlayer?]()
@@ -49,14 +48,13 @@ struct SoundController {
     
     /**
      Activate or deactivate the audio session
-     
-     When activating the audio session, it is nice to prepare the sounds proactively.
      - parameter active: Whether the audio session should be activated or deactivated
      */
     func setActive(_ active: Bool) {
         do {try audioSession.setActive(active)}
         catch {print("Could not activate/deactivate AVAudioSession: \(error)")}
         
+        // When activating the audio session, it is nice to prepare the sounds proactively.
         guard active else {return}
         for sound in sounds {
             sound.value?.prepareToPlay()
@@ -75,6 +73,7 @@ struct SoundController {
         vibrate()
         audio.prepareToPlay()
         
+        // Add an extra vibration for the warning cue
         guard cue == .die else {return}
         Timer.scheduledTimer(withTimeInterval: 1.0, repeats: false) {timer in
             self.vibrate()
