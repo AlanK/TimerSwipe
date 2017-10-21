@@ -40,28 +40,18 @@ class TableCell: UITableViewCell {
     func setupCell(with timer: STSavedTimer) {
         let label = NSLocalizedString("numberOfSeconds", value: "\(Int(timer.seconds)) seconds", comment: "{whole number} seconds")
         
-        let buttonImage: UIImage
-        let accessLabel: String, buttonDescription: String
-        
         // Configure based on isFavorite status
-        switch timer.isFavorite {
-        case true:
-            buttonImage = #imageLiteral(resourceName: "Full heart")
-            accessLabel = label + ", " + TableCell.isFavorite
-            buttonDescription = TableCell.makeNotFavorite
-        case false:
-            buttonImage = #imageLiteral(resourceName: "Empty heart")
-            accessLabel = label
-            buttonDescription = TableCell.makeFavorite
-        }
-
-        let toggleFavorite = UIAccessibilityCustomAction.init(name: buttonDescription, target: self, selector: #selector(favoriteButton(_:)) )
-
+        let buttonImage = timer.isFavorite ? #imageLiteral(resourceName: "Full heart") : #imageLiteral(resourceName: "Empty heart")
+        let accessLabel = timer.isFavorite ? label + ", " + TableCell.isFavorite : label
+        let buttonDescription = timer.isFavorite ? TableCell.makeNotFavorite : TableCell.makeFavorite
+        
         // Set visible state of cell
         secondsLabel.text = label
         favoriteIcon.setImage(buttonImage.withRenderingMode(.alwaysTemplate), for: UIControlState())
         
         // Set accessibility state of cell
+        let toggleFavorite = UIAccessibilityCustomAction.init(name: buttonDescription, target: self, selector: #selector(favoriteButton(_:)) )
+        
         isAccessibilityElement = true
         accessibilityLabel = accessLabel
         accessibilityCustomActions = [toggleFavorite]
