@@ -74,10 +74,8 @@ class MainViewController: UIViewController {
     // A two-finger double-tap "magic tap" accessibility command starts/cancels the timer
     override func accessibilityPerformMagicTap() -> Bool {
         switch buttonStatus {
-        case .change:
-            start()
-        case .cancel:
-            buttonActions()
+        case .change: start()
+        case .cancel: buttonActions()
         }
         return true
     }
@@ -147,8 +145,7 @@ class MainViewController: UIViewController {
         // If the change button is tapped, go back one level in the view hierarchy
         case .change: self.navigationController?.popViewController(animated: true)
         // If the cancel button is tapped, call setButton(to:) to interrupt the running timer and change the text on the button
-        case .cancel:
-            setButton(to: .change)
+        case .cancel: setButton(to: .change)
         }
     }
     
@@ -218,16 +215,10 @@ extension MainViewController: StopwatchDelegate {
     }
     
     /// Locks the stopwatch to prevent multiple timers from running simultaneously
-    func lock() {
-        // Set the Change/Cancel button to cancel
-        setButton(to: .cancel)
-    }
+    func lock() {setButton(to: .cancel)}
     
     /// Unlocks the stopwatch when no timer is running
-    func unlock() {
-        // Set the Change/Cancel button to change
-        setButton(to: .change)
-    }
+    func unlock() {setButton(to: .change)}
 }
 
 // MARK: - StopwatchIntermediary
