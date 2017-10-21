@@ -18,7 +18,7 @@ enum AudioCue: String {
 /// Handles sounds for the main view of the app
 struct SoundController {
     private let audioSession = AVAudioSession()
-    private var audioPlayers = [AudioCue : AVAudioPlayer]()
+    private let audioPlayers: [AudioCue : AVAudioPlayer?]
     
     init() {
         /**
@@ -31,10 +31,11 @@ struct SoundController {
             return try? AVAudioPlayer(contentsOf: URL(fileURLWithPath: path))
         }
         
-        // Initialize the audio players. Kinda silly how verbose this is
-        audioPlayers[.start] = newPlayer(.start)
-        audioPlayers[.end] = newPlayer(.end)
-        audioPlayers[.die] = newPlayer(.die)
+        // Initialize the audio players
+        audioPlayers = [.start : newPlayer(.start),
+                        .end : newPlayer(.end),
+                        .die : newPlayer(.die)]
+        
         // Configure audio session to mix with background music
         do {try audioSession.setCategory(AVAudioSessionCategoryAmbient, mode: AVAudioSessionModeDefault, options: [])}
         catch {print("Could not set AVAudioSession category, mode, or options: \(error)")}
@@ -51,7 +52,7 @@ struct SoundController {
         // When activating the audio session, it is nice to prepare the sounds proactively.
         guard active else {return}
         for audioPlayer in audioPlayers {
-            audioPlayer.value.prepareToPlay()
+            audioPlayer.value?.prepareToPlay()
         }
     }
     
@@ -64,9 +65,9 @@ struct SoundController {
         func vibrate() {AudioServicesPlaySystemSound(kSystemSoundID_Vibrate)}
         
         guard let audioPlayer = audioPlayers[cue] else {return}
-        audioPlayer.play()
+        audioPlayer?.play()
         vibrate()
-        audioPlayer.prepareToPlay()
+        audioPlayer?.prepareToPlay()
         
         // Add an extra vibration for the warning cue
         guard cue == .die else {return}
