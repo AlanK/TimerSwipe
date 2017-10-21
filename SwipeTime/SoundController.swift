@@ -8,6 +8,7 @@
 
 import AVFoundation
 
+/// Available audio cues
 enum Cue {
     case start
     case end
