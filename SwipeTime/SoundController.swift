@@ -8,6 +8,12 @@
 
 import AVFoundation
 
+enum Cue {
+    case start
+    case end
+    case die
+}
+
 /// Handles sounds for the main view of the app
 struct SoundController {
     /// Singleton `AVAudioSession`
@@ -67,25 +73,22 @@ struct SoundController {
         AudioServicesPlaySystemSound(kSystemSoundID_Vibrate)
     }
     
-    /// Plays the "timer start" sound
-    func playStartSound() {
-        timerDidStartCue?.play()
+    /// Play the appropriate audio and vibration cue
+    func play(_ cue: Cue) {
+        let audio: AVAudioPlayer?
+        
+        switch cue {
+        case .start: audio = timerDidStartCue
+        case .end: audio = timerDidEndCue
+        case .die: audio = timerWillDieCue
+        }
+        
+        guard let sound = audio else {return}
+        sound.play()
         vibrate()
-        timerDidStartCue?.prepareToPlay()
-    }
-    
-    /// Plays the "timer end" sound
-    func playEndSound() {
-        timerDidEndCue?.play()
-        vibrate()
-        timerDidEndCue?.prepareToPlay()
-     }
-    
-    /// Attempts to warn the user that a running timer is about to be killed by the OS
-    func warn() {
-        timerWillDieCue?.play()
-        vibrate()
-        timerWillDieCue?.prepareToPlay()
+        sound.prepareToPlay()
+        
+        guard sound == timerWillDieCue else {return}
         Timer.scheduledTimer(withTimeInterval: 1.0, repeats: false) {timer in
             self.vibrate()
         }

@@ -197,12 +197,12 @@ extension MainViewController: StopwatchDelegate {
         
         switch status {
         case .start:
-            soundController.playStartSound()
+            soundController.play(.start)
             UIAccessibilityPostNotification(UIAccessibilityAnnouncementNotification, NSLocalizedString("startedTimer", value: "Started timer", comment: "The timer has started"))
             button.accessibilityLabel = NSLocalizedString("runningTimer", value: "Running \(textDuration)-second timer, cancels timer", comment: "Running {whole number}-second timer (When activated, this button) cancels the timer")
             instructionsVisible = false
         case .end:
-            soundController.playEndSound()
+            soundController.play(.end)
             UIAccessibilityPostNotification(UIAccessibilityAnnouncementNotification, NSLocalizedString("timerFinished", value: "Timer finished", comment: "The timer has finished"))
             resetView()
         case .cancel:
@@ -222,7 +222,7 @@ extension MainViewController: StopwatchDelegate {
 
 extension MainViewController: StopwatchIntermediary {
     func killTimer() {
-        soundController.warn()
+        soundController.play(.die)
         buttonActions()
     }
 }
