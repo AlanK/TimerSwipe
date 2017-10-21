@@ -52,7 +52,7 @@ struct SoundController {
      */
     func setActive(_ active: Bool) {
         do {try audioSession.setActive(active)}
-        catch {print("Could not activate/deactivate AVAudioSession: \(error)")}
+        catch {print("Could not setActive(\(active)) AVAudioSession: \(error)")}
         
         // When activating the audio session, it is nice to prepare the sounds proactively.
         guard active else {return}
