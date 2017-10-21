@@ -36,9 +36,7 @@ struct SoundController {
         audioPlayers[.end] = newPlayer(.end)
         audioPlayers[.die] = newPlayer(.die)
         // Configure audio session to mix with background music
-        do {
-            try audioSession.setCategory(AVAudioSessionCategoryAmbient, mode: AVAudioSessionModeDefault, options: [])
-        }
+        do {try audioSession.setCategory(AVAudioSessionCategoryAmbient, mode: AVAudioSessionModeDefault, options: [])}
         catch {print("Could not set AVAudioSession category, mode, or options: \(error)")}
     }
     
