@@ -9,10 +9,10 @@
 import AVFoundation
 
 /// Available audio cues
-enum Cue {
-    case start
-    case end
-    case die
+enum AudioCue: String {
+    case start = "TS_short_in.aif"
+    case end = "TS_short_out.aif"
+    case die = "TS_short_warn.aif"
 }
 
 /// Handles sounds for the main view of the app
@@ -20,13 +20,7 @@ struct SoundController {
     /// Singleton `AVAudioSession`
     private let audioSession = AVAudioSession()
     // Initializing an AVAudioPlayer is failable, so these need to be optionals
-    private let timerDidStartCue: AVAudioPlayer?, timerDidEndCue: AVAudioPlayer?, timerWillDieCue: AVAudioPlayer?
-    /// Audio file names (with extensions)
-    private enum Sound: String {
-        case shortWindStart = "TS_short_in.aif"
-        case shortWindEnd = "TS_short_out.aif"
-        case shortWindWarn = "TS_short_warn.aif"
-    }
+    private var sounds = [AudioCue : AVAudioPlayer?]()
     
     init() {
         /**
@@ -42,10 +36,10 @@ struct SoundController {
             return player
         }
         
-        // Initialize the audio players
-        timerDidStartCue = initializePlayer(with: Sound.shortWindStart.rawValue)
-        timerDidEndCue = initializePlayer(with: Sound.shortWindEnd.rawValue)
-        timerWillDieCue = initializePlayer(with: Sound.shortWindWarn.rawValue)
+        // Initialize the audio players. Kinda silly how verbose this is
+        sounds[.start] = initializePlayer(with: AudioCue.start.rawValue)
+        sounds[.end] = initializePlayer(with: AudioCue.end.rawValue)
+        sounds[.die] = initializePlayer(with: AudioCue.die.rawValue)
         // Configure audio session to mix with background music
         do {
             try audioSession.setCategory(AVAudioSessionCategoryAmbient, mode: AVAudioSessionModeDefault, options: [])
@@ -64,9 +58,9 @@ struct SoundController {
         catch {print("Could not activate/deactivate AVAudioSession: \(error)")}
         
         guard active else {return}
-        timerDidStartCue?.prepareToPlay()
-        timerDidEndCue?.prepareToPlay()
-        timerWillDieCue?.prepareToPlay()
+        for sound in sounds {
+            sound.value?.prepareToPlay()
+        }
     }
     
     /// Vibrate without playing a sound
@@ -75,21 +69,13 @@ struct SoundController {
     }
     
     /// Play the appropriate audio and vibration cue
-    func play(_ cue: Cue) {
-        let audio: AVAudioPlayer?
-        
-        switch cue {
-        case .start: audio = timerDidStartCue
-        case .end: audio = timerDidEndCue
-        case .die: audio = timerWillDieCue
-        }
-        
-        guard let sound = audio else {return}
-        sound.play()
+    func play(_ cue: AudioCue) {
+        guard let sound = sounds[cue], let audio = sound else {return}
+        audio.play()
         vibrate()
-        sound.prepareToPlay()
+        audio.prepareToPlay()
         
-        guard sound == timerWillDieCue else {return}
+        guard cue == .die else {return}
         Timer.scheduledTimer(withTimeInterval: 1.0, repeats: false) {timer in
             self.vibrate()
         }
