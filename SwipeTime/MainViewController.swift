@@ -45,6 +45,13 @@ class MainViewController: UIViewController {
     private var buttonStatus = ButtonValue.change
     /// The object that runs the selected timer
     private var stopwatch: Stopwatch?
+    /// Shows and hides "Swipe to Start" instructions
+    private var instructionsVisible = true {
+        didSet {
+            let alpha = instructionsVisible ? K.enabledAlpha : K.disabledAlpha
+            UIView.animate(withDuration: K.instructionsAnimationDuration, delay: 0, options: .curveLinear, animations: {self.instructionsDisplay.alpha = alpha}, completion: nil)
+        }
+    }
     
     // MARK: Labels & Buttons
     
@@ -124,16 +131,6 @@ class MainViewController: UIViewController {
         timeDisplay.text = timeFormatter.string(from: Date(timeIntervalSinceReferenceDate: seconds))
     }
     
-    /// Hides the "Swipe to Start" instructions when a timer is running
-    private func hideInstructions() {
-        UIView.animate(withDuration: K.instructionsAnimationDuration, delay: 0, options: .curveLinear, animations: {self.instructionsDisplay.alpha = K.disabledAlpha}, completion: nil)
-    }
-    
-    /// Shows the "Swipe to Start" instructions when a timer is not running
-    private func showInstructions() {
-        UIView.animate(withDuration: K.instructionsAnimationDuration, delay: 0, options: .curveLinear, animations: {self.instructionsDisplay.alpha = K.enabledAlpha}, completion: nil)
-    }
-    
     // MARK: Convenience
     
     /// Tells the Stopwatch to start the timer
@@ -195,7 +192,7 @@ extension MainViewController: StopwatchDelegate {
         /// Reset the Change Button accessibility label and instructions
         func resetView() {
             button.accessibilityLabel = NSLocalizedString("changesTimer", value: "\(textDuration)-second timer, changes timer", comment: "{Whole number}-second timer (When activated, this button) changes the timer")
-            showInstructions()
+            instructionsVisible = true
         }
         
         switch status {
@@ -203,7 +200,7 @@ extension MainViewController: StopwatchDelegate {
             soundController.playStartSound()
             UIAccessibilityPostNotification(UIAccessibilityAnnouncementNotification, NSLocalizedString("startedTimer", value: "Started timer", comment: "The timer has started"))
             button.accessibilityLabel = NSLocalizedString("runningTimer", value: "Running \(textDuration)-second timer, cancels timer", comment: "Running {whole number}-second timer (When activated, this button) cancels the timer")
-            hideInstructions()
+            instructionsVisible = false
         case .end:
             soundController.playEndSound()
             UIAccessibilityPostNotification(UIAccessibilityAnnouncementNotification, NSLocalizedString("timerFinished", value: "Timer finished", comment: "The timer has finished"))
