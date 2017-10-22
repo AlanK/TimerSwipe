@@ -29,16 +29,12 @@ class NavController: UINavigationController {
             navigationBar.prefersLargeTitles = true
         }
         
-        guard let storyboard = storyboard else {return}
         // Make sure the table view is in the view hierarchy
+        guard let storyboard = storyboard else {return}
         let tableVC = storyboard.instantiateViewController(withIdentifier: StoryboardID.tableView.rawValue)
-        var navHierarchy = [tableVC]
+        let navHierarchy = (model.favorite() == nil) ? [tableVC] :
+            [tableVC, storyboard.instantiateViewController(withIdentifier: StoryboardID.mainView.rawValue)]
         
-        if let _ = model.favorite() {
-            // If a favorite exists, navigate to the favorite timer
-            let mainVC = storyboard.instantiateViewController(withIdentifier: StoryboardID.mainView.rawValue)
-            navHierarchy.append(mainVC)
-        }
         setViewControllers(navHierarchy, animated: false)
     }
     
