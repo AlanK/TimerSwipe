@@ -49,7 +49,7 @@ class MainViewController: UIViewController {
     private var instructionsVisible = true {
         didSet {
             let alpha = instructionsVisible ? K.enabledAlpha : K.disabledAlpha
-            UIView.animate(withDuration: K.instructionsAnimationDuration, delay: 0, options: .curveLinear, animations: {self.instructionsDisplay.alpha = alpha}, completion: nil)
+            UIView.animate(withDuration: K.instructionsAnimationDuration, delay: 0, options: .curveLinear, animations: {self.instructionsDisplay.alpha = alpha})
         }
     }
     
