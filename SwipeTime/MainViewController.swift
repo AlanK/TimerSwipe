@@ -87,6 +87,30 @@ class MainViewController: UIViewController {
         return true
     }
     
+    /// Tells the Stopwatch to start the timer
+    private func start() {stopwatch?.startTimer()}
+    
+    /// Handles taps on the Change/Cancel button
+    private func buttonActions() {
+        switch buttonStatus {
+        // If the change button is tapped, go back one level in the view hierarchy
+        case .change: self.navigationController?.popViewController(animated: true)
+        // If the cancel button is tapped, call setButton(to:) to interrupt the running timer and change the text on the button
+        case .cancel: setButton(to: .change)
+        }
+    }
+    
+    /// Sets the enum that controls the value of the Change/Cancel button and interrupts the running timer
+    private func setButton(to buttonValue: ButtonValue) {
+        buttonStatus = buttonValue
+        
+        // Use performWithoutAnimation to prevent weird flashing as button text animates.
+        UIView.performWithoutAnimation {
+            self.button.setTitle(buttonStatus.text, for: UIControlState())
+            self.button.layoutIfNeeded()
+        }
+    }
+
     // MARK: View lifecycle
     
     override func viewDidLoad() {
@@ -129,32 +153,6 @@ class MainViewController: UIViewController {
     /// Updates the timer display with a time interval
     private func display(seconds: TimeInterval) {
         timeDisplay.text = timeFormatter.string(from: Date(timeIntervalSinceReferenceDate: seconds))
-    }
-    
-    // MARK: Convenience
-    
-    /// Tells the Stopwatch to start the timer
-    private func start() {stopwatch?.startTimer()}
-    
-    /// Handles taps on the Change/Cancel button
-    private func buttonActions() {
-        switch buttonStatus {
-        // If the change button is tapped, go back one level in the view hierarchy
-        case .change: self.navigationController?.popViewController(animated: true)
-        // If the cancel button is tapped, call setButton(to:) to interrupt the running timer and change the text on the button
-        case .cancel: setButton(to: .change)
-        }
-    }
-    
-    /// Sets the enum that controls the value of the Change/Cancel button and interrupts the running timer
-    private func setButton(to buttonValue: ButtonValue) {
-        buttonStatus = buttonValue
-        
-        // Use performWithoutAnimation to prevent weird flashing as button text animates.
-        UIView.performWithoutAnimation {
-            self.button.setTitle(buttonStatus.text, for: UIControlState())
-            self.button.layoutIfNeeded()
-        }
     }
 }
 
