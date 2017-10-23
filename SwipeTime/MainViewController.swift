@@ -172,9 +172,7 @@ extension MainViewController: StopwatchDelegate {
     
     /**
      Updates the timer display with a time interval.
-     
-     - parameters:
-     - seconds: time remaining in `TimeInterval`
+     - parameter seconds: time remaining as a `TimeInterval`
      */
     func updateDisplay(with seconds: TimeInterval) {
         display(seconds: seconds)
