@@ -22,7 +22,7 @@ class MainViewController: UIViewController {
     private enum ButtonValue {
         case cancel
         case change
-        // rawValue can't return an NSLocalizedString
+        // rawValue can't return an `NSLocalizedString`
         /// Returns a localized string with text for the Change/Cancel button
         var text: String {
             switch self {
@@ -31,7 +31,7 @@ class MainViewController: UIViewController {
             }
         }
     }
-    /// The duration of the selected timer in seconds
+
     var duration: TimeInterval?
     /// Formats time as a string for display
     private let timeFormatter: DateFormatter = {
@@ -39,12 +39,12 @@ class MainViewController: UIViewController {
         formatter.dateFormat = "mm:ss.SS"
         return formatter
     }()
-    /// Plays the timer start and finish sounds
+
     private let soundController = SoundController()
     /// Controls the text for the change/cancel button (and cancels a running timer)
     private var buttonStatus = ButtonValue.change
-    /// The object that runs the selected timer
     private var stopwatch: Stopwatch?
+
     /// Shows and hides "Swipe to Start" instructions
     private var instructionsVisible = true {
         didSet {
@@ -100,7 +100,10 @@ class MainViewController: UIViewController {
         }
     }
     
-    /// Sets the enum that controls the value of the Change/Cancel button and interrupts the running timer
+    /**
+     Sets the `enum` that controls the value of the Change/Cancel button and interrupts the running timer
+     - parameter buttonValue: the value to which the button should be set
+     */
     private func setButton(to buttonValue: ButtonValue) {
         buttonStatus = buttonValue
         
@@ -170,7 +173,10 @@ extension MainViewController: StopwatchDelegate {
         display(seconds: seconds)
     }
     
-    /// Handle changes in timer status
+    /**
+     Handle changes in timer status
+     - parameter status: whether the timer started, ended, or was cancelled
+    */
     func timerDid(_ status: TimerStatus) {
         let defaultDisplay: String = "00:00.00"
         /// String of the timer duration (or "Unknown" if duration is unavailable)
