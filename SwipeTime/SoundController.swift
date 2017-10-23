@@ -67,12 +67,13 @@ struct SoundController {
         guard let audioPlayer = audioPlayers[cue] else {return}
         audioPlayer?.play()
         vibrate()
-        audioPlayer?.prepareToPlay()
-        
-        // Add an extra vibration for the warning cue
-        guard cue == .die else {return}
-        Timer.scheduledTimer(withTimeInterval: 1.0, repeats: false) {timer in
+        guard cue != .die else {
+            // Add an extra vibration for the warning cue
             vibrate()
+            // Prepare to die
+            setActive(false)
+            return
         }
+        audioPlayer?.prepareToPlay()
     }
 }

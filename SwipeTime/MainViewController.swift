@@ -212,7 +212,7 @@ extension MainViewController: StopwatchDelegate {
 
 extension MainViewController: StopwatchIntermediary {
     func killTimer() {
+        if buttonStatus == .cancel {buttonActions()}
         soundController.play(.die)
-        buttonActions()
     }
 }
