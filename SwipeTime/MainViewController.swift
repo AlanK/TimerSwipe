@@ -32,7 +32,6 @@ class MainViewController: UIViewController {
         }
     }
 
-    var duration: TimeInterval?
     /// Formats time as a string for display
     private let timeFormatter: DateFormatter = {
         let formatter = DateFormatter()
@@ -41,10 +40,11 @@ class MainViewController: UIViewController {
     }()
 
     private let soundController = SoundController()
-    /// Controls the text for the change/cancel button (and cancels a running timer)
+    
+    var duration: TimeInterval?
     private var buttonStatus = ButtonValue.change
     private var stopwatch: Stopwatch?
-
+    
     /// Shows and hides "Swipe to Start" instructions
     private var instructionsVisible = true {
         didSet {
@@ -106,7 +106,6 @@ class MainViewController: UIViewController {
      */
     private func setButton(to buttonValue: ButtonValue) {
         buttonStatus = buttonValue
-        
         // Use performWithoutAnimation to prevent weird flashing as button text animates.
         UIView.performWithoutAnimation {
             self.button.setTitle(buttonStatus.text, for: UIControlState())
@@ -162,7 +161,6 @@ class MainViewController: UIViewController {
 // MARK: - Stopwatch delegate
 
 extension MainViewController: StopwatchDelegate {
-    ///Reports lock status to the stopwatch to prevent multiple timers from running at once
     var timerNotRunning: Bool {return (buttonStatus == .change)}
     
     /**
