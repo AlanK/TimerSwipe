@@ -119,16 +119,14 @@ class MainViewController: UIViewController {
         super.viewDidLoad()
         // Make the timer display huge with monospaced numbers
         timeDisplay.font = UIFont.monospacedDigitSystemFont(ofSize: K.timerDisplaySize, weight: UIFont.Weight.regular)
-        // Use providedDuration, then the favorite timer, then the default timer
-        if duration == nil {
-            let modelController = self.navigationController as? ModelIntermediary
-            duration = modelController?.model.favorite()?.seconds ?? K.defaultDuration
-        }
         
-        guard let duration = duration else {return}
+        // Use duration provided from elsewhere, then the favorite timer, then the default timer
+        let duration = self.duration ?? (self.navigationController as? ModelIntermediary)?.model.favorite()?.seconds ?? K.defaultDuration
+        
         stopwatch = Stopwatch.init(delegate: self, duration: duration)
         // Ensure the stopwatch and delegate are ready; set the display to the current timer
         stopwatch?.clear()
+        
         // Provide accessible instructions for this timer
         button.accessibilityLabel = NSLocalizedString("timerReady",value: "\(Int(duration))-second timer, changes timer",comment: "{Whole number}-second timer (When activated, this button) changes timer")
         button.accessibilityHint = NSLocalizedString("magicTap", value: "Two-finger double-tap starts or cancels timer.", comment: "Tapping twice with two fingers starts or cancels the timer")
