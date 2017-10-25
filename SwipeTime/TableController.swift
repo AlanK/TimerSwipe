@@ -33,6 +33,11 @@ class TableController: UITableViewController {
     private let cellID = "STTableViewCell"
     private let sectionsInTableView = 1, mainSection = 0
 
+    @IBAction func inputNewTimer(_ sender: Any) {
+        keyboardAccessoryView.addButton.isEnabled = false
+        keyboardAccessoryView.isVisible = true
+        keyboardAccessoryView.textField.becomeFirstResponder()
+    }
     
     // MARK: View controller
     
@@ -200,12 +205,6 @@ extension TableController {
     
     override var canBecomeFirstResponder: Bool {
         return true
-    }
-    
-    @IBAction func inputNewTimer(_ sender: Any) {
-        keyboardAccessoryView.addButton.isEnabled = false
-        keyboardAccessoryView.isVisible = true
-        keyboardAccessoryView.textField.becomeFirstResponder()
     }
     
     override var inputAccessoryView: UIInputView? {
