@@ -22,21 +22,14 @@ class TableController: UITableViewController {
     @IBOutlet var footerContainer: UIView!
     /// The label serving as the table footer
     @IBOutlet var footer: UILabel!
-    /// The view which can create new timers
-    let keyboardAccessoryView: InputView = {
-        let view = InputView(frame: .zero, inputViewStyle: .default)
-        view.cancelButton.addTarget(self, action: #selector(exitKeyboardAccessoryView), for: .touchUpInside)
-        view.addButton.addTarget(self, action: #selector(commitNewTimer), for: .touchUpInside)
-        return view
-    }()
+    /// The object that can create new timers
+    var inputController: InputController?
     
     private let cellID = "STTableViewCell"
     private let sectionsInTableView = 1, mainSection = 0
 
     @IBAction func inputNewTimer(_ sender: Any) {
-        keyboardAccessoryView.addButton.isEnabled = false
-        keyboardAccessoryView.isVisible = true
-        keyboardAccessoryView.textField.becomeFirstResponder()
+        inputController?.activate()
     }
     
     // MARK: View controller
@@ -47,8 +40,7 @@ class TableController: UITableViewController {
         self.navigationItem.rightBarButtonItem = self.editButtonItem
         
         // Ready input accessory
-        keyboardAccessoryView.textField.delegate = self
-        keyboardAccessoryView.textField.addTarget(self, action: #selector(textInTextFieldChanged(_:)), for: UIControlEvents.editingChanged)
+        inputController = InputController.init(parent: self)
     }
     
     override func viewDidLayoutSubviews() {
@@ -78,7 +70,7 @@ class TableController: UITableViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         // Make sure keyboard accessory view isn’t stuck to the bottom of the screen when we unwind to this view
-        exitKeyboardAccessoryView()
+        inputController?.exitKeyboardAccessoryView()
         
         super.viewWillDisappear(animated)
     }
@@ -187,77 +179,5 @@ extension TableController: TableCellDelegate {
         model.toggleFavorite(at: index)
         model.saveData()
         tableView.reloadData()
-    }
-}
-
-// MARK: - Text Field Delegate
-extension TableController: UITextFieldDelegate {
-    // Protect against text-related problems
-    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        let charCount = textField.text?.characters.count ?? 0
-        let invalidCharacters = CharacterSet(charactersIn: "0123456789").inverted
-        let maxLength = 3
-        
-        // Prevent crash-on-undo when a text insertion was blocked by this code
-        // Prevent non-number characters from being inserted
-        // Prevent too many characters from being inserted
-        return (range.length + range.location <= charCount &&
-            string.rangeOfCharacter(from: invalidCharacters) == nil &&
-            charCount + string.characters.count - range.length <= maxLength)
-    }
-    
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        commitNewTimer()
-        return false
-    }
-}
-
-// MARK: - Input Accessory Controller
-extension TableController {
-    
-    override var canBecomeFirstResponder: Bool {
-        return true
-    }
-    
-    override var inputAccessoryView: UIInputView? {
-        return keyboardAccessoryView
-    }
-    
-    /// Enable and disable the add button based on whether there is text in the text field
-    @objc func textInTextFieldChanged(_ textField: UITextField) {
-        let isEnabled: Bool
-        if let text = textField.text {
-            isEnabled = (text.characters.count > 0)
-        } else {
-            isEnabled = false
-        }
-        keyboardAccessoryView.addButton.isEnabled = isEnabled
-    }
-
-    
-    /// Resets and hides the input accessory
-    @objc func exitKeyboardAccessoryView() {
-        guard keyboardAccessoryView.isVisible else {return}
-        // Clear the text field
-        keyboardAccessoryView.textField.text?.removeAll()
-        // Ditch the keyboard and hide
-        keyboardAccessoryView.textField.resignFirstResponder()
-        keyboardAccessoryView.isVisible = false
-    }
-    
-    override func accessibilityPerformEscape() -> Bool {
-        exitKeyboardAccessoryView()
-        return true
-    }
-    
-    @objc func commitNewTimer() {
-        defer {
-            exitKeyboardAccessoryView()
-        }
-        // Create a valid userSelectedTime or exit early
-        guard let text = keyboardAccessoryView.textField.text, let userTimeInSeconds = Int(text), userTimeInSeconds > 0 else {return}
-        let userSelectedTime = TimeInterval(userTimeInSeconds)
-        
-        commitTimer(userSelectedTime)
     }
 }
