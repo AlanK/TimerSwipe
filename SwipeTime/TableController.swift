@@ -78,7 +78,7 @@ class TableController: UITableViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         // Make sure keyboard accessory view isn’t stuck to the bottom of the screen when we unwind to this view
-        if keyboardAccessoryView.isVisible {exitKeyboardAccessoryView()}
+        exitKeyboardAccessoryView()
         
         super.viewWillDisappear(animated)
     }
@@ -237,6 +237,7 @@ extension TableController {
     
     /// Resets and hides the input accessory
     @objc func exitKeyboardAccessoryView() {
+        guard keyboardAccessoryView.isVisible else {return}
         // Clear the text field
         keyboardAccessoryView.textField.text?.removeAll()
         // Ditch the keyboard and hide
