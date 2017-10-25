@@ -126,6 +126,18 @@ class TableController: UITableViewController {
         super.setEditing(editing, animated: animated)
     }
     
+    func commitTimer(_ userSelectedTime: TimeInterval) {
+        // Create a new timer
+        guard let model = modelIntermediary?.model else {return}
+        let newTimer = STSavedTimer(seconds: userSelectedTime)
+        let newIndexPath = IndexPath(row: model.count(), section: mainSection)
+        // Append, save, and update view
+        model.append(timer: newTimer)
+        model.saveData()
+        tableView.insertRows(at: [newIndexPath], with: .automatic)
+        refreshEditButton()
+    }
+    
     /// Enable the Edit button when the table has one or more rows
     func refreshEditButton() {
         let isEnabled: Bool
@@ -245,14 +257,6 @@ extension TableController {
         guard let text = keyboardAccessoryView.textField.text, let userTimeInSeconds = Int(text), userTimeInSeconds > 0 else {return}
         let userSelectedTime = TimeInterval(userTimeInSeconds)
         
-        // Create a new timer
-        guard let model = modelIntermediary?.model else {return}
-        let newTimer = STSavedTimer(seconds: userSelectedTime)
-        let newIndexPath = IndexPath(row: model.count(), section: mainSection)
-        // Append, save, and update view
-        model.append(timer: newTimer)
-        model.saveData()
-        tableView.insertRows(at: [newIndexPath], with: .automatic)
-        refreshEditButton()
+        commitTimer(userSelectedTime)
     }
 }
