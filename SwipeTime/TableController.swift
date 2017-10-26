@@ -121,6 +121,8 @@ class TableController: UITableViewController {
         model.insert(timer, at: toIndexPath.row)
     }
     
+    // MARK: Custom logic
+    
     override func setEditing(_ editing: Bool, animated: Bool) {
         modelIntermediary?.model.saveData()
         super.setEditing(editing, animated: animated)
@@ -219,7 +221,7 @@ extension TableController {
         return true
     }
     
-    override var inputAccessoryView: UIInputView? {
+    override var inputAccessoryView: UIView? {
         return keyboardAccessoryView
     }
     
