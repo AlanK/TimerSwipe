@@ -194,7 +194,7 @@ extension TableController: TableCellDelegate {
 extension TableController: UITextFieldDelegate {
     // Protect against text-related problems
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        let charCount = textField.text?.characters.count ?? 0
+        let charCount = textField.text?.count ?? 0
         let invalidCharacters = CharacterSet(charactersIn: "0123456789").inverted
         let maxLength = 3
         
@@ -203,7 +203,7 @@ extension TableController: UITextFieldDelegate {
         // Prevent too many characters from being inserted
         return (range.length + range.location <= charCount &&
             string.rangeOfCharacter(from: invalidCharacters) == nil &&
-            charCount + string.characters.count - range.length <= maxLength)
+            charCount + string.count - range.length <= maxLength)
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -227,7 +227,7 @@ extension TableController {
     @objc func textInTextFieldChanged(_ textField: UITextField) {
         let isEnabled: Bool
         if let text = textField.text {
-            isEnabled = (text.characters.count > 0)
+            isEnabled = (text.count > 0)
         } else {
             isEnabled = false
         }
