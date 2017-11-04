@@ -22,21 +22,14 @@ class TableController: UITableViewController {
     @IBOutlet var footerContainer: UIView!
     /// The label serving as the table footer
     @IBOutlet var footer: UILabel!
-    /// The view which can create new timers
-    let keyboardAccessoryView: InputView = {
-        let view = InputView(frame: .zero, inputViewStyle: .default)
-        view.cancelButton.addTarget(self, action: #selector(exitKeyboardAccessoryView), for: .touchUpInside)
-        view.addButton.addTarget(self, action: #selector(commitNewTimer), for: .touchUpInside)
-        return view
-    }()
+    /// The object that can create new timers
+    var inputController: InputController?
     
     private let cellID = "STTableViewCell"
     private let sectionsInTableView = 1, mainSection = 0
 
     @IBAction func inputNewTimer(_ sender: Any) {
-        keyboardAccessoryView.addButton.isEnabled = false
-        keyboardAccessoryView.isVisible = true
-        keyboardAccessoryView.textField.becomeFirstResponder()
+        inputController?.activate()
     }
     
     // MARK: View controller
@@ -47,8 +40,7 @@ class TableController: UITableViewController {
         self.navigationItem.rightBarButtonItem = self.editButtonItem
         
         // Ready input accessory
-        keyboardAccessoryView.textField.delegate = self
-        keyboardAccessoryView.textField.addTarget(self, action: #selector(textInTextFieldChanged(_:)), for: UIControlEvents.editingChanged)
+        inputController = InputController.init(parent: self)
     }
     
     override func viewDidLayoutSubviews() {
@@ -78,7 +70,7 @@ class TableController: UITableViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         // Make sure keyboard accessory view isn’t stuck to the bottom of the screen when we unwind to this view
-        exitKeyboardAccessoryView()
+        inputController?.exitKeyboardAccessoryView()
         
         super.viewWillDisappear(animated)
     }
