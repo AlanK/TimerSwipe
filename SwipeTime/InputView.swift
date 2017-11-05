@@ -152,11 +152,11 @@ class InputView: UIInputView {
         
         thinLine.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
         thinLine.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
-        thinLine.bottomAnchor.constraint(equalTo: margin.bottomAnchor).isActive = true
         
         wrapper.topAnchor.constraint(equalTo: thinLine.topAnchor, constant: thinLineHeight).isActive = true
         wrapper.leadingAnchor.constraint(equalTo: thinLine.leadingAnchor).isActive = true
         wrapper.trailingAnchor.constraint(equalTo: thinLine.trailingAnchor).isActive = true
+        wrapper.bottomAnchor.constraint(equalTo: thinLine.bottomAnchor).isActive = true
         
         cancelButton.leadingAnchor.constraint(equalTo: margin.leadingAnchor, constant: -horizontalGap).isActive = true
         cancelButton.topAnchor.constraint(equalTo: wrapper.topAnchor).isActive = true
@@ -186,12 +186,12 @@ class InputView: UIInputView {
         
         // Constraints for showing this view
         constraintsToShowView.insert(thinLine.topAnchor.constraint(equalTo: margin.topAnchor))
-        constraintsToShowView.insert(wrapper.bottomAnchor.constraint(equalTo: thinLine.bottomAnchor))
+        constraintsToShowView.insert(thinLine.bottomAnchor.constraint(equalTo: margin.bottomAnchor))
         
         // Constraint for hiding this view (make active because this view should start hidden)
-        let constraintToHideView = thinLine.topAnchor.constraint(equalTo: thinLine.bottomAnchor)
-        constraintToHideView.isActive = true
-        constraintsToHideView.insert(constraintToHideView)
+        let hidingConstraint = thinLine.topAnchor.constraint(equalTo: bottomAnchor)
+        hidingConstraint.isActive = true
+        constraintsToHideView.insert(hidingConstraint)
         
         // Set the order of elements for accessibility to prevent the parent view from stealing accessibility focus
         accessibilityElements = [cancelButton, textField, addButton]
