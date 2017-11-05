@@ -150,8 +150,6 @@ class InputView: UIInputView {
 
         // Set constraints for the subviews
         
-        clipsToBounds = true
-
         thinLine.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
         thinLine.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
         thinLine.bottomAnchor.constraint(equalTo: margin.bottomAnchor).isActive = true
