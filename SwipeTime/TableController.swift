@@ -219,7 +219,7 @@ extension TableController {
         return true
     }
     
-    override var inputAccessoryView: UIInputView? {
+    override var inputAccessoryView: UIView? {
         return keyboardAccessoryView
     }
     
