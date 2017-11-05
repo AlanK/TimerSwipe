@@ -114,7 +114,7 @@ class InputView: UIInputView {
         // Assemble the subviews
         addSubview(wrapper)
         addSubview(thinLine)
-        addSubview(cancelButton)
+        wrapper.addSubview(cancelButton)
         wrapper.addSubview(innerWrapper)
         wrapper.addSubview(addButton)
         innerWrapper.addSubview(textField)
