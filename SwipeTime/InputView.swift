@@ -64,23 +64,25 @@ class InputView: UIInputView {
             return isVisible
         }
         set {
-            defer {layoutIfNeeded()}
-            // Always deactivate constraints before activating conflicting ones (or else this could be a lot less verbose)
-            switch newValue {
-            case true:
-                for constraint in constraintsToHideView {
-                    constraint.isActive = false
+            UIView.animate(withDuration: 0.2) {
+                // Always deactivate constraints before activating conflicting ones (or else this could be a lot less verbose)
+                switch newValue {
+                case true:
+                    for constraint in self.constraintsToHideView {
+                        constraint.isActive = false
+                    }
+                    for constraint in self.constraintsToShowView {
+                        constraint.isActive = true
+                    }
+                case false:
+                    for constraint in self.constraintsToShowView {
+                        constraint.isActive = false
+                    }
+                    for constraint in self.constraintsToHideView {
+                        constraint.isActive = true
+                    }
                 }
-                for constraint in constraintsToShowView {
-                    constraint.isActive = true
-                }
-            case false:
-                for constraint in constraintsToShowView {
-                    constraint.isActive = false
-                }
-                for constraint in constraintsToHideView {
-                    constraint.isActive = true
-                }
+                self.layoutIfNeeded()
             }
         }
     }
