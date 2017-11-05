@@ -64,26 +64,22 @@ class InputView: UIInputView {
             return isVisible
         }
         set {
-            self.layoutIfNeeded()
-            UIView.animate(withDuration: 0.2) {
-                // Always deactivate constraints before activating conflicting ones (or else this could be a lot less verbose)
-                switch newValue {
-                case true:
-                    for constraint in self.constraintsToHideView {
-                        constraint.isActive = false
-                    }
-                    for constraint in self.constraintsToShowView {
-                        constraint.isActive = true
-                    }
-                case false:
-                    for constraint in self.constraintsToShowView {
-                        constraint.isActive = false
-                    }
-                    for constraint in self.constraintsToHideView {
-                        constraint.isActive = true
-                    }
+            // Always deactivate constraints before activating conflicting ones (or else this could be a lot less verbose)
+            switch newValue {
+            case true:
+                for constraint in self.constraintsToHideView {
+                    constraint.isActive = false
                 }
-                self.layoutIfNeeded()
+                for constraint in self.constraintsToShowView {
+                    constraint.isActive = true
+                }
+            case false:
+                for constraint in self.constraintsToShowView {
+                    constraint.isActive = false
+                }
+                for constraint in self.constraintsToHideView {
+                    constraint.isActive = true
+                }
             }
         }
     }
@@ -95,7 +91,9 @@ class InputView: UIInputView {
     }
     
     override var intrinsicContentSize: CGSize {
-        return bounds.size
+        var size = bounds.size
+        size.height = thinLine.bounds.size.height
+        return size
     }
     
     // MARK: Initializers
@@ -150,13 +148,15 @@ class InputView: UIInputView {
 
         // Set constraints for the subviews
         
+        thinLine.clipsToBounds = true
+        
         thinLine.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
         thinLine.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
+        thinLine.bottomAnchor.constraint(equalTo: margin.bottomAnchor).isActive = true
         
         wrapper.topAnchor.constraint(equalTo: thinLine.topAnchor, constant: thinLineHeight).isActive = true
         wrapper.leadingAnchor.constraint(equalTo: thinLine.leadingAnchor).isActive = true
         wrapper.trailingAnchor.constraint(equalTo: thinLine.trailingAnchor).isActive = true
-        wrapper.bottomAnchor.constraint(equalTo: thinLine.bottomAnchor).isActive = true
         
         cancelButton.leadingAnchor.constraint(equalTo: margin.leadingAnchor, constant: -horizontalGap).isActive = true
         cancelButton.topAnchor.constraint(equalTo: wrapper.topAnchor).isActive = true
@@ -186,10 +186,10 @@ class InputView: UIInputView {
         
         // Constraints for showing this view
         constraintsToShowView.insert(thinLine.topAnchor.constraint(equalTo: margin.topAnchor))
-        constraintsToShowView.insert(thinLine.bottomAnchor.constraint(equalTo: margin.bottomAnchor))
+        constraintsToShowView.insert(wrapper.bottomAnchor.constraint(equalTo: thinLine.bottomAnchor))
         
         // Constraint for hiding this view (make active because this view should start hidden)
-        let hidingConstraint = thinLine.topAnchor.constraint(equalTo: bottomAnchor)
+        let hidingConstraint = thinLine.topAnchor.constraint(equalTo: margin.bottomAnchor)
         hidingConstraint.isActive = true
         constraintsToHideView.insert(hidingConstraint)
         

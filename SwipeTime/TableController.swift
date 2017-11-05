@@ -35,8 +35,12 @@ class TableController: UITableViewController {
 
     @IBAction func inputNewTimer(_ sender: Any) {
         keyboardAccessoryView.addButton.isEnabled = false
-        keyboardAccessoryView.isVisible = true
-        keyboardAccessoryView.textField.becomeFirstResponder()
+        UIView.animate(withDuration: 0.1, delay: 0.0, options: .curveEaseIn, animations: {
+            self.keyboardAccessoryView.isVisible = true
+            self.keyboardAccessoryView.layoutIfNeeded()
+        }) { _ in
+            self.keyboardAccessoryView.textField.becomeFirstResponder()
+        }
     }
     
     // MARK: View controller
@@ -240,8 +244,12 @@ extension TableController {
         // Clear the text field
         keyboardAccessoryView.textField.text?.removeAll()
         // Ditch the keyboard and hide
-        keyboardAccessoryView.textField.resignFirstResponder()
-        keyboardAccessoryView.isVisible = false
+        UIView.animate(withDuration: 0.1, delay: 0.0, options: .curveEaseIn, animations: {
+            self.keyboardAccessoryView.isVisible = false
+            self.keyboardAccessoryView.layoutIfNeeded()
+        }) { _ in
+            self.keyboardAccessoryView.textField.resignFirstResponder()
+        }
     }
     
     override func accessibilityPerformEscape() -> Bool {
