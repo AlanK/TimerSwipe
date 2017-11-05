@@ -64,6 +64,7 @@ class InputView: UIInputView {
             return isVisible
         }
         set {
+            self.layoutIfNeeded()
             UIView.animate(withDuration: 0.2) {
                 // Always deactivate constraints before activating conflicting ones (or else this could be a lot less verbose)
                 switch newValue {
@@ -112,8 +113,8 @@ class InputView: UIInputView {
         let margin = layoutMarginsGuide
         
         // Assemble the subviews
-        addSubview(wrapper)
         addSubview(thinLine)
+        thinLine.addSubview(wrapper)
         wrapper.addSubview(cancelButton)
         wrapper.addSubview(innerWrapper)
         wrapper.addSubview(addButton)
@@ -121,8 +122,8 @@ class InputView: UIInputView {
         innerWrapper.addSubview(secondsLabel)
         
         // Add colors
-        backgroundColor = UIColor.white
         thinLine.backgroundColor = K.fineLineColor
+        wrapper.backgroundColor = UIColor.white
         
         // No, do not translate autoresizing mask into constraints for anything…
         translatesAutoresizingMaskIntoConstraints = false
@@ -148,17 +149,18 @@ class InputView: UIInputView {
         innerWrapper.setContentHuggingPriority(.defaultHigh, for: .vertical)
 
         // Set constraints for the subviews
+        
+        clipsToBounds = true
 
-        thinLine.topAnchor.constraint(equalTo: margin.topAnchor).isActive = true
         thinLine.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
         thinLine.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
-        thinLine.bottomAnchor.constraint(equalTo: thinLine.topAnchor, constant: thinLineHeight).isActive = true
+        thinLine.bottomAnchor.constraint(equalTo: margin.bottomAnchor).isActive = true
         
-        wrapper.topAnchor.constraint(equalTo: thinLine.bottomAnchor).isActive = true
-        wrapper.leadingAnchor.constraint(equalTo: margin.leadingAnchor).isActive = true
-        wrapper.trailingAnchor.constraint(equalTo: margin.trailingAnchor).isActive = true
+        wrapper.topAnchor.constraint(equalTo: thinLine.topAnchor, constant: thinLineHeight).isActive = true
+        wrapper.leadingAnchor.constraint(equalTo: thinLine.leadingAnchor).isActive = true
+        wrapper.trailingAnchor.constraint(equalTo: thinLine.trailingAnchor).isActive = true
         
-        cancelButton.leadingAnchor.constraint(equalTo: wrapper.leadingAnchor, constant: -horizontalGap).isActive = true
+        cancelButton.leadingAnchor.constraint(equalTo: margin.leadingAnchor, constant: -horizontalGap).isActive = true
         cancelButton.topAnchor.constraint(equalTo: wrapper.topAnchor).isActive = true
         cancelButton.bottomAnchor.constraint(equalTo: wrapper.bottomAnchor).isActive = true
 
@@ -168,13 +170,14 @@ class InputView: UIInputView {
         textField.topAnchor.constraint(equalTo: wrapper.topAnchor, constant: verticalGap).isActive = true
         textField.leadingAnchor.constraint(equalTo: innerWrapper.leadingAnchor).isActive = true
         textField.trailingAnchor.constraint(equalTo: secondsLabel.leadingAnchor).isActive = true
+        textField.bottomAnchor.constraint(equalTo: wrapper.bottomAnchor, constant: -verticalGap).isActive = true
         
         secondsLabel.firstBaselineAnchor.constraint(equalTo: textField.firstBaselineAnchor).isActive = true
         secondsLabel.trailingAnchor.constraint(equalTo: innerWrapper.trailingAnchor).isActive = true
         
         addButton.topAnchor.constraint(equalTo: wrapper.topAnchor).isActive = true
         addButton.bottomAnchor.constraint(equalTo: wrapper.bottomAnchor).isActive = true
-        addButton.trailingAnchor.constraint(equalTo: wrapper.trailingAnchor, constant: horizontalGap).isActive = true
+        addButton.trailingAnchor.constraint(equalTo: margin.trailingAnchor, constant: horizontalGap).isActive = true
         
         // iOS 10 won’t dynamically resize the text field, so give it a sufficient width based on aspect ratio
         if #available(iOS 11, *) {}
@@ -184,11 +187,11 @@ class InputView: UIInputView {
         }
         
         // Constraints for showing this view
-        constraintsToShowView.insert(wrapper.bottomAnchor.constraint(equalTo: margin.bottomAnchor))
-        constraintsToShowView.insert(textField.bottomAnchor.constraint(equalTo: wrapper.bottomAnchor, constant: -verticalGap))
+        constraintsToShowView.insert(thinLine.topAnchor.constraint(equalTo: margin.topAnchor))
+        constraintsToShowView.insert(wrapper.bottomAnchor.constraint(equalTo: thinLine.bottomAnchor))
         
         // Constraint for hiding this view (make active because this view should start hidden)
-        let constraintToHideView = wrapper.bottomAnchor.constraint(equalTo: wrapper.topAnchor)
+        let constraintToHideView = thinLine.topAnchor.constraint(equalTo: thinLine.bottomAnchor)
         constraintToHideView.isActive = true
         constraintsToHideView.insert(constraintToHideView)
         
