@@ -21,14 +21,13 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="center" horizontalCompressionResistancePriority="752" verticalCompressionResistancePriority="752" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yum-AW-GvH" userLabel="Bottom Button">
-                                <rect key="frame" x="125" y="266" width="69" height="36"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <button opaque="NO" contentMode="center" horizontalCompressionResistancePriority="752" verticalCompressionResistancePriority="752" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yum-AW-GvH" userLabel="Show Button">
+                                <rect key="frame" x="135" y="266" width="50" height="36"/>
                                 <accessibility key="accessibilityConfiguration">
                                     <accessibilityTraits key="traits" button="YES" updatesFrequently="YES"/>
                                 </accessibility>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleTitle3"/>
-                                <state key="normal" title="Change"/>
+                                <state key="normal" title="Show"/>
                                 <attributedString key="userComments">
                                     <fragment content="Tap this button to change the timer">
                                         <attributes>
@@ -44,10 +43,11 @@
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <gestureRecognizers/>
+                        <constraints>
+                            <constraint firstItem="yum-AW-GvH" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="aPd-iY-WIy"/>
+                            <constraint firstItem="yum-AW-GvH" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="tuD-b3-Uk5"/>
+                        </constraints>
                     </view>
-                    <connections>
-                        <outlet property="button" destination="yum-AW-GvH" id="XN3-PN-cy0"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>

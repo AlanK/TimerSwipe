@@ -75,37 +75,13 @@
 			isa = PBXGroup;
 			children = (
 				5A03B9A71D1DDB9800E245C9 /* AppDelegate.swift */,
-				5AA3E3AC1EEF360C00FB5F1D /* Views and Controllers */,
-				5AA3E3A91EEF34F700FB5F1D /* Storyboards */,
+				5ADB6A171F561562006BEE1B /* InputView.swift */,
+				5AB18AF91D2058CA007B9D9F /* MainViewController.swift */,
+				5A03B9AB1D1DDB9800E245C9 /* Main.storyboard */,
 				5A03B9AE1D1DDB9800E245C9 /* Assets.xcassets */,
 				5A03B9B31D1DDB9800E245C9 /* Info.plist */,
 			);
 			path = SwipeTime;
-			sourceTree = "<group>";
-		};
-		5AA3E3A91EEF34F700FB5F1D /* Storyboards */ = {
-			isa = PBXGroup;
-			children = (
-				5A03B9AB1D1DDB9800E245C9 /* Main.storyboard */,
-			);
-			name = Storyboards;
-			sourceTree = "<group>";
-		};
-		5AA3E3AA1EEF354300FB5F1D /* Main */ = {
-			isa = PBXGroup;
-			children = (
-				5AB18AF91D2058CA007B9D9F /* MainViewController.swift */,
-			);
-			name = Main;
-			sourceTree = "<group>";
-		};
-		5AA3E3AC1EEF360C00FB5F1D /* Views and Controllers */ = {
-			isa = PBXGroup;
-			children = (
-				5ADB6A171F561562006BEE1B /* InputView.swift */,
-				5AA3E3AA1EEF354300FB5F1D /* Main */,
-			);
-			name = "Views and Controllers";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

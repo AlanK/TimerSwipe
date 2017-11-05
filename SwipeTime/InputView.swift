@@ -2,22 +2,22 @@ import UIKit
 
 class InputView: UIInputView {
     
-    private let providedHeight: CGFloat = 50.0
-    private let usefulView = UIView()
-    private var constraintToHideView: NSLayoutConstraint?, constraintToShowView: NSLayoutConstraint?
+    private let someHeight: CGFloat = 50.0, zeroHeight: CGFloat = 0.0
+    private let view = UIView()
+    private var hide: NSLayoutConstraint?, show: NSLayoutConstraint?
    
     var isVisible: Bool {
         get {
-            return constraintToShowView!.isActive
+            return show!.isActive
         }
         set {
             // Always deactivate constraints before activating conflicting ones
             if newValue == true {
-                constraintToHideView?.isActive = false
-                constraintToShowView?.isActive = true
+                hide?.isActive = false
+                show?.isActive = true
             } else {
-                constraintToShowView?.isActive = false
-                constraintToHideView?.isActive = true
+                show?.isActive = false
+                hide?.isActive = true
             }
         }
     }
@@ -25,12 +25,12 @@ class InputView: UIInputView {
     // MARK: Sizing
 
     override func sizeThatFits(_ size: CGSize) -> CGSize {
-        return CGSize(width: size.width, height: providedHeight)
+        return CGSize(width: size.width, height: someHeight)
     }
     
     override var intrinsicContentSize: CGSize {
         var size = bounds.size
-        size.height = usefulView.bounds.size.height
+        size.height = view.bounds.size.height
         return size
     }
     
@@ -43,21 +43,20 @@ class InputView: UIInputView {
     override init(frame: CGRect, inputViewStyle: UIInputViewStyle) {
         super.init(frame: frame, inputViewStyle: inputViewStyle)
         
-        let guide = layoutMarginsGuide
-        
+        addSubview(view)
+        view.backgroundColor = UIColor.purple
+
         translatesAutoresizingMaskIntoConstraints = false
-        addSubview(usefulView)
+        view.translatesAutoresizingMaskIntoConstraints = false
+
+        view.topAnchor.constraint(equalTo: layoutMarginsGuide.topAnchor).isActive = true
+        view.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
+        view.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
+        view.bottomAnchor.constraint(equalTo: layoutMarginsGuide.bottomAnchor).isActive = true
         
-        usefulView.backgroundColor = UIColor.purple
-        usefulView.translatesAutoresizingMaskIntoConstraints = false
-        usefulView.topAnchor.constraint(equalTo: guide.topAnchor).isActive = true
-        usefulView.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
-        usefulView.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
-        usefulView.bottomAnchor.constraint(equalTo: guide.bottomAnchor).isActive = true
+        show = view.heightAnchor.constraint(equalToConstant: someHeight)
+        hide = view.heightAnchor.constraint(equalToConstant: zeroHeight)
         
-        constraintToShowView = usefulView.heightAnchor.constraint(equalToConstant: providedHeight)
-        constraintToHideView = usefulView.heightAnchor.constraint(equalToConstant: 0.0)
-        
-        constraintToHideView?.isActive = true
+        hide?.isActive = true
     }
 }
