@@ -25,8 +25,6 @@ class TableController: UITableViewController {
     /// The view which can create new timers
     let keyboardAccessoryView: InputView = {
         let view = InputView(frame: .zero, inputViewStyle: .default)
-        view.cancelButton.addTarget(self, action: #selector(exitKeyboardAccessoryView), for: .touchUpInside)
-        view.addButton.addTarget(self, action: #selector(commitNewTimer), for: .touchUpInside)
         return view
     }()
     
@@ -34,12 +32,9 @@ class TableController: UITableViewController {
     private let sectionsInTableView = 1, mainSection = 0
 
     @IBAction func inputNewTimer(_ sender: Any) {
-        keyboardAccessoryView.addButton.isEnabled = false
-        UIView.animate(withDuration: 0.1, delay: 0.0, options: .curveEaseIn, animations: {
+        UIView.animate(withDuration: 0.1) {
             self.keyboardAccessoryView.isVisible = true
             self.keyboardAccessoryView.layoutIfNeeded()
-        }) { _ in
-            self.keyboardAccessoryView.textField.becomeFirstResponder()
         }
     }
     
@@ -49,10 +44,6 @@ class TableController: UITableViewController {
         super.viewDidLoad()
         modelIntermediary = self.navigationController as? ModelIntermediary
         self.navigationItem.rightBarButtonItem = self.editButtonItem
-        
-        // Ready input accessory
-        keyboardAccessoryView.textField.delegate = self
-        keyboardAccessoryView.textField.addTarget(self, action: #selector(textInTextFieldChanged(_:)), for: UIControlEvents.editingChanged)
     }
     
     override func viewDidLayoutSubviews() {
@@ -211,7 +202,6 @@ extension TableController: UITextFieldDelegate {
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        commitNewTimer()
         return false
     }
 }
@@ -227,44 +217,17 @@ extension TableController {
         return keyboardAccessoryView
     }
     
-    /// Enable and disable the add button based on whether there is text in the text field
-    @objc func textInTextFieldChanged(_ textField: UITextField) {
-        let isEnabled: Bool
-        if let text = textField.text {
-            isEnabled = (text.count > 0)
-        } else {
-            isEnabled = false
-        }
-        keyboardAccessoryView.addButton.isEnabled = isEnabled
-    }
-
-    
     /// Resets and hides the input accessory
     @objc func exitKeyboardAccessoryView() {
-        // Clear the text field
-        keyboardAccessoryView.textField.text?.removeAll()
         // Ditch the keyboard and hide
-        UIView.animate(withDuration: 0.1, delay: 0.0, options: .curveEaseIn, animations: {
+        UIView.animate(withDuration: 0.1) {
             self.keyboardAccessoryView.isVisible = false
             self.keyboardAccessoryView.layoutIfNeeded()
-        }) { _ in
-            self.keyboardAccessoryView.textField.resignFirstResponder()
         }
     }
     
     override func accessibilityPerformEscape() -> Bool {
         exitKeyboardAccessoryView()
         return true
-    }
-    
-    @objc func commitNewTimer() {
-        defer {
-            exitKeyboardAccessoryView()
-        }
-        // Create a valid userSelectedTime or exit early
-        guard let text = keyboardAccessoryView.textField.text, let userTimeInSeconds = Int(text), userTimeInSeconds > 0 else {return}
-        let userSelectedTime = TimeInterval(userTimeInSeconds)
-        
-        commitTimer(userSelectedTime)
     }
 }
