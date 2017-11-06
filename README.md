@@ -1,3 +1,3 @@
-# TimerSwipe
+# IAV Test Case
 
-TimerSwipe is a gesture-based iOS timer [available on the App Store](https://appstore.com/timerswipe).
+Sample code for a question about Input Accessory Views on Stack Overflow.
