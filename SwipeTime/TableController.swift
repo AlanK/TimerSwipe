@@ -35,7 +35,7 @@ class TableController: UITableViewController {
 
     @IBAction func inputNewTimer(_ sender: Any) {
         keyboardAccessoryView.addButton.isEnabled = false
-        UIView.animate(withDuration: 0.1, delay: 0.0, options: .curveEaseIn, animations: {
+        UIView.animate(withDuration: 0.0, delay: 0.0, options: .curveEaseIn, animations: {
             self.keyboardAccessoryView.isVisible = true
             self.keyboardAccessoryView.layoutIfNeeded()
         }) { _ in
