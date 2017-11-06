@@ -16,7 +16,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		5A03B9A41D1DDB9800E245C9 /* TimerSwipe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TimerSwipe.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		5A03B9A41D1DDB9800E245C9 /* IAV Test Case.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "IAV Test Case.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5A03B9A71D1DDB9800E245C9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5A03B9AC1D1DDB9800E245C9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		5A03B9AE1D1DDB9800E245C9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -48,7 +48,7 @@
 		5A03B9A51D1DDB9800E245C9 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				5A03B9A41D1DDB9800E245C9 /* TimerSwipe.app */,
+				5A03B9A41D1DDB9800E245C9 /* IAV Test Case.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -70,9 +70,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		5A03B9A31D1DDB9800E245C9 /* TimerSwipe */ = {
+		5A03B9A31D1DDB9800E245C9 /* IAV Test Case */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 5A03B9B61D1DDB9800E245C9 /* Build configuration list for PBXNativeTarget "TimerSwipe" */;
+			buildConfigurationList = 5A03B9B61D1DDB9800E245C9 /* Build configuration list for PBXNativeTarget "IAV Test Case" */;
 			buildPhases = (
 				5A03B9A01D1DDB9800E245C9 /* Sources */,
 				5A03B9A11D1DDB9800E245C9 /* Frameworks */,
@@ -82,9 +82,9 @@
 			);
 			dependencies = (
 			);
-			name = TimerSwipe;
+			name = "IAV Test Case";
 			productName = SwipeTime;
-			productReference = 5A03B9A41D1DDB9800E245C9 /* TimerSwipe.app */;
+			productReference = 5A03B9A41D1DDB9800E245C9 /* IAV Test Case.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -104,7 +104,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 5A03B99F1D1DDB9800E245C9 /* Build configuration list for PBXProject "SwipeTime" */;
+			buildConfigurationList = 5A03B99F1D1DDB9800E245C9 /* Build configuration list for PBXProject "IAV Test Case" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -117,7 +117,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				5A03B9A31D1DDB9800E245C9 /* TimerSwipe */,
+				5A03B9A31D1DDB9800E245C9 /* IAV Test Case */,
 			);
 		};
 /* End PBXProject section */
@@ -318,7 +318,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		5A03B99F1D1DDB9800E245C9 /* Build configuration list for PBXProject "SwipeTime" */ = {
+		5A03B99F1D1DDB9800E245C9 /* Build configuration list for PBXProject "IAV Test Case" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				5A03B9B41D1DDB9800E245C9 /* Debug */,
@@ -327,7 +327,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		5A03B9B61D1DDB9800E245C9 /* Build configuration list for PBXNativeTarget "TimerSwipe" */ = {
+		5A03B9B61D1DDB9800E245C9 /* Build configuration list for PBXNativeTarget "IAV Test Case" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				5A03B9B71D1DDB9800E245C9 /* Debug */,

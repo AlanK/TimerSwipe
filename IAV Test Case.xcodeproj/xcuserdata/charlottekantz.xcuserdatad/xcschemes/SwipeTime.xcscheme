@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "5A03B9A31D1DDB9800E245C9"
-               BuildableName = "TimerSwipe.app"
-               BlueprintName = "TimerSwipe"
-               ReferencedContainer = "container:SwipeTime.xcodeproj">
+               BuildableName = "IAV Test Case.app"
+               BlueprintName = "IAV Test Case"
+               ReferencedContainer = "container:IAV Test Case.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -36,7 +36,7 @@
                BlueprintIdentifier = "5A01E6B01F9FFBB3007F0373"
                BuildableName = "TimerSwipeTests.xctest"
                BlueprintName = "TimerSwipeTests"
-               ReferencedContainer = "container:SwipeTime.xcodeproj">
+               ReferencedContainer = "container:IAV Test Case.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -44,9 +44,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "5A03B9A31D1DDB9800E245C9"
-            BuildableName = "TimerSwipe.app"
-            BlueprintName = "TimerSwipe"
-            ReferencedContainer = "container:SwipeTime.xcodeproj">
+            BuildableName = "IAV Test Case.app"
+            BlueprintName = "IAV Test Case"
+            ReferencedContainer = "container:IAV Test Case.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -68,9 +68,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "5A03B9A31D1DDB9800E245C9"
-            BuildableName = "TimerSwipe.app"
-            BlueprintName = "TimerSwipe"
-            ReferencedContainer = "container:SwipeTime.xcodeproj">
+            BuildableName = "IAV Test Case.app"
+            BlueprintName = "IAV Test Case"
+            ReferencedContainer = "container:IAV Test Case.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -87,9 +87,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "5A03B9A31D1DDB9800E245C9"
-            BuildableName = "TimerSwipe.app"
-            BlueprintName = "TimerSwipe"
-            ReferencedContainer = "container:SwipeTime.xcodeproj">
+            BuildableName = "IAV Test Case.app"
+            BlueprintName = "IAV Test Case"
+            ReferencedContainer = "container:IAV Test Case.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
