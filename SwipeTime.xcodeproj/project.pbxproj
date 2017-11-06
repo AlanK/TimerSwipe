@@ -14,18 +14,7 @@
 		5ADB6A181F561562006BEE1B /* InputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ADB6A171F561562006BEE1B /* InputView.swift */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXContainerItemProxy section */
-		5A01E6B61F9FFBB3007F0373 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 5A03B99C1D1DDB9800E245C9 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 5A03B9A31D1DDB9800E245C9;
-			remoteInfo = TimerSwipe;
-		};
-/* End PBXContainerItemProxy section */
-
 /* Begin PBXFileReference section */
-		5A01E6B11F9FFBB3007F0373 /* TimerSwipeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TimerSwipeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5A03B9A41D1DDB9800E245C9 /* TimerSwipe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TimerSwipe.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5A03B9A71D1DDB9800E245C9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5A03B9AC1D1DDB9800E245C9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -37,13 +26,6 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		5A01E6AE1F9FFBB3007F0373 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		5A03B9A11D1DDB9800E245C9 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -66,7 +48,6 @@
 			isa = PBXGroup;
 			children = (
 				5A03B9A41D1DDB9800E245C9 /* TimerSwipe.app */,
-				5A01E6B11F9FFBB3007F0373 /* TimerSwipeTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -87,24 +68,6 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		5A01E6B01F9FFBB3007F0373 /* TimerSwipeTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 5A01E6BA1F9FFBB3007F0373 /* Build configuration list for PBXNativeTarget "TimerSwipeTests" */;
-			buildPhases = (
-				5A01E6AD1F9FFBB3007F0373 /* Sources */,
-				5A01E6AE1F9FFBB3007F0373 /* Frameworks */,
-				5A01E6AF1F9FFBB3007F0373 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				5A01E6B71F9FFBB3007F0373 /* PBXTargetDependency */,
-			);
-			name = TimerSwipeTests;
-			productName = TimerSwipeTests;
-			productReference = 5A01E6B11F9FFBB3007F0373 /* TimerSwipeTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 		5A03B9A31D1DDB9800E245C9 /* TimerSwipe */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 5A03B9B61D1DDB9800E245C9 /* Build configuration list for PBXNativeTarget "TimerSwipe" */;
@@ -132,12 +95,6 @@
 				LastUpgradeCheck = 0910;
 				ORGANIZATIONNAME = "Alan Kantz";
 				TargetAttributes = {
-					5A01E6B01F9FFBB3007F0373 = {
-						CreatedOnToolsVersion = 9.0;
-						DevelopmentTeam = QWQWH28653;
-						ProvisioningStyle = Automatic;
-						TestTargetID = 5A03B9A31D1DDB9800E245C9;
-					};
 					5A03B9A31D1DDB9800E245C9 = {
 						CreatedOnToolsVersion = 7.3.1;
 						DevelopmentTeam = QWQWH28653;
@@ -159,19 +116,11 @@
 			projectRoot = "";
 			targets = (
 				5A03B9A31D1DDB9800E245C9 /* TimerSwipe */,
-				5A01E6B01F9FFBB3007F0373 /* TimerSwipeTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		5A01E6AF1F9FFBB3007F0373 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		5A03B9A21D1DDB9800E245C9 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -184,13 +133,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		5A01E6AD1F9FFBB3007F0373 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		5A03B9A01D1DDB9800E245C9 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -202,14 +144,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		5A01E6B71F9FFBB3007F0373 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 5A03B9A31D1DDB9800E245C9 /* TimerSwipe */;
-			targetProxy = 5A01E6B61F9FFBB3007F0373 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		5A03B9AB1D1DDB9800E245C9 /* Main.storyboard */ = {
@@ -224,53 +158,6 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
-		5A01E6B81F9FFBB3007F0373 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = QWQWH28653;
-				GCC_C_LANGUAGE_STANDARD = gnu11;
-				INFOPLIST_FILE = TimerSwipeTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.asciilus.TimerSwipeTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
-				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TimerSwipe.app/TimerSwipe";
-			};
-			name = Debug;
-		};
-		5A01E6B91F9FFBB3007F0373 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = QWQWH28653;
-				GCC_C_LANGUAGE_STANDARD = gnu11;
-				INFOPLIST_FILE = TimerSwipeTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.asciilus.TimerSwipeTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TimerSwipe.app/TimerSwipe";
-			};
-			name = Release;
-		};
 		5A03B9B41D1DDB9800E245C9 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -425,15 +312,6 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		5A01E6BA1F9FFBB3007F0373 /* Build configuration list for PBXNativeTarget "TimerSwipeTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				5A01E6B81F9FFBB3007F0373 /* Debug */,
-				5A01E6B91F9FFBB3007F0373 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		5A03B99F1D1DDB9800E245C9 /* Build configuration list for PBXProject "SwipeTime" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
