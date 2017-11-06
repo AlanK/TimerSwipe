@@ -92,7 +92,7 @@
 		5A03B99B1D1DDB9800E245C9 = {
 			isa = PBXGroup;
 			children = (
-				5A03B9A61D1DDB9800E245C9 /* SwipeTime */,
+				5A03B9A61D1DDB9800E245C9 /* TimerSwipe */,
 				5A01E6B21F9FFBB3007F0373 /* TimerSwipeTests */,
 				5A03B9A51D1DDB9800E245C9 /* Products */,
 			);
@@ -107,7 +107,7 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		5A03B9A61D1DDB9800E245C9 /* SwipeTime */ = {
+		5A03B9A61D1DDB9800E245C9 /* TimerSwipe */ = {
 			isa = PBXGroup;
 			children = (
 				5A90785C1EEB8C24006BCDD3 /* Constants.swift */,
@@ -119,7 +119,7 @@
 				5A03B9B31D1DDB9800E245C9 /* Info.plist */,
 				5A66EB7A1F099E5900225C38 /* Sounds */,
 			);
-			path = SwipeTime;
+			path = TimerSwipe;
 			sourceTree = "<group>";
 		};
 		5A66EB7A1F099E5900225C38 /* Sounds */ = {
@@ -241,7 +241,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 5A03B99F1D1DDB9800E245C9 /* Build configuration list for PBXProject "SwipeTime" */;
+			buildConfigurationList = 5A03B99F1D1DDB9800E245C9 /* Build configuration list for PBXProject "TimerSwipe" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -505,7 +505,7 @@
 				DEFINES_MODULE = NO;
 				DEVELOPMENT_TEAM = QWQWH28653;
 				EMBED_ASSET_PACKS_IN_PRODUCT_BUNDLE = NO;
-				INFOPLIST_FILE = SwipeTime/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/TimerSwipe/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.asciilus.TimerSwipe;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -526,7 +526,7 @@
 				DEFINES_MODULE = NO;
 				DEVELOPMENT_TEAM = QWQWH28653;
 				EMBED_ASSET_PACKS_IN_PRODUCT_BUNDLE = NO;
-				INFOPLIST_FILE = SwipeTime/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/TimerSwipe/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.asciilus.TimerSwipe;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -550,7 +550,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		5A03B99F1D1DDB9800E245C9 /* Build configuration list for PBXProject "SwipeTime" */ = {
+		5A03B99F1D1DDB9800E245C9 /* Build configuration list for PBXProject "TimerSwipe" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				5A03B9B41D1DDB9800E245C9 /* Debug */,

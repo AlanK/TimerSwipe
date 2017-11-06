@@ -2,6 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:SwipeTime.xcodeproj">
+      location = "self:/Users/charlottekantz/Documents/Programming/SwipeTime/TimerSwipe.xcodeproj">
    </FileRef>
 </Workspace>

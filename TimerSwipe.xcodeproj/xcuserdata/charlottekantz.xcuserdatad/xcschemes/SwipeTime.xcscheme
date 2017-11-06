@@ -17,7 +17,7 @@
                BlueprintIdentifier = "5A03B9A31D1DDB9800E245C9"
                BuildableName = "TimerSwipe.app"
                BlueprintName = "TimerSwipe"
-               ReferencedContainer = "container:SwipeTime.xcodeproj">
+               ReferencedContainer = "container:TimerSwipe.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -36,7 +36,7 @@
                BlueprintIdentifier = "5A01E6B01F9FFBB3007F0373"
                BuildableName = "TimerSwipeTests.xctest"
                BlueprintName = "TimerSwipeTests"
-               ReferencedContainer = "container:SwipeTime.xcodeproj">
+               ReferencedContainer = "container:TimerSwipe.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -46,7 +46,7 @@
             BlueprintIdentifier = "5A03B9A31D1DDB9800E245C9"
             BuildableName = "TimerSwipe.app"
             BlueprintName = "TimerSwipe"
-            ReferencedContainer = "container:SwipeTime.xcodeproj">
+            ReferencedContainer = "container:TimerSwipe.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -70,7 +70,7 @@
             BlueprintIdentifier = "5A03B9A31D1DDB9800E245C9"
             BuildableName = "TimerSwipe.app"
             BlueprintName = "TimerSwipe"
-            ReferencedContainer = "container:SwipeTime.xcodeproj">
+            ReferencedContainer = "container:TimerSwipe.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -89,7 +89,7 @@
             BlueprintIdentifier = "5A03B9A31D1DDB9800E245C9"
             BuildableName = "TimerSwipe.app"
             BlueprintName = "TimerSwipe"
-            ReferencedContainer = "container:SwipeTime.xcodeproj">
+            ReferencedContainer = "container:TimerSwipe.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
