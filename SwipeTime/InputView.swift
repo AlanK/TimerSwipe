@@ -29,9 +29,7 @@ class InputView: UIInputView {
     }
     
     override var intrinsicContentSize: CGSize {
-        var size = bounds.size
-        size.height = view.bounds.size.height
-        return size
+        return CGSize.init(width: bounds.size.width, height: subView.bounds.size.height)
     }
     
     // MARK: Initializers
