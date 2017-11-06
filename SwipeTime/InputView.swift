@@ -14,8 +14,8 @@ class InputView: UIInputView {
     
     // MARK: Private properties
     
-    private let wrapper = UIView(), innerWrapper = UIView(), thinLine = UIView()
-    private var constraintsToHideView = Set<NSLayoutConstraint>(), constraintsToShowView = Set<NSLayoutConstraint>()
+    private let wrapper = UIView(), innerWrapper = UIView(), borderWrapper = UIView()
+    private var hide: NSLayoutConstraint?, show: NSLayoutConstraint?
 
     private let secondsLabel: UILabel = {
         let label = UILabel()
@@ -60,26 +60,17 @@ class InputView: UIInputView {
     /// Report whether the constraints are set to make the view visible and toggle visibility
     var isVisible: Bool {
         get {
-            guard let isVisible = constraintsToShowView.first?.isActive else {return false}
-            return isVisible
+            return show?.isActive ?? false
         }
         set {
             // Always deactivate constraints before activating conflicting ones (or else this could be a lot less verbose)
             switch newValue {
             case true:
-                for constraint in self.constraintsToHideView {
-                    constraint.isActive = false
-                }
-                for constraint in self.constraintsToShowView {
-                    constraint.isActive = true
-                }
+                hide?.isActive = false
+                show?.isActive = true
             case false:
-                for constraint in self.constraintsToShowView {
-                    constraint.isActive = false
-                }
-                for constraint in self.constraintsToHideView {
-                    constraint.isActive = true
-                }
+                show?.isActive = false
+                hide?.isActive = true
             }
         }
     }
@@ -91,9 +82,7 @@ class InputView: UIInputView {
     }
     
     override var intrinsicContentSize: CGSize {
-        var size = bounds.size
-        size.height = thinLine.bounds.size.height
-        return size
+        return CGSize.init(width: bounds.size.width, height: borderWrapper.bounds.size.height)
     }
     
     // MARK: Initializers
@@ -106,13 +95,13 @@ class InputView: UIInputView {
         super.init(frame: frame, inputViewStyle: inputViewStyle)
         
         let verticalGap: CGFloat = 10.0, horizontalGap: CGFloat = 18.0
-        let thinLineHeight: CGFloat = 0.5
+        let borderHeight: CGFloat = 0.5
         let verticalInset: CGFloat = 0.0, medialInset: CGFloat = 32.0, lateralInset: CGFloat = 16.0
         let margin = layoutMarginsGuide
         
         // Assemble the subviews
-        addSubview(thinLine)
-        thinLine.addSubview(wrapper)
+        addSubview(borderWrapper)
+        borderWrapper.addSubview(wrapper)
         wrapper.addSubview(cancelButton)
         wrapper.addSubview(innerWrapper)
         wrapper.addSubview(addButton)
@@ -120,13 +109,13 @@ class InputView: UIInputView {
         innerWrapper.addSubview(secondsLabel)
         
         // Add colors
-        thinLine.backgroundColor = K.fineLineColor
+        borderWrapper.backgroundColor = K.fineLineColor
         wrapper.backgroundColor = UIColor.white
         
         // No, do not translate autoresizing mask into constraints for anything…
         translatesAutoresizingMaskIntoConstraints = false
         wrapper.translatesAutoresizingMaskIntoConstraints = false
-        thinLine.translatesAutoresizingMaskIntoConstraints = false
+        borderWrapper.translatesAutoresizingMaskIntoConstraints = false
         cancelButton.translatesAutoresizingMaskIntoConstraints = false
         innerWrapper.translatesAutoresizingMaskIntoConstraints = false
         textField.translatesAutoresizingMaskIntoConstraints = false
@@ -148,15 +137,16 @@ class InputView: UIInputView {
 
         // Set constraints for the subviews
         
-        thinLine.clipsToBounds = true
+        borderWrapper.clipsToBounds = true
         
-        thinLine.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
-        thinLine.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
-        thinLine.bottomAnchor.constraint(equalTo: margin.bottomAnchor).isActive = true
+        borderWrapper.topAnchor.constraint(equalTo: margin.topAnchor).isActive = true
+        borderWrapper.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
+        borderWrapper.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
+        borderWrapper.bottomAnchor.constraint(equalTo: margin.bottomAnchor).isActive = true
         
-        wrapper.topAnchor.constraint(equalTo: thinLine.topAnchor, constant: thinLineHeight).isActive = true
-        wrapper.leadingAnchor.constraint(equalTo: thinLine.leadingAnchor).isActive = true
-        wrapper.trailingAnchor.constraint(equalTo: thinLine.trailingAnchor).isActive = true
+        wrapper.topAnchor.constraint(equalTo: borderWrapper.topAnchor, constant: borderHeight).isActive = true
+        wrapper.leadingAnchor.constraint(equalTo: borderWrapper.leadingAnchor).isActive = true
+        wrapper.trailingAnchor.constraint(equalTo: borderWrapper.trailingAnchor).isActive = true
         
         cancelButton.leadingAnchor.constraint(equalTo: margin.leadingAnchor, constant: -horizontalGap).isActive = true
         cancelButton.topAnchor.constraint(equalTo: wrapper.topAnchor).isActive = true
@@ -184,14 +174,10 @@ class InputView: UIInputView {
             textField.widthAnchor.constraint(equalTo: textField.heightAnchor, multiplier: fallbackTextFieldAspectRatio).isActive = true
         }
         
-        // Constraints for showing this view
-        constraintsToShowView.insert(thinLine.topAnchor.constraint(equalTo: margin.topAnchor))
-        constraintsToShowView.insert(wrapper.bottomAnchor.constraint(equalTo: thinLine.bottomAnchor))
-        
-        // Constraint for hiding this view (make active because this view should start hidden)
-        let hidingConstraint = thinLine.topAnchor.constraint(equalTo: margin.bottomAnchor)
-        hidingConstraint.isActive = true
-        constraintsToHideView.insert(hidingConstraint)
+        // Constraints for showing and hiding this view
+        show = wrapper.bottomAnchor.constraint(equalTo: borderWrapper.bottomAnchor)
+        hide = borderWrapper.topAnchor.constraint(equalTo: borderWrapper.bottomAnchor)
+        hide?.isActive = true
         
         // Set the order of elements for accessibility to prevent the parent view from stealing accessibility focus
         accessibilityElements = [cancelButton, textField, addButton]
