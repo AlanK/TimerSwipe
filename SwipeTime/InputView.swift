@@ -1,9 +1,8 @@
 import UIKit
 
 class InputView: UIInputView {
-    
     private let someHeight: CGFloat = 50.0, zeroHeight: CGFloat = 0.0
-    private let view = UIView()
+    private let subView = UIView()
     private var hide: NSLayoutConstraint?, show: NSLayoutConstraint?
    
     var isVisible: Bool {
@@ -41,20 +40,19 @@ class InputView: UIInputView {
     override init(frame: CGRect, inputViewStyle: UIInputViewStyle) {
         super.init(frame: frame, inputViewStyle: inputViewStyle)
         
-        addSubview(view)
-        view.backgroundColor = UIColor.purple
+        addSubview(subView)
+        subView.backgroundColor = UIColor.purple
 
         translatesAutoresizingMaskIntoConstraints = false
-        view.translatesAutoresizingMaskIntoConstraints = false
+        subView.translatesAutoresizingMaskIntoConstraints = false
 
-        view.topAnchor.constraint(equalTo: layoutMarginsGuide.topAnchor).isActive = true
-        view.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
-        view.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
-        view.bottomAnchor.constraint(equalTo: layoutMarginsGuide.bottomAnchor).isActive = true
+        subView.topAnchor.constraint(equalTo: layoutMarginsGuide.topAnchor).isActive = true
+        subView.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
+        subView.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
+        subView.bottomAnchor.constraint(equalTo: layoutMarginsGuide.bottomAnchor).isActive = true
         
-        show = view.heightAnchor.constraint(equalToConstant: someHeight)
-        hide = view.heightAnchor.constraint(equalToConstant: zeroHeight)
-        
+        show = subView.heightAnchor.constraint(equalToConstant: someHeight)
+        hide = subView.heightAnchor.constraint(equalToConstant: zeroHeight)
         hide?.isActive = true
     }
 }
