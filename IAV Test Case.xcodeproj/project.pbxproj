@@ -40,7 +40,13 @@
 		5A03B99B1D1DDB9800E245C9 = {
 			isa = PBXGroup;
 			children = (
-				5A03B9A61D1DDB9800E245C9 /* SwipeTime */,
+				5A03B9A71D1DDB9800E245C9 /* AppDelegate.swift */,
+				5ADB6A171F561562006BEE1B /* InputView.swift */,
+				5AB18AF91D2058CA007B9D9F /* MainViewController.swift */,
+				5A5B2AF21FB0AF52005657DA /* Launch Screen.storyboard */,
+				5A03B9AB1D1DDB9800E245C9 /* Main.storyboard */,
+				5A03B9AE1D1DDB9800E245C9 /* Assets.xcassets */,
+				5A03B9B31D1DDB9800E245C9 /* Info.plist */,
 				5A03B9A51D1DDB9800E245C9 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -51,20 +57,6 @@
 				5A03B9A41D1DDB9800E245C9 /* IAV Test Case.app */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		5A03B9A61D1DDB9800E245C9 /* SwipeTime */ = {
-			isa = PBXGroup;
-			children = (
-				5A03B9A71D1DDB9800E245C9 /* AppDelegate.swift */,
-				5ADB6A171F561562006BEE1B /* InputView.swift */,
-				5AB18AF91D2058CA007B9D9F /* MainViewController.swift */,
-				5A5B2AF21FB0AF52005657DA /* Launch Screen.storyboard */,
-				5A03B9AB1D1DDB9800E245C9 /* Main.storyboard */,
-				5A03B9AE1D1DDB9800E245C9 /* Assets.xcassets */,
-				5A03B9B31D1DDB9800E245C9 /* Info.plist */,
-			);
-			path = SwipeTime;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -279,7 +271,7 @@
 				DEFINES_MODULE = NO;
 				DEVELOPMENT_TEAM = "";
 				EMBED_ASSET_PACKS_IN_PRODUCT_BUNDLE = NO;
-				INFOPLIST_FILE = SwipeTime/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.example.IAVTestCase;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -302,7 +294,7 @@
 				DEFINES_MODULE = NO;
 				DEVELOPMENT_TEAM = "";
 				EMBED_ASSET_PACKS_IN_PRODUCT_BUNDLE = NO;
-				INFOPLIST_FILE = SwipeTime/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.example.IAVTestCase;
 				PRODUCT_NAME = "$(TARGET_NAME)";
