@@ -35,12 +35,12 @@ class TableController: UITableViewController {
 
     @IBAction func inputNewTimer(_ sender: Any) {
         keyboardAccessoryView.addButton.isEnabled = false
-        UIView.animate(withDuration: 0.0, delay: 0.0, options: .curveEaseIn, animations: {
+        self.keyboardAccessoryView.textField.becomeFirstResponder()
+        UIView.animate(withDuration: 1.0/3.0, delay: 0.0, options: .curveEaseOut, animations: {
             self.keyboardAccessoryView.isVisible = true
-            self.keyboardAccessoryView.layoutIfNeeded()
-        }) { _ in
-            self.keyboardAccessoryView.textField.becomeFirstResponder()
-        }
+            // MARK: Dangerous superview spelunking
+            self.keyboardAccessoryView.superview?.superview?.layoutIfNeeded()
+        })
     }
     
     // MARK: View controller
@@ -244,12 +244,12 @@ extension TableController {
         // Clear the text field
         keyboardAccessoryView.textField.text?.removeAll()
         // Ditch the keyboard and hide
-        UIView.animate(withDuration: 0.1, delay: 0.0, options: .curveEaseIn, animations: {
+        self.keyboardAccessoryView.textField.resignFirstResponder()
+        UIView.animate(withDuration: 1.0/3.0, delay: 0.0, options: .curveEaseInOut, animations: {
             self.keyboardAccessoryView.isVisible = false
-            self.keyboardAccessoryView.layoutIfNeeded()
-        }) { _ in
-            self.keyboardAccessoryView.textField.resignFirstResponder()
-        }
+            // MARK: Dangerous superview spelunking
+            self.keyboardAccessoryView.superview?.superview?.layoutIfNeeded()
+        })
     }
     
     override func accessibilityPerformEscape() -> Bool {
