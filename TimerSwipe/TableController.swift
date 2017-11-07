@@ -35,12 +35,7 @@ class TableController: UITableViewController {
 
     @IBAction func inputNewTimer(_ sender: Any) {
         keyboardAccessoryView.addButton.isEnabled = false
-        self.keyboardAccessoryView.textField.becomeFirstResponder()
-        UIView.animate(withDuration: 1.0/3.0, delay: 0.0, options: .curveEaseOut, animations: {
-            self.keyboardAccessoryView.isVisible = true
-            // MARK: Dangerous superview spelunking
-            self.keyboardAccessoryView.superview?.superview?.layoutIfNeeded()
-        })
+        makeKAV(visible: true)
     }
     
     // MARK: View controller
@@ -227,6 +222,22 @@ extension TableController {
         return keyboardAccessoryView
     }
     
+    /// Animate keyboard and input accessory view visible or invisible
+    func makeKAV(visible: Bool) {
+        switch visible {
+        case true: self.keyboardAccessoryView.textField.becomeFirstResponder()
+        case false: self.keyboardAccessoryView.textField.resignFirstResponder()
+        }
+        
+        let duration = K.keyboardAnimationDuration
+        let options = visible ? K.keyboardAnimateInCurve : K.keyboardAnimateOutCurve
+        UIView.animate(withDuration: duration, delay: 0.0, options: options, animations: {
+            self.keyboardAccessoryView.isVisible = visible
+            // MARK: Dangerous superview spelunking
+            self.keyboardAccessoryView.superview?.superview?.layoutIfNeeded()
+        })
+    }
+    
     /// Enable and disable the add button based on whether there is text in the text field
     @objc func textInTextFieldChanged(_ textField: UITextField) {
         let isEnabled: Bool
@@ -244,12 +255,7 @@ extension TableController {
         // Clear the text field
         keyboardAccessoryView.textField.text?.removeAll()
         // Ditch the keyboard and hide
-        self.keyboardAccessoryView.textField.resignFirstResponder()
-        UIView.animate(withDuration: 1.0/3.0, delay: 0.0, options: .curveEaseInOut, animations: {
-            self.keyboardAccessoryView.isVisible = false
-            // MARK: Dangerous superview spelunking
-            self.keyboardAccessoryView.superview?.superview?.layoutIfNeeded()
-        })
+        makeKAV(visible: false)
     }
     
     override func accessibilityPerformEscape() -> Bool {

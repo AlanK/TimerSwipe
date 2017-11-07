@@ -43,6 +43,11 @@ struct K {
     static let enabledAlpha: CGFloat = 1.0
     static let disabledAlpha: CGFloat = 0.2
     
+    // MARK: Keyboard Animation
+    static let keyboardAnimationDuration: TimeInterval = 1.0/3.0
+    static let keyboardAnimateInCurve: UIViewAnimationOptions = .curveEaseOut
+    static let keyboardAnimateOutCurve: UIViewAnimationOptions = .curveEaseInOut
+    
     // MARK: Time
     static let defaultDuration: TimeInterval = 30.0
     static let hundredthOfASecond: TimeInterval = 0.01
