@@ -235,6 +235,7 @@ extension TableController {
             self.keyboardAccessoryView.isVisible = visible
             // MARK: Dangerous superview spelunking
             self.keyboardAccessoryView.superview?.superview?.layoutIfNeeded()
+           self.keyboardAccessoryView.supremeView.layoutIfNeeded()
         })
     }
     
