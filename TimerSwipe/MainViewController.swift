@@ -31,6 +31,8 @@ class MainViewController: UIViewController {
             }
         }
     }
+    
+    private let notificationCenter = NotificationCenter.default
 
     /// Formats time as a string for display
     private let timeFormatter: DateFormatter = {
@@ -112,6 +114,25 @@ class MainViewController: UIViewController {
             self.button.layoutIfNeeded()
         }
     }
+    
+    func customizeDisplayForVoiceOver(_: Notification? = nil) {
+        let voiceOverOn = UIAccessibilityIsVoiceOverRunning()
+        button.isHidden = voiceOverOn
+        instructionsDisplay.isHidden = voiceOverOn
+    }
+    
+    func registerNotifications(_ register: Bool) {
+        switch register {
+        case true:
+            if #available(iOS 11.0, *) {
+                notificationCenter.addObserver(forName: .UIAccessibilityVoiceOverStatusDidChange, object: nil, queue: nil, using: customizeDisplayForVoiceOver(_:))
+            }
+        case false:
+            if #available(iOS 11.0, *) {
+                notificationCenter.removeObserver(self, name: .UIAccessibilityVoiceOverStatusDidChange, object: nil)
+            }
+        }
+    }
 
     // MARK: View lifecycle
     
@@ -127,6 +148,9 @@ class MainViewController: UIViewController {
         // Ensure the stopwatch and delegate are ready; set the display to the current timer
         stopwatch?.clear()
         
+        // Customize display based on VoiceOver settings
+        customizeDisplayForVoiceOver()
+        
         // Provide accessible instructions for this timer
         button.accessibilityLabel = NSLocalizedString("timerReady",value: "\(Int(duration))-second timer, changes timer",comment: "{Whole number}-second timer (When activated, this button) changes timer")
         button.accessibilityHint = NSLocalizedString("magicTap", value: "Two-finger double-tap starts or cancels timer.", comment: "Tapping twice with two fingers starts or cancels the timer")
@@ -134,6 +158,7 @@ class MainViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        registerNotifications(true)
         // The display shouldn’t sleep while this view is visible since the user expects to start a timer when they can’t see the screen
         UIApplication.shared.isIdleTimerDisabled = true
         self.navigationController?.setNavigationBarHidden(true, animated: false)
@@ -143,6 +168,7 @@ class MainViewController: UIViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
+        registerNotifications(false)
         // The display should sleep in other views in the app
         UIApplication.shared.isIdleTimerDisabled = false
         soundController.setActive(false)
