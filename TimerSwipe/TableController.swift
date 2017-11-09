@@ -43,7 +43,7 @@ class TableController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         modelIntermediary = self.navigationController as? ModelIntermediary
-        self.navigationItem.rightBarButtonItem = self.editButtonItem
+        self.navigationItem.leftBarButtonItem = self.editButtonItem
         
         // Ready input accessory
         keyboardAccessoryView.textField.delegate = self
@@ -70,7 +70,6 @@ class TableController: UITableViewController {
         super.viewWillAppear(animated)
         // This view should have a navigation bar and toolbar
         self.navigationController?.setNavigationBarHidden(false, animated: animated)
-        self.navigationController?.setToolbarHidden(false, animated: animated)
         
         refreshEditButton()
     }
@@ -145,7 +144,7 @@ class TableController: UITableViewController {
         } else {
             isEnabled = false
         }
-        self.navigationItem.rightBarButtonItem?.isEnabled = isEnabled
+        self.navigationItem.leftBarButtonItem?.isEnabled = isEnabled
     }
 
     // MARK: Navigation
