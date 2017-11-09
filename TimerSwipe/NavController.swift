@@ -28,6 +28,9 @@ class NavController: UINavigationController {
         if #available(iOS 11.0, *) {
             navigationBar.prefersLargeTitles = true
         }
+        navigationBar.barStyle = .black
+        navigationBar.barTintColor = K.tintColor
+        navigationBar.tintColor = .white
         
         // Make sure the table view is in the view hierarchy
         guard let storyboard = storyboard else {return}
