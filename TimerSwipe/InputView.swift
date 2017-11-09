@@ -142,7 +142,7 @@ class InputView: UIInputView {
         borderWrapper.topAnchor.constraint(equalTo: margin.topAnchor).isActive = true
         borderWrapper.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
         borderWrapper.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
-        borderWrapper.bottomAnchor.constraint(equalTo: margin.bottomAnchor).isActive = true
+        borderWrapper.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
         
         wrapper.topAnchor.constraint(equalTo: borderWrapper.topAnchor, constant: borderHeight).isActive = true
         wrapper.leadingAnchor.constraint(equalTo: borderWrapper.leadingAnchor).isActive = true
@@ -175,7 +175,7 @@ class InputView: UIInputView {
         }
         
         // Constraints for showing and hiding this view
-        show = wrapper.bottomAnchor.constraint(equalTo: borderWrapper.bottomAnchor)
+        show = wrapper.bottomAnchor.constraint(equalTo: margin.bottomAnchor)
         hide = borderWrapper.topAnchor.constraint(equalTo: borderWrapper.bottomAnchor)
         hide?.isActive = true
         
