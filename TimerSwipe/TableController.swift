@@ -169,7 +169,7 @@ class TableController: UITableViewController {
             let model = modelIntermediary?.model else {return}
         let timer = model[indexPath.row]
         // Set the destination view controller's providedDuration to the timer value
-        controller.duration = timer.seconds
+        controller.providedDuration = timer.seconds
     }
 }
 

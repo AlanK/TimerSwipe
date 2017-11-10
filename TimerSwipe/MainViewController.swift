@@ -60,9 +60,12 @@ class MainViewController: UIViewController {
 
     private let soundController = SoundController()
     
-    var duration: TimeInterval?
+    // Use duration provided from elsewhere, then the favorite timer, then the default timer
+    var providedDuration: TimeInterval?
+    private lazy var duration = providedDuration ?? (self.navigationController as? ModelIntermediary)?.model.favorite()?.seconds ?? K.defaultDuration
     private var buttonStatus = ButtonValue.change
-    private var stopwatch: Stopwatch?
+    private lazy var stopwatch: Stopwatch = Stopwatch.init(delegate: self, duration: duration)
+
     
     /// Shows and hides "Swipe to Start" instructions
     private var instructionsVisible = true {
@@ -79,12 +82,30 @@ class MainViewController: UIViewController {
     // MARK: Labels & Buttons
     
     /// The "Swipe to Start" label
-    @IBOutlet var instructionsDisplay: UILabel!
+    @IBOutlet var instructionsDisplay: UILabel! {
+        didSet {
+            instructionsDisplay.text = Instructions.normal.text
+        }
+    }
     /// The "00:00.00" label
-    @IBOutlet var timeDisplay: UILabel!
+    @IBOutlet var timeDisplay: UILabel! {
+        didSet {
+            timeDisplay.font = UIFont.monospacedDigitSystemFont(ofSize: K.timerDisplaySize, weight: UIFont.Weight.regular)
+        }
+    }
     /// The Change/Cancel button
     @IBOutlet var button: UIButton!
-    @IBOutlet var containerView: UIStackView!
+    @IBOutlet var containerView: UIStackView! {
+        didSet {
+            containerView.isAccessibilityElement = true
+            containerView.accessibilityTraits = UIAccessibilityTraitSummaryElement
+            containerView.accessibilityCustomActions = [accessibleButtonAction]
+
+            // Provide accessible instructions for this timer
+            containerView.accessibilityLabel = NSLocalizedString("timerReady",value: "\(Int(duration))-second timer, starts timer",comment: "{Whole number}-second timer (When activated, this button) starts the timer")
+            containerView.accessibilityHint = NSLocalizedString("actionsAvailable", value: "Actions available", comment: "Other actions are available for this element")
+        }
+    }
     
     // MARK: Actions
     
@@ -117,7 +138,7 @@ class MainViewController: UIViewController {
     }
     
     /// Tells the Stopwatch to start the timer
-    private func start() {stopwatch?.startTimer()}
+    private func start() {stopwatch.startTimer()}
     
     /// Handles taps on the Change/Cancel button
     @objc private func buttonActions() {
@@ -171,28 +192,10 @@ class MainViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Make the timer display huge with monospaced numbers
-        timeDisplay.font = UIFont.monospacedDigitSystemFont(ofSize: K.timerDisplaySize, weight: UIFont.Weight.regular)
-        instructionsDisplay.text = Instructions.normal.text
-        
-        // Use duration provided from elsewhere, then the favorite timer, then the default timer
-        self.duration = self.duration ?? (self.navigationController as? ModelIntermediary)?.model.favorite()?.seconds ?? K.defaultDuration
-        let duration = self.duration!
-        
-        stopwatch = Stopwatch.init(delegate: self, duration: duration)
         // Ensure the stopwatch and delegate are ready; set the display to the current timer
-        stopwatch?.clear()
-        
+        stopwatch.clear()
         // Customize display based on VoiceOver settings
         customizeDisplayForVoiceOver()
-        
-        containerView.isAccessibilityElement = true
-        containerView.accessibilityTraits = UIAccessibilityTraitSummaryElement
-        containerView.accessibilityCustomActions = [accessibleButtonAction]
-        
-        // Provide accessible instructions for this timer
-        containerView.accessibilityLabel = NSLocalizedString("timerReady",value: "\(Int(duration))-second timer, starts timer",comment: "{Whole number}-second timer (When activated, this button) starts the timer")
-        containerView.accessibilityHint = NSLocalizedString("actionsAvailable", value: "Actions available", comment: "Other actions are available for this element")
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -238,12 +241,7 @@ extension MainViewController: StopwatchDelegate {
      - parameter status: whether the timer started, ended, or was cancelled
     */
     func timerDid(_ status: TimerStatus) {
-        let defaultDisplay: String = "00:00.00"
-        /// String of the timer duration (or "Unknown" if duration is unavailable)
-        var textDuration: String {
-            guard let duration = duration else {return defaultDisplay}
-            return String(Int(duration))
-        }
+        let textDuration = String(Int(duration))
         
         /// Reset the Change Button accessibility label and instructions
         func resetView() {
