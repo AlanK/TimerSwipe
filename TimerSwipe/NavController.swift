@@ -25,9 +25,6 @@ class NavController: UINavigationController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        if #available(iOS 11.0, *) {
-            navigationBar.prefersLargeTitles = true
-        }
         navigationBar.barStyle = .black
         navigationBar.barTintColor = K.tintColor
         navigationBar.tintColor = .white
