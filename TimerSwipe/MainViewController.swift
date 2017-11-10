@@ -160,8 +160,7 @@ class MainViewController: UIViewController {
         registerNotifications(true)
         // The display shouldn’t sleep while this view is visible since the user expects to start a timer when they can’t see the screen
         UIApplication.shared.isIdleTimerDisabled = true
-        self.navigationController?.setNavigationBarHidden(true, animated: false)
-        self.navigationController?.setToolbarHidden(true, animated: false)
+        self.navigationController?.setNavigationBarHidden(true, animated: true)
         soundController.setActive(true)
     }
     
