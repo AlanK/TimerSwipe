@@ -117,7 +117,6 @@ class MainViewController: UIViewController {
     
     func customizeDisplayForVoiceOver(_: Notification? = nil) {
         let voiceOverOn = UIAccessibilityIsVoiceOverRunning()
-        button.isHidden = voiceOverOn
         instructionsDisplay.isHidden = voiceOverOn
     }
     
