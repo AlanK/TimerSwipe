@@ -55,6 +55,8 @@ class MainViewController: UIViewController {
         }
     }
     
+    lazy var tapRecognizer = UITapGestureRecognizer.init(target: self, action: #selector(containerViewAsButton(sender:)))
+    
     // MARK: Labels & Buttons
     
     /// The "Swipe to Start" label
@@ -63,6 +65,7 @@ class MainViewController: UIViewController {
     @IBOutlet var timeDisplay: UILabel!
     /// The Change/Cancel button
     @IBOutlet var button: UIButton!
+    @IBOutlet var containerView: UIStackView!
     
     // MARK: Actions
     
@@ -89,11 +92,16 @@ class MainViewController: UIViewController {
         return true
     }
     
+    @objc func containerViewAsButton(sender: UITapGestureRecognizer) {
+        guard sender.state == .ended else {return}
+        _ = accessibilityPerformMagicTap()
+    }
+    
     /// Tells the Stopwatch to start the timer
     private func start() {stopwatch?.startTimer()}
     
     /// Handles taps on the Change/Cancel button
-    private func buttonActions() {
+    @objc private func buttonActions() {
         switch buttonStatus {
         // If the change button is tapped, go back one level in the view hierarchy
         case .change: self.navigationController?.popViewController(animated: true)
@@ -118,6 +126,11 @@ class MainViewController: UIViewController {
     func customizeDisplayForVoiceOver(_: Notification? = nil) {
         let voiceOverOn = UIAccessibilityIsVoiceOverRunning()
         instructionsDisplay.isHidden = voiceOverOn
+        
+        switch voiceOverOn {
+        case true: containerView.addGestureRecognizer(tapRecognizer)
+        case false: containerView.removeGestureRecognizer(tapRecognizer)
+        }
     }
     
     func registerNotifications(_ register: Bool) {
@@ -150,9 +163,14 @@ class MainViewController: UIViewController {
         // Customize display based on VoiceOver settings
         customizeDisplayForVoiceOver()
         
+        let buttonAccessibleAction = UIAccessibilityCustomAction.init(name: buttonStatus.text, target: self, selector: #selector(buttonActions))
+        containerView.isAccessibilityElement = true
+        containerView.accessibilityTraits = UIAccessibilityTraitButton
+        containerView.accessibilityCustomActions = [buttonAccessibleAction]
+        
         // Provide accessible instructions for this timer
-        button.accessibilityLabel = NSLocalizedString("timerReady",value: "\(Int(duration))-second timer, changes timer",comment: "{Whole number}-second timer (When activated, this button) changes timer")
-        button.accessibilityHint = NSLocalizedString("magicTap", value: "Two-finger double-tap starts or cancels timer.", comment: "Tapping twice with two fingers starts or cancels the timer")
+        containerView.accessibilityLabel = NSLocalizedString("timerReady",value: "\(Int(duration))-second timer, changes timer",comment: "{Whole number}-second timer (When activated, this button) changes timer")
+        containerView.accessibilityHint = NSLocalizedString("magicTap", value: "Two-finger double-tap starts or cancels timer.", comment: "Tapping twice with two fingers starts or cancels the timer")
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -207,7 +225,7 @@ extension MainViewController: StopwatchDelegate {
         
         /// Reset the Change Button accessibility label and instructions
         func resetView() {
-            button.accessibilityLabel = NSLocalizedString("changesTimer", value: "\(textDuration)-second timer, changes timer", comment: "{Whole number}-second timer (When activated, this button) changes the timer")
+            containerView.accessibilityLabel = NSLocalizedString("changesTimer", value: "\(textDuration)-second timer, changes timer", comment: "{Whole number}-second timer (When activated, this button) changes the timer")
             instructionsVisible = true
         }
         
@@ -215,7 +233,7 @@ extension MainViewController: StopwatchDelegate {
         case .start:
             soundController.play(.start)
             UIAccessibilityPostNotification(UIAccessibilityAnnouncementNotification, NSLocalizedString("startedTimer", value: "Started timer", comment: "The timer has started"))
-            button.accessibilityLabel = NSLocalizedString("runningTimer", value: "Running \(textDuration)-second timer, cancels timer", comment: "Running {whole number}-second timer (When activated, this button) cancels the timer")
+            containerView.accessibilityLabel = NSLocalizedString("runningTimer", value: "Running \(textDuration)-second timer, cancels timer", comment: "Running {whole number}-second timer (When activated, this button) cancels the timer")
             instructionsVisible = false
         case .end:
             soundController.play(.end)
