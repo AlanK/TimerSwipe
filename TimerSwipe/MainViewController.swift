@@ -30,6 +30,23 @@ class MainViewController: UIViewController {
             case .change: return NSLocalizedString("changeButton", value: "Change", comment: "Change which timer is displayed")
             }
         }
+        var accessibleLabel: String {
+            switch self {
+            case .cancel: return NSLocalizedString("cancelTimer", value: "Cancel timer", comment: "Cancel the running timer")
+            case .change: return NSLocalizedString("changeTimer", value: "Change timer", comment: "Change the timer by selecting another one")
+            }
+        }
+    }
+    
+    private enum Instructions {
+        case normal
+        case voiceOver
+        var text: String {
+            switch self {
+            case .normal: return NSLocalizedString("swipeToStart", value: "Swipe to Start", comment: "Swipe anywhere on the screen in any direction to start the timer")
+            case .voiceOver: return NSLocalizedString("doubleTapToStart", value: "Double-Tap to Start", comment: "Double-tap anywhere on the screen to start the timer")
+            }
+        }
     }
     
     private let notificationCenter = NotificationCenter.default
@@ -56,6 +73,8 @@ class MainViewController: UIViewController {
     }
     
     lazy var tapRecognizer = UITapGestureRecognizer.init(target: self, action: #selector(containerViewAsButton(sender:)))
+    lazy var accessibleButtonAction = UIAccessibilityCustomAction.init(name: buttonStatus.accessibleLabel, target: self, selector: #selector(buttonActions))
+
     
     // MARK: Labels & Buttons
     
@@ -116,6 +135,7 @@ class MainViewController: UIViewController {
      */
     private func setButton(to buttonValue: ButtonValue) {
         buttonStatus = buttonValue
+        accessibleButtonAction.name = buttonStatus.accessibleLabel
         // Use performWithoutAnimation to prevent weird flashing as button text animates.
         UIView.performWithoutAnimation {
             self.button.setTitle(buttonStatus.text, for: UIControlState())
@@ -125,7 +145,8 @@ class MainViewController: UIViewController {
     
     func customizeDisplayForVoiceOver(_: Notification? = nil) {
         let voiceOverOn = UIAccessibilityIsVoiceOverRunning()
-        instructionsDisplay.isHidden = voiceOverOn
+        instructionsDisplay.text = voiceOverOn ? Instructions.voiceOver.text : Instructions.normal.text
+        containerView.layoutIfNeeded()
         
         switch voiceOverOn {
         case true: containerView.addGestureRecognizer(tapRecognizer)
@@ -152,9 +173,11 @@ class MainViewController: UIViewController {
         super.viewDidLoad()
         // Make the timer display huge with monospaced numbers
         timeDisplay.font = UIFont.monospacedDigitSystemFont(ofSize: K.timerDisplaySize, weight: UIFont.Weight.regular)
+        instructionsDisplay.text = Instructions.normal.text
         
         // Use duration provided from elsewhere, then the favorite timer, then the default timer
-        let duration = self.duration ?? (self.navigationController as? ModelIntermediary)?.model.favorite()?.seconds ?? K.defaultDuration
+        self.duration = self.duration ?? (self.navigationController as? ModelIntermediary)?.model.favorite()?.seconds ?? K.defaultDuration
+        let duration = self.duration!
         
         stopwatch = Stopwatch.init(delegate: self, duration: duration)
         // Ensure the stopwatch and delegate are ready; set the display to the current timer
@@ -163,14 +186,13 @@ class MainViewController: UIViewController {
         // Customize display based on VoiceOver settings
         customizeDisplayForVoiceOver()
         
-        let buttonAccessibleAction = UIAccessibilityCustomAction.init(name: buttonStatus.text, target: self, selector: #selector(buttonActions))
         containerView.isAccessibilityElement = true
-        containerView.accessibilityTraits = UIAccessibilityTraitButton
-        containerView.accessibilityCustomActions = [buttonAccessibleAction]
+        containerView.accessibilityTraits = UIAccessibilityTraitSummaryElement
+        containerView.accessibilityCustomActions = [accessibleButtonAction]
         
         // Provide accessible instructions for this timer
-        containerView.accessibilityLabel = NSLocalizedString("timerReady",value: "\(Int(duration))-second timer, changes timer",comment: "{Whole number}-second timer (When activated, this button) changes timer")
-        containerView.accessibilityHint = NSLocalizedString("magicTap", value: "Two-finger double-tap starts or cancels timer.", comment: "Tapping twice with two fingers starts or cancels the timer")
+        containerView.accessibilityLabel = NSLocalizedString("timerReady",value: "\(Int(duration))-second timer, starts timer",comment: "{Whole number}-second timer (When activated, this button) starts the timer")
+        containerView.accessibilityHint = NSLocalizedString("actionsAvailable", value: "Actions available", comment: "Other actions are available for this element")
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -225,7 +247,7 @@ extension MainViewController: StopwatchDelegate {
         
         /// Reset the Change Button accessibility label and instructions
         func resetView() {
-            containerView.accessibilityLabel = NSLocalizedString("changesTimer", value: "\(textDuration)-second timer, changes timer", comment: "{Whole number}-second timer (When activated, this button) changes the timer")
+            containerView.accessibilityLabel = NSLocalizedString("timerLabel", value: "\(textDuration)-second timer", comment: "{Whole number}-second timer")
             instructionsVisible = true
         }
         
@@ -240,7 +262,7 @@ extension MainViewController: StopwatchDelegate {
             UIAccessibilityPostNotification(UIAccessibilityAnnouncementNotification, NSLocalizedString("timerFinished", value: "Timer finished", comment: "The timer has finished"))
             resetView()
         case .cancel:
-            UIAccessibilityPostNotification(UIAccessibilityAnnouncementNotification, NSLocalizedString("canceldTimer", value: "Cancelled timer", comment: "The timer has been cancelled"))
+            UIAccessibilityPostNotification(UIAccessibilityAnnouncementNotification, NSLocalizedString("cancelledTimer", value: "Cancelled timer", comment: "The timer has been cancelled"))
             resetView()
         }
     }
