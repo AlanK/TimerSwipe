@@ -49,6 +49,8 @@ class MainViewController: UIViewController {
         }
     }
     
+    lazy private var defaultContainerViewLabel = NSLocalizedString("timerReady",value: "\(Int(duration))-second timer, starts timer",comment: "{Whole number}-second timer (When activated, this button) starts the timer")
+    
     private let notificationCenter = NotificationCenter.default
 
     /// Formats time as a string for display
@@ -102,7 +104,7 @@ class MainViewController: UIViewController {
             containerView.accessibilityCustomActions = [accessibleButtonAction]
 
             // Provide accessible instructions for this timer
-            containerView.accessibilityLabel = NSLocalizedString("timerReady",value: "\(Int(duration))-second timer, starts timer",comment: "{Whole number}-second timer (When activated, this button) starts the timer")
+            containerView.accessibilityLabel = defaultContainerViewLabel
             containerView.accessibilityHint = NSLocalizedString("actionsAvailable", value: "Actions available", comment: "Other actions are available for this element")
         }
     }
@@ -245,14 +247,14 @@ extension MainViewController: StopwatchDelegate {
         
         /// Reset the Change Button accessibility label and instructions
         func resetView() {
-            containerView.accessibilityLabel = NSLocalizedString("timerLabel", value: "\(textDuration)-second timer", comment: "{Whole number}-second timer")
+            containerView.accessibilityLabel = defaultContainerViewLabel
             instructionsVisible = true
         }
         
         switch status {
         case .start:
             soundController.play(.start)
-            UIAccessibilityPostNotification(UIAccessibilityAnnouncementNotification, NSLocalizedString("startedTimer", value: "Started timer", comment: "The timer has started"))
+            UIAccessibilityPostNotification(UIAccessibilityAnnouncementNotification, NSLocalizedString("startedTimer", value: "Started timer, double-tap to cancel", comment: "The timer has started, double-tap anywhere on the screen to cancel the running timer"))
             containerView.accessibilityLabel = NSLocalizedString("runningTimer", value: "Running \(textDuration)-second timer, cancels timer", comment: "Running {whole number}-second timer (When activated, this button) cancels the timer")
             instructionsVisible = false
         case .end:
