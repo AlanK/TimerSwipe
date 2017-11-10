@@ -17,22 +17,24 @@ protocol ModelIntermediary {
 /// The main table in the app
 class TableController: UITableViewController {
     /// Controller holding the app model
-    private var modelIntermediary: ModelIntermediary?
+    private lazy var modelIntermediary: ModelIntermediary? = self.navigationController as? ModelIntermediary
     /// The UIView containing the table footer
     @IBOutlet var footerContainer: UIView!
     /// The label serving as the table footer
     @IBOutlet var footer: UILabel!
     /// The view which can create new timers
-    let keyboardAccessoryView: InputView = {
+    lazy var keyboardAccessoryView: InputView = {
         let view = InputView(frame: .zero, inputViewStyle: .default)
         view.cancelButton.addTarget(self, action: #selector(exitKeyboardAccessoryView), for: .touchUpInside)
         view.addButton.addTarget(self, action: #selector(commitNewTimer), for: .touchUpInside)
+        view.textField.addTarget(self, action: #selector(textInTextFieldChanged(_:)), for: UIControlEvents.editingChanged)
+        view.textField.delegate = self
         return view
     }()
     
     private let cellID = "STTableViewCell"
     private let sectionsInTableView = 1, mainSection = 0
-
+    
     @IBAction func inputNewTimer(_ sender: Any) {
         keyboardAccessoryView.addButton.isEnabled = false
         makeKAV(visible: true)
@@ -42,12 +44,7 @@ class TableController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        modelIntermediary = self.navigationController as? ModelIntermediary
         self.navigationItem.leftBarButtonItem = self.editButtonItem
-        
-        // Ready input accessory
-        keyboardAccessoryView.textField.delegate = self
-        keyboardAccessoryView.textField.addTarget(self, action: #selector(textInTextFieldChanged(_:)), for: UIControlEvents.editingChanged)
     }
     
     override func viewDidLayoutSubviews() {
@@ -80,13 +77,13 @@ class TableController: UITableViewController {
         
         super.viewWillDisappear(animated)
     }
-
+    
     // MARK: Table view data source
-
+    
     override func numberOfSections(in tableView: UITableView) -> Int {return sectionsInTableView}
-
+    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {return modelIntermediary?.model.count() ?? 0}
-
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellID, for: indexPath)
         // Pass delegate and timer to cell so it can complete its own setup
@@ -96,7 +93,7 @@ class TableController: UITableViewController {
         }
         return cell
     }
-
+    
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         // Don't delete the row if the model can't be updated
         guard editingStyle == .delete, let model = modelIntermediary?.model else {return}
@@ -112,7 +109,7 @@ class TableController: UITableViewController {
             DispatchQueue.main.asyncAfter(deadline: nearFuture, execute: work)
         }
     }
-
+    
     override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to toIndexPath: IndexPath) {
         guard let model = modelIntermediary?.model else {return}
         let timer = model.remove(at: fromIndexPath.row)
@@ -146,9 +143,9 @@ class TableController: UITableViewController {
         }
         self.navigationItem.leftBarButtonItem?.isEnabled = isEnabled
     }
-
+    
     // MARK: Navigation
-
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // More segues might exist in the future, so let's keep this short and factor out the realy work
         if segue.identifier == SegueID.tableToTimer.rawValue {
@@ -159,8 +156,8 @@ class TableController: UITableViewController {
     /**
      Prepare for segue to the main view controller specifically. This has the same signature as `prepare(for:sender:)` for convenience.
      - parameters:
-         - segue: The `TableToTimer` storyboard segue
-         - sender: A `TableCell`
+     - segue: The `TableToTimer` storyboard segue
+     - sender: A `TableCell`
      */
     private func segueToMainViewController(for segue: UIStoryboardSegue, sender: Any?) {
         guard let controller = segue.destination as? MainViewController,
@@ -234,7 +231,7 @@ extension TableController {
             self.keyboardAccessoryView.isVisible = visible
             // MARK: Dangerous superview spelunking
             self.keyboardAccessoryView.superview?.superview?.layoutIfNeeded()
-           self.keyboardAccessoryView.supremeView.layoutIfNeeded()
+            self.keyboardAccessoryView.supremeView.layoutIfNeeded()
         })
     }
     
@@ -248,7 +245,7 @@ extension TableController {
         }
         keyboardAccessoryView.addButton.isEnabled = isEnabled
     }
-
+    
     
     /// Resets and hides the input accessory
     @objc func exitKeyboardAccessoryView() {
