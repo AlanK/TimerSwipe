@@ -42,15 +42,8 @@ class MainViewController: UIViewController {
         }
     }
     
-    private enum Instructions {
-        case normal
-        case voiceOver
-        var text: String {
-            switch self {
-            case .normal: return NSLocalizedString("swipeToStart", value: "Swipe to Start", comment: "Swipe anywhere on the screen in any direction to start the timer")
-            case .voiceOver: return NSLocalizedString("doubleTapToStart", value: "Double-Tap to Start", comment: "Double-tap anywhere on the screen to start the timer")
-            }
-        }
+    private func textInstructions(voiceOverOn: Bool) -> String {
+        return voiceOverOn ? NSLocalizedString("doubleTapToStart", value: "Double-Tap to Start", comment: "Double-tap anywhere on the screen to start the timer") : NSLocalizedString("swipeToStart", value: "Swipe to Start", comment: "Swipe anywhere on the screen in any direction to start the timer")
     }
     
     private var defaultContainerViewLabel: String {
@@ -100,7 +93,7 @@ class MainViewController: UIViewController {
     /// The "Swipe to Start" label
     @IBOutlet var instructionsDisplay: UILabel! {
         didSet {
-            instructionsDisplay.text = Instructions.normal.text
+            instructionsDisplay.text = textInstructions(voiceOverOn: false)
         }
     }
     /// The "00:00.00" label
@@ -265,7 +258,7 @@ extension MainViewController: VoiceOverObserver {
     func voiceOverStatusDidChange(_: Notification?) {
         let voiceOverOn = UIAccessibilityIsVoiceOverRunning()
         
-        instructionsDisplay.text = voiceOverOn ? Instructions.voiceOver.text : Instructions.normal.text
+        instructionsDisplay.text = textInstructions(voiceOverOn: voiceOverOn)
         voiceOverOn ? containerView.addGestureRecognizer(tapRecognizer) : containerView.removeGestureRecognizer(tapRecognizer)
         containerView.layoutIfNeeded()
     }
