@@ -18,6 +18,10 @@ protocol StopwatchIntermediary {
 
 /// Primary view controller—displays the selected timer
 class MainViewController: UIViewController {
+    static private let timerStarted = NSLocalizedString("timerStarted", value: "Started timer, double-tap to cancel", comment: "The timer has started, double-tap anywhere on the screen to cancel the running timer"),
+    timerEnded = NSLocalizedString("timerFinished", value: "Timer finished", comment: "The timer has finished"),
+    timerCancelled = NSLocalizedString("timerCancelled", value: "Cancelled timer", comment: "The timer has been cancelled")
+    
     /// Controls the value of the Change/Cancel button
     private enum ButtonValue {
         case cancel
@@ -262,15 +266,15 @@ extension MainViewController: StopwatchDelegate {
         switch status {
         case .start:
             soundController.play(.start)
-            UIAccessibilityPostNotification(UIAccessibilityAnnouncementNotification, NSLocalizedString("startedTimer", value: "Started timer, double-tap to cancel", comment: "The timer has started, double-tap anywhere on the screen to cancel the running timer"))
+            UIAccessibilityPostNotification(UIAccessibilityAnnouncementNotification, MainViewController.timerStarted)
             containerView.accessibilityLabel = runningTimerContainerViewLabel
             instructionsVisible = false
         case .end:
             soundController.play(.end)
-            UIAccessibilityPostNotification(UIAccessibilityAnnouncementNotification, NSLocalizedString("timerFinished", value: "Timer finished", comment: "The timer has finished"))
+            UIAccessibilityPostNotification(UIAccessibilityAnnouncementNotification, MainViewController.timerEnded)
             cleanupActions()
         case .cancel:
-            UIAccessibilityPostNotification(UIAccessibilityAnnouncementNotification, NSLocalizedString("cancelledTimer", value: "Cancelled timer", comment: "The timer has been cancelled"))
+            UIAccessibilityPostNotification(UIAccessibilityAnnouncementNotification, MainViewController.timerCancelled)
             cleanupActions()
         }
     }
