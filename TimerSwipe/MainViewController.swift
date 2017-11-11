@@ -255,25 +255,20 @@ extension MainViewController: StopwatchDelegate {
      - parameter status: whether the timer started, ended, or was cancelled
     */
     func timerDid(_ status: TimerStatus) {
-        func cleanupActions() {
-            containerView.accessibilityLabel = defaultContainerViewLabel
-            instructionsVisible = true
+        func notifyUserOfTimerStatus(notice: String, sound: AudioCue? = nil) {
+            if let sound = sound {
+                soundController.play(sound)
+            }
+            UIAccessibilityPostNotification(UIAccessibilityAnnouncementNotification, notice)
+            containerView.accessibilityLabel = (status != .start) ? defaultContainerViewLabel : runningTimerContainerViewLabel
+            instructionsVisible = (status != .start)
             UIAccessibilityPostNotification(UIAccessibilityLayoutChangedNotification, nil)
         }
         
         switch status {
-        case .start:
-            soundController.play(.start)
-            UIAccessibilityPostNotification(UIAccessibilityAnnouncementNotification, MainViewController.timerStarted)
-            containerView.accessibilityLabel = runningTimerContainerViewLabel
-            instructionsVisible = false
-        case .end:
-            soundController.play(.end)
-            UIAccessibilityPostNotification(UIAccessibilityAnnouncementNotification, MainViewController.timerEnded)
-            cleanupActions()
-        case .cancel:
-            UIAccessibilityPostNotification(UIAccessibilityAnnouncementNotification, MainViewController.timerCancelled)
-            cleanupActions()
+        case .start: notifyUserOfTimerStatus(notice: MainViewController.timerStarted, sound: .start)
+        case .end: notifyUserOfTimerStatus(notice: MainViewController.timerEnded, sound: .end)
+        case .cancel: notifyUserOfTimerStatus(notice: MainViewController.timerCancelled)
         }
     }
     
