@@ -41,6 +41,14 @@ class TableController: UITableViewController {
     private let cellID = "STTableViewCell"
     private let sectionsInTableView = 1, mainSection = 0
     
+    private lazy var accessibleFirstFocus: UIResponder? = {
+        guard let model = modelIntermediary?.model else {return nil}
+        let count = model.count()
+        guard count > 0 else {return nil}
+        let index = model.favoriteIndex() ?? 0
+        return self.tableView.cellForRow(at: IndexPath.init(row: index, section: mainSection))
+    }()
+    
     @IBAction func inputNewTimer(_ sender: Any) {
         keyboardAccessoryView.addButton.isEnabled = false
         makeKAV(visible: true)
@@ -73,8 +81,10 @@ class TableController: UITableViewController {
         super.viewWillAppear(animated)
         // This view should have a navigation bar and toolbar
         self.navigationController?.setNavigationBarHidden(false, animated: animated)
-        
         refreshEditButton()
+        
+        guard let accessibleFirstFocus = accessibleFirstFocus else {return}
+        UIAccessibilityPostNotification(UIAccessibilityScreenChangedNotification, accessibleFirstFocus)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -171,6 +181,7 @@ class TableController: UITableViewController {
             let indexPath = tableView.indexPath(for: selectedCell),
             let model = modelIntermediary?.model else {return}
         let timer = model[indexPath.row]
+        accessibleFirstFocus = selectedCell
         // Set the destination view controller's providedDuration to the timer value
         controller.providedDuration = timer.seconds
     }
