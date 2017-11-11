@@ -49,7 +49,17 @@ class MainViewController: UIViewController {
         }
     }
     
-    lazy private var defaultContainerViewLabel = NSLocalizedString("timerReady",value: "\(Int(duration))-second timer, starts timer",comment: "{Whole number}-second timer (When activated, this button) starts the timer")
+    private var defaultContainerViewLabel: String {
+        return NSLocalizedString("timerReady", value: "\(textDuration)-second timer, starts timer", comment: "{Whole number}-second timer (When activated, this button) starts the timer")
+    }
+    
+    private var runningTimerContainerViewLabel: String {
+        return NSLocalizedString("runningTimer", value: "Running \(textDuration)-second timer, cancels timer", comment: "Running {whole number}-second timer (When activated, this button) cancels the timer")
+    }
+    
+    var textDuration: String {
+        return String(Int(duration))
+    }
     
     private let notificationCenter = NotificationCenter.default
 
@@ -78,7 +88,7 @@ class MainViewController: UIViewController {
     }
     
     lazy var tapRecognizer = UITapGestureRecognizer.init(target: self, action: #selector(containerViewAsButton(sender:)))
-    lazy var accessibleButtonAction = UIAccessibilityCustomAction.init(name: buttonStatus.accessibleLabel, target: self, selector: #selector(buttonActions))
+    lazy var containerViewAction = UIAccessibilityCustomAction.init(name: buttonStatus.accessibleLabel, target: self, selector: #selector(buttonActions))
 
     
     // MARK: Labels & Buttons
@@ -101,7 +111,7 @@ class MainViewController: UIViewController {
         didSet {
             containerView.isAccessibilityElement = true
             containerView.accessibilityTraits = UIAccessibilityTraitSummaryElement
-            containerView.accessibilityCustomActions = [accessibleButtonAction]
+            containerView.accessibilityCustomActions = [containerViewAction]
             containerView.accessibilityLabel = defaultContainerViewLabel
         }
     }
@@ -155,7 +165,7 @@ class MainViewController: UIViewController {
      */
     private func setButton(to buttonValue: ButtonValue) {
         buttonStatus = buttonValue
-        accessibleButtonAction.name = buttonStatus.accessibleLabel
+        containerViewAction.name = buttonStatus.accessibleLabel
         // Use performWithoutAnimation to prevent weird flashing as button text animates.
         UIView.performWithoutAnimation {
             self.button.setTitle(buttonStatus.text, for: UIControlState())
@@ -240,27 +250,25 @@ extension MainViewController: StopwatchDelegate {
      - parameter status: whether the timer started, ended, or was cancelled
     */
     func timerDid(_ status: TimerStatus) {
-        let textDuration = String(Int(duration))
-        
-        /// Reset the Change Button accessibility label and instructions
-        func resetView() {
+        func cleanupActions() {
             containerView.accessibilityLabel = defaultContainerViewLabel
             instructionsVisible = true
+            UIAccessibilityPostNotification(UIAccessibilityLayoutChangedNotification, nil)
         }
         
         switch status {
         case .start:
             soundController.play(.start)
             UIAccessibilityPostNotification(UIAccessibilityAnnouncementNotification, NSLocalizedString("startedTimer", value: "Started timer, double-tap to cancel", comment: "The timer has started, double-tap anywhere on the screen to cancel the running timer"))
-            containerView.accessibilityLabel = NSLocalizedString("runningTimer", value: "Running \(textDuration)-second timer, cancels timer", comment: "Running {whole number}-second timer (When activated, this button) cancels the timer")
+            containerView.accessibilityLabel = runningTimerContainerViewLabel
             instructionsVisible = false
         case .end:
             soundController.play(.end)
             UIAccessibilityPostNotification(UIAccessibilityAnnouncementNotification, NSLocalizedString("timerFinished", value: "Timer finished", comment: "The timer has finished"))
-            resetView()
+            cleanupActions()
         case .cancel:
             UIAccessibilityPostNotification(UIAccessibilityAnnouncementNotification, NSLocalizedString("cancelledTimer", value: "Cancelled timer", comment: "The timer has been cancelled"))
-            resetView()
+            cleanupActions()
         }
     }
     
