@@ -96,6 +96,14 @@ class STTimerList: NSObject, NSCoding {
         return nil
     }
     
+    func favoriteIndex() -> Int? {
+        guard timers.isEmpty == false else {return nil}
+        for index in 0..<timers.count {
+            if timers[index].isFavorite {return index}
+        }
+        return nil
+    }
+    
     func count() -> Int {
         return timers.count
     }
