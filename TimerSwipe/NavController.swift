@@ -7,6 +7,11 @@
 //
 
 import UIKit
+
+protocol VoiceOverHandler {
+    func customizeDisplayForVoiceOver(_: Notification?)
+}
+
 /// Root navigation controller for app
 class NavController: UINavigationController {
     /// Underlying model for app

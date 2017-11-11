@@ -180,17 +180,6 @@ class MainViewController: UIViewController {
         }
     }
     
-    private func customizeDisplayForVoiceOver(_: Notification? = nil) {
-        let voiceOverOn = UIAccessibilityIsVoiceOverRunning()
-        instructionsDisplay.text = voiceOverOn ? Instructions.voiceOver.text : Instructions.normal.text
-        containerView.layoutIfNeeded()
-        
-        switch voiceOverOn {
-        case true: containerView.addGestureRecognizer(tapRecognizer)
-        case false: containerView.removeGestureRecognizer(tapRecognizer)
-        }
-    }
-    
     private func registerNotifications(_ register: Bool) {
         let voiceOverNotice: NSNotification.Name
         if #available(iOS 11.0, *) {voiceOverNotice = .UIAccessibilityVoiceOverStatusDidChange}
@@ -209,7 +198,7 @@ class MainViewController: UIViewController {
         // Ensure the stopwatch and delegate are ready; set the display to the current timer
         stopwatch.clear()
         // Customize display based on VoiceOver settings
-        customizeDisplayForVoiceOver()
+        customizeDisplayForVoiceOver(nil)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -285,5 +274,18 @@ extension MainViewController: StopwatchIntermediary {
     func killTimer() {
         if buttonStatus == .cancel {buttonActions()}
         soundController.play(.die)
+    }
+}
+
+extension MainViewController: VoiceOverHandler {
+    func customizeDisplayForVoiceOver(_: Notification?) {
+        let voiceOverOn = UIAccessibilityIsVoiceOverRunning()
+        instructionsDisplay.text = voiceOverOn ? Instructions.voiceOver.text : Instructions.normal.text
+        containerView.layoutIfNeeded()
+        
+        switch voiceOverOn {
+        case true: containerView.addGestureRecognizer(tapRecognizer)
+        case false: containerView.removeGestureRecognizer(tapRecognizer)
+        }
     }
 }
