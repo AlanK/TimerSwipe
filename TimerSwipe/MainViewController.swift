@@ -105,7 +105,7 @@ class MainViewController: UIViewController {
 
             // Provide accessible instructions for this timer
             containerView.accessibilityLabel = defaultContainerViewLabel
-            containerView.accessibilityHint = NSLocalizedString("actionsAvailable", value: "Actions available", comment: "Other actions are available for this element")
+//            containerView.accessibilityHint = NSLocalizedString("actionsAvailable", value: "Actions available", comment: "Other actions are available for this element")
         }
     }
     
