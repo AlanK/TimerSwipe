@@ -247,7 +247,6 @@ extension TableController {
         UIView.animate(withDuration: duration, delay: 0.0, options: options, animations: {
             self.keyboardAccessoryView.isVisible = visible
             // MARK: Dangerous superview spelunking
-            self.keyboardAccessoryView.superview?.superview?.layoutIfNeeded()
             self.keyboardAccessoryView.supremeView.layoutIfNeeded()
         })
     }
