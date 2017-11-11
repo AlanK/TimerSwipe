@@ -34,7 +34,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func applicationDidBecomeActive(_ application: UIApplication) {
         if let date = lastEnteredBackground, timeout < Date().timeIntervalSince(date) {
-            nav?.refreshViews()
+            nav?.resetViewsAfterBackgroundTimeout()
         }
         lastEnteredBackground = nil
     }
