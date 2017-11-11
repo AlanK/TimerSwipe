@@ -125,6 +125,7 @@
                     </navigationItem>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
+                        <outlet property="addButton" destination="Mal-wu-NLy" id="tKr-OH-zod"/>
                         <outlet property="footer" destination="5QI-Sw-C7Z" id="y9Q-Gy-aeI"/>
                         <outlet property="footerContainer" destination="iOO-Fb-4CL" id="AFI-EG-bvj"/>
                     </connections>

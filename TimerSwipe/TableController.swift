@@ -18,6 +18,12 @@ protocol ModelIntermediary {
 class TableController: UITableViewController {
     /// Controller holding the app model
     private lazy var modelIntermediary: ModelIntermediary? = self.navigationController as? ModelIntermediary
+    /// The table-add button
+    @IBOutlet var addButton: UIBarButtonItem! {
+        didSet {
+            addButton.accessibilityHint = NSLocalizedString("addToTableButton", value: "Creates a new timer", comment: "Allows the user to create a new timer of their preferred duration")
+        }
+    }
     /// The UIView containing the table footer
     @IBOutlet var footerContainer: UIView!
     /// The label serving as the table footer
