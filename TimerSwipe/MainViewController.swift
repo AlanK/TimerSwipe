@@ -65,8 +65,6 @@ class MainViewController: UIViewController {
         return String(Int(duration))
     }
     
-    private let notificationCenter = NotificationCenter.default
-
     /// Formats time as a string for display
     private let timeFormatter: DateFormatter = {
         let formatter = DateFormatter()
@@ -180,17 +178,6 @@ class MainViewController: UIViewController {
         }
     }
     
-    private func registerNotifications(_ register: Bool) {
-        let voiceOverNotice: NSNotification.Name
-        if #available(iOS 11.0, *) {voiceOverNotice = .UIAccessibilityVoiceOverStatusDidChange}
-        else {voiceOverNotice = NSNotification.Name(rawValue: UIAccessibilityVoiceOverStatusChanged)}
-        
-        switch register {
-        case true: notificationCenter.addObserver(forName: voiceOverNotice, object: nil, queue: nil, using: customizeDisplayForVoiceOver(_:))
-        case false: notificationCenter.removeObserver(self, name: voiceOverNotice, object: nil)
-        }
-    }
-
     // MARK: View lifecycle
     
     override func viewDidLoad() {
@@ -198,12 +185,11 @@ class MainViewController: UIViewController {
         // Ensure the stopwatch and delegate are ready; set the display to the current timer
         stopwatch.clear()
         // Customize display based on VoiceOver settings
-        customizeDisplayForVoiceOver(nil)
+        voiceOverStatusDidChange(nil)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        registerNotifications(true)
         // The display shouldn’t sleep while this view is visible since the user expects to start a timer when they can’t see the screen
         UIApplication.shared.isIdleTimerDisabled = true
         self.navigationController?.setNavigationBarHidden(true, animated: true)
@@ -212,7 +198,6 @@ class MainViewController: UIViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        registerNotifications(false)
         // The display should sleep in other views in the app
         UIApplication.shared.isIdleTimerDisabled = false
         soundController.setActive(false)
@@ -277,8 +262,8 @@ extension MainViewController: StopwatchIntermediary {
     }
 }
 
-extension MainViewController: VoiceOverHandler {
-    func customizeDisplayForVoiceOver(_: Notification?) {
+extension MainViewController: VoiceOverObserver {
+    func voiceOverStatusDidChange(_: Notification?) {
         let voiceOverOn = UIAccessibilityIsVoiceOverRunning()
         instructionsDisplay.text = voiceOverOn ? Instructions.voiceOver.text : Instructions.normal.text
         containerView.layoutIfNeeded()

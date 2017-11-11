@@ -8,12 +8,15 @@
 
 import UIKit
 
-protocol VoiceOverHandler {
-    func customizeDisplayForVoiceOver(_: Notification?)
+protocol VoiceOverObserver {
+    func voiceOverStatusDidChange(_: Notification?)
 }
 
 /// Root navigation controller for app
 class NavController: UINavigationController {
+    
+    private let notificationCenter = NotificationCenter.default
+    
     /// Underlying model for app
     let model: STTimerList = {
         let model: STTimerList
@@ -43,6 +46,16 @@ class NavController: UINavigationController {
         setViewControllers(navHierarchy, animated: false)
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        registerNotifications(true)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        registerNotifications(false)
+    }
+    
     /// Make any necessary changes to views after being in the background for a long time
     func refreshViews() {
         // Don’t change views if a timer is running or there’s no favorite to change to
@@ -57,6 +70,22 @@ class NavController: UINavigationController {
         let animate = !(topViewController is MainViewController)
         
         setViewControllers([tableVC, mainVC], animated: animate)
+    }
+    
+    private func registerNotifications(_ register: Bool) {
+        let voiceOverNotice: NSNotification.Name
+        if #available(iOS 11.0, *) {voiceOverNotice = .UIAccessibilityVoiceOverStatusDidChange}
+        else {voiceOverNotice = NSNotification.Name(rawValue: UIAccessibilityVoiceOverStatusChanged)}
+        
+        switch register {
+        case true: notificationCenter.addObserver(forName: voiceOverNotice, object: nil, queue: nil, using: forwardVoiceOverNotification(_:))
+        case false: notificationCenter.removeObserver(self, name: voiceOverNotice, object: nil)
+        }
+    }
+    
+    private func forwardVoiceOverNotification(_ notification: Notification) {
+        guard let vc = topViewController as? VoiceOverObserver else {return}
+        vc.voiceOverStatusDidChange(notification)
     }
 }
 
