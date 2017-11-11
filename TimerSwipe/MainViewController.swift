@@ -22,6 +22,10 @@ class MainViewController: UIViewController {
     timerEnded = NSLocalizedString("timerFinished", value: "Timer finished", comment: "The timer has finished"),
     timerCancelled = NSLocalizedString("timerCancelled", value: "Cancelled timer", comment: "The timer has been cancelled")
     
+    static private func textInstructions(voiceOverOn: Bool) -> String {
+        return voiceOverOn ? NSLocalizedString("doubleTapToStart", value: "Double-Tap to Start", comment: "Double-tap anywhere on the screen to start the timer") : NSLocalizedString("swipeToStart", value: "Swipe to Start", comment: "Swipe anywhere on the screen in any direction to start the timer")
+    }
+    
     /// Controls the value of the Change/Cancel button
     private enum ButtonValue {
         case cancel
@@ -40,10 +44,6 @@ class MainViewController: UIViewController {
             case .change: return NSLocalizedString("changeTimer", value: "Change timer", comment: "Change the timer by selecting another one")
             }
         }
-    }
-    
-    private func textInstructions(voiceOverOn: Bool) -> String {
-        return voiceOverOn ? NSLocalizedString("doubleTapToStart", value: "Double-Tap to Start", comment: "Double-tap anywhere on the screen to start the timer") : NSLocalizedString("swipeToStart", value: "Swipe to Start", comment: "Swipe anywhere on the screen in any direction to start the timer")
     }
     
     private var defaultContainerViewLabel: String {
@@ -93,7 +93,7 @@ class MainViewController: UIViewController {
     /// The "Swipe to Start" label
     @IBOutlet var instructionsDisplay: UILabel! {
         didSet {
-            instructionsDisplay.text = textInstructions(voiceOverOn: false)
+            instructionsDisplay.text = MainViewController.textInstructions(voiceOverOn: false)
         }
     }
     /// The "00:00.00" label
@@ -258,7 +258,7 @@ extension MainViewController: VoiceOverObserver {
     func voiceOverStatusDidChange(_: Notification?) {
         let voiceOverOn = UIAccessibilityIsVoiceOverRunning()
         
-        instructionsDisplay.text = textInstructions(voiceOverOn: voiceOverOn)
+        instructionsDisplay.text = MainViewController.textInstructions(voiceOverOn: voiceOverOn)
         voiceOverOn ? containerView.addGestureRecognizer(tapRecognizer) : containerView.removeGestureRecognizer(tapRecognizer)
         containerView.layoutIfNeeded()
     }
