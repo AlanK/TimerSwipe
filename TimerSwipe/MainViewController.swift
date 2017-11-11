@@ -57,7 +57,7 @@ class MainViewController: UIViewController {
         return NSLocalizedString("runningTimer", value: "Running \(textDuration)-second timer, cancels timer", comment: "Running {whole number}-second timer (When activated, this button) cancels the timer")
     }
     
-    var textDuration: String {
+    private var textDuration: String {
         return String(Int(duration))
     }
     
@@ -75,7 +75,9 @@ class MainViewController: UIViewController {
     // Use duration provided from elsewhere, then the favorite timer, then the default timer
     var providedDuration: TimeInterval?
     private lazy var duration = providedDuration ?? (self.navigationController as? ModelIntermediary)?.model.favorite()?.seconds ?? K.defaultDuration
+    
     private var buttonStatus = ButtonValue.change
+    
     private lazy var stopwatch: Stopwatch = Stopwatch.init(delegate: self, duration: duration)
 
     
@@ -87,8 +89,9 @@ class MainViewController: UIViewController {
         }
     }
     
-    lazy var tapRecognizer = UITapGestureRecognizer.init(target: self, action: #selector(containerViewAsButton(sender:)))
-    lazy var containerViewAction = UIAccessibilityCustomAction.init(name: buttonStatus.accessibleLabel, target: self, selector: #selector(buttonActions))
+    private lazy var tapRecognizer = UITapGestureRecognizer.init(target: self, action: #selector(containerViewAsButton(sender:)))
+    
+    private lazy var containerViewAction = UIAccessibilityCustomAction.init(name: buttonStatus.accessibleLabel, target: self, selector: #selector(buttonActions))
 
     
     // MARK: Labels & Buttons
@@ -173,7 +176,7 @@ class MainViewController: UIViewController {
         }
     }
     
-    func customizeDisplayForVoiceOver(_: Notification? = nil) {
+    private func customizeDisplayForVoiceOver(_: Notification? = nil) {
         let voiceOverOn = UIAccessibilityIsVoiceOverRunning()
         instructionsDisplay.text = voiceOverOn ? Instructions.voiceOver.text : Instructions.normal.text
         containerView.layoutIfNeeded()
@@ -184,7 +187,7 @@ class MainViewController: UIViewController {
         }
     }
     
-    func registerNotifications(_ register: Bool) {
+    private func registerNotifications(_ register: Bool) {
         switch register {
         case true:
             if #available(iOS 11.0, *) {
