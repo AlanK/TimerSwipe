@@ -265,12 +265,9 @@ extension MainViewController: StopwatchIntermediary {
 extension MainViewController: VoiceOverObserver {
     func voiceOverStatusDidChange(_: Notification?) {
         let voiceOverOn = UIAccessibilityIsVoiceOverRunning()
-        instructionsDisplay.text = voiceOverOn ? Instructions.voiceOver.text : Instructions.normal.text
-        containerView.layoutIfNeeded()
         
-        switch voiceOverOn {
-        case true: containerView.addGestureRecognizer(tapRecognizer)
-        case false: containerView.removeGestureRecognizer(tapRecognizer)
-        }
+        instructionsDisplay.text = voiceOverOn ? Instructions.voiceOver.text : Instructions.normal.text
+        voiceOverOn ? containerView.addGestureRecognizer(tapRecognizer) : containerView.removeGestureRecognizer(tapRecognizer)
+        containerView.layoutIfNeeded()
     }
 }
