@@ -192,15 +192,13 @@ class MainViewController: UIViewController {
     }
     
     private func registerNotifications(_ register: Bool) {
+        let voiceOverNotice: NSNotification.Name
+        if #available(iOS 11.0, *) {voiceOverNotice = .UIAccessibilityVoiceOverStatusDidChange}
+        else {voiceOverNotice = NSNotification.Name(rawValue: UIAccessibilityVoiceOverStatusChanged)}
+        
         switch register {
-        case true:
-            if #available(iOS 11.0, *) {
-                notificationCenter.addObserver(forName: .UIAccessibilityVoiceOverStatusDidChange, object: nil, queue: nil, using: customizeDisplayForVoiceOver(_:))
-            }
-        case false:
-            if #available(iOS 11.0, *) {
-                notificationCenter.removeObserver(self, name: .UIAccessibilityVoiceOverStatusDidChange, object: nil)
-            }
+        case true: notificationCenter.addObserver(forName: voiceOverNotice, object: nil, queue: nil, using: customizeDisplayForVoiceOver(_:))
+        case false: notificationCenter.removeObserver(self, name: voiceOverNotice, object: nil)
         }
     }
 
