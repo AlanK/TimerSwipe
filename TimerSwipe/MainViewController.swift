@@ -61,10 +61,6 @@ class MainViewController: UIViewController {
         return NSLocalizedString("runningTimer", value: "Running \(textDuration)-second timer, cancels timer", comment: "Running {whole number}-second timer (When activated, this button) cancels the timer")
     }
     
-    private var textDuration: String {
-        return String(Int(duration))
-    }
-    
     /// Formats time as a string for display
     private let timeFormatter: DateFormatter = {
         let formatter = DateFormatter()
@@ -77,6 +73,9 @@ class MainViewController: UIViewController {
     // Use duration provided from elsewhere, then the favorite timer, then the default timer
     var providedDuration: TimeInterval?
     private lazy var duration = providedDuration ?? (self.navigationController as? ModelIntermediary)?.model.favorite()?.seconds ?? K.defaultDuration
+    private var textDuration: String {
+        return String(Int(duration))
+    }
     
     private var buttonStatus = ButtonValue.change
     
