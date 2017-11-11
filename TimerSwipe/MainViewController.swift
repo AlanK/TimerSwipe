@@ -102,10 +102,7 @@ class MainViewController: UIViewController {
             containerView.isAccessibilityElement = true
             containerView.accessibilityTraits = UIAccessibilityTraitSummaryElement
             containerView.accessibilityCustomActions = [accessibleButtonAction]
-
-            // Provide accessible instructions for this timer
             containerView.accessibilityLabel = defaultContainerViewLabel
-//            containerView.accessibilityHint = NSLocalizedString("actionsAvailable", value: "Actions available", comment: "Other actions are available for this element")
         }
     }
     
