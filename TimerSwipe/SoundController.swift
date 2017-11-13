@@ -10,9 +10,9 @@ import AVFoundation
 
 /// Available audio cues
 enum AudioCue: String {
-    case start = "TS_short_in.aif"
-    case end = "TS_short_out.aif"
-    case die = "TS_short_warn.aif"
+    case startCue = "TS_short_in.aif"
+    case endCue = "TS_short_out.aif"
+    case dieCue = "TS_short_warn.aif"
 }
 
 /// Handles sounds for the main view of the app
@@ -32,9 +32,9 @@ struct SoundController {
         }
         
         // Initialize the audio players
-        audioPlayers = [.start : newPlayer(.start),
-                        .end : newPlayer(.end),
-                        .die : newPlayer(.die)]
+        audioPlayers = [.startCue : newPlayer(.startCue),
+                        .endCue : newPlayer(.endCue),
+                        .dieCue : newPlayer(.dieCue)]
         
         // Configure audio session to mix with background music
         do {try audioSession.setCategory(AVAudioSessionCategoryAmbient, mode: AVAudioSessionModeDefault, options: [])}
@@ -67,7 +67,7 @@ struct SoundController {
         guard let audioPlayer = audioPlayers[cue] else {return}
         audioPlayer?.play()
         vibrate()
-        guard cue != .die else {
+        guard cue != .dieCue else {
             // Add an extra vibration for the warning cue
             vibrate()
             // Prepare to die

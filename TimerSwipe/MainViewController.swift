@@ -11,7 +11,7 @@ import UIKit
 /// Enables other parts of the app to check for and kill running timers
 protocol StopwatchIntermediary {
     /// Reports whether a timer is active
-    var timerNotRunning: Bool {get}
+    var timerReady: Bool {get}
     /// Causes any active timer to die with an audible warning to the user
     func killTimer()
 }
@@ -187,7 +187,7 @@ class MainViewController: UIViewController {
 // MARK: - Stopwatch delegate
 
 extension MainViewController: StopwatchDelegate {
-    var timerNotRunning: Bool {return (buttonStatus == .change)}
+    var timerReady: Bool {return (buttonStatus == .change)}
     
     /**
      Updates the timer display with a time interval.
@@ -213,8 +213,8 @@ extension MainViewController: StopwatchDelegate {
         }
         
         switch status {
-        case .start: notifyUserOfTimerStatus(notice: MainVCStrings.timerStarted, sound: .start)
-        case .end: notifyUserOfTimerStatus(notice: MainVCStrings.timerEnded, sound: .end)
+        case .start: notifyUserOfTimerStatus(notice: MainVCStrings.timerStarted, sound: .startCue)
+        case .end: notifyUserOfTimerStatus(notice: MainVCStrings.timerEnded, sound: .endCue)
         case .cancel: notifyUserOfTimerStatus(notice: MainVCStrings.timerCancelled)
         }
     }
@@ -231,7 +231,7 @@ extension MainViewController: StopwatchDelegate {
 extension MainViewController: StopwatchIntermediary {
     func killTimer() {
         if buttonStatus == .cancel {buttonActions()}
-        soundController.play(.die)
+        soundController.play(.dieCue)
     }
 }
 

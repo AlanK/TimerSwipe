@@ -59,7 +59,7 @@ class NavController: UINavigationController {
     /// Make any necessary changes to views after being in the background for a long time
     func resetViewsAfterBackgroundTimeout() {
         // Don’t change views if a timer is running or there’s no favorite to change to
-        guard timerNotRunning, let storyboard = storyboard, let _ = model.favorite() else {return}
+        guard timerReady, let storyboard = storyboard, let _ = model.favorite() else {return}
         // Don't disrupt an active edit session
         if (topViewController as? TableController)?.isEditing == true {return}
 
@@ -96,8 +96,8 @@ extension NavController: ModelIntermediary {}
 // MARK: - StopwatchIntermediary
 
 extension NavController: StopwatchIntermediary {
-    var timerNotRunning: Bool {
-        return (topViewController as? StopwatchIntermediary)?.timerNotRunning ?? true
+    var timerReady: Bool {
+        return (topViewController as? StopwatchIntermediary)?.timerReady ?? true
     }
     
     func killTimer() {

@@ -10,9 +10,9 @@ import Foundation
 
 /// Responsible for providing a locking system (to prevent concurrency), timer completion handlers, and a display updater
 protocol StopwatchDelegate {
-    // NOTE: The indirection in timerNotRunning/lock/unlock allows Stopwatch to be a struct. Don't collapse it all into an unlocked {get set} unless you're prepared to make Stopwatch a class.
+    // NOTE: The indirection in timerReady/lock/unlock allows Stopwatch to be a struct. Don't collapse it all into an unlocked {get set} unless you're prepared to make Stopwatch a class.
     /// Reports whether a timer is active
-    var timerNotRunning: Bool {get}
+    var timerReady: Bool {get}
     /// Locks to prevent starting a new timer
     func lock()
     /// Unlocks to allow starting a new timer
@@ -35,7 +35,7 @@ struct Stopwatch {
     }
     
     func startTimer() {
-        guard delegate.timerNotRunning else {return}
+        guard delegate.timerReady else {return}
         delegate.lock()
         let startTime = Date.init()
         let endTime = Date.init(timeInterval: duration, since: startTime)
@@ -53,7 +53,7 @@ struct Stopwatch {
     
     /// Called every time the `NSTimer` fires
     private func tick(_ timer: Timer, until endTime: Date) {
-        guard delegate.timerNotRunning == false else {
+        guard delegate.timerReady == false else {
             // If the flag has been set by the delegate, cancel the timer
             clear(timer: timer)
             delegate.timerDid(.cancel)
