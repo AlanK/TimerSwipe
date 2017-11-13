@@ -8,14 +8,6 @@
 
 import UIKit
 
-/// Enables other parts of the app to check for and kill running timers
-protocol StopwatchIntermediary {
-    /// Reports whether a timer is active
-    var timerReady: Bool {get}
-    /// Causes any active timer to die with an audible warning to the user
-    func killTimer()
-}
-
 /// Primary view controller—displays the selected timer
 class MainViewController: UIViewController {
     /// Controls the value of the Change/Cancel button
@@ -227,7 +219,7 @@ extension MainViewController: StopwatchDelegate {
 }
 
 // MARK: - StopwatchIntermediary
-
+// This view controller can kill a running timer directly
 extension MainViewController: StopwatchIntermediary {
     func killTimer() {
         if buttonStatus == .cancel {buttonActions()}
@@ -235,7 +227,10 @@ extension MainViewController: StopwatchIntermediary {
     }
 }
 
+// MARK: - VoiceOverObserver
+// Receive notifications when VoiceOver status changes
 extension MainViewController: VoiceOverObserver {
+    /// Change the text instructions to match the VO-enabled interaction paradigm and make the containerView touch-enabled
     func voiceOverStatusDidChange(_: Notification?) {
         let voiceOverOn = UIAccessibilityIsVoiceOverRunning()
         

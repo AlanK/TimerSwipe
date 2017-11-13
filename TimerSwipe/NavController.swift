@@ -8,7 +8,9 @@
 
 import UIKit
 
+/// This protocol should be adopted by any object that wants to respond to changes in VoiceOver status
 protocol VoiceOverObserver {
+    /// This function is called whenever VoiceOver status changes and is passed the relevant notification
     func voiceOverStatusDidChange(_: Notification?)
 }
 
@@ -48,6 +50,7 @@ class NavController: UINavigationController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        // Registering and unregistering for notifications should be paired in viewWillAppear(_:) and viewWillDisappear(_:)
         registerNotifications(true)
     }
     
@@ -72,7 +75,9 @@ class NavController: UINavigationController {
         setViewControllers([tableVC, mainVC], animated: animate)
     }
     
+    /// Register and unregister for notifications on behalf of other VCs
     private func registerNotifications(_ register: Bool) {
+        // UIAccessibilityVoiceOverStatusChanged and NSNotification.Name.UIAccessibilityVoiceOverStatusDidChange are the same notification in iOS 10 and iOS 11
         let voiceOverNotice: NSNotification.Name
         if #available(iOS 11.0, *) {voiceOverNotice = .UIAccessibilityVoiceOverStatusDidChange}
         else {voiceOverNotice = NSNotification.Name(rawValue: UIAccessibilityVoiceOverStatusChanged)}
@@ -83,6 +88,7 @@ class NavController: UINavigationController {
         }
     }
     
+    /// Forwards the UIAccessibilityVoiceOverStatusChanged/.UIAccessibilityVoiceOverStatusDidChange notification to the topmost VC if it conforms to the VoiceOverObserver protocol
     private func forwardVoiceOverNotification(_ notification: Notification) {
         guard let vc = topViewController as? VoiceOverObserver else {return}
         vc.voiceOverStatusDidChange(notification)
@@ -94,12 +100,12 @@ class NavController: UINavigationController {
 extension NavController: ModelIntermediary {}
 
 // MARK: - StopwatchIntermediary
-
+// Kill the timer when the app lifecycle dictates
 extension NavController: StopwatchIntermediary {
     var timerReady: Bool {
         return (topViewController as? StopwatchIntermediary)?.timerReady ?? true
     }
-    
+    // Pass the message to kill the timer to the topmost view controller
     func killTimer() {
         (topViewController as? StopwatchIntermediary)?.killTimer()
     }
