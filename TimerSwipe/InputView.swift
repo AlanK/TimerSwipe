@@ -13,6 +13,8 @@ import UIKit
 class InputView: UIInputView {
     
     // MARK: Private properties
+    static private let secondsLabelFull = NSLocalizedString("secondsLabelFull", value: " seconds", comment: "A space followed by the word seconds, so it can be concatenated with an integer to form a phrase like '20 seconds'"),
+    secondsLabelTruncated = NSLocalizedString("secondsLabelTruncated", value: " sec", comment: "A space followed by an abbreviated word seconds, so it can be concatenated with an integer to form a phrase like '20 sec'")
     private let verticalInset: CGFloat = 0.0, medialInset: CGFloat = 32.0, lateralInset: CGFloat = 16.0
     private lazy var margin = layoutMarginsGuide
 
@@ -42,7 +44,7 @@ class InputView: UIInputView {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = K.largeFont
-        label.text = NSLocalizedString("secondsLabel", value: " seconds", comment: "A space followed by the word seconds, so it can be concatenated with an integer to form a phrase like '20 seconds'")
+        label.text = InputView.secondsLabelFull
         return label
     }()
     
@@ -112,11 +114,17 @@ class InputView: UIInputView {
             // Always deactivate constraints before activating conflicting ones (or else this could be a lot less verbose)
             switch newValue {
             case true:
+                // Reduce the size of the seconds label if it is larger than half the width of the input view
+                if secondsLabel.bounds.width > (self.bounds.width)/2.0 {
+                    secondsLabel.text = InputView.secondsLabelTruncated
+                }
                 hide.isActive = false
                 show.isActive = true
             case false:
                 show.isActive = false
                 hide.isActive = true
+                // Reset the seconds label to its normal size
+                secondsLabel.text = InputView.secondsLabelFull
             }
         }
     }
