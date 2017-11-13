@@ -7,6 +7,7 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -14,12 +15,12 @@
         <scene sceneID="EQS-1j-nI2">
             <objects>
                 <tableViewController storyboardIdentifier="tableView" useStoryboardIdentifierAsRestorationIdentifier="YES" id="l3v-I2-uXY" customClass="TableController" customModule="TimerSwipe" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="80" sectionHeaderHeight="18" sectionFooterHeight="18" id="Rac-Mk-hEI">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="80" sectionHeaderHeight="18" sectionFooterHeight="18" id="Rac-Mk-hEI">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <view key="tableFooterView" contentMode="scaleToFill" id="iOO-Fb-4CL" userLabel="Footer Container">
-                            <rect key="frame" x="0.0" y="153.5" width="320" height="44"/>
+                            <rect key="frame" x="0.0" y="117.5" width="320" height="44"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <label userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Mark a timer ♥︎ to open it by default." textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="none" enabled="NO" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5QI-Sw-C7Z" userLabel="Footer">
@@ -42,21 +43,21 @@
                         </view>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="STTableViewCell" id="Tkz-t1-8aP" customClass="TableCell" customModule="TimerSwipe" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="55.5" width="320" height="80"/>
+                                <rect key="frame" x="0.0" y="55.5" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" tableViewCell="Tkz-t1-8aP" id="hQt-XQ-0tT">
-                                    <rect key="frame" x="0.0" y="0.0" width="320" height="79.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="seconds" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lv9-sQ-pS8" userLabel="Seconds">
-                                            <rect key="frame" x="16" y="24" width="95" height="31.5"/>
+                                            <rect key="frame" x="16" y="11" width="95" height="22"/>
                                             <gestureRecognizers/>
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="751" verticalHuggingPriority="751" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="C23-7f-YoB" userLabel="Favorite">
-                                            <rect key="frame" x="262" y="11" width="58" height="58"/>
+                                            <rect key="frame" x="262" y="8" width="58" height="28"/>
                                             <gestureRecognizers/>
                                             <inset key="contentEdgeInsets" minX="16" minY="0.0" maxX="14" maxY="0.0"/>
                                             <state key="normal" image="Empty heart"/>
@@ -67,7 +68,7 @@
                                     </subviews>
                                     <gestureRecognizers/>
                                     <constraints>
-                                        <constraint firstAttribute="bottomMargin" secondItem="C23-7f-YoB" secondAttribute="bottom" id="03Y-eC-IML"/>
+                                        <constraint firstAttribute="height" relation="greaterThanOrEqual" secondItem="lv9-sQ-pS8" secondAttribute="height" multiplier="2" id="Hoi-Ij-S2T"/>
                                         <constraint firstItem="C23-7f-YoB" firstAttribute="trailing" secondItem="hQt-XQ-0tT" secondAttribute="trailing" id="N01-LN-dAb">
                                             <attributedString key="userComments">
                                                 <fragment content="Add constant of 8 to equal left margin.">
@@ -79,6 +80,7 @@
                                             </attributedString>
                                         </constraint>
                                         <constraint firstItem="C23-7f-YoB" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="lv9-sQ-pS8" secondAttribute="trailing" id="POE-92-9ad"/>
+                                        <constraint firstItem="C23-7f-YoB" firstAttribute="centerY" secondItem="lv9-sQ-pS8" secondAttribute="centerY" id="VpJ-I0-Etr"/>
                                         <constraint firstItem="lv9-sQ-pS8" firstAttribute="leading" secondItem="hQt-XQ-0tT" secondAttribute="leadingMargin" id="bre-4B-fqM">
                                             <attributedString key="userComments">
                                                 <fragment content="Adding 8 to make the left edge of the label align with the left edge of the table row dividers.">
@@ -89,7 +91,6 @@
                                                 </fragment>
                                             </attributedString>
                                         </constraint>
-                                        <constraint firstItem="C23-7f-YoB" firstAttribute="top" secondItem="hQt-XQ-0tT" secondAttribute="topMargin" id="pG1-zx-WXt"/>
                                         <constraint firstItem="lv9-sQ-pS8" firstAttribute="centerY" secondItem="hQt-XQ-0tT" secondAttribute="centerY" id="utD-To-0ki"/>
                                     </constraints>
                                 </tableViewCellContentView>
