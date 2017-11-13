@@ -55,7 +55,7 @@
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <button opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="C23-7f-YoB" userLabel="Favorite">
+                                        <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="751" verticalHuggingPriority="751" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="C23-7f-YoB" userLabel="Favorite">
                                             <rect key="frame" x="262" y="11" width="58" height="58"/>
                                             <gestureRecognizers/>
                                             <inset key="contentEdgeInsets" minX="16" minY="0.0" maxX="14" maxY="0.0"/>
@@ -147,10 +147,11 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="center" horizontalHuggingPriority="750" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" axis="vertical" distribution="equalSpacing" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="F3f-0s-rqz">
-                                <rect key="frame" x="27" y="208" width="266" height="152.5"/>
+                                <rect key="frame" x="0.0" y="208" width="0.0" height="152.5"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" text="Swipe to Start" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="74y-S5-5gr" userLabel="Top Label">
-                                        <rect key="frame" x="72.5" y="0.0" width="121.5" height="24"/>
+                                    <label userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" text="Swipe to Start" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="74y-S5-5gr" userLabel="Top Label">
+                                        <rect key="frame" x="0.0" y="0.0" width="0.0" height="24"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <accessibility key="accessibilityConfiguration">
                                             <accessibilityTraits key="traits" staticText="YES" notEnabled="YES"/>
                                             <bool key="isElement" value="NO"/>
@@ -160,7 +161,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="753" verticalCompressionResistancePriority="753" text="00:00.00" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kn3-O2-ymo" userLabel="Time">
-                                        <rect key="frame" x="0.0" y="32" width="266" height="76.5"/>
+                                        <rect key="frame" x="27" y="32" width="266" height="76.5"/>
                                         <accessibility key="accessibilityConfiguration">
                                             <accessibilityTraits key="traits" notEnabled="YES" updatesFrequently="YES"/>
                                             <bool key="isElement" value="NO"/>
@@ -171,7 +172,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="center" horizontalCompressionResistancePriority="752" verticalCompressionResistancePriority="752" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yum-AW-GvH" userLabel="Bottom Button">
-                                        <rect key="frame" x="98.5" y="116.5" width="69" height="36"/>
+                                        <rect key="frame" x="125.5" y="116.5" width="69" height="36"/>
                                         <accessibility key="accessibilityConfiguration">
                                             <accessibilityTraits key="traits" button="YES" updatesFrequently="YES"/>
                                         </accessibility>
@@ -197,6 +198,7 @@
                         <constraints>
                             <constraint firstItem="F3f-0s-rqz" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="1pf-DU-abt"/>
                             <constraint firstItem="F3f-0s-rqz" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="cfr-Kb-FtS"/>
+                            <constraint firstItem="74y-S5-5gr" firstAttribute="width" relation="lessThanOrEqual" secondItem="8bC-Xf-vdC" secondAttribute="width" id="eSo-hz-1bF"/>
                         </constraints>
                         <connections>
                             <outletCollection property="gestureRecognizers" destination="iu1-W6-3dE" appends="YES" id="vOO-zn-J0U"/>
