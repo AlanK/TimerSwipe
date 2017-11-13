@@ -18,14 +18,6 @@ protocol StopwatchIntermediary {
 
 /// Primary view controller—displays the selected timer
 class MainViewController: UIViewController {
-    static private let timerStarted = NSLocalizedString("timerStarted", value: "Started timer, double-tap to cancel", comment: "The timer has started, double-tap anywhere on the screen to cancel the running timer"),
-    timerEnded = NSLocalizedString("timerFinished", value: "Timer finished", comment: "The timer has finished"),
-    timerCancelled = NSLocalizedString("timerCancelled", value: "Cancelled timer", comment: "The timer has been cancelled")
-    
-    static private func textInstructions(voiceOverOn: Bool) -> String {
-        return voiceOverOn ? NSLocalizedString("doubleTapToStart", value: "Double-Tap to Start", comment: "Double-tap anywhere on the screen to start the timer") : NSLocalizedString("swipeToStart", value: "Swipe to Start", comment: "Swipe anywhere on the screen in any direction to start the timer")
-    }
-    
     /// Controls the value of the Change/Cancel button
     private enum ButtonValue {
         case cancel
@@ -46,14 +38,6 @@ class MainViewController: UIViewController {
         }
     }
     
-    private var defaultContainerViewLabel: String {
-        return NSLocalizedString("timerReady", value: "\(textDuration)-second timer, starts timer", comment: "{Whole number}-second timer (When activated, this button) starts the timer")
-    }
-    
-    private var runningTimerContainerViewLabel: String {
-        return NSLocalizedString("runningTimer", value: "Running \(textDuration)-second timer, cancels timer", comment: "Running {whole number}-second timer (When activated, this button) cancels the timer")
-    }
-    
     /// Formats time as a string for display
     private let timeFormatter: DateFormatter = {
         let formatter = DateFormatter()
@@ -66,10 +50,7 @@ class MainViewController: UIViewController {
     // Use duration provided from elsewhere, then the favorite timer, then the default timer
     var providedDuration: TimeInterval?
     private lazy var duration = providedDuration ?? (self.navigationController as? ModelIntermediary)?.model.favorite()?.seconds ?? K.defaultDuration
-    private var textDuration: String {
-        return String(Int(duration))
-    }
-    
+
     private var buttonStatus = ButtonValue.change
     
     private lazy var stopwatch: Stopwatch = Stopwatch.init(delegate: self, duration: duration)
@@ -93,7 +74,7 @@ class MainViewController: UIViewController {
     /// The "Swipe to Start" label
     @IBOutlet var instructionsDisplay: UILabel! {
         didSet {
-            instructionsDisplay.text = MainViewController.textInstructions(voiceOverOn: false)
+            instructionsDisplay.text = MainVCStrings.textInstructions(voiceOverOn: false)
         }
     }
     /// The "00:00.00" label
@@ -109,7 +90,7 @@ class MainViewController: UIViewController {
             containerView.isAccessibilityElement = true
             containerView.accessibilityTraits = UIAccessibilityTraitSummaryElement
             containerView.accessibilityCustomActions = [containerViewAction]
-            containerView.accessibilityLabel = defaultContainerViewLabel
+            containerView.accessibilityLabel = MainVCStrings.containerViewLabel(timerReady: true, timerDuration: duration)
         }
     }
     
@@ -226,15 +207,15 @@ extension MainViewController: StopwatchDelegate {
                 soundController.play(sound)
             }
             UIAccessibilityPostNotification(UIAccessibilityAnnouncementNotification, notice)
-            containerView.accessibilityLabel = (status != .start) ? defaultContainerViewLabel : runningTimerContainerViewLabel
+            containerView.accessibilityLabel = MainVCStrings.containerViewLabel(timerReady: (status != .start), timerDuration: duration)
             instructionsVisible = (status != .start)
             UIAccessibilityPostNotification(UIAccessibilityLayoutChangedNotification, nil)
         }
         
         switch status {
-        case .start: notifyUserOfTimerStatus(notice: MainViewController.timerStarted, sound: .start)
-        case .end: notifyUserOfTimerStatus(notice: MainViewController.timerEnded, sound: .end)
-        case .cancel: notifyUserOfTimerStatus(notice: MainViewController.timerCancelled)
+        case .start: notifyUserOfTimerStatus(notice: MainVCStrings.timerStarted, sound: .start)
+        case .end: notifyUserOfTimerStatus(notice: MainVCStrings.timerEnded, sound: .end)
+        case .cancel: notifyUserOfTimerStatus(notice: MainVCStrings.timerCancelled)
         }
     }
     
@@ -258,7 +239,7 @@ extension MainViewController: VoiceOverObserver {
     func voiceOverStatusDidChange(_: Notification?) {
         let voiceOverOn = UIAccessibilityIsVoiceOverRunning()
         
-        instructionsDisplay.text = MainViewController.textInstructions(voiceOverOn: voiceOverOn)
+        instructionsDisplay.text = MainVCStrings.textInstructions(voiceOverOn: voiceOverOn)
         voiceOverOn ? containerView.addGestureRecognizer(tapRecognizer) : containerView.removeGestureRecognizer(tapRecognizer)
         containerView.layoutIfNeeded()
     }
