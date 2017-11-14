@@ -152,6 +152,8 @@ class TableController: UITableViewController {
         model.saveData()
         tableView.insertRows(at: [newIndexPath], with: .automatic)
         refreshEditButton()
+        
+        UIAccessibilityPostNotification(UIAccessibilityScreenChangedNotification, tableView.cellForRow(at: newIndexPath))
     }
     
     /// Enable the Edit button when the table has one or more rows
