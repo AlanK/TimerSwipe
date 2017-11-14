@@ -15,7 +15,7 @@ class InputView: UIInputView {
     // MARK: Private properties
     static private let secondsLabelFull = NSLocalizedString("secondsLabelFull", value: " seconds", comment: "A space followed by the word seconds, so it can be concatenated with an integer to form a phrase like '20 seconds'"),
     secondsLabelTruncated = NSLocalizedString("secondsLabelTruncated", value: " sec", comment: "A space followed by an abbreviated word seconds, so it can be concatenated with an integer to form a phrase like '20 sec'")
-    private let verticalInset: CGFloat = 0.0, medialInset: CGFloat = 32.0, lateralInset: CGFloat = 16.0
+    static private let vInset: CGFloat = 0.0, medialInset: CGFloat = 32.0, lateralInset: CGFloat = 16.0
     private lazy var margin = layoutMarginsGuide
 
     private let innerWrapper: UIView = {
@@ -50,30 +50,30 @@ class InputView: UIInputView {
     
     // MARK: Public properties
     
-    lazy var cancelButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.setImage(#imageLiteral(resourceName: "Quit X").withRenderingMode(.alwaysTemplate), for: .normal)
-        button.tintColor = K.tintColor
-        button.contentEdgeInsets = UIEdgeInsetsMake(verticalInset, lateralInset, verticalInset, medialInset)
-        button.setContentHuggingPriority(.defaultHigh, for: .horizontal)
-        button.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
-        button.accessibilityLabel = NSLocalizedString("cancelAddButton", value: "Cancel new timer", comment: "Cancel the user-initiated action of adding a new timer")
-        return button
+    let cancelButton: UIButton = {
+        let cancelButton = UIButton(type: .system)
+        cancelButton.translatesAutoresizingMaskIntoConstraints = false
+        cancelButton.setImage(#imageLiteral(resourceName: "Cancel X").withRenderingMode(.alwaysOriginal), for: .normal)
+        cancelButton.tintColor = K.tintColor
+        cancelButton.contentEdgeInsets = UIEdgeInsetsMake(InputView.vInset, InputView.lateralInset, InputView.vInset, InputView.medialInset)
+        cancelButton.setContentHuggingPriority(.defaultHigh, for: .horizontal)
+        cancelButton.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
+        cancelButton.accessibilityLabel = NSLocalizedString("cancelAddButton", value: "Cancel new timer", comment: "Cancel the user-initiated action of adding a new timer")
+        return cancelButton
     }()
     
-    lazy var addButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.setImage(#imageLiteral(resourceName: "Arrow").withRenderingMode(.alwaysTemplate), for: .normal)
-        button.tintColor = K.tintColor
-        button.contentEdgeInsets = UIEdgeInsetsMake(verticalInset, medialInset, verticalInset, lateralInset)
-        button.setContentHuggingPriority(.defaultHigh, for: .horizontal)
-        button.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
-        button.accessibilityLabel = NSLocalizedString("titleOfAddButton", value: "Create new timer", comment: "")
+    let addButton: UIButton = {
+        let addButton = UIButton(type: .system)
+        addButton.translatesAutoresizingMaskIntoConstraints = false
+        addButton.setImage(#imageLiteral(resourceName: "Save Arrow").withRenderingMode(.alwaysOriginal), for: .normal)
+        addButton.tintColor = K.tintColor
+        addButton.contentEdgeInsets = UIEdgeInsetsMake(InputView.vInset, InputView.medialInset, InputView.vInset, InputView.lateralInset)
+        addButton.setContentHuggingPriority(.defaultHigh, for: .horizontal)
+        addButton.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
+        addButton.accessibilityLabel = NSLocalizedString("titleOfAddButton", value: "Create new timer", comment: "")
         // Can’t add a timer until it has a valid time
-        button.isEnabled = false
-        return button
+        addButton.isEnabled = false
+        return addButton
     }()
     
     let textField: UITextField = {
