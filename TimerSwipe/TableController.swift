@@ -128,6 +128,10 @@ class TableController: UITableViewController {
                 self.setEditing(false, animated: false)
             }
             DispatchQueue.main.asyncAfter(deadline: nearFuture, execute: work)
+            UIAccessibilityPostNotification(UIAccessibilityScreenChangedNotification, self.addButton)
+        } else {
+            let newIndexPath = (indexPath.row == 0) ? indexPath : IndexPath.init(row: indexPath.row - 1, section: mainSection)
+            UIAccessibilityPostNotification(UIAccessibilityScreenChangedNotification, tableView.cellForRow(at: newIndexPath))
         }
     }
     
