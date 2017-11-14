@@ -8,6 +8,20 @@
 
 import UIKit
 
+// Insane hack taken from Stack Overflow: https://stackoverflow.com/a/45832608/8600409
+extension UIImage {
+    static func imageTinted(image: UIImage?, color: UIColor) -> UIImage? {
+        let rect  = CGRect(x: 0.0, y: 0.0, width: image?.size.width ?? 0.0, height: image?.size.height ?? 0.0)
+        UIGraphicsBeginImageContextWithOptions(image?.size ?? CGSize.zero, false, image?.scale ?? 2.0)
+        color.set()
+        UIRectFill(rect)
+        image?.draw(in: rect, blendMode: CGBlendMode.destinationIn, alpha: 1.0)
+        let tinted = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext();
+        return tinted;
+    }
+}
+
 // Based on the CatChat app from https://developer.apple.com/videos/play/wwdc2017/242/
 /// Input accessory view that accepts an integer seconds value
 class InputView: UIInputView {
@@ -51,29 +65,31 @@ class InputView: UIInputView {
     // MARK: Public properties
     
     let cancelButton: UIButton = {
-        let cancelButton = UIButton(type: .system)
-        cancelButton.translatesAutoresizingMaskIntoConstraints = false
-        cancelButton.setImage(#imageLiteral(resourceName: "Cancel X").withRenderingMode(.alwaysTemplate), for: .normal)
-        cancelButton.tintColor = K.tintColor
-        cancelButton.contentEdgeInsets = UIEdgeInsetsMake(InputView.vInset, InputView.lateralInset, InputView.vInset, InputView.medialInset)
-        cancelButton.setContentHuggingPriority(.defaultHigh, for: .horizontal)
-        cancelButton.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
-        cancelButton.accessibilityLabel = NSLocalizedString("cancelAddButton", value: "Cancel new timer", comment: "Cancel the user-initiated action of adding a new timer")
-        return cancelButton
+        let button = UIButton(type: .system)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        // button.setImage(#imageLiteral(resourceName: "Save Arrow").withRenderingMode(.alwaysTemplate), for: .normal)
+        // button.tintColor = K.tintColor
+        // This insane pile of hacks dodges a terrible rendering bug that appears on UIButton images when the bold text accessibility option is selected
+        button.setImage(UIImage.imageTinted(image: #imageLiteral(resourceName: "Cancel X"), color: K.tintColor)?.withRenderingMode(.alwaysOriginal), for: .normal)
+        button.contentEdgeInsets = UIEdgeInsetsMake(InputView.vInset, InputView.lateralInset, InputView.vInset, InputView.medialInset)
+        button.setContentHuggingPriority(.defaultHigh, for: .horizontal)
+        button.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
+        button.accessibilityLabel = NSLocalizedString("cancelAddButton", value: "Cancel new timer", comment: "Cancel the user-initiated action of adding a new timer")
+        return button
     }()
     
     let addButton: UIButton = {
-        let addButton = UIButton(type: .system)
-        addButton.translatesAutoresizingMaskIntoConstraints = false
-        addButton.setImage(#imageLiteral(resourceName: "Save Arrow").withRenderingMode(.alwaysTemplate), for: .normal)
-        addButton.tintColor = K.tintColor
-        addButton.contentEdgeInsets = UIEdgeInsetsMake(InputView.vInset, InputView.medialInset, InputView.vInset, InputView.lateralInset)
-        addButton.setContentHuggingPriority(.defaultHigh, for: .horizontal)
-        addButton.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
-        addButton.accessibilityLabel = NSLocalizedString("titleOfAddButton", value: "Create new timer", comment: "")
+        let button = UIButton(type: .system)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setImage(#imageLiteral(resourceName: "Save Arrow").withRenderingMode(.alwaysTemplate), for: .normal)
+        button.tintColor = K.tintColor
+        button.contentEdgeInsets = UIEdgeInsetsMake(InputView.vInset, InputView.medialInset, InputView.vInset, InputView.lateralInset)
+        button.setContentHuggingPriority(.defaultHigh, for: .horizontal)
+        button.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
+        button.accessibilityLabel = NSLocalizedString("titleOfAddButton", value: "Create new timer", comment: "")
         // Can’t add a timer until it has a valid time
-        addButton.isEnabled = false
-        return addButton
+        button.isEnabled = false
+        return button
     }()
     
     let textField: UITextField = {
