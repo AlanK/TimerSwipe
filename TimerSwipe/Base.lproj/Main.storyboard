@@ -19,21 +19,21 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
-                        <view key="tableFooterView" contentMode="scaleToFill" id="iOO-Fb-4CL" userLabel="Footer Container">
+                        <view key="tableFooterView" opaque="NO" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" id="iOO-Fb-4CL" userLabel="Footer Container">
                             <rect key="frame" x="0.0" y="117.5" width="320" height="44"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
-                                <label userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Mark a timer ♥︎ to open it by default." textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="none" enabled="NO" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5QI-Sw-C7Z" userLabel="Footer">
+                                <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Mark a timer ♥︎ to open it by default." textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="none" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5QI-Sw-C7Z" userLabel="Footer">
                                     <rect key="frame" x="8" y="8" width="304" height="28"/>
-                                    <accessibility key="accessibilityConfiguration">
-                                        <bool key="isElement" value="NO"/>
-                                    </accessibility>
                                     <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                             </subviews>
-                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <accessibility key="accessibilityConfiguration" label="Mark a timer ♥︎ to open it by default">
+                                <accessibilityTraits key="traits" none="YES"/>
+                                <bool key="isElement" value="NO"/>
+                            </accessibility>
                             <constraints>
                                 <constraint firstAttribute="trailingMargin" secondItem="5QI-Sw-C7Z" secondAttribute="trailing" id="L4e-9h-b0d"/>
                                 <constraint firstItem="5QI-Sw-C7Z" firstAttribute="leading" secondItem="iOO-Fb-4CL" secondAttribute="leadingMargin" id="iFP-KV-20I"/>
