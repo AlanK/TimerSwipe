@@ -150,7 +150,7 @@ class MainViewController: UIViewController {
         // Ensure the stopwatch and delegate are ready; set the display to the current timer
         stopwatch.clear()
         // Customize display based on VoiceOver settings
-        voiceOverStatusDidChange(nil)
+        voiceOverStatusDidChange()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -231,7 +231,7 @@ extension MainViewController: StopwatchIntermediary {
 // Receive notifications when VoiceOver status changes
 extension MainViewController: VoiceOverObserver {
     /// Change the text instructions to match the VO-enabled interaction paradigm and make the containerView touch-enabled
-    func voiceOverStatusDidChange(_: Notification?) {
+    func voiceOverStatusDidChange(_: Notification? = nil) {
         let voiceOverOn = UIAccessibilityIsVoiceOverRunning()
         
         instructionsDisplay.text = MainVCStrings.textInstructions(voiceOverOn: voiceOverOn)
