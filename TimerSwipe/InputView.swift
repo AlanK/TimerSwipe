@@ -53,7 +53,7 @@ class InputView: UIInputView {
     lazy var cancelButton: UIButton = {
         let button = UIButton(type: .system)
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.setImage(#imageLiteral(resourceName: "Cancel X").withRenderingMode(.alwaysTemplate), for: .normal)
+        button.setImage(#imageLiteral(resourceName: "Quit X").withRenderingMode(.alwaysTemplate), for: .normal)
         button.tintColor = K.tintColor
         button.contentEdgeInsets = UIEdgeInsetsMake(verticalInset, lateralInset, verticalInset, medialInset)
         button.setContentHuggingPriority(.defaultHigh, for: .horizontal)
@@ -65,7 +65,7 @@ class InputView: UIInputView {
     lazy var addButton: UIButton = {
         let button = UIButton(type: .system)
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.setImage(#imageLiteral(resourceName: "Save Arrow").withRenderingMode(.alwaysTemplate), for: .normal)
+        button.setImage(#imageLiteral(resourceName: "Arrow").withRenderingMode(.alwaysTemplate), for: .normal)
         button.tintColor = K.tintColor
         button.contentEdgeInsets = UIEdgeInsetsMake(verticalInset, medialInset, verticalInset, lateralInset)
         button.setContentHuggingPriority(.defaultHigh, for: .horizontal)
