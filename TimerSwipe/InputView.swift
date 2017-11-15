@@ -168,6 +168,7 @@ class InputView: UIInputView {
         let borderHeight: CGFloat = 0.5
         
         translatesAutoresizingMaskIntoConstraints = false
+        preservesSuperviewLayoutMargins = true
         
         // Assemble the subviews
         addSubview(borderWrapper)
@@ -180,7 +181,7 @@ class InputView: UIInputView {
         
         // Set constraints for the subviews
         
-        borderWrapper.topAnchor.constraint(equalTo: margin.topAnchor).isActive = true
+        borderWrapper.topAnchor.constraint(equalTo: topAnchor).isActive = true
         borderWrapper.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
         borderWrapper.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
         borderWrapper.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
