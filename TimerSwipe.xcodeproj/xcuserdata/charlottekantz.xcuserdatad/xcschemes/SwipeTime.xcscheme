@@ -38,6 +38,11 @@
                BlueprintName = "TimerSwipeTests"
                ReferencedContainer = "container:TimerSwipe.xcodeproj">
             </BuildableReference>
+            <SkippedTests>
+               <Test
+                  Identifier = "MainVCTests/testExample()">
+               </Test>
+            </SkippedTests>
          </TestableReference>
       </Testables>
       <MacroExpansion>

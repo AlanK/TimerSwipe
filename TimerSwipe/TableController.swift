@@ -248,6 +248,7 @@ extension TableController {
     
     /// Animate keyboard and input accessory view visible or invisible
     func makeKAV(visible: Bool) {
+        addButton.isEnabled = !visible
         _ = visible ? keyboardAccessoryView.textField.becomeFirstResponder() : keyboardAccessoryView.textField.resignFirstResponder()
         
         let duration = K.keyboardAnimationDuration
