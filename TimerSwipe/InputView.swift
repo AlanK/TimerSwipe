@@ -114,7 +114,7 @@ class InputView: UIInputView {
         return textField
     }()
 
-    private lazy var show: NSLayoutConstraint = wrapper.bottomAnchor.constraint(equalTo: margin.bottomAnchor)
+    private lazy var show: NSLayoutConstraint = wrapper.bottomAnchor.constraint(equalTo: bottomAnchor)
     private lazy var hide: NSLayoutConstraint = {
         let constraint = borderWrapper.topAnchor.constraint(equalTo: borderWrapper.bottomAnchor)
         constraint.isActive = true
@@ -169,6 +169,9 @@ class InputView: UIInputView {
         
         translatesAutoresizingMaskIntoConstraints = false
         preservesSuperviewLayoutMargins = true
+        borderWrapper.preservesSuperviewLayoutMargins = true
+        wrapper.preservesSuperviewLayoutMargins = true
+        innerWrapper.preservesSuperviewLayoutMargins = true
         
         // Assemble the subviews
         addSubview(borderWrapper)
@@ -191,22 +194,21 @@ class InputView: UIInputView {
         wrapper.trailingAnchor.constraint(equalTo: borderWrapper.trailingAnchor).isActive = true
         
         cancelButton.leadingAnchor.constraint(equalTo: margin.leadingAnchor, constant: -horizontalGap).isActive = true
-        cancelButton.topAnchor.constraint(equalTo: wrapper.topAnchor).isActive = true
-        cancelButton.bottomAnchor.constraint(equalTo: wrapper.bottomAnchor).isActive = true
 
         innerWrapper.topAnchor.constraint(equalTo: wrapper.topAnchor).isActive = true
+        innerWrapper.bottomAnchor.constraint(equalTo: wrapper.layoutMarginsGuide.bottomAnchor).isActive = true
         innerWrapper.centerXAnchor.constraint(equalTo: wrapper.centerXAnchor).isActive = true
         
-        textField.topAnchor.constraint(equalTo: wrapper.topAnchor, constant: verticalGap).isActive = true
+        textField.topAnchor.constraint(equalTo: innerWrapper.topAnchor, constant: verticalGap).isActive = true
         textField.leadingAnchor.constraint(equalTo: innerWrapper.leadingAnchor).isActive = true
         textField.trailingAnchor.constraint(equalTo: secondsLabel.leadingAnchor).isActive = true
-        textField.bottomAnchor.constraint(equalTo: wrapper.bottomAnchor, constant: -verticalGap).isActive = true
+        textField.bottomAnchor.constraint(equalTo: innerWrapper.bottomAnchor).isActive = true
         
         secondsLabel.firstBaselineAnchor.constraint(equalTo: textField.firstBaselineAnchor).isActive = true
         secondsLabel.trailingAnchor.constraint(equalTo: innerWrapper.trailingAnchor).isActive = true
         
-        addButton.topAnchor.constraint(equalTo: wrapper.topAnchor).isActive = true
-        addButton.bottomAnchor.constraint(equalTo: wrapper.bottomAnchor).isActive = true
+        addButton.centerYAnchor.constraint(equalTo: textField.centerYAnchor).isActive = true
+        addButton.centerYAnchor.constraint(equalTo: cancelButton.centerYAnchor).isActive = true
         addButton.trailingAnchor.constraint(lessThanOrEqualTo: margin.trailingAnchor, constant: horizontalGap).isActive = true
         
         let hintConstraint = addButton.trailingAnchor.constraint(equalTo: trailingAnchor)
