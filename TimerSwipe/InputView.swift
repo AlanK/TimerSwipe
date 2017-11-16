@@ -207,7 +207,11 @@ class InputView: UIInputView {
         
         addButton.topAnchor.constraint(equalTo: wrapper.topAnchor).isActive = true
         addButton.bottomAnchor.constraint(equalTo: wrapper.bottomAnchor).isActive = true
-        addButton.trailingAnchor.constraint(equalTo: margin.trailingAnchor, constant: horizontalGap).isActive = true
+        addButton.trailingAnchor.constraint(lessThanOrEqualTo: margin.trailingAnchor, constant: horizontalGap).isActive = true
+        
+        let hintConstraint = addButton.trailingAnchor.constraint(equalTo: trailingAnchor)
+        hintConstraint.priority = UILayoutPriority.init(500.0)
+        hintConstraint.isActive = true
         
         // Set the order of elements for accessibility to prevent the parent view from stealing accessibility focus
         accessibilityElements = [cancelButton, textField, addButton]
