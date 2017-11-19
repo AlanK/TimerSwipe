@@ -99,14 +99,14 @@ class NavController: UINavigationController {
 // Make the model available to other objects
 extension NavController: ModelIntermediary {}
 
-// MARK: - StopwatchIntermediary
+// MARK: - StopwatchKiller
 // Kill the timer when the app lifecycle dictates
-extension NavController: StopwatchIntermediary {
+extension NavController: StopwatchKiller {
     var timerReady: Bool {
-        return (topViewController as? StopwatchIntermediary)?.timerReady ?? true
+        return (topViewController as? StopwatchKiller)?.timerReady ?? true
     }
     // Pass the message to kill the timer to the topmost view controller
     func killTimer() {
-        (topViewController as? StopwatchIntermediary)?.killTimer()
+        (topViewController as? StopwatchKiller)?.killTimer()
     }
 }

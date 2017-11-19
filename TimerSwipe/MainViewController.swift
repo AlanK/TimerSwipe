@@ -204,11 +204,8 @@ extension MainViewController: StopwatchDelegate {
     
     /// Unlocks the stopwatch when no timer is running
     func unlock() {setButton(to: .change)}
-}
 
-// MARK: - StopwatchIntermediary
-// This view controller can kill a running timer directly
-extension MainViewController: StopwatchIntermediary {
+    // This view controller can kill a running timer directly
     func killTimer() {
         if buttonStatus == .cancel {buttonActions()}
         soundController.play(.dieCue)

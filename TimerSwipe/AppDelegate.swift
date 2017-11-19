@@ -18,8 +18,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return window?.rootViewController as? NavController
     }
     
-    private var stopwatchIntermediary: StopwatchIntermediary? {
-        return window?.rootViewController as? StopwatchIntermediary
+    private var stopwatchKiller: StopwatchKiller? {
+        return window?.rootViewController as? StopwatchKiller
     }
     
     func applicationDidFinishLaunching(_ application: UIApplication) {
@@ -40,6 +40,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func applicationWillTerminate(_ application: UIApplication) {
-        stopwatchIntermediary?.killTimer()
+        stopwatchKiller?.killTimer()
     }
 }
