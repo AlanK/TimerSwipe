@@ -171,6 +171,7 @@
 			children = (
 				5A12267B1D5A80BA006D49F1 /* TableController.swift */,
 				5A871FF91D6FC68900B08A05 /* TableCell.swift */,
+				5ADB6A171F561562006BEE1B /* InputView.swift */,
 			);
 			name = Table;
 			sourceTree = "<group>";
@@ -179,7 +180,6 @@
 			isa = PBXGroup;
 			children = (
 				5AA3E3AD1EEF36C400FB5F1D /* NavController.swift */,
-				5ADB6A171F561562006BEE1B /* InputView.swift */,
 				5AA3E3AB1EEF356600FB5F1D /* Table */,
 				5AA3E3AA1EEF354300FB5F1D /* Main */,
 			);
