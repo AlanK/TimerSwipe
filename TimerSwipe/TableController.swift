@@ -202,8 +202,7 @@ class TableController: UITableViewController {
 extension TableController: TableCellDelegate {
     /// Handles taps on the custom accessory view on the table view cells
     func cellButtonTapped(cell: TableCell) {
-        // Indirectly get the cell index path by finding the index path for the cell located where the cell that was tapped was located…
-        let indexPath = self.tableView.indexPathForRow(at: cell.center)
+        let indexPath = tableView.indexPath(for: cell)
         
         guard let index = indexPath?.row, let model = modelIntermediary?.model else {return}
         // Update favorite timer, save, and reload the view
