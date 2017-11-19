@@ -50,7 +50,6 @@ struct K {
     static let editButtonDelay: TimeInterval = 0.5
     
     // MARK: Main View
-    static let timerDisplaySize: CGFloat = 64
     static let instructionsAnimationDuration: TimeInterval = 0.2
     static let enabledAlpha: CGFloat = 1.0
     static let disabledAlpha: CGFloat = 0.2

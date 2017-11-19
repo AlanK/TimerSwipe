@@ -30,13 +30,8 @@ class MainViewController: UIViewController {
         }
     }
     
-    /// Formats time as a string for display
-    private let timeFormatter: DateFormatter = {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "mm:ss.SS"
-        return formatter
-    }()
-
+    private let displayStack = DisplayStack()
+    
     private let soundController = SoundController()
     
     // Use duration provided from elsewhere, then the favorite timer, then the default timer
@@ -66,13 +61,13 @@ class MainViewController: UIViewController {
     /// The "Swipe to Start" label
     @IBOutlet var instructionsDisplay: UILabel! {
         didSet {
-            instructionsDisplay.text = MainVCStrings.textInstructions(voiceOverOn: false)
+            instructionsDisplay.text = DisplayStack.textInstructions(voiceOverOn: false)
         }
     }
     /// The "00:00.00" label
     @IBOutlet var timeDisplay: UILabel! {
         didSet {
-            timeDisplay.font = UIFont.monospacedDigitSystemFont(ofSize: K.timerDisplaySize, weight: UIFont.Weight.regular)
+            timeDisplay.font = UIFont.monospacedDigitSystemFont(ofSize: DisplayStack.timeSize, weight: UIFont.Weight.regular)
         }
     }
     /// The Change/Cancel button
@@ -82,7 +77,7 @@ class MainViewController: UIViewController {
             containerView.isAccessibilityElement = true
             containerView.accessibilityTraits = UIAccessibilityTraitSummaryElement
             containerView.accessibilityCustomActions = [containerViewAction]
-            containerView.accessibilityLabel = MainVCStrings.containerViewLabel(timerReady: true, timerDuration: duration)
+            containerView.accessibilityLabel = DisplayStack.containerViewLabel(timerReady: true, timerDuration: duration)
         }
     }
     
@@ -167,13 +162,6 @@ class MainViewController: UIViewController {
         UIApplication.shared.isIdleTimerDisabled = false
         soundController.setActive(false)
     }
-    
-    // MARK: Display updating
-    
-    /// Updates the timer display with a time interval
-    private func display(seconds: TimeInterval) {
-        timeDisplay.text = timeFormatter.string(from: Date(timeIntervalSinceReferenceDate: seconds))
-    }
 }
 
 // MARK: - Stopwatch delegate
@@ -186,7 +174,7 @@ extension MainViewController: StopwatchDelegate {
      - parameter seconds: time remaining as a `TimeInterval`
      */
     func updateDisplay(with seconds: TimeInterval) {
-        display(seconds: seconds)
+        timeDisplay.text = displayStack.display(time: seconds)
     }
     
     /**
@@ -199,15 +187,15 @@ extension MainViewController: StopwatchDelegate {
                 soundController.play(sound)
             }
             UIAccessibilityPostNotification(UIAccessibilityAnnouncementNotification, notice)
-            containerView.accessibilityLabel = MainVCStrings.containerViewLabel(timerReady: (status != .start), timerDuration: duration)
+            containerView.accessibilityLabel = DisplayStack.containerViewLabel(timerReady: (status != .start), timerDuration: duration)
             instructionsVisible = (status != .start)
             UIAccessibilityPostNotification(UIAccessibilityLayoutChangedNotification, nil)
         }
         
         switch status {
-        case .start: notifyUserOfTimerStatus(notice: MainVCStrings.timerStarted, sound: .startCue)
-        case .end: notifyUserOfTimerStatus(notice: MainVCStrings.timerEnded, sound: .endCue)
-        case .cancel: notifyUserOfTimerStatus(notice: MainVCStrings.timerCancelled)
+        case .start: notifyUserOfTimerStatus(notice: DisplayStack.timerStarted, sound: .startCue)
+        case .end: notifyUserOfTimerStatus(notice: DisplayStack.timerEnded, sound: .endCue)
+        case .cancel: notifyUserOfTimerStatus(notice: DisplayStack.timerCancelled)
         }
     }
     
@@ -234,7 +222,7 @@ extension MainViewController: VoiceOverObserver {
     func voiceOverStatusDidChange(_: Notification? = nil) {
         let voiceOverOn = UIAccessibilityIsVoiceOverRunning()
         
-        instructionsDisplay.text = MainVCStrings.textInstructions(voiceOverOn: voiceOverOn)
+        instructionsDisplay.text = DisplayStack.textInstructions(voiceOverOn: voiceOverOn)
         voiceOverOn ? containerView.addGestureRecognizer(tapRecognizer) : containerView.removeGestureRecognizer(tapRecognizer)
         containerView.layoutIfNeeded()
     }
