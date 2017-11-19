@@ -20,7 +20,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <view key="tableFooterView" opaque="NO" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" id="iOO-Fb-4CL" userLabel="Footer Container">
-                            <rect key="frame" x="0.0" y="117.5" width="320" height="44"/>
+                            <rect key="frame" x="0.0" y="147.5" width="320" height="44"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Mark a timer ♥︎ to open it by default." textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="none" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5QI-Sw-C7Z" userLabel="Footer">
@@ -42,22 +42,22 @@
                             </constraints>
                         </view>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="STTableViewCell" id="Tkz-t1-8aP" customClass="TableCell" customModule="TimerSwipe" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="55.5" width="320" height="44"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="STTableViewCell" rowHeight="74" id="Tkz-t1-8aP" customClass="TableCell" customModule="TimerSwipe" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="55.5" width="320" height="74"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" tableViewCell="Tkz-t1-8aP" id="hQt-XQ-0tT">
-                                    <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="73.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="seconds" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lv9-sQ-pS8" userLabel="Seconds">
-                                            <rect key="frame" x="16" y="11" width="95" height="22"/>
+                                            <rect key="frame" x="16" y="21" width="95" height="31.5"/>
                                             <gestureRecognizers/>
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="751" verticalHuggingPriority="751" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="C23-7f-YoB" userLabel="Favorite">
-                                            <rect key="frame" x="262" y="8" width="58" height="28"/>
+                                            <rect key="frame" x="262" y="22.5" width="58" height="28"/>
                                             <gestureRecognizers/>
                                             <inset key="contentEdgeInsets" minX="16" minY="0.0" maxX="14" maxY="0.0"/>
                                             <state key="normal" image="Empty heart"/>
@@ -68,7 +68,7 @@
                                     </subviews>
                                     <gestureRecognizers/>
                                     <constraints>
-                                        <constraint firstAttribute="height" relation="greaterThanOrEqual" secondItem="lv9-sQ-pS8" secondAttribute="height" multiplier="2" id="Hoi-Ij-S2T"/>
+                                        <constraint firstAttribute="height" relation="greaterThanOrEqual" secondItem="lv9-sQ-pS8" secondAttribute="height" multiplier="0.5" constant="50" id="Hoi-Ij-S2T"/>
                                         <constraint firstItem="C23-7f-YoB" firstAttribute="trailing" secondItem="hQt-XQ-0tT" secondAttribute="trailing" id="N01-LN-dAb">
                                             <attributedString key="userComments">
                                                 <fragment content="Add constant of 8 to equal left margin.">
@@ -133,7 +133,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="glh-9n-EK2" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="286" y="322"/>
+            <point key="canvasLocation" x="285" y="321.12676056338029"/>
         </scene>
         <!--Main View Controller-->
         <scene sceneID="tne-QT-ifu">
