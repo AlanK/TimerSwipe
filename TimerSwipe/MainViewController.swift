@@ -74,9 +74,17 @@ class MainViewController: UIViewController {
     private lazy var duration = providedDuration ?? (self.navigationController as? ModelIntermediary)?.model.favorite()?.seconds ?? K.defaultDuration
 
     // MARK: Stopwatch Properties
-    private var buttonStatus = ButtonValue.change
     private lazy var stopwatch: Stopwatch = Stopwatch.init(delegate: self, duration: duration)
-
+    private var buttonStatus = ButtonValue.change {
+        didSet {
+            containerViewAction.name = buttonStatus.accessibleLabel
+            // Use performWithoutAnimation to prevent weird flashing as button text animates.
+            UIView.performWithoutAnimation {
+                self.button.setTitle(buttonStatus.text, for: UIControlState())
+                self.button.layoutIfNeeded()
+            }
+        }
+    }
     
     /// Shows and hides "Swipe to Start" instructions
     private var instructionsVisible = true {
@@ -157,25 +165,11 @@ class MainViewController: UIViewController {
         // If the change button is tapped, go back one level in the view hierarchy
         case .change: self.navigationController?.popViewController(animated: true)
         // If the cancel button is tapped, call setButton(to:) to interrupt the running timer and change the text on the button
-        case .cancel: setButton(to: .change)
+        case .cancel: buttonStatus = .change
         }
     }
     
-    /**
-     Sets the `enum` that controls the value of the Change/Cancel button and interrupts the running timer
-     - parameter buttonValue: the value to which the button should be set
-     */
-    private func setButton(to buttonValue: ButtonValue) {
-        buttonStatus = buttonValue
-        containerViewAction.name = buttonStatus.accessibleLabel
-        // Use performWithoutAnimation to prevent weird flashing as button text animates.
-        UIView.performWithoutAnimation {
-            self.button.setTitle(buttonStatus.text, for: UIControlState())
-            self.button.layoutIfNeeded()
-        }
-    }
-    
-    // MARK: View lifecycle
+    // MARK: View Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -239,10 +233,10 @@ extension MainViewController: StopwatchDelegate {
     }
     
     /// Locks the stopwatch to prevent multiple timers from running simultaneously
-    func lock() {setButton(to: .cancel)}
+    func lock() {buttonStatus = .cancel}
     
     /// Unlocks the stopwatch when no timer is running
-    func unlock() {setButton(to: .change)}
+    func unlock() {buttonStatus = .change}
 
     // This view controller can kill a running timer directly
     func killTimer() {
