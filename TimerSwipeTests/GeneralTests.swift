@@ -16,4 +16,10 @@ class GeneralTests: XCTestCase {
         let testString = timeFormatter.display(time: 83.45)
         XCTAssertEqual(testString, "01:23.45")
     }
+    
+    func testInputViewInitialInvisibility() {
+        let frame = CGRect(x: 0, y: 0, width: 500, height: 100)
+        let inputView = InputView.init(frame: frame, inputViewStyle: .default)
+        XCTAssertFalse(inputView.isVisible)
+    }
 }
