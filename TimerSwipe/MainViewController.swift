@@ -10,10 +10,20 @@ import UIKit
 
 /// Primary view controller—displays the selected timer
 class MainViewController: UIViewController {
-    static let timeSize: CGFloat = 64.0
-    static let timeWeight: UIFont.Weight = .regular
+    private static let timerStarted = NSLocalizedString("timerStarted", value: "Started timer, double-tap to cancel", comment: "The timer has started, double-tap anywhere on the screen to cancel the running timer"),
+    timerEnded = NSLocalizedString("timerFinished", value: "Timer finished", comment: "The timer has finished"),
+    timerCancelled = NSLocalizedString("timerCancelled", value: "Cancelled timer", comment: "The timer has been cancelled")
     
+    private static func textInstructions(voiceOverOn: Bool) -> String {
+        return voiceOverOn ? NSLocalizedString("doubleTapToStart", value: "Double-Tap to Start", comment: "Double-tap anywhere on the screen to start the timer") : NSLocalizedString("swipeToStart", value: "Swipe to Start", comment: "Swipe anywhere on the screen in any direction to start the timer")
+    }
+    
+    private static func containerViewLabel(timerReady: Bool, timerDuration: TimeInterval) -> String {
+        let textDuration = String(Int(timerDuration))
+        return timerReady ? NSLocalizedString("timerReady", value: "\(textDuration)-second timer, starts timer", comment: "{Whole number}-second timer (When activated, this button) starts the timer") : NSLocalizedString("runningTimer", value: "Running \(textDuration)-second timer, cancels timer", comment: "Running {whole number}-second timer (When activated, this button) cancels the timer")
+    }
 
+    private static let timeFont = UIFont.monospacedDigitSystemFont(ofSize: 64.0, weight: UIFont.Weight.regular)
     
     /// Controls the value of the Change/Cancel button
     private enum ButtonValue {
@@ -66,13 +76,13 @@ class MainViewController: UIViewController {
     /// The "Swipe to Start" label
     @IBOutlet var instructionsDisplay: UILabel! {
         didSet {
-            instructionsDisplay.text = DisplayStack.textInstructions(voiceOverOn: false)
+            instructionsDisplay.text = MainViewController.textInstructions(voiceOverOn: false)
         }
     }
     /// The "00:00.00" label
     @IBOutlet var timeDisplay: UILabel! {
         didSet {
-            timeDisplay.font = UIFont.monospacedDigitSystemFont(ofSize: MainViewController.timeSize, weight: MainViewController.timeWeight)
+            timeDisplay.font = MainViewController.timeFont
         }
     }
     /// The Change/Cancel button
@@ -82,7 +92,7 @@ class MainViewController: UIViewController {
             containerView.isAccessibilityElement = true
             containerView.accessibilityTraits = UIAccessibilityTraitSummaryElement
             containerView.accessibilityCustomActions = [containerViewAction]
-            containerView.accessibilityLabel = DisplayStack.containerViewLabel(timerReady: true, timerDuration: duration)
+            containerView.accessibilityLabel = MainViewController.containerViewLabel(timerReady: true, timerDuration: duration)
         }
     }
     
@@ -192,15 +202,15 @@ extension MainViewController: StopwatchDelegate {
                 soundController.play(sound)
             }
             UIAccessibilityPostNotification(UIAccessibilityAnnouncementNotification, notice)
-            containerView.accessibilityLabel = DisplayStack.containerViewLabel(timerReady: (status != .start), timerDuration: duration)
+            containerView.accessibilityLabel = MainViewController.containerViewLabel(timerReady: (status != .start), timerDuration: duration)
             instructionsVisible = (status != .start)
             UIAccessibilityPostNotification(UIAccessibilityLayoutChangedNotification, nil)
         }
         
         switch status {
-        case .start: notifyUserOfTimerStatus(notice: DisplayStack.timerStarted, sound: .startCue)
-        case .end: notifyUserOfTimerStatus(notice: DisplayStack.timerEnded, sound: .endCue)
-        case .cancel: notifyUserOfTimerStatus(notice: DisplayStack.timerCancelled)
+        case .start: notifyUserOfTimerStatus(notice: MainViewController.timerStarted, sound: .startCue)
+        case .end: notifyUserOfTimerStatus(notice: MainViewController.timerEnded, sound: .endCue)
+        case .cancel: notifyUserOfTimerStatus(notice: MainViewController.timerCancelled)
         }
     }
     
@@ -224,7 +234,7 @@ extension MainViewController: VoiceOverObserver {
     func voiceOverStatusDidChange(_: Notification? = nil) {
         let voiceOverOn = UIAccessibilityIsVoiceOverRunning()
         
-        instructionsDisplay.text = DisplayStack.textInstructions(voiceOverOn: voiceOverOn)
+        instructionsDisplay.text = MainViewController.textInstructions(voiceOverOn: voiceOverOn)
         voiceOverOn ? containerView.addGestureRecognizer(tapRecognizer) : containerView.removeGestureRecognizer(tapRecognizer)
         containerView.layoutIfNeeded()
     }
