@@ -10,19 +10,29 @@ import UIKit
 
 /// Primary view controller—displays the selected timer
 class MainViewController: UIViewController {
+    // Localized strings for StopwatchDelegate events
     private static let timerStarted = NSLocalizedString("timerStarted", value: "Started timer, double-tap to cancel", comment: "The timer has started, double-tap anywhere on the screen to cancel the running timer"),
     timerEnded = NSLocalizedString("timerFinished", value: "Timer finished", comment: "The timer has finished"),
     timerCancelled = NSLocalizedString("timerCancelled", value: "Cancelled timer", comment: "The timer has been cancelled")
-    
-    private static func textInstructions(voiceOverOn: Bool) -> String {
-        return voiceOverOn ? NSLocalizedString("doubleTapToStart", value: "Double-Tap to Start", comment: "Double-tap anywhere on the screen to start the timer") : NSLocalizedString("swipeToStart", value: "Swipe to Start", comment: "Swipe anywhere on the screen in any direction to start the timer")
+    /**
+     Text for visible instructions depending on VoiceOver Status
+     - parameter voiceOverOn: the status of VoiceOver
+     - returns: instructions to display to the user
+     */
+    private static func textInstructions(voiceOverIsOn: Bool) -> String {
+        return voiceOverIsOn ? NSLocalizedString("doubleTapToStart", value: "Double-Tap to Start", comment: "Double-tap anywhere on the screen to start the timer") : NSLocalizedString("swipeToStart", value: "Swipe to Start", comment: "Swipe anywhere on the screen in any direction to start the timer")
     }
-    
+    /**
+     Spoken instructions based on timer status and duration
+     - parameter timerReady: the status of the timer
+     - parameter timerDuration: the duration of the timer
+     - returns: VoiceOver instructions for the user
+     */
     private static func containerViewLabel(timerReady: Bool, timerDuration: TimeInterval) -> String {
         let textDuration = String(Int(timerDuration))
         return timerReady ? NSLocalizedString("timerReady", value: "\(textDuration)-second timer, starts timer", comment: "{Whole number}-second timer (When activated, this button) starts the timer") : NSLocalizedString("runningTimer", value: "Running \(textDuration)-second timer, cancels timer", comment: "Running {whole number}-second timer (When activated, this button) cancels the timer")
     }
-
+    /// Font settings for the timer display
     private static let timeFont = UIFont.monospacedDigitSystemFont(ofSize: 64.0, weight: UIFont.Weight.regular)
     
     /// Controls the value of the Change/Cancel button
@@ -37,6 +47,7 @@ class MainViewController: UIViewController {
             case .change: return NSLocalizedString("changeButton", value: "Change", comment: "Change which timer is displayed")
             }
         }
+        /// Returns a localized string with VoiceOver instructions for the Change/Cancel button
         var accessibleLabel: String {
             switch self {
             case .cancel: return NSLocalizedString("cancelTimer", value: "Cancel timer", comment: "Cancel the running timer")
@@ -76,7 +87,7 @@ class MainViewController: UIViewController {
     /// The "Swipe to Start" label
     @IBOutlet var instructionsDisplay: UILabel! {
         didSet {
-            instructionsDisplay.text = MainViewController.textInstructions(voiceOverOn: false)
+            instructionsDisplay.text = MainViewController.textInstructions(voiceOverIsOn: false)
         }
     }
     /// The "00:00.00" label
@@ -234,7 +245,7 @@ extension MainViewController: VoiceOverObserver {
     func voiceOverStatusDidChange(_: Notification? = nil) {
         let voiceOverOn = UIAccessibilityIsVoiceOverRunning()
         
-        instructionsDisplay.text = MainViewController.textInstructions(voiceOverOn: voiceOverOn)
+        instructionsDisplay.text = MainViewController.textInstructions(voiceOverIsOn: voiceOverOn)
         voiceOverOn ? containerView.addGestureRecognizer(tapRecognizer) : containerView.removeGestureRecognizer(tapRecognizer)
         containerView.layoutIfNeeded()
     }
