@@ -10,6 +10,7 @@ import UIKit
 
 /// Primary view controller—displays the selected timer
 class MainViewController: UIViewController {
+    // MARK: Class Properties
     // Localized strings for StopwatchDelegate events
     private static let timerStarted = NSLocalizedString("timerStarted", value: "Started timer, double-tap to cancel", comment: "The timer has started, double-tap anywhere on the screen to cancel the running timer"),
     timerEnded = NSLocalizedString("timerFinished", value: "Timer finished", comment: "The timer has finished"),
@@ -56,16 +57,18 @@ class MainViewController: UIViewController {
         }
     }
     
-    private let timeFormatter = TimeFormatter()
+    // MARK: - Instance
     
+    private let timeFormatter = TimeFormatter()
     private let soundController = SoundController()
     
+    // MARK: Duration Properties
     // Use duration provided from elsewhere, then the favorite timer, then the default timer
     var providedDuration: TimeInterval?
     private lazy var duration = providedDuration ?? (self.navigationController as? ModelIntermediary)?.model.favorite()?.seconds ?? K.defaultDuration
 
+    // MARK: Stopwatch Properties
     private var buttonStatus = ButtonValue.change
-    
     private lazy var stopwatch: Stopwatch = Stopwatch.init(delegate: self, duration: duration)
 
     
@@ -73,7 +76,9 @@ class MainViewController: UIViewController {
     private var instructionsVisible = true {
         didSet {
             let alpha = instructionsVisible ? K.enabledAlpha : K.disabledAlpha
-            UIView.animate(withDuration: K.instructionsAnimationDuration, delay: 0, options: .curveLinear, animations: {self.instructionsDisplay.alpha = alpha})
+            UIView.animate(withDuration: K.instructionsAnimationDuration, delay: 0, options: .curveLinear, animations: {
+                self.instructionsDisplay.alpha = alpha
+            })
         }
     }
     
