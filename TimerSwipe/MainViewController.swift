@@ -55,6 +55,12 @@ class MainViewController: UIViewController {
             case .change: return NSLocalizedString("changeTimer", value: "Change timer", comment: "Change the timer by selecting another one")
             }
         }
+        var timerReady: Bool {
+            switch self {
+            case .cancel: return false
+            case .change: return true
+            }
+        }
     }
     
     // MARK: - Instance
@@ -198,7 +204,9 @@ class MainViewController: UIViewController {
 // MARK: - Stopwatch delegate
 
 extension MainViewController: StopwatchDelegate {
-    var timerReady: Bool {return (buttonStatus == .change)}
+    var timerReady: Bool {
+        return buttonStatus.timerReady
+    }
     
     /**
      Updates the timer display with a time interval.
@@ -238,8 +246,10 @@ extension MainViewController: StopwatchDelegate {
 
     // This view controller can kill a running timer directly
     func killTimer() {
-        if buttonStatus == .cancel {buttonActions()}
-        soundController.play(.dieCue)
+        if buttonStatus.timerReady == false {
+            buttonActions()
+            soundController.play(.dieCue)
+        }
     }
 }
 
