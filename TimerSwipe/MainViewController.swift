@@ -45,7 +45,7 @@ class MainViewController: UIViewController {
         }
     }
     
-    private let displayStack = DisplayStack()
+    private let displayStack = timeFormatter()
     
     private let soundController = SoundController()
     
