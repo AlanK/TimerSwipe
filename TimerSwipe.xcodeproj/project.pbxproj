@@ -25,7 +25,7 @@
 		5AB18AFA1D2058CA007B9D9F /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AB18AF91D2058CA007B9D9F /* MainViewController.swift */; };
 		5AB69EBF1EC799370078DDA5 /* Stopwatch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AB69EBE1EC799370078DDA5 /* Stopwatch.swift */; };
 		5ADB6A181F561562006BEE1B /* InputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ADB6A171F561562006BEE1B /* InputView.swift */; };
-		858480F61FCB55D300DBE466 /* TFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 858480F51FCB55D300DBE466 /* TFormatter.swift */; };
+		858480F61FCB55D300DBE466 /* TimeFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 858480F51FCB55D300DBE466 /* TimeFormatter.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,7 +63,7 @@
 		5AB18AF91D2058CA007B9D9F /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		5AB69EBE1EC799370078DDA5 /* Stopwatch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Stopwatch.swift; sourceTree = "<group>"; };
 		5ADB6A171F561562006BEE1B /* InputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputView.swift; sourceTree = "<group>"; };
-		858480F51FCB55D300DBE466 /* TFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TFormatter.swift; sourceTree = "<group>"; };
+		858480F51FCB55D300DBE466 /* TimeFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeFormatter.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -159,7 +159,7 @@
 			isa = PBXGroup;
 			children = (
 				5AB18AF91D2058CA007B9D9F /* MainViewController.swift */,
-				858480F51FCB55D300DBE466 /* TFormatter.swift */,
+				858480F51FCB55D300DBE466 /* TimeFormatter.swift */,
 				5AB69EBE1EC799370078DDA5 /* Stopwatch.swift */,
 				5A591CE81D3AA18E00B9BD3D /* SoundController.swift */,
 			);
@@ -303,7 +303,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5ADB6A181F561562006BEE1B /* InputView.swift in Sources */,
-				858480F61FCB55D300DBE466 /* TFormatter.swift in Sources */,
+				858480F61FCB55D300DBE466 /* TimeFormatter.swift in Sources */,
 				5A12267E1D5A94C3006D49F1 /* STTimerList.swift in Sources */,
 				5A90785D1EEB8C24006BCDD3 /* Constants.swift in Sources */,
 				5A03B9A81D1DDB9800E245C9 /* AppDelegate.swift in Sources */,
