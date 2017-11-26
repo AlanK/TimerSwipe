@@ -10,6 +10,11 @@ import UIKit
 
 /// Primary view controller—displays the selected timer
 class MainViewController: UIViewController {
+    static let timeSize: CGFloat = 64.0
+    static let timeWeight: UIFont.Weight = .regular
+    
+
+    
     /// Controls the value of the Change/Cancel button
     private enum ButtonValue {
         case cancel
@@ -67,7 +72,7 @@ class MainViewController: UIViewController {
     /// The "00:00.00" label
     @IBOutlet var timeDisplay: UILabel! {
         didSet {
-            timeDisplay.font = UIFont.monospacedDigitSystemFont(ofSize: DisplayStack.timeSize, weight: UIFont.Weight.regular)
+            timeDisplay.font = UIFont.monospacedDigitSystemFont(ofSize: MainViewController.timeSize, weight: MainViewController.timeWeight)
         }
     }
     /// The Change/Cancel button
