@@ -1,5 +1,5 @@
 //
-//  timeFormatter.swift
+//  TimeFormatter.swift
 //  TimerSwipe
 //
 //  Created by Alan Kantz on 11/12/17.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct timeFormatter {
+struct TimeFormatter {
     private let formatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateFormat = "mm:ss.SS"

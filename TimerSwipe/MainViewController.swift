@@ -45,7 +45,7 @@ class MainViewController: UIViewController {
         }
     }
     
-    private let displayStack = timeFormatter()
+    private let timeFormatter = TimeFormatter()
     
     private let soundController = SoundController()
     
@@ -189,7 +189,7 @@ extension MainViewController: StopwatchDelegate {
      - parameter seconds: time remaining as a `TimeInterval`
      */
     func updateDisplay(with seconds: TimeInterval) {
-        timeDisplay.text = displayStack.display(time: seconds)
+        timeDisplay.text = timeFormatter.display(time: seconds)
     }
     
     /**
