@@ -15,6 +15,21 @@ class MainViewController: UIViewController {
     private static let timerStarted = NSLocalizedString("timerStarted", value: "Started timer, double-tap to cancel", comment: "The timer has started, double-tap anywhere on the screen to cancel the running timer"),
     timerEnded = NSLocalizedString("timerFinished", value: "Timer finished", comment: "The timer has finished"),
     timerCancelled = NSLocalizedString("timerCancelled", value: "Cancelled timer", comment: "The timer has been cancelled")
+    /// Returns a localized string with text for the Change/Cancel button
+    private static func buttonText(timerIsReady: Bool) -> String {
+        switch timerIsReady {
+        case true: return NSLocalizedString("changeButton", value: "Change", comment: "Change which timer is displayed")
+        case false: return NSLocalizedString("cancelButton", value: "Cancel", comment: "Cancel the timer that is currently running")
+        }
+    }
+    /// Returns a localized string with VoiceOver instructions for the Change/Cancel button
+    private static func buttonLabel(timerIsReady: Bool) -> String {
+        switch timerIsReady {
+        case true: return NSLocalizedString("changeTimer", value: "Change timer", comment: "Change the timer by selecting another one")
+        case false: return NSLocalizedString("cancelTimer", value: "Cancel timer", comment: "Cancel the running timer")
+        }
+    }
+
     /**
      Text for visible instructions depending on VoiceOver Status
      - parameter voiceOverOn: the status of VoiceOver
@@ -28,6 +43,7 @@ class MainViewController: UIViewController {
             return NSLocalizedString("swipeToStart", value: "Swipe to Start", comment: "Swipe anywhere on the screen in any direction to start the timer")
         }
     }
+
     /**
      Spoken instructions based on timer status and duration
      - parameter timerReady: the status of the timer
@@ -51,20 +67,6 @@ class MainViewController: UIViewController {
         case cancel
         case change
         // rawValue can't return an `NSLocalizedString`
-        /// Returns a localized string with text for the Change/Cancel button
-        var text: String {
-            switch self {
-            case .cancel: return NSLocalizedString("cancelButton", value: "Cancel", comment: "Cancel the timer that is currently running")
-            case .change: return NSLocalizedString("changeButton", value: "Change", comment: "Change which timer is displayed")
-            }
-        }
-        /// Returns a localized string with VoiceOver instructions for the Change/Cancel button
-        var accessibleLabel: String {
-            switch self {
-            case .cancel: return NSLocalizedString("cancelTimer", value: "Cancel timer", comment: "Cancel the running timer")
-            case .change: return NSLocalizedString("changeTimer", value: "Change timer", comment: "Change the timer by selecting another one")
-            }
-        }
         var timerReady: Bool {
             switch self {
             case .cancel: return false
@@ -87,10 +89,10 @@ class MainViewController: UIViewController {
     private lazy var stopwatch: Stopwatch = Stopwatch.init(delegate: self, duration: duration)
     private var buttonStatus = ButtonValue.change {
         didSet {
-            containerViewAction.name = buttonStatus.accessibleLabel
+            containerViewAction.name = MainViewController.buttonLabel(timerIsReady: buttonStatus.timerReady)
             // Use performWithoutAnimation to prevent weird flashing as button text animates.
             UIView.performWithoutAnimation {
-                self.button.setTitle(buttonStatus.text, for: UIControlState())
+                self.button.setTitle(MainViewController.buttonText(timerIsReady: buttonStatus.timerReady), for: UIControlState())
                 self.button.layoutIfNeeded()
             }
         }
@@ -108,7 +110,7 @@ class MainViewController: UIViewController {
     
     private lazy var tapRecognizer = UITapGestureRecognizer.init(target: self, action: #selector(containerViewAsButton(sender:)))
     
-    private lazy var containerViewAction = UIAccessibilityCustomAction.init(name: buttonStatus.accessibleLabel, target: self, selector: #selector(buttonActions))
+    private lazy var containerViewAction = UIAccessibilityCustomAction.init(name: MainViewController.buttonLabel(timerIsReady: buttonStatus.timerReady), target: self, selector: #selector(buttonActions))
 
     
     // MARK: Labels & Buttons
