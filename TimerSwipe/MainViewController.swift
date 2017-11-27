@@ -21,7 +21,12 @@ class MainViewController: UIViewController {
      - returns: instructions to display to the user
      */
     private static func textInstructions(voiceOverIsOn: Bool) -> String {
-        return voiceOverIsOn ? NSLocalizedString("doubleTapToStart", value: "Double-Tap to Start", comment: "Double-tap anywhere on the screen to start the timer") : NSLocalizedString("swipeToStart", value: "Swipe to Start", comment: "Swipe anywhere on the screen in any direction to start the timer")
+        switch voiceOverIsOn {
+        case true:
+            return NSLocalizedString("doubleTapToStart", value: "Double-Tap to Start", comment: "Double-tap anywhere on the screen to start the timer")
+        case false:
+            return NSLocalizedString("swipeToStart", value: "Swipe to Start", comment: "Swipe anywhere on the screen in any direction to start the timer")
+        }
     }
     /**
      Spoken instructions based on timer status and duration
@@ -31,7 +36,12 @@ class MainViewController: UIViewController {
      */
     private static func containerViewLabel(timerReady: Bool, timerDuration: TimeInterval) -> String {
         let textDuration = String(Int(timerDuration))
-        return timerReady ? NSLocalizedString("timerReady", value: "\(textDuration)-second timer, starts timer", comment: "{Whole number}-second timer (When activated, this button) starts the timer") : NSLocalizedString("runningTimer", value: "Running \(textDuration)-second timer, cancels timer", comment: "Running {whole number}-second timer (When activated, this button) cancels the timer")
+        switch timerReady {
+        case true:
+            return NSLocalizedString("timerReady", value: "\(textDuration)-second timer, starts timer", comment: "{Whole number}-second timer (When activated, this button) starts the timer")
+        case false:
+            return NSLocalizedString("runningTimer", value: "Running \(textDuration)-second timer, cancels timer", comment: "Running {whole number}-second timer (When activated, this button) cancels the timer")
+        }
     }
     /// Font settings for the timer display
     private static let timeFont = UIFont.monospacedDigitSystemFont(ofSize: 64.0, weight: UIFont.Weight.regular)
