@@ -62,19 +62,6 @@ class MainViewController: UIViewController {
     /// Font settings for the timer display
     private static let timeFont = UIFont.monospacedDigitSystemFont(ofSize: 64.0, weight: UIFont.Weight.regular)
     
-    /// Controls the value of the Change/Cancel button
-    private enum ButtonValue {
-        case cancel
-        case change
-        // rawValue can't return an `NSLocalizedString`
-        var timerReady: Bool {
-            switch self {
-            case .cancel: return false
-            case .change: return true
-            }
-        }
-    }
-    
     // MARK: - Instance
     
     private let timeFormatter = TimeFormatter()
@@ -87,12 +74,12 @@ class MainViewController: UIViewController {
 
     // MARK: Stopwatch Properties
     private lazy var stopwatch: Stopwatch = Stopwatch.init(delegate: self, duration: duration)
-    private var buttonStatus = ButtonValue.change {
+    var timerReady: Bool = true {
         didSet {
-            containerViewAction.name = MainViewController.buttonLabel(timerIsReady: buttonStatus.timerReady)
+            containerViewAction.name = MainViewController.buttonLabel(timerIsReady: timerReady)
             // Use performWithoutAnimation to prevent weird flashing as button text animates.
             UIView.performWithoutAnimation {
-                self.button.setTitle(MainViewController.buttonText(timerIsReady: buttonStatus.timerReady), for: UIControlState())
+                self.button.setTitle(MainViewController.buttonText(timerIsReady: timerReady), for: UIControlState())
                 self.button.layoutIfNeeded()
             }
         }
@@ -110,7 +97,7 @@ class MainViewController: UIViewController {
     
     private lazy var tapRecognizer = UITapGestureRecognizer.init(target: self, action: #selector(containerViewAsButton(sender:)))
     
-    private lazy var containerViewAction = UIAccessibilityCustomAction.init(name: MainViewController.buttonLabel(timerIsReady: buttonStatus.timerReady), target: self, selector: #selector(buttonActions))
+    private lazy var containerViewAction = UIAccessibilityCustomAction.init(name: MainViewController.buttonLabel(timerIsReady: timerReady), target: self, selector: #selector(buttonActions))
 
     
     // MARK: Labels & Buttons
@@ -156,7 +143,7 @@ class MainViewController: UIViewController {
     
     // A two-finger double-tap "magic tap" accessibility command starts/cancels the timer
     override func accessibilityPerformMagicTap() -> Bool {
-        buttonStatus.timerReady ? start() : buttonActions()
+        timerReady ? start() : buttonActions()
         return true
     }
     
@@ -170,11 +157,11 @@ class MainViewController: UIViewController {
     
     /// Handles taps on the Change/Cancel button
     @objc private func buttonActions() {
-        switch buttonStatus {
+        switch timerReady {
         // If the change button is tapped, go back one level in the view hierarchy
-        case .change: self.navigationController?.popViewController(animated: true)
+        case true: self.navigationController?.popViewController(animated: true)
         // If the cancel button is tapped, call setButton(to:) to interrupt the running timer and change the text on the button
-        case .cancel: buttonStatus = .change
+        case false: timerReady = true
         }
     }
     
@@ -207,10 +194,6 @@ class MainViewController: UIViewController {
 // MARK: - Stopwatch delegate
 
 extension MainViewController: StopwatchDelegate {
-    var timerReady: Bool {
-        return buttonStatus.timerReady
-    }
-    
     /**
      Updates the timer display with a time interval.
      - parameter seconds: time remaining as a `TimeInterval`
@@ -242,14 +225,14 @@ extension MainViewController: StopwatchDelegate {
     }
     
     /// Locks the stopwatch to prevent multiple timers from running simultaneously
-    func lock() {buttonStatus = .cancel}
+    func lock() {timerReady = false}
     
     /// Unlocks the stopwatch when no timer is running
-    func unlock() {buttonStatus = .change}
+    func unlock() {timerReady = true}
 
     // This view controller can kill a running timer directly
     func killTimer() {
-        if buttonStatus.timerReady == false {
+        if timerReady == false {
             buttonActions()
             soundController.play(.dieCue)
         }
