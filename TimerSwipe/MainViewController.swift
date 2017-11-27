@@ -154,10 +154,7 @@ class MainViewController: UIViewController {
     
     // A two-finger double-tap "magic tap" accessibility command starts/cancels the timer
     override func accessibilityPerformMagicTap() -> Bool {
-        switch buttonStatus {
-        case .change: start()
-        case .cancel: buttonActions()
-        }
+        buttonStatus.timerReady ? start() : buttonActions()
         return true
     }
     
