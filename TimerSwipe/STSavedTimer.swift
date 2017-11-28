@@ -48,3 +48,9 @@ class STSavedTimer: NSObject, NSCoding {
         self.init(seconds: Double(centiseconds)/STSavedTimer.centisecondsPerSecond, isFavorite: isFavorite)
     }
 }
+
+extension STSavedTimer: NSSecureCoding {
+    static var supportsSecureCoding: Bool {
+        return true
+    }
+}
