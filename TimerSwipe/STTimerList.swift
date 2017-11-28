@@ -63,6 +63,12 @@ class STTimerList: NSObject, NSCoding {
         timers.insert(newElement, at: index)
         validate()
     }
+    
+    /// Insert an array of timers at a specified index
+    func insert(_ newTimers: [STSavedTimer], at index: Int) {
+        timers.insert(contentsOf: newTimers, at: index)
+        validate()
+    }
 
     /// Remove and return a timer from a specified index
     func remove(at: Int) -> STSavedTimer {
