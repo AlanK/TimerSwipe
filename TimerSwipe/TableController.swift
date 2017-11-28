@@ -317,6 +317,7 @@ extension TableController: UITableViewDragDelegate {
         return dragItems(at: indexPath)
     }
     
+    // Support multi-row selections
 //    func tableView(_ tableView: UITableView, itemsForAddingTo session: UIDragSession, at indexPath: IndexPath, point: CGPoint) -> [UIDragItem] {
 //        return dragItems(at: indexPath)
 //    }
