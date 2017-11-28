@@ -121,8 +121,9 @@ class TableController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         // Don't delete the row if the model can't be updated
-        guard editingStyle == .delete, let model = modelIntermediary?.model else {return}
+        guard editingStyle == .delete, let model = modelIntermediary?.model else { return }
         let _ = model.remove(at: indexPath.row)
+        model.saveData()
         tableView.deleteRows(at: [indexPath], with: .automatic)
         refreshEditButton()
         // You shouldn't toggle setEditing within this method, so GCD to the rescue
@@ -143,6 +144,7 @@ class TableController: UITableViewController {
         guard let model = modelIntermediary?.model else {return}
         let timer = model.remove(at: fromIndexPath.row)
         model.insert(timer, at: toIndexPath.row)
+        model.saveData()
     }
     
     override func setEditing(_ editing: Bool, animated: Bool) {
