@@ -62,7 +62,11 @@ class TableController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationItem.leftBarButtonItem = self.editButtonItem
-        
+        if #available(iOS 11.0, *) {
+            tableView.dragDelegate = self
+            tableView.dropDelegate = self
+            tableView.dragInteractionEnabled = true
+        }
         voiceOverStatusDidChange()
     }
     
@@ -303,4 +307,34 @@ extension TableController: VoiceOverObserver {
         footer.text = TableController.footerTextwhenVoiceOverIs(voiceOverOn)
         tableView.tableFooterView?.layoutIfNeeded()
     }
+}
+
+@available(iOS 11.0, *)
+extension TableController: UITableViewDragDelegate {
+    func tableView(_ tableView: UITableView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
+        return dragItems(at: indexPath)
+    }
+    
+//    func tableView(_ tableView: UITableView, itemsForAddingTo session: UIDragSession, at indexPath: IndexPath, point: CGPoint) -> [UIDragItem] {
+//        return dragItems(at: indexPath)
+//    }
+    
+    private func dragItems(at indexPath: IndexPath) -> [UIDragItem] {
+        let itemProvider = NSItemProvider(item: nil, typeIdentifier: nil)
+        let dragItem = UIDragItem(itemProvider: itemProvider)
+        return [dragItem]
+    }
+}
+
+@available(iOS 11.0, *)
+extension TableController: UITableViewDropDelegate {
+    func tableView(_ tableView: UITableView, canHandle session: UIDropSession) -> Bool {
+        return true
+    }
+    
+    func tableView(_ tableView: UITableView, dropSessionDidUpdate session: UIDropSession, withDestinationIndexPath destinationIndexPath: IndexPath?) -> UITableViewDropProposal {
+        return UITableViewDropProposal(operation: .move, intent: .insertAtDestinationIndexPath)
+    }
+    
+    func tableView(_ tableView: UITableView, performDropWith coordinator: UITableViewDropCoordinator) { }
 }
