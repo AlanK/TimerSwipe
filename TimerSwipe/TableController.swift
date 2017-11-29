@@ -25,7 +25,7 @@ class TableController: UITableViewController {
     }
     
     /// Controller holding the app model
-    private lazy var modelIntermediary: ModelIntermediary? = self.navigationController as? ModelIntermediary
+    lazy var modelIntermediary: ModelIntermediary? = self.navigationController as? ModelIntermediary
     /// The table-add button
     @IBOutlet var addButton: UIBarButtonItem! {
         didSet {
@@ -49,7 +49,7 @@ class TableController: UITableViewController {
     private let cellID = "STTableViewCell"
     private let sectionsInTableView = 1, mainSection = 0
     
-    private lazy var accessibleFirstFocus: UIResponder? = {
+    lazy var accessibleFirstFocus: UIResponder? = {
         guard let model = modelIntermediary?.model, model.count() > 0 else { return nil }
         let index = model.favoriteIndex() ?? 0
         return self.tableView.cellForRow(at: IndexPath.init(row: index, section: mainSection))
@@ -194,25 +194,8 @@ class TableController: UITableViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // More segues might exist in the future, so let's keep this short and factor out the realy work
         if segue.identifier == SegueID.tableToTimer.rawValue {
-            segueToMainViewController(for: segue, sender: sender)
+            SegueMediator.fromTableControllerToMainViewController(segue: segue, sender: sender)
         }
-    }
-    
-    /**
-     Prepare for segue to the main view controller specifically. This has the same signature as `prepare(for:sender:)` for convenience.
-     - parameters:
-     - segue: The `TableToTimer` storyboard segue
-     - sender: A `TableCell`
-     */
-    private func segueToMainViewController(for segue: UIStoryboardSegue, sender: Any?) {
-        guard let controller = segue.destination as? MainViewController,
-            let selectedCell = sender as? TableCell,
-            let indexPath = tableView.indexPath(for: selectedCell),
-            let model = modelIntermediary?.model else {return}
-        let timer = model[indexPath.row]
-        accessibleFirstFocus = selectedCell
-        // Set the destination view controller's providedDuration to the timer value
-        controller.providedDuration = timer.seconds
     }
 }
 
