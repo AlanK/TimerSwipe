@@ -14,6 +14,7 @@ protocol ModelIntermediary {
     var model: STTimerList {get}
 }
 
+// MARK: -
 /// The main table in the app
 class TableController: UITableViewController {
     static private func footerTextWhenVoiceOverIs(_ enabled: Bool) -> String {
@@ -199,6 +200,39 @@ class TableController: UITableViewController {
     }
 }
 
+// MARK: - Table View Drag Delegate
+@available(iOS 11.0, *)
+extension TableController: UITableViewDragDelegate {
+    func tableView(_ tableView: UITableView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
+        return dragItems(at: indexPath)
+    }
+    
+    // Support multi-row selections
+    //    func tableView(_ tableView: UITableView, itemsForAddingTo session: UIDragSession, at indexPath: IndexPath, point: CGPoint) -> [UIDragItem] {
+    //        return dragItems(at: indexPath)
+    //    }
+    
+    private func dragItems(at indexPath: IndexPath) -> [UIDragItem] {
+        let itemProvider = NSItemProvider(item: nil, typeIdentifier: nil)
+        let dragItem = UIDragItem(itemProvider: itemProvider)
+        return [dragItem]
+    }
+}
+
+// MARK: Table View Drop Delegate
+@available(iOS 11.0, *)
+extension TableController: UITableViewDropDelegate {
+    func tableView(_ tableView: UITableView, canHandle session: UIDropSession) -> Bool {
+        return true
+    }
+    
+    func tableView(_ tableView: UITableView, dropSessionDidUpdate session: UIDropSession, withDestinationIndexPath destinationIndexPath: IndexPath?) -> UITableViewDropProposal {
+        return UITableViewDropProposal(operation: .move, intent: .insertAtDestinationIndexPath)
+    }
+    
+    func tableView(_ tableView: UITableView, performDropWith coordinator: UITableViewDropCoordinator) { }
+}
+
 // MARK: - Table Cell Delegate
 extension TableController: TableCellDelegate {
     /// Handles taps on the custom accessory view on the table view cells
@@ -210,28 +244,6 @@ extension TableController: TableCellDelegate {
         model.toggleFavorite(at: index)
         model.saveData()
         tableView.reloadData()
-    }
-}
-
-// MARK: - Text Field Delegate
-extension TableController: UITextFieldDelegate {
-    // Protect against text-related problems
-    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        let charCount = textField.text?.count ?? 0
-        let invalidCharacters = CharacterSet(charactersIn: "0123456789").inverted
-        let maxLength = 3
-        
-        // Prevent crash-on-undo when a text insertion was blocked by this code
-        // Prevent non-number characters from being inserted
-        // Prevent too many characters from being inserted
-        return (range.length + range.location <= charCount &&
-            string.rangeOfCharacter(from: invalidCharacters) == nil &&
-            charCount + string.count - range.length <= maxLength)
-    }
-    
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        createNewTimer()
-        return false
     }
 }
 
@@ -297,39 +309,31 @@ extension TableController {
     }
 }
 
+// MARK: Text Field Delegate
+extension TableController: UITextFieldDelegate {
+    // Protect against text-related problems
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        let charCount = textField.text?.count ?? 0
+        let invalidCharacters = CharacterSet(charactersIn: "0123456789").inverted
+        let maxLength = 3
+        
+        // Prevent crash-on-undo when a text insertion was blocked by this code
+        // Prevent non-number characters from being inserted
+        // Prevent too many characters from being inserted
+        return (range.length + range.location <= charCount &&
+            string.rangeOfCharacter(from: invalidCharacters) == nil &&
+            charCount + string.count - range.length <= maxLength)
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        createNewTimer()
+        return false
+    }
+}
+
+// MARK: - VoiceOver Observer
 extension TableController: VoiceOverObserver {
     func voiceOverStatusDidChange(_: Notification? = nil) {
         handleVoiceOverStatus()
     }
-}
-
-@available(iOS 11.0, *)
-extension TableController: UITableViewDragDelegate {
-    func tableView(_ tableView: UITableView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
-        return dragItems(at: indexPath)
-    }
-    
-    // Support multi-row selections
-//    func tableView(_ tableView: UITableView, itemsForAddingTo session: UIDragSession, at indexPath: IndexPath, point: CGPoint) -> [UIDragItem] {
-//        return dragItems(at: indexPath)
-//    }
-    
-    private func dragItems(at indexPath: IndexPath) -> [UIDragItem] {
-        let itemProvider = NSItemProvider(item: nil, typeIdentifier: nil)
-        let dragItem = UIDragItem(itemProvider: itemProvider)
-        return [dragItem]
-    }
-}
-
-@available(iOS 11.0, *)
-extension TableController: UITableViewDropDelegate {
-    func tableView(_ tableView: UITableView, canHandle session: UIDropSession) -> Bool {
-        return true
-    }
-    
-    func tableView(_ tableView: UITableView, dropSessionDidUpdate session: UIDropSession, withDestinationIndexPath destinationIndexPath: IndexPath?) -> UITableViewDropProposal {
-        return UITableViewDropProposal(operation: .move, intent: .insertAtDestinationIndexPath)
-    }
-    
-    func tableView(_ tableView: UITableView, performDropWith coordinator: UITableViewDropCoordinator) { }
 }
