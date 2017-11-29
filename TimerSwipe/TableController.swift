@@ -45,9 +45,7 @@ class TableController: UITableViewController {
     private let sectionsInTableView = 1, mainSection = 0
     
     private lazy var accessibleFirstFocus: UIResponder? = {
-        guard let model = modelIntermediary?.model else {return nil}
-        let count = model.count()
-        guard count > 0 else {return nil}
+        guard let model = modelIntermediary?.model, model.count() > 0 else { return nil }
         let index = model.favoriteIndex() ?? 0
         return self.tableView.cellForRow(at: IndexPath.init(row: index, section: mainSection))
     }()
