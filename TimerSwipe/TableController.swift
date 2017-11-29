@@ -16,9 +16,14 @@ protocol ModelIntermediary {
 
 /// The main table in the app
 class TableController: UITableViewController {
-    static private func footerTextwhenVoiceOverIs(_ enabled: Bool) -> String {
-        return enabled ? NSLocalizedString("voiceOverFooter", value: "Mark a timer favorite to open it by default.", comment: "") : NSLocalizedString("defaultFooter", value: "Mark a timer ♥︎ to open it by default.", comment: "")
+    static private func footerTextWhenVoiceOverIs(_ enabled: Bool) -> String {
+        if enabled {
+            return NSLocalizedString("voiceOverFooter", value: "Mark a timer favorite to open it by default.", comment: "")
+        } else {
+            return NSLocalizedString("defaultFooter", value: "Mark a timer ♥︎ to open it by default.", comment: "")
+        }
     }
+    
     /// Controller holding the app model
     private lazy var modelIntermediary: ModelIntermediary? = self.navigationController as? ModelIntermediary
     /// The table-add button
@@ -65,7 +70,7 @@ class TableController: UITableViewController {
             tableView.dropDelegate = self
             tableView.dragInteractionEnabled = true
         }
-        voiceOverStatusDidChange()
+        handleVoiceOverStatus()
     }
     
     override func viewDidLayoutSubviews() {
@@ -173,6 +178,15 @@ class TableController: UITableViewController {
             isEnabled = false
         }
         self.navigationItem.leftBarButtonItem?.isEnabled = isEnabled
+    }
+    
+    // MARK: Accessibility
+    
+    private func handleVoiceOverStatus() {
+        let voiceOverOn = UIAccessibilityIsVoiceOverRunning()
+        
+        footer.text = TableController.footerTextWhenVoiceOverIs(voiceOverOn)
+        tableView.tableFooterView?.layoutIfNeeded()
     }
     
     // MARK: Navigation
@@ -302,10 +316,7 @@ extension TableController {
 
 extension TableController: VoiceOverObserver {
     func voiceOverStatusDidChange(_: Notification? = nil) {
-        let voiceOverOn = UIAccessibilityIsVoiceOverRunning()
-        
-        footer.text = TableController.footerTextwhenVoiceOverIs(voiceOverOn)
-        tableView.tableFooterView?.layoutIfNeeded()
+        handleVoiceOverStatus()
     }
 }
 
