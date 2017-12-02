@@ -174,10 +174,10 @@ extension MainViewController: StopwatchDelegate {
             if let sound = sound {
                 soundController.play(sound)
             }
-            UIAccessibilityPostNotification(UIAccessibilityAnnouncementNotification, notice)
             containerView.accessibilityLabel = strings.containerViewLabel(timerReady: (status != .start), timerDuration: duration)
             instructionsVisible = (status != .start)
             UIAccessibilityPostNotification(UIAccessibilityLayoutChangedNotification, nil)
+            UIAccessibilityPostNotification(UIAccessibilityAnnouncementNotification, notice)
         }
         
         switch status {
