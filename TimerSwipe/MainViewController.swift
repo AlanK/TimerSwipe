@@ -134,6 +134,7 @@ class MainViewController: UIViewController {
         UIApplication.shared.isIdleTimerDisabled = true
         self.navigationController?.setNavigationBarHidden(true, animated: true)
         soundController.setActive(true)
+        voiceOverStatusDidChange()
     }
     
     override func viewWillDisappear(_ animated: Bool) {

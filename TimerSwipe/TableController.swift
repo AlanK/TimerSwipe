@@ -95,6 +95,7 @@ class TableController: UITableViewController {
         // This view should have a navigation bar and toolbar
         self.navigationController?.setNavigationBarHidden(false, animated: animated)
         refreshEditButton()
+        handleVoiceOverStatus()
         
         guard let accessibleFirstFocus = accessibleFirstFocus else {return}
         UIAccessibilityPostNotification(UIAccessibilityScreenChangedNotification, accessibleFirstFocus)
