@@ -125,7 +125,7 @@ class MainViewController: UIViewController {
         // Ensure the stopwatch and delegate are ready; set the display to the current timer
         stopwatch.clear()
         // Customize display based on VoiceOver settings
-        voiceOverStatusDidChange()
+        handleVoiceOverStatus()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -134,7 +134,7 @@ class MainViewController: UIViewController {
         UIApplication.shared.isIdleTimerDisabled = true
         self.navigationController?.setNavigationBarHidden(true, animated: true)
         soundController.setActive(true)
-        voiceOverStatusDidChange()
+        handleVoiceOverStatus()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -142,6 +142,15 @@ class MainViewController: UIViewController {
         // The display should sleep in other views in the app
         UIApplication.shared.isIdleTimerDisabled = false
         soundController.setActive(false)
+    }
+    
+    private func handleVoiceOverStatus() {
+        /// Change the text instructions to match the VO-enabled interaction paradigm and make the containerView touch-enabled
+        let voiceOverOn = UIAccessibilityIsVoiceOverRunning()
+        
+        instructionsDisplay.text = strings.textInstructions(voiceOverIsOn: voiceOverOn)
+        voiceOverOn ? containerView.addGestureRecognizer(tapRecognizer) : containerView.removeGestureRecognizer(tapRecognizer)
+        containerView.layoutIfNeeded()
     }
 }
 
@@ -196,12 +205,7 @@ extension MainViewController: StopwatchDelegate {
 // MARK: - VoiceOverObserver
 // Receive notifications when VoiceOver status changes
 extension MainViewController: VoiceOverObserver {
-    /// Change the text instructions to match the VO-enabled interaction paradigm and make the containerView touch-enabled
     func voiceOverStatusDidChange(_: Notification? = nil) {
-        let voiceOverOn = UIAccessibilityIsVoiceOverRunning()
-        
-        instructionsDisplay.text = strings.textInstructions(voiceOverIsOn: voiceOverOn)
-        voiceOverOn ? containerView.addGestureRecognizer(tapRecognizer) : containerView.removeGestureRecognizer(tapRecognizer)
-        containerView.layoutIfNeeded()
+        handleVoiceOverStatus()
     }
 }
