@@ -16,15 +16,16 @@ struct SegueMediator {
      - parameter modelIntermediary: The data model
      */
     static func fromTableControllerToMainViewController(segue: UIStoryboardSegue, sender: Any?) {
-        guard let source = segue.source as? TableController,
+        if let source = segue.source as? TableController,
             let destination = segue.destination as? MainViewController,
             let selectedCell = sender as? TableCell,
             let indexPath = source.tableView.indexPath(for: selectedCell),
-            let model = source.modelIntermediary?.model else { return }
-        let timer = model[indexPath.row]
-        // Make sure VoiceOver will focus on the selected cell if the user unwinds this segue
-        source.accessibleFirstFocus = selectedCell
-        // Set the destination view controller's providedDuration to the timer value
-        destination.providedDuration = timer.seconds
+            let model = source.modelIntermediary?.model {
+            let timer = model[indexPath.row]
+            // Make sure VoiceOver will focus on the selected cell if the user unwinds this segue
+            source.accessibleFirstFocus = selectedCell
+            // Set the destination view controller's providedDuration to the timer value
+            destination.providedDuration = timer.seconds
+        }
     }
 }
