@@ -17,14 +17,6 @@ protocol ModelIntermediary {
 // MARK: -
 /// The main table in the app
 class TableController: UITableViewController {
-    static private func footerTextWhenVoiceOverIs(_ enabled: Bool) -> String {
-        if enabled {
-            return NSLocalizedString("voiceOverFooter", value: "Mark a timer favorite to open it by default.", comment: "")
-        } else {
-            return NSLocalizedString("defaultFooter", value: "Mark a timer ♥︎ to open it by default.", comment: "")
-        }
-    }
-    
     /// Controller holding the app model
     lazy var modelIntermediary: ModelIntermediary? = self.navigationController as? ModelIntermediary
     /// The table-add button
@@ -187,7 +179,7 @@ class TableController: UITableViewController {
     private func handleVoiceOverStatus() {
         let voiceOverOn = UIAccessibilityIsVoiceOverRunning()
         
-        footer.text = TableController.footerTextWhenVoiceOverIs(voiceOverOn)
+        footer.text = TableStrings.footerText(voiceOverOn: voiceOverOn)
         tableView.tableFooterView?.layoutIfNeeded()
     }
     

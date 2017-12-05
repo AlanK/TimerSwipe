@@ -24,3 +24,11 @@ struct TextFieldHandler {
         return correctLength && onlyNumbers && withinMaxLength
     }
 }
+
+struct TableStrings {
+    static let voiceOverFooter = NSLocalizedString("voiceOverFooter", value: "Mark a timer favorite to open it by default.", comment: ""), defaultFooter = NSLocalizedString("defaultFooter", value: "Mark a timer ♥︎ to open it by default.", comment: "")
+    
+    static func footerText(voiceOverOn: Bool) -> String {
+        return voiceOverOn ? voiceOverFooter : defaultFooter
+    }
+}
