@@ -16,12 +16,6 @@ protocol TableCellDelegate {
 
 /// Custom table view cell with heart icon accessory view
 class TableCell: UITableViewCell {
-    // MARK: Type
-    private static let isFavorite = NSLocalizedString("fav", value: "Favorite", comment: "this is my favorite timer"),
-    makeFavorite = NSLocalizedString("makeFav", value: "Make favorite", comment: "make this timer my favorite timer"),
-    makeNotFavorite = NSLocalizedString("unfav", value: "Make not favorite", comment: "make this not be my favorite timer")
-
-    // MARK: Instance
     var delegate: TableCellDelegate?
 
     @IBOutlet var secondsLabel: UILabel!
@@ -38,12 +32,12 @@ class TableCell: UITableViewCell {
          - timer: an `STSavedTimer` with a duration and a favorite status
      */
     func setupCell(with timer: STSavedTimer) {
-        let label = NSLocalizedString("numberOfSeconds", value: "\(Int(timer.seconds)) seconds", comment: "{whole number} seconds")
+        let label = String((Int(timer.seconds))) + " " + TableStrings.secondsText
         
         // Configure based on isFavorite status
         let buttonImage = timer.isFavorite ? #imageLiteral(resourceName: "Full heart") : #imageLiteral(resourceName: "Empty heart")
-        let accessLabel = timer.isFavorite ? label + ", " + TableCell.isFavorite : label
-        let buttonDescription = timer.isFavorite ? TableCell.makeNotFavorite : TableCell.makeFavorite
+        let accessLabel = timer.isFavorite ? label + ", " + TableStrings.isFavorite : label
+        let buttonDescription = timer.isFavorite ? TableStrings.makeNotFavorite : TableStrings.makeFavorite
         
         // Set visible state of cell
         secondsLabel.text = label
