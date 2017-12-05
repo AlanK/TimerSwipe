@@ -165,13 +165,8 @@ class TableController: UITableViewController {
     
     /// Enable the Edit button when the table has one or more rows
     func refreshEditButton() {
-        let isEnabled: Bool
-        if let model = modelIntermediary?.model {
-            isEnabled = (model.count() > 0)
-        } else {
-            isEnabled = false
-        }
-        self.navigationItem.leftBarButtonItem?.isEnabled = isEnabled
+        let numberOfTimers = modelIntermediary?.model.count() ?? 0
+        self.navigationItem.leftBarButtonItem?.isEnabled = numberOfTimers > 0
     }
     
     // MARK: - Input Accessory View
@@ -191,13 +186,8 @@ class TableController: UITableViewController {
     
     /// Enable and disable the add button based on whether there is text in the text field
     @objc func textInTextFieldChanged(_ textField: UITextField) {
-        let isEnabled: Bool
-        if let text = textField.text {
-            isEnabled = (text.count > 0)
-        } else {
-            isEnabled = false
-        }
-        keyboardAccessoryView.addButton.isEnabled = isEnabled
+        let charactersInField = textField.text?.count ?? 0
+        keyboardAccessoryView.addButton.isEnabled = charactersInField > 0
     }
     
     
