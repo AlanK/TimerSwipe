@@ -319,11 +319,13 @@ extension TableController: UITextFieldDelegate {
         let maxLength = 3
         
         // Prevent crash-on-undo when a text insertion was blocked by this code
+        let correctLength = range.length + range.location <= charCount
         // Prevent non-number characters from being inserted
+        let onlyNumbers = string.rangeOfCharacter(from: invalidCharacters) == nil
         // Prevent too many characters from being inserted
-        return (range.length + range.location <= charCount &&
-            string.rangeOfCharacter(from: invalidCharacters) == nil &&
-            charCount + string.count - range.length <= maxLength)
+        let withinMaxLength = charCount + string.count - range.length <= maxLength
+        
+        return correctLength && onlyNumbers && withinMaxLength
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
