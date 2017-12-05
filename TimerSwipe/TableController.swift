@@ -174,6 +174,52 @@ class TableController: UITableViewController {
         self.navigationItem.leftBarButtonItem?.isEnabled = isEnabled
     }
     
+    // MARK: - Input Accessory View
+    /// Animate keyboard and input accessory view visible or invisible
+    func makeKAV(visible: Bool) {
+        addButton.isEnabled = !visible
+        _ = visible ? keyboardAccessoryView.textField.becomeFirstResponder() : keyboardAccessoryView.textField.resignFirstResponder()
+        
+        let duration = K.keyboardAnimationDuration
+        let options = visible ? K.keyboardAnimateInCurve : K.keyboardAnimateOutCurve
+        UIView.animate(withDuration: duration, delay: 0.0, options: options, animations: {
+            self.keyboardAccessoryView.isVisible = visible
+            // MARK: Dangerous superview spelunking
+            self.keyboardAccessoryView.supremeView.layoutIfNeeded()
+        })
+    }
+    
+    /// Enable and disable the add button based on whether there is text in the text field
+    @objc func textInTextFieldChanged(_ textField: UITextField) {
+        let isEnabled: Bool
+        if let text = textField.text {
+            isEnabled = (text.count > 0)
+        } else {
+            isEnabled = false
+        }
+        keyboardAccessoryView.addButton.isEnabled = isEnabled
+    }
+    
+    
+    /// Resets and hides the input accessory
+    @objc func exitKeyboardAccessoryView() {
+        // Clear the text field
+        keyboardAccessoryView.textField.text?.removeAll()
+        // Ditch the keyboard and hide
+        makeKAV(visible: false)
+    }
+    
+    @objc func createNewTimer() {
+        defer {
+            exitKeyboardAccessoryView()
+        }
+        // Create a valid userSelectedTime or exit early
+        guard let text = keyboardAccessoryView.textField.text, let userTimeInSeconds = Int(text), userTimeInSeconds > 0 else {return}
+        let userSelectedTime = TimeInterval(userTimeInSeconds)
+        
+        commitTimer(userSelectedTime)
+    }
+    
     // MARK: Accessibility
     
     private func handleVoiceOverStatus() {
@@ -251,54 +297,9 @@ extension TableController {
         return keyboardAccessoryView
     }
     
-    /// Animate keyboard and input accessory view visible or invisible
-    func makeKAV(visible: Bool) {
-        addButton.isEnabled = !visible
-        _ = visible ? keyboardAccessoryView.textField.becomeFirstResponder() : keyboardAccessoryView.textField.resignFirstResponder()
-        
-        let duration = K.keyboardAnimationDuration
-        let options = visible ? K.keyboardAnimateInCurve : K.keyboardAnimateOutCurve
-        UIView.animate(withDuration: duration, delay: 0.0, options: options, animations: {
-            self.keyboardAccessoryView.isVisible = visible
-            // MARK: Dangerous superview spelunking
-            self.keyboardAccessoryView.supremeView.layoutIfNeeded()
-        })
-    }
-    
-    /// Enable and disable the add button based on whether there is text in the text field
-    @objc func textInTextFieldChanged(_ textField: UITextField) {
-        let isEnabled: Bool
-        if let text = textField.text {
-            isEnabled = (text.count > 0)
-        } else {
-            isEnabled = false
-        }
-        keyboardAccessoryView.addButton.isEnabled = isEnabled
-    }
-    
-    
-    /// Resets and hides the input accessory
-    @objc func exitKeyboardAccessoryView() {
-        // Clear the text field
-        keyboardAccessoryView.textField.text?.removeAll()
-        // Ditch the keyboard and hide
-        makeKAV(visible: false)
-    }
-    
     override func accessibilityPerformEscape() -> Bool {
         exitKeyboardAccessoryView()
         return true
-    }
-    
-    @objc func createNewTimer() {
-        defer {
-            exitKeyboardAccessoryView()
-        }
-        // Create a valid userSelectedTime or exit early
-        guard let text = keyboardAccessoryView.textField.text, let userTimeInSeconds = Int(text), userTimeInSeconds > 0 else {return}
-        let userSelectedTime = TimeInterval(userTimeInSeconds)
-        
-        commitTimer(userSelectedTime)
     }
 }
 
