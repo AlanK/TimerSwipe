@@ -32,7 +32,7 @@ class TableCell: UITableViewCell {
          - timer: an `STSavedTimer` with a duration and a favorite status
      */
     func setupCell(with timer: STSavedTimer) {
-        let label = String((Int(timer.seconds))) + " " + TableStrings.secondsText
+        let label = TableStrings.numberOfSeconds(Int(timer.seconds))
         
         // Configure based on isFavorite status
         let buttonImage = timer.isFavorite ? #imageLiteral(resourceName: "Full heart") : #imageLiteral(resourceName: "Empty heart")

@@ -32,9 +32,12 @@ struct TableStrings {
     makeFavorite = NSLocalizedString("makeFav", value: "Make favorite", comment: "make this timer my favorite timer"),
     makeNotFavorite = NSLocalizedString("unfav", value: "Make not favorite", comment: "make this not be my favorite timer")
     
-    static let secondsText = NSLocalizedString("seconds", value: "seconds", comment: "{whole number} seconds")
-    
     static func footerText(voiceOverOn: Bool) -> String {
         return voiceOverOn ? voiceOverFooter : defaultFooter
+    }
+    
+    static func numberOfSeconds(_ seconds: Int) -> String {
+        let format = NSLocalizedString("number_of_seconds", comment: "")
+        return String.localizedStringWithFormat(format, seconds)
     }
 }
