@@ -13,6 +13,7 @@
 		5A03B9B21D1DDB9800E245C9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5A03B9B01D1DDB9800E245C9 /* LaunchScreen.storyboard */; };
 		5A12267C1D5A80BA006D49F1 /* TableController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A12267B1D5A80BA006D49F1 /* TableController.swift */; };
 		5A12267E1D5A94C3006D49F1 /* STTimerList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A12267D1D5A94C3006D49F1 /* STTimerList.swift */; };
+		5A2731DA1FD6224A00FD5737 /* TableText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A2731D91FD6224A00FD5737 /* TableText.swift */; };
 		5A4DC9181D596D460009446B /* STSavedTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A4DC9171D596D460009446B /* STSavedTimer.swift */; };
 		5A591CE91D3AA18E00B9BD3D /* SoundController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A591CE81D3AA18E00B9BD3D /* SoundController.swift */; };
 		5A7159921FCBC35E00BEB5EE /* MainVCStrings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A7159911FCBC35E00BEB5EE /* MainVCStrings.swift */; };
@@ -51,6 +52,7 @@
 		5A03B9B31D1DDB9800E245C9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5A12267B1D5A80BA006D49F1 /* TableController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableController.swift; sourceTree = "<group>"; };
 		5A12267D1D5A94C3006D49F1 /* STTimerList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STTimerList.swift; sourceTree = "<group>"; };
+		5A2731D91FD6224A00FD5737 /* TableText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableText.swift; sourceTree = "<group>"; };
 		5A4DC9171D596D460009446B /* STSavedTimer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STSavedTimer.swift; sourceTree = "<group>"; };
 		5A591CE81D3AA18E00B9BD3D /* SoundController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoundController.swift; sourceTree = "<group>"; };
 		5A6E07951F8C443200B7062A /* TS_short_warn.aif */ = {isa = PBXFileReference; lastKnownFileType = file; path = TS_short_warn.aif; sourceTree = "<group>"; };
@@ -177,6 +179,7 @@
 				5A12267B1D5A80BA006D49F1 /* TableController.swift */,
 				5A871FF91D6FC68900B08A05 /* TableCell.swift */,
 				5ADB6A171F561562006BEE1B /* InputView.swift */,
+				5A2731D91FD6224A00FD5737 /* TableText.swift */,
 			);
 			name = Table;
 			sourceTree = "<group>";
@@ -314,6 +317,7 @@
 				5A90785D1EEB8C24006BCDD3 /* Constants.swift in Sources */,
 				5A7159921FCBC35E00BEB5EE /* MainVCStrings.swift in Sources */,
 				5A03B9A81D1DDB9800E245C9 /* AppDelegate.swift in Sources */,
+				5A2731DA1FD6224A00FD5737 /* TableText.swift in Sources */,
 				5ABEF3311FCF191300655FEE /* SegueMediator.swift in Sources */,
 				5AB18AFA1D2058CA007B9D9F /* MainViewController.swift in Sources */,
 				5AA3E3AE1EEF36C400FB5F1D /* NavController.swift in Sources */,

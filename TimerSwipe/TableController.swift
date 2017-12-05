@@ -314,18 +314,7 @@ extension TableController {
 extension TableController: UITextFieldDelegate {
     // Protect against text-related problems
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        let charCount = textField.text?.count ?? 0
-        let invalidCharacters = CharacterSet(charactersIn: "0123456789").inverted
-        let maxLength = 3
-        
-        // Prevent crash-on-undo when a text insertion was blocked by this code
-        let correctLength = range.length + range.location <= charCount
-        // Prevent non-number characters from being inserted
-        let onlyNumbers = string.rangeOfCharacter(from: invalidCharacters) == nil
-        // Prevent too many characters from being inserted
-        let withinMaxLength = charCount + string.count - range.length <= maxLength
-        
-        return correctLength && onlyNumbers && withinMaxLength
+        return TextFieldHandler.protectAgainstTextProblems(textField, shouldChangeCharactersIn: range, replacementString: string)
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
