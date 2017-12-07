@@ -257,7 +257,10 @@ extension TableController: UITableViewDropDelegate {
     }
     
     func tableView(_ tableView: UITableView, dropSessionDidUpdate session: UIDropSession, withDestinationIndexPath destinationIndexPath: IndexPath?) -> UITableViewDropProposal {
-        return UITableViewDropProposal(operation: .move, intent: .insertAtDestinationIndexPath)
+        let singleRowProposal = UITableViewDropProposal(operation: .move, intent: .insertAtDestinationIndexPath),
+        multiRowProposal = UITableViewDropProposal(operation: .move, intent: .unspecified)
+        
+        return session.localDragSession?.localContext == nil ? singleRowProposal : multiRowProposal
     }
     
     func tableView(_ tableView: UITableView, performDropWith coordinator: UITableViewDropCoordinator) { }
