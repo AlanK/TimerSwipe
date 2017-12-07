@@ -263,7 +263,29 @@ extension TableController: UITableViewDropDelegate {
         return session.localDragSession?.localContext == nil ? singleRowProposal : multiRowProposal
     }
     
-    func tableView(_ tableView: UITableView, performDropWith coordinator: UITableViewDropCoordinator) { }
+    func tableView(_ tableView: UITableView, performDropWith coordinator: UITableViewDropCoordinator) {
+        print("Entering multirow code…")
+        
+        guard let destinationIndexPath = coordinator.destinationIndexPath else { return }
+        let items = coordinator.items
+        
+        var targetIndexPath = destinationIndexPath
+        
+        
+        
+        
+        // MUST UPDATE THE MODEL
+        
+        
+        
+        
+        
+        for item in items {
+            let dragItem = item.dragItem
+            coordinator.drop(dragItem, toRowAt: targetIndexPath)
+            targetIndexPath.row += 1
+        }
+    }
 }
 
 // MARK: - Table Cell Delegate
