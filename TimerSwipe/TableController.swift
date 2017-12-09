@@ -238,7 +238,6 @@ extension TableController: UITableViewDragDelegate {
     
     // Multi-row drag
     func tableView(_ tableView: UITableView, itemsForAddingTo session: UIDragSession, at indexPath: IndexPath, point: CGPoint) -> [UIDragItem] {
-        session.localContext = "multirow"
         return dragItems(at: indexPath)
     }
     
@@ -260,7 +259,7 @@ extension TableController: UITableViewDropDelegate {
         let singleRowProposal = UITableViewDropProposal(operation: .move, intent: .insertAtDestinationIndexPath),
         multiRowProposal = UITableViewDropProposal(operation: .move, intent: .unspecified)
         
-        return session.localDragSession?.localContext == nil ? singleRowProposal : multiRowProposal
+        return session.items.count == 1 ? singleRowProposal : multiRowProposal
     }
     
     func tableView(_ tableView: UITableView, performDropWith coordinator: UITableViewDropCoordinator) {
