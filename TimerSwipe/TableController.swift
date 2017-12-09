@@ -244,6 +244,9 @@ extension TableController: UITableViewDragDelegate {
     private func dragItems(at indexPath: IndexPath) -> [UIDragItem] {
         let itemProvider = NSItemProvider(item: nil, typeIdentifier: nil)
         let dragItem = UIDragItem(itemProvider: itemProvider)
+        
+        dragItem.localObject = indexPath
+        
         return [dragItem]
     }
 }
@@ -265,25 +268,73 @@ extension TableController: UITableViewDropDelegate {
     func tableView(_ tableView: UITableView, performDropWith coordinator: UITableViewDropCoordinator) {
         print("Entering multirow code…")
         
-        guard let destinationIndexPath = coordinator.destinationIndexPath else { return }
-        let items = coordinator.items
+        // Something in here is broken but I don't know what
         
-        var targetIndexPath = destinationIndexPath
+//        guard let destinationIndexPath = coordinator.destinationIndexPath, let model = modelIntermediary?.model else { return }
+//
+//        let items = coordinator.items
+//
+//        var sourceRows = [Int]()
+//        var targetIndexPath = destinationIndexPath
+//        var destinationOffsetAccumulator = 0
+//        var timers = [Int: STSavedTimer]()
+//        var numberOfRowsToInsert = 0
+//        var actualTableRowInsertionIndexPaths = [IndexPath]()
+//
+//        for item in items {
+//            // Collect the source index paths and tag them with the index of their selection order
+//            guard let sourcePath = item.dragItem.localObject as? IndexPath else { return }
+//            let sourceRow = sourcePath.row
+//            sourceRows.append(sourceRow)
+//
+//            // Decrement the destination offset accumulator by one for every index path preceding the destination index path
+//            guard sourceRow < destinationIndexPath.row else { return }
+//            destinationOffsetAccumulator -= 1
+//        }
+//
+//        print("Source rows: \(sourceRows)")
+//        print("Destination offset: \(destinationOffsetAccumulator)")
+//
+//        let sortedSourceRows = sourceRows.sorted(by: >)
+//
+//        for row in sortedSourceRows {
+//            tableView.deleteRows(at: [IndexPath.init(row: row, section: mainSection)], with: .fade)
+//            timers[row] = model.remove(at: row)
+//        }
+//
+//        targetIndexPath.row += destinationOffsetAccumulator
+//
+//        while sourceRows.isEmpty == false {
+//            let row = sourceRows.removeLast()
+//
+//            guard let timer = timers[row] else { return }
+//            model.insert(timer, at: targetIndexPath.row)
+//            numberOfRowsToInsert += 1
+//        }
+//
+//        var i = 0
+//
+//        while numberOfRowsToInsert > 0 {
+//            let path = IndexPath.init(row: targetIndexPath.row + i, section: mainSection)
+//            actualTableRowInsertionIndexPaths.append(path)
+//            i += 1
+//            numberOfRowsToInsert -= 1
+//        }
+//
+//        tableView.insertRows(at: actualTableRowInsertionIndexPaths, with: .fade)
+//        model.saveData()
         
         
         
         
-        // MUST UPDATE THE MODEL
         
-        
-        
-        
-        
-        for item in items {
-            let dragItem = item.dragItem
-            coordinator.drop(dragItem, toRowAt: targetIndexPath)
-            targetIndexPath.row += 1
-        }
+        // Unlikely anything below here in this function is necessary
+//
+//        for item in items {
+//            let dragItem = item.dragItem
+//            coordinator.drop(dragItem, toRowAt: targetIndexPath)
+//            targetIndexPath.row += 1
+//        }
     }
 }
 
