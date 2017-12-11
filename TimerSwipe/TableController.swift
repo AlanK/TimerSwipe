@@ -35,7 +35,7 @@ class TableController: UITableViewController {
         view.cancelButton.addTarget(self, action: #selector(exitKeyboardAccessoryView), for: .touchUpInside)
         view.addButton.addTarget(self, action: #selector(createNewTimer), for: .touchUpInside)
         view.textField.addTarget(self, action: #selector(textInTextFieldChanged(_:)), for: UIControlEvents.editingChanged)
-        view.textField.delegate = self
+        view.textField.delegate = TextFieldDelegate.init(self)
         return view
     }()
     
@@ -290,19 +290,6 @@ extension TableController {
     override func accessibilityPerformEscape() -> Bool {
         exitKeyboardAccessoryView()
         return true
-    }
-}
-
-// MARK: Text Field Delegate
-extension TableController: UITextFieldDelegate {
-    // Protect against text-related problems
-    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        return TextFieldHandler.protectAgainstTextProblems(textField, shouldChangeCharactersIn: range, replacementString: string)
-    }
-    
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        createNewTimer()
-        return false
     }
 }
 
