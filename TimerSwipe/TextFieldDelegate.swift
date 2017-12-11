@@ -9,19 +9,23 @@
 import UIKit
 
 class TextFieldDelegate: NSObject, UITextFieldDelegate {
-    private let viewController: UIViewController
+    public enum ViewController {
+        case tableController(() -> Void)
+    }
     
-    init(_ viewController: UIViewController) {
+    private let viewController: ViewController
+    
+    init(_ viewController: ViewController) {
         self.viewController = viewController
     }
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        let charCount = textField.text?.count ?? 0
-        
         // Prevent crash-on-undo when a text insertion was blocked by this code
+        let charCount = textField.text?.count ?? 0
         let willNotCrashOnUndo = range.length + range.location <= charCount
         
-        if let _ = viewController as? TableController {
+        switch viewController {
+        case .tableController(_):
             let invalidCharacters = CharacterSet(charactersIn: "0123456789").inverted
             let maxLength = 3
             
@@ -31,17 +35,14 @@ class TextFieldDelegate: NSObject, UITextFieldDelegate {
             let withinMaxLength = charCount + string.count - range.length <= maxLength
             
             return willNotCrashOnUndo && onlyNumbers && withinMaxLength
-        } else {
-            return willNotCrashOnUndo
         }
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        if let viewController = viewController as? TableController {
-            viewController.createNewTimer()
+        switch viewController {
+        case .tableController(let createNewTimer):
+            createNewTimer()
             return false
-        } else {
-            return true
         }
     }
 }
