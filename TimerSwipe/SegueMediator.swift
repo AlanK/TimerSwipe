@@ -20,7 +20,7 @@ struct SegueMediator {
             let destination = segue.destination as? MainViewController,
             let selectedCell = sender as? TableCell,
             let indexPath = source.tableView.indexPath(for: selectedCell),
-            let model = source.modelIntermediary?.model {
+            let model = source.model {
             let timer = model[indexPath.row]
             // Make sure VoiceOver will focus on the selected cell if the user unwinds this segue
             source.accessibleFirstFocus = selectedCell

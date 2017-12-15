@@ -46,7 +46,10 @@ class NavController: UINavigationController {
         guard let storyboard = storyboard else {return}
         // Make sure the table view is in the view hierarchy
         let tableVC = storyboard.instantiateViewController(withIdentifier: StoryboardID.tableView.rawValue)
-        var navHierarchy: [UIViewController] = [tableVC]
+        
+        guard let vc = tableVC as? TableController else { return }
+        vc.model = model
+        var navHierarchy: [UIViewController] = [vc]
         
         if let favorite = model.favorite() {
             let mainVC = storyboard.instantiateViewController(withIdentifier: StoryboardID.mainView.rawValue)
@@ -90,10 +93,6 @@ class NavController: UINavigationController {
         vc.voiceOverStatusDidChange(notification)
     }
 }
-
-// MARK: - Model Intermediary
-// Make the model available to other objects
-extension NavController: ModelIntermediary {}
 
 // MARK: - StopwatchKiller
 // Kill the timer when the app lifecycle dictates
