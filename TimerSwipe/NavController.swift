@@ -20,18 +20,7 @@ class NavController: UINavigationController {
     private let notificationCenter = NotificationCenter.default
     
     /// Underlying model for app
-    let model: STTimerList = {
-        let model: STTimerList
-        // Try to load the model from UserDefaults
-        if let archivedData = UserDefaults.standard.object(forKey: K.persistedList) as? Data, let extractedModel = NSKeyedUnarchiver.unarchiveObject(with: archivedData) as? STTimerList {
-            model = extractedModel
-        } else {
-            // No model extracted; give up and load the default model
-            model = STTimerList()
-            model.loadSampleTimers()
-        }
-        return model
-    }()
+    let model: STTimerList = STTimerList.loadExistingModel()
     
     override func viewDidLoad() {
         super.viewDidLoad()

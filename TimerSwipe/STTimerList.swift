@@ -141,6 +141,20 @@ extension STTimerList {
     func loadSampleTimers() {
         load(timerArray: [STSavedTimer(seconds: 60.0), STSavedTimer(seconds: 30.0, isFavorite: true), STSavedTimer(seconds: 15.0)])
     }
+    
+    static func loadExistingModel() -> STTimerList {
+        let model: STTimerList
+        // Try to load the model from UserDefaults
+        if let archivedData = UserDefaults.standard.object(forKey: K.persistedList) as? Data, let extractedModel = NSKeyedUnarchiver.unarchiveObject(with: archivedData) as? STTimerList {
+            model = extractedModel
+        } else {
+            // No model extracted; give up and load the default model
+            model = STTimerList()
+            model.loadSampleTimers()
+        }
+        
+        return model
+    }
 }
 
 // MARK: - Save to Disk
