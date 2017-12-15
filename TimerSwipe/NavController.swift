@@ -31,8 +31,12 @@ class NavController: UINavigationController {
         // Make sure the table view is in the view hierarchy
         guard let storyboard = storyboard else {return}
         let tableVC = storyboard.instantiateViewController(withIdentifier: StoryboardID.tableView.rawValue)
-        let navHierarchy = (model.favorite() == nil) ? [tableVC] :
-            [tableVC, storyboard.instantiateViewController(withIdentifier: StoryboardID.mainView.rawValue)]
+        var navHierarchy: [UIViewController] = [tableVC]
+        
+        if let _ = model.favorite() {
+            let mainVC = storyboard.instantiateViewController(withIdentifier: StoryboardID.mainView.rawValue)
+            navHierarchy.append(mainVC)
+        }
         
         setViewControllers(navHierarchy, animated: false)
     }
