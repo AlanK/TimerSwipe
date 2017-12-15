@@ -28,17 +28,7 @@ class NavController: UINavigationController {
         navigationBar.barTintColor = K.tintColor
         navigationBar.tintColor = .white
         
-        // Make sure the table view is in the view hierarchy
-        guard let storyboard = storyboard else {return}
-        let tableVC = storyboard.instantiateViewController(withIdentifier: StoryboardID.tableView.rawValue)
-        var navHierarchy: [UIViewController] = [tableVC]
-        
-        if let _ = model.favorite() {
-            let mainVC = storyboard.instantiateViewController(withIdentifier: StoryboardID.mainView.rawValue)
-            navHierarchy.append(mainVC)
-        }
-        
-        setViewControllers(navHierarchy, animated: false)
+        loadNavigationStack(animated: false)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -52,20 +42,33 @@ class NavController: UINavigationController {
         registerNotifications(false)
     }
     
+    func loadNavigationStack(animated: Bool) {
+        guard let storyboard = storyboard else {return}
+        // Make sure the table view is in the view hierarchy
+        let tableVC = storyboard.instantiateViewController(withIdentifier: StoryboardID.tableView.rawValue)
+        var navHierarchy: [UIViewController] = [tableVC]
+        
+        if let favorite = model.favorite() {
+            let mainVC = storyboard.instantiateViewController(withIdentifier: StoryboardID.mainView.rawValue)
+            
+            guard let vc = mainVC as? MainViewController else { return }
+            vc.providedTimer = favorite
+            navHierarchy.append(vc)
+        }
+        setViewControllers(navHierarchy, animated: animated)
+    }
+    
     /// Make any necessary changes to views after being in the background for a long time
     func resetViewsAfterBackgroundTimeout() {
         // Don’t change views if a timer is running or there’s no favorite to change to
-        guard timerReady, let storyboard = storyboard, let _ = model.favorite() else {return}
+        guard timerReady, let _ = model.favorite() else {return}
         // Don't disrupt an active edit session
         if (topViewController as? TableController)?.isEditing == true {return}
 
-        // Navigate to the favorite timer with the table view in the nav stack
-        let tableVC = storyboard.instantiateViewController(withIdentifier: StoryboardID.tableView.rawValue)
-        let mainVC = storyboard.instantiateViewController(withIdentifier: StoryboardID.mainView.rawValue)
         // Don't animate going from one timer to another; it looks weird
-        let animate = !(topViewController is MainViewController)
+        let animated = topViewController is MainViewController == false
         
-        setViewControllers([tableVC, mainVC], animated: animate)
+        loadNavigationStack(animated: animated)
     }
     
     /// Register and unregister for notifications on behalf of other VCs

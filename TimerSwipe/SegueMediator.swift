@@ -24,8 +24,8 @@ struct SegueMediator {
             let timer = model[indexPath.row]
             // Make sure VoiceOver will focus on the selected cell if the user unwinds this segue
             source.accessibleFirstFocus = selectedCell
-            // Set the destination view controller's providedDuration to the timer value
-            destination.providedDuration = timer.seconds
+            // Set the destination view controller's providedTimer to the timer value
+            destination.providedTimer = timer
         }
     }
 }
