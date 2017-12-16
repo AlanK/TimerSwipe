@@ -260,7 +260,13 @@ extension TableController: UITableViewDropDelegate {
     
     func tableView(_ tableView: UITableView, dropSessionDidUpdate session: UIDropSession, withDestinationIndexPath destinationIndexPath: IndexPath?) -> UITableViewDropProposal {
         let singleRowProposal = UITableViewDropProposal(operation: .move, intent: .insertAtDestinationIndexPath),
-        multiRowProposal = UITableViewDropProposal(operation: .move, intent: .unspecified)
+        multiRowProposal = UITableViewDropProposal(operation: .move, intent: .unspecified),
+        cancelProposal = UITableViewDropProposal(operation: .cancel, intent: .automatic)
+        
+        guard let destinationIndexPath = destinationIndexPath,
+            destinationIndexPath.section == mainSection else {
+                return cancelProposal
+        }
         
         return session.items.count == 1 ? singleRowProposal : multiRowProposal
     }
