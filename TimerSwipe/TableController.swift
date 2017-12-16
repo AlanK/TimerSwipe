@@ -264,7 +264,7 @@ extension TableController: UITableViewDropDelegate {
     }
     
     func tableView(_ tableView: UITableView, performDropWith coordinator: UITableViewDropCoordinator) {
-        guard let originalPath = coordinator.destinationIndexPath, let model = modelIntermediary?.model else { return }
+        guard let originalPath = coordinator.destinationIndexPath, let model = model else { return }
         let modelCount = model.count()
         let destinationIndexPath = originalPath.row < modelCount ? originalPath : IndexPath.init(row: modelCount - 1, section: mainSection)
         let items = coordinator.items
