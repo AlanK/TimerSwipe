@@ -306,6 +306,8 @@ extension TableController: UITableViewDropDelegate {
             model.insert(timer, at: targetIndexPath.row)
         }
         
+        model.saveData()
+        
         // Update table view
         
         // Collect source and destination index paths
