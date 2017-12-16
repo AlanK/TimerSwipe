@@ -103,8 +103,7 @@ class TableController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellID, for: indexPath)
         // Pass delegate and timer to cell so it can complete its own setup
         if let cell = cell as? TableCell, let cellTimer = model?[indexPath.row] {
-            cell.delegate = self
-            cell.setupCell(with: cellTimer)
+            cell.setupCell(delegate: self, timer: cellTimer)
         }
         return cell
     }
