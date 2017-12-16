@@ -30,18 +30,24 @@ class STTimerList: NSObject, NSCoding {
     
     // MARK: Favorites
     
-    /// Toggle favorite status of a specific timer
-    func toggleFavorite(at index: Int) {
+    /// Toggle favorite status of a specific timer and return an array of all timers with favorite status changed
+    func updateFavorite(at index: Int) -> [Int] {
+        var updatedTimers = [index]
+        
         switch timers[index].isFavorite {
-        case true: timers[index].isFavorite = false
+        case true:
+            timers[index].isFavorite = false
         case false:
-            // Remove all existing favorites
-            for timer in timers {
-                timer.isFavorite = false
+            for i in 0..<timers.count {
+                if timers[i].isFavorite {
+                    timers[i].isFavorite = false
+                    updatedTimers.append(i)
+                }
             }
-            // Mark the timer at the provided index favorite
             timers[index].isFavorite = true
         }
+        print(updatedTimers)
+        return updatedTimers
     }
     
     // MARK: Add & Remove
@@ -140,6 +146,20 @@ extension STTimerList {
     /// Set the timer array to a developer-chosen default set of timers
     func loadSampleTimers() {
         load(timerArray: [STSavedTimer(seconds: 60.0), STSavedTimer(seconds: 30.0, isFavorite: true), STSavedTimer(seconds: 15.0)])
+    }
+    
+    static func loadExistingModel() -> STTimerList {
+        let model: STTimerList
+        // Try to load the model from UserDefaults
+        if let archivedData = UserDefaults.standard.object(forKey: K.persistedList) as? Data, let extractedModel = NSKeyedUnarchiver.unarchiveObject(with: archivedData) as? STTimerList {
+            model = extractedModel
+        } else {
+            // No model extracted; give up and load the default model
+            model = STTimerList()
+            model.loadSampleTimers()
+        }
+        
+        return model
     }
 }
 

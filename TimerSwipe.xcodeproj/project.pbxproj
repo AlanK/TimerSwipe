@@ -13,7 +13,7 @@
 		5A03B9B21D1DDB9800E245C9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5A03B9B01D1DDB9800E245C9 /* LaunchScreen.storyboard */; };
 		5A12267C1D5A80BA006D49F1 /* TableController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A12267B1D5A80BA006D49F1 /* TableController.swift */; };
 		5A12267E1D5A94C3006D49F1 /* STTimerList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A12267D1D5A94C3006D49F1 /* STTimerList.swift */; };
-		5A2731DA1FD6224A00FD5737 /* TableText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A2731D91FD6224A00FD5737 /* TableText.swift */; };
+		5A2731DA1FD6224A00FD5737 /* TableStrings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A2731D91FD6224A00FD5737 /* TableStrings.swift */; };
 		5A2731DE1FD62ED400FD5737 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5A2731DD1FD62ED400FD5737 /* Localizable.strings */; };
 		5A2731E21FD6311100FD5737 /* Localizable.stringsdict in Resources */ = {isa = PBXBuildFile; fileRef = 5A2731E11FD6311100FD5737 /* Localizable.stringsdict */; };
 		5A4DC9181D596D460009446B /* STSavedTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A4DC9171D596D460009446B /* STSavedTimer.swift */; };
@@ -28,6 +28,7 @@
 		5AB69EBF1EC799370078DDA5 /* Stopwatch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AB69EBE1EC799370078DDA5 /* Stopwatch.swift */; };
 		5ABEF3311FCF191300655FEE /* SegueMediator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ABEF3301FCF191300655FEE /* SegueMediator.swift */; };
 		5ADB6A181F561562006BEE1B /* InputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ADB6A171F561562006BEE1B /* InputView.swift */; };
+		5AF470991FDF040A0014244A /* TextFieldDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF470981FDF040A0014244A /* TextFieldDelegate.swift */; };
 		858480F61FCB55D300DBE466 /* TimeFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 858480F51FCB55D300DBE466 /* TimeFormatter.swift */; };
 		858480F81FCB63EE00DBE466 /* MainVCTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 858480F71FCB63EE00DBE466 /* MainVCTests.swift */; };
 		858480FA1FCB657E00DBE466 /* GeneralTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 858480F91FCB657E00DBE466 /* GeneralTests.swift */; };
@@ -54,7 +55,7 @@
 		5A03B9B31D1DDB9800E245C9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5A12267B1D5A80BA006D49F1 /* TableController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableController.swift; sourceTree = "<group>"; };
 		5A12267D1D5A94C3006D49F1 /* STTimerList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STTimerList.swift; sourceTree = "<group>"; };
-		5A2731D91FD6224A00FD5737 /* TableText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableText.swift; sourceTree = "<group>"; };
+		5A2731D91FD6224A00FD5737 /* TableStrings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableStrings.swift; sourceTree = "<group>"; };
 		5A2731DD1FD62ED400FD5737 /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
 		5A2731E11FD6311100FD5737 /* Localizable.stringsdict */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; path = Localizable.stringsdict; sourceTree = "<group>"; };
 		5A4DC9171D596D460009446B /* STSavedTimer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STSavedTimer.swift; sourceTree = "<group>"; };
@@ -71,6 +72,7 @@
 		5AB69EBE1EC799370078DDA5 /* Stopwatch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Stopwatch.swift; sourceTree = "<group>"; };
 		5ABEF3301FCF191300655FEE /* SegueMediator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegueMediator.swift; sourceTree = "<group>"; };
 		5ADB6A171F561562006BEE1B /* InputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputView.swift; sourceTree = "<group>"; };
+		5AF470981FDF040A0014244A /* TextFieldDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldDelegate.swift; sourceTree = "<group>"; };
 		858480F51FCB55D300DBE466 /* TimeFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeFormatter.swift; sourceTree = "<group>"; };
 		858480F71FCB63EE00DBE466 /* MainVCTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainVCTests.swift; sourceTree = "<group>"; };
 		858480F91FCB657E00DBE466 /* GeneralTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralTests.swift; sourceTree = "<group>"; };
@@ -185,7 +187,7 @@
 				5A12267B1D5A80BA006D49F1 /* TableController.swift */,
 				5A871FF91D6FC68900B08A05 /* TableCell.swift */,
 				5ADB6A171F561562006BEE1B /* InputView.swift */,
-				5A2731D91FD6224A00FD5737 /* TableText.swift */,
+				5A2731D91FD6224A00FD5737 /* TableStrings.swift */,
 			);
 			name = Table;
 			sourceTree = "<group>";
@@ -195,6 +197,7 @@
 			children = (
 				5AA3E3AD1EEF36C400FB5F1D /* NavController.swift */,
 				5ABEF3301FCF191300655FEE /* SegueMediator.swift */,
+				5AF470981FDF040A0014244A /* TextFieldDelegate.swift */,
 				5AA3E3AB1EEF356600FB5F1D /* Table */,
 				5AA3E3AA1EEF354300FB5F1D /* Main */,
 			);
@@ -325,7 +328,8 @@
 				5A90785D1EEB8C24006BCDD3 /* Constants.swift in Sources */,
 				5A7159921FCBC35E00BEB5EE /* MainVCStrings.swift in Sources */,
 				5A03B9A81D1DDB9800E245C9 /* AppDelegate.swift in Sources */,
-				5A2731DA1FD6224A00FD5737 /* TableText.swift in Sources */,
+				5AF470991FDF040A0014244A /* TextFieldDelegate.swift in Sources */,
+				5A2731DA1FD6224A00FD5737 /* TableStrings.swift in Sources */,
 				5ABEF3311FCF191300655FEE /* SegueMediator.swift in Sources */,
 				5AB18AFA1D2058CA007B9D9F /* MainViewController.swift in Sources */,
 				5AA3E3AE1EEF36C400FB5F1D /* NavController.swift in Sources */,

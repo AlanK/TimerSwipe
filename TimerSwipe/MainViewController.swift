@@ -21,9 +21,10 @@ class MainViewController: UIViewController {
     private let strings = MainVCStrings()
     
     // MARK: Duration Properties
-    // Use duration provided from elsewhere, then the favorite timer, then the default timer
-    var providedDuration: TimeInterval?
-    private lazy var duration = providedDuration ?? (self.navigationController as? ModelIntermediary)?.model.favorite()?.seconds ?? K.defaultDuration
+    var providedTimer: STSavedTimer?
+    
+    // Use a timer provided from elsewhere, then a default time
+    private lazy var duration = providedTimer?.seconds ?? K.defaultDuration
 
     // MARK: Stopwatch Properties
     private lazy var stopwatch: Stopwatch = Stopwatch.init(delegate: self, duration: duration)

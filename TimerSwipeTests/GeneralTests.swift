@@ -22,4 +22,43 @@ class GeneralTests: XCTestCase {
         let inputView = InputView.init(frame: frame, inputViewStyle: .default)
         XCTAssertFalse(inputView.isVisible)
     }
+    
+    func testTextFieldDelegateCharacterRejection() {
+        let textField = UITextField()
+        let textFieldDelegate = TextFieldDelegate.init(.tableController({}))
+        
+        textField.delegate = textFieldDelegate
+        
+        let rangeShouldPass: NSRange = NSRange.init(location: 0, length: 1)
+        let stringShouldPass: String = "1"
+        
+        textField.text = "123"
+        
+        let charactersShouldChange = textFieldDelegate.textField(textField, shouldChangeCharactersIn: rangeShouldPass, replacementString: stringShouldPass)
+        XCTAssertTrue(charactersShouldChange)
+
+        let rangeTooDistant: NSRange = NSRange.init(location: 1, length: 3)
+        let invalidString: String = "ab"
+        
+        textField.text = "2"
+        
+        let charactersShouldNotChangeRangeTooDistant = textFieldDelegate.textField(textField, shouldChangeCharactersIn: rangeTooDistant, replacementString: stringShouldPass)
+        XCTAssertFalse(charactersShouldNotChangeRangeTooDistant)
+        
+        let charactersShouldNotChangeInvalidCharacters = textFieldDelegate.textField(textField, shouldChangeCharactersIn: rangeShouldPass, replacementString: invalidString)
+        XCTAssertFalse(charactersShouldNotChangeInvalidCharacters)
+    }
+    
+    func testTextFieldDelegateShouldReturnAndCall() {
+        var dummyVar = false
+        
+        let textField = UITextField()
+        let textFieldDelegate = TextFieldDelegate.init(.tableController({dummyVar = true}))
+        
+        textField.delegate = textFieldDelegate
+        
+        let textFieldShouldNotReturn = textFieldDelegate.textFieldShouldReturn(textField)
+        XCTAssertFalse(textFieldShouldNotReturn)
+        XCTAssertTrue(dummyVar)
+    }
 }

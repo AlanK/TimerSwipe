@@ -16,7 +16,7 @@ protocol TableCellDelegate {
 
 /// Custom table view cell with heart icon accessory view
 class TableCell: UITableViewCell {
-    var delegate: TableCellDelegate?
+    private var delegate: TableCellDelegate?
 
     @IBOutlet var secondsLabel: UILabel!
     @IBOutlet var favoriteIcon: UIButton!
@@ -31,7 +31,9 @@ class TableCell: UITableViewCell {
      - Parameters:
          - timer: an `STSavedTimer` with a duration and a favorite status
      */
-    func setupCell(with timer: STSavedTimer) {
+    func setupCell(delegate: TableCellDelegate, timer: STSavedTimer) {
+        self.delegate = delegate
+        
         let label = TableStrings.numberOfSeconds(Int(timer.seconds))
         
         // Configure based on isFavorite status
