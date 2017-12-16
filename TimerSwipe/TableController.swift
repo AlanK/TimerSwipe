@@ -261,10 +261,17 @@ extension TableController: TableCellDelegate {
         let indexPath = tableView.indexPath(for: cell)
         
         guard let index = indexPath?.row, let model = model else { return }
-        // Update favorite timer, save, and reload the view
-        model.toggleFavorite(at: index)
+        // Update favorite timer and save
+        let rowsToUpdate = model.updateFavorite(at: index)
         model.saveData()
-        tableView.reloadData()
+        
+        // Update the table view
+        var indexPaths = [IndexPath]()
+        for row in rowsToUpdate {
+            let path = IndexPath.init(row: row, section: mainSection)
+            indexPaths.append(path)
+        }
+        tableView.reloadRows(at: indexPaths, with: .none)
     }
 }
 
