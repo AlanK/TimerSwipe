@@ -266,75 +266,66 @@ extension TableController: UITableViewDropDelegate {
     }
     
     func tableView(_ tableView: UITableView, performDropWith coordinator: UITableViewDropCoordinator) {
-        print("Entering multirow code…")
         
-        // Something in here is broken but I don't know what
+        // This is putting the rows in the wrong order but has the basic idea right and is no longer crashing.
+
+        guard let destinationIndexPath = coordinator.destinationIndexPath, let model = modelIntermediary?.model else { return }
+
+        let items = coordinator.items
         
-//        guard let destinationIndexPath = coordinator.destinationIndexPath, let model = modelIntermediary?.model else { return }
-//
-//        let items = coordinator.items
-//
-//        var sourceRows = [Int]()
-//        var targetIndexPath = destinationIndexPath
-//        var destinationOffsetAccumulator = 0
-//        var timers = [Int: STSavedTimer]()
-//        var numberOfRowsToInsert = 0
-//        var actualTableRowInsertionIndexPaths = [IndexPath]()
-//
-//        for item in items {
-//            // Collect the source index paths and tag them with the index of their selection order
-//            guard let sourcePath = item.dragItem.localObject as? IndexPath else { return }
-//            let sourceRow = sourcePath.row
-//            sourceRows.append(sourceRow)
-//
-//            // Decrement the destination offset accumulator by one for every index path preceding the destination index path
-//            guard sourceRow < destinationIndexPath.row else { return }
-//            destinationOffsetAccumulator -= 1
-//        }
-//
-//        print("Source rows: \(sourceRows)")
-//        print("Destination offset: \(destinationOffsetAccumulator)")
-//
-//        let sortedSourceRows = sourceRows.sorted(by: >)
-//
-//        for row in sortedSourceRows {
-//            tableView.deleteRows(at: [IndexPath.init(row: row, section: mainSection)], with: .fade)
-//            timers[row] = model.remove(at: row)
-//        }
-//
-//        targetIndexPath.row += destinationOffsetAccumulator
-//
-//        while sourceRows.isEmpty == false {
-//            let row = sourceRows.removeLast()
-//
-//            guard let timer = timers[row] else { return }
-//            model.insert(timer, at: targetIndexPath.row)
-//            numberOfRowsToInsert += 1
-//        }
-//
-//        var i = 0
-//
-//        while numberOfRowsToInsert > 0 {
-//            let path = IndexPath.init(row: targetIndexPath.row + i, section: mainSection)
-//            actualTableRowInsertionIndexPaths.append(path)
-//            i += 1
-//            numberOfRowsToInsert -= 1
-//        }
-//
-//        tableView.insertRows(at: actualTableRowInsertionIndexPaths, with: .fade)
-//        model.saveData()
+        var sourcePaths = [IndexPath]()
+        var targetIndexPath = destinationIndexPath
+        var timers = [IndexPath: STSavedTimer]()
         
+        // Update model
         
+        for item in items {
+            // Collect the source index paths in their selection order
+            guard let sourcePath = item.dragItem.localObject as? IndexPath else { return }
+            sourcePaths.append(sourcePath)
+            
+            // Decrement the target index path by one for every source path preceding the destination path
+            if sourcePath < destinationIndexPath {
+                targetIndexPath.row -= 1
+            }
+        }
         
+        // We need to remove the model items being moved from the model. The math is simpler if we start with the lastmost item to be removed and work backwards.
+        let sortedSourcePaths = sourcePaths.sorted(by: >)
         
+        // Put each model item being removed in a dictionary, with the key being where it was removed from
+        for path in sortedSourcePaths {
+            timers[path] = model.remove(at: path.row)
+        }
         
-        // Unlikely anything below here in this function is necessary
-//
-//        for item in items {
-//            let dragItem = item.dragItem
-//            coordinator.drop(dragItem, toRowAt: targetIndexPath)
-//            targetIndexPath.row += 1
-//        }
+        // Back the removed model items into their destination
+        while sourcePaths.isEmpty == false {
+            let path = sourcePaths.removeLast()
+            
+            guard let timer = timers[path] else { return }
+            model.insert(timer, at: targetIndexPath.row)
+        }
+        
+        // Update table view
+        
+        // Collect source and destination index paths
+        var sourceAndDestinationPaths = sortedSourcePaths
+        sourceAndDestinationPaths.append(destinationIndexPath)
+        
+        // Sort the paths
+        let unitedPaths = sourceAndDestinationPaths.sorted(by: >)
+        
+        // Create a collection of every index path between the smallest and largest
+        guard let smallestPath = unitedPaths.last, let largestPath = unitedPaths.first else { return }
+        var pathsToUpdate = [IndexPath]()
+        
+        for row in smallestPath.row...largestPath.row {
+            let newPath = IndexPath.init(row: row, section: mainSection)
+            pathsToUpdate.append(newPath)
+        }
+        
+        // Execute the row updates
+        tableView.reloadRows(at: pathsToUpdate, with: .fade)
     }
 }
 
