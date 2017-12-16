@@ -272,11 +272,9 @@ extension TableController: UITableViewDropDelegate {
     }
     
     func tableView(_ tableView: UITableView, performDropWith coordinator: UITableViewDropCoordinator) {
-        
-        // This is putting the rows in the wrong order but has the basic idea right and is no longer crashing.
-
-        guard let destinationIndexPath = coordinator.destinationIndexPath, let model = modelIntermediary?.model else { return }
-
+        guard let originalPath = coordinator.destinationIndexPath, let model = modelIntermediary?.model else { return }
+        let modelCount = model.count()
+        let destinationIndexPath = originalPath.row < modelCount ? originalPath : IndexPath.init(row: modelCount - 1, section: mainSection)
         let items = coordinator.items
         
         var sourcePaths = [IndexPath]()
@@ -333,7 +331,18 @@ extension TableController: UITableViewDropDelegate {
         }
         
         // Execute the row updates
-        tableView.reloadRows(at: pathsToUpdate, with: .fade)
+        var pathsAboveDestination = [IndexPath]()
+        var pathsAtDestinationAndBelow = [IndexPath]()
+        for path in pathsToUpdate {
+            if path < destinationIndexPath {
+                pathsAboveDestination.append(path)
+            } else {
+                pathsAtDestinationAndBelow.append(path)
+            }
+        }
+        
+        tableView.reloadRows(at: pathsAboveDestination, with: .top)
+        tableView.reloadRows(at: pathsAtDestinationAndBelow, with: .bottom)
     }
 }
 
