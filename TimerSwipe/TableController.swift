@@ -95,9 +95,9 @@ class TableController: UITableViewController {
     
     // MARK: Table view data source
     
-    override func numberOfSections(in tableView: UITableView) -> Int {return sectionsInTableView}
+    override func numberOfSections(in tableView: UITableView) -> Int { return sectionsInTableView }
     
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {return model?.count() ?? 0}
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int { return model?.count() ?? 0 }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellID, for: indexPath)
@@ -130,7 +130,7 @@ class TableController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to toIndexPath: IndexPath) {
-        guard let model = model else {return}
+        guard let model = model else { return }
         let timer = model.remove(at: fromIndexPath.row)
         model.insert(timer, at: toIndexPath.row)
         model.saveData()
@@ -143,7 +143,7 @@ class TableController: UITableViewController {
     
     func commitTimer(_ userSelectedTime: TimeInterval) {
         // Create a new timer
-        guard let model = model else {return}
+        guard let model = model else { return }
         let newTimer = STSavedTimer(seconds: userSelectedTime)
         let newIndexPath = IndexPath(row: model.count(), section: mainSection)
         // Append, save, and update view
@@ -260,7 +260,7 @@ extension TableController: TableCellDelegate {
     func cellButtonTapped(cell: TableCell) {
         let indexPath = tableView.indexPath(for: cell)
         
-        guard let index = indexPath?.row, let model = model else {return}
+        guard let index = indexPath?.row, let model = model else { return }
         // Update favorite timer, save, and reload the view
         model.toggleFavorite(at: index)
         model.saveData()
