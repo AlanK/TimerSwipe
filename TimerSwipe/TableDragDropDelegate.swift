@@ -13,11 +13,11 @@ protocol TableModelDragDropDelegate: NSObjectProtocol {
 }
 
 class TableDragDropDelegate: NSObject {
-    private let tableViewController: UITableViewDataSource
+    private let tableViewDataSource: UITableViewDataSource
     private let tableModelDragDropDelegate: TableModelDragDropDelegate
     
-    init(_ tableViewController: UITableViewDataSource, tableModelDragDropDelegate: TableModelDragDropDelegate) {
-        self.tableViewController = tableViewController
+    init(_ tableViewDataSource: UITableViewDataSource, tableModelDragDropDelegate: TableModelDragDropDelegate) {
+        self.tableViewDataSource = tableViewDataSource
         self.tableModelDragDropDelegate = tableModelDragDropDelegate
     }
 }
@@ -70,7 +70,7 @@ extension TableDragDropDelegate: UITableViewDropDelegate {
         guard let destinationIndexPath = coordinator.destinationIndexPath else { return }
         
         // Prevent a crash from attempting to insert rows beyond the last row of the section
-        let rowsInSection = tableViewController.tableView(tableView, numberOfRowsInSection: destinationIndexPath.section)
+        let rowsInSection = tableViewDataSource.tableView(tableView, numberOfRowsInSection: destinationIndexPath.section)
         let correctedDestination: IndexPath
         if destinationIndexPath.row < rowsInSection {
             correctedDestination = destinationIndexPath
