@@ -168,10 +168,14 @@ class InputView: UIInputView {
         let borderHeight: CGFloat = 0.5
         
         translatesAutoresizingMaskIntoConstraints = false
-        preservesSuperviewLayoutMargins = true
-        borderWrapper.preservesSuperviewLayoutMargins = true
-        wrapper.preservesSuperviewLayoutMargins = true
-        innerWrapper.preservesSuperviewLayoutMargins = true
+        
+        // Avoid bugs in iOS 10 by not enabling these fixes for the iPhone X
+        if #available(iOS 11, *) {
+            preservesSuperviewLayoutMargins = true
+            borderWrapper.preservesSuperviewLayoutMargins = true
+            wrapper.preservesSuperviewLayoutMargins = true
+            innerWrapper.preservesSuperviewLayoutMargins = true
+        }
         
         // Assemble the subviews
         addSubview(borderWrapper)
