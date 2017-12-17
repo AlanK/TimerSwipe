@@ -13,6 +13,7 @@
 		5A03B9B21D1DDB9800E245C9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5A03B9B01D1DDB9800E245C9 /* LaunchScreen.storyboard */; };
 		5A12267C1D5A80BA006D49F1 /* TableController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A12267B1D5A80BA006D49F1 /* TableController.swift */; };
 		5A12267E1D5A94C3006D49F1 /* STTimerList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A12267D1D5A94C3006D49F1 /* STTimerList.swift */; };
+		5A2318CB1FE71CD50065C057 /* TableDragDropTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A2318CA1FE71CD50065C057 /* TableDragDropTests.swift */; };
 		5A2731DA1FD6224A00FD5737 /* TableStrings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A2731D91FD6224A00FD5737 /* TableStrings.swift */; };
 		5A2731DE1FD62ED400FD5737 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5A2731DD1FD62ED400FD5737 /* Localizable.strings */; };
 		5A2731E21FD6311100FD5737 /* Localizable.stringsdict in Resources */ = {isa = PBXBuildFile; fileRef = 5A2731E11FD6311100FD5737 /* Localizable.stringsdict */; };
@@ -56,6 +57,7 @@
 		5A03B9B31D1DDB9800E245C9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5A12267B1D5A80BA006D49F1 /* TableController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableController.swift; sourceTree = "<group>"; };
 		5A12267D1D5A94C3006D49F1 /* STTimerList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STTimerList.swift; sourceTree = "<group>"; };
+		5A2318CA1FE71CD50065C057 /* TableDragDropTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableDragDropTests.swift; sourceTree = "<group>"; };
 		5A2731D91FD6224A00FD5737 /* TableStrings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableStrings.swift; sourceTree = "<group>"; };
 		5A2731DD1FD62ED400FD5737 /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
 		5A2731E11FD6311100FD5737 /* Localizable.stringsdict */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; path = Localizable.stringsdict; sourceTree = "<group>"; };
@@ -102,6 +104,7 @@
 			isa = PBXGroup;
 			children = (
 				858480F91FCB657E00DBE466 /* GeneralTests.swift */,
+				5A2318CA1FE71CD50065C057 /* TableDragDropTests.swift */,
 				858480F71FCB63EE00DBE466 /* MainVCTests.swift */,
 				5A01E6B51F9FFBB3007F0373 /* Info.plist */,
 			);
@@ -317,6 +320,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				858480F81FCB63EE00DBE466 /* MainVCTests.swift in Sources */,
+				5A2318CB1FE71CD50065C057 /* TableDragDropTests.swift in Sources */,
 				858480FA1FCB657E00DBE466 /* GeneralTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
