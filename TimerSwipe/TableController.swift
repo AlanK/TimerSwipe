@@ -12,6 +12,9 @@ import UIKit
 class TableController: UITableViewController {
     /// App model must be injected by parent
     var model: STTimerList?
+    
+    private lazy var dragDropDelegate = TableDragDropDelegate.init(self, tableModelDragDropDelegate: self)
+    
     /// The table-add button
     @IBOutlet var addButton: UIBarButtonItem! {
         didSet {
@@ -52,8 +55,8 @@ class TableController: UITableViewController {
         super.viewDidLoad()
         self.navigationItem.leftBarButtonItem = self.editButtonItem
         if #available(iOS 11.0, *) {
-            tableView.dragDelegate = self
-            tableView.dropDelegate = self
+            tableView.dragDelegate = dragDropDelegate
+            tableView.dropDelegate = dragDropDelegate
             tableView.dragInteractionEnabled = true
         }
         handleVoiceOverStatus()
@@ -221,123 +224,30 @@ class TableController: UITableViewController {
     }
 }
 
-// MARK: - Table View Drag Delegate
-@available(iOS 11.0, *)
-extension TableController: UITableViewDragDelegate {
-    func tableView(_ tableView: UITableView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
-        return dragItems(at: indexPath)
-    }
-    
-    // Multi-row drag
-    func tableView(_ tableView: UITableView, itemsForAddingTo session: UIDragSession, at indexPath: IndexPath, point: CGPoint) -> [UIDragItem] {
-        return dragItems(at: indexPath)
-    }
-    
-    private func dragItems(at indexPath: IndexPath) -> [UIDragItem] {
-        let itemProvider = NSItemProvider(item: nil, typeIdentifier: nil)
-        let dragItem = UIDragItem(itemProvider: itemProvider)
-        
-        dragItem.localObject = indexPath
-        
-        return [dragItem]
-    }
-}
-
-// MARK: Table View Drop Delegate
-@available(iOS 11.0, *)
-extension TableController: UITableViewDropDelegate {
-    func tableView(_ tableView: UITableView, canHandle session: UIDropSession) -> Bool {
-        return true
-    }
-    
-    func tableView(_ tableView: UITableView, dropSessionDidUpdate session: UIDropSession, withDestinationIndexPath destinationIndexPath: IndexPath?) -> UITableViewDropProposal {
-        let singleRowProposal = UITableViewDropProposal(operation: .move, intent: .insertAtDestinationIndexPath),
-        multiRowProposal = UITableViewDropProposal(operation: .move, intent: .unspecified),
-        cancelProposal = UITableViewDropProposal(operation: .cancel, intent: .automatic)
-        
-        guard let destinationIndexPath = destinationIndexPath,
-            destinationIndexPath.section == mainSection else {
-                return cancelProposal
-        }
-        
-        return session.items.count == 1 ? singleRowProposal : multiRowProposal
-    }
-    
-    func tableView(_ tableView: UITableView, performDropWith coordinator: UITableViewDropCoordinator) {
-        guard let originalPath = coordinator.destinationIndexPath, let model = model else { return }
-        let modelCount = model.count()
-        // Prevent a crash from attempting to insert rows beyond the last row of the section
-        let destinationIndexPath = originalPath.row < modelCount ? originalPath : IndexPath.init(row: modelCount - 1, section: mainSection)
-        let items = coordinator.items
-        
-        var sourcePaths = [IndexPath]()
-        var targetIndexPath = destinationIndexPath
-        var timers = [IndexPath: STSavedTimer]()
-        
-        // Update model
-        
-        for item in items {
-            // Collect the source index paths in their selection order
-            guard let sourcePath = item.dragItem.localObject as? IndexPath else { return }
-            sourcePaths.append(sourcePath)
-            
-            // Decrement the target index path by one for every source path preceding the destination path
-            if sourcePath < destinationIndexPath {
-                targetIndexPath.row -= 1
-            }
-        }
-        
-        // We need to remove the model items being moved from the model. The math is simpler if we start with the lastmost item to be removed and work backwards.
-        let sortedSourcePaths = sourcePaths.sorted(by: >)
+// MARK: - Table Model Drag Drop Delegate
+extension TableController: TableModelDragDropDelegate {
+    func updateModelOnDrop(_ sourcePaths: [IndexPath], targetIndexPath: IndexPath) -> Bool {
+        guard let model = model else { return false }
+        let sourcePathsInReverseIndexOrder = sourcePaths.sorted(by: >)
+        var sourcePathsInSelectionOrder = sourcePaths
         
         // Put each model item being removed in a dictionary, with the key being where it was removed from
-        for path in sortedSourcePaths {
+        var timers = [IndexPath: STSavedTimer]()
+        for path in sourcePathsInReverseIndexOrder {
             timers[path] = model.remove(at: path.row)
         }
         
         // Back the removed model items into their destination
-        while sourcePaths.isEmpty == false {
-            let path = sourcePaths.removeLast()
+        while sourcePathsInSelectionOrder.isEmpty == false {
+            let path = sourcePathsInSelectionOrder.removeLast()
             
-            guard let timer = timers[path] else { return }
+            guard let timer = timers[path] else { return false }
             model.insert(timer, at: targetIndexPath.row)
         }
         
         model.saveData()
         
-        // Update table view
-        
-        /*
-         Three possibilities:
-         
-         1. The destination path is before the earliest source path. Update from the destination path through the latest source path
-         2. The destination path is between the earliest and latest source paths. Update from the earliest through latest souce paths
-         3. The destination path is after the latest source path. Update from the earliest source path through one before the destination path
-         
-         */
-        
-        // Set start and end of update
-        guard let topSrc = sortedSourcePaths.last, let bottomSrc = sortedSourcePaths.first else { return }
-        let destination = destinationIndexPath
-        let startUpdatePath = destination < topSrc ? destination : topSrc,
-        endUpdatePath = destination > bottomSrc ? IndexPath.init(row: destination.row - 1, section: destination.section) : bottomSrc
-        
-        // Create paths to update. Tracking which are above and below the destination is nice for the animation
-        var pathsAboveDestination = [IndexPath]()
-        var pathsAtDestinationAndBelow = [IndexPath]()
-
-        for row in startUpdatePath.row...endUpdatePath.row {
-            let path = IndexPath.init(row: row, section: mainSection)
-            if path < destinationIndexPath {
-                pathsAboveDestination.append(path)
-            } else {
-                pathsAtDestinationAndBelow.append(path)
-            }
-        }
-        
-        // Animate the row updates
-        tableView.reloadRows(at: pathsAboveDestination, with: .top)
-        tableView.reloadRows(at: pathsAtDestinationAndBelow, with: .bottom)
+        return true
     }
 }
 
