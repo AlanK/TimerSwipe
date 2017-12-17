@@ -9,6 +9,7 @@
 import XCTest
 @testable import TimerSwipe
 
+@available(iOS 11.0, *)
 class TableDragDropTests: XCTestCase {
     
     let tableController = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: StoryboardID.tableView.rawValue) as? TableController
