@@ -25,13 +25,15 @@ class TableController: UITableViewController {
     @IBOutlet var footerContainer: UIView!
     /// The label serving as the table footer
     @IBOutlet var footer: UILabel!
+    
+    private lazy var textFieldDelegate = TextFieldDelegate.init(.tableController(createNewTimer))
     /// The view which can create new timers
     private lazy var keyboardAccessoryView: InputView = {
         let view = InputView(frame: .zero, inputViewStyle: .default)
         view.cancelButton.addTarget(self, action: #selector(exitKeyboardAccessoryView), for: .touchUpInside)
         view.addButton.addTarget(self, action: #selector(createNewTimer), for: .touchUpInside)
         view.textField.addTarget(self, action: #selector(textInTextFieldChanged(_:)), for: UIControlEvents.editingChanged)
-        view.textField.delegate = TextFieldDelegate.init(.tableController(createNewTimer))
+        view.textField.delegate = textFieldDelegate
         return view
     }()
     
