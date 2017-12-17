@@ -266,6 +266,7 @@ extension TableController: UITableViewDropDelegate {
     func tableView(_ tableView: UITableView, performDropWith coordinator: UITableViewDropCoordinator) {
         guard let originalPath = coordinator.destinationIndexPath, let model = model else { return }
         let modelCount = model.count()
+        // Prevent a crash from attempting to insert rows beyond the last row of the section
         let destinationIndexPath = originalPath.row < modelCount ? originalPath : IndexPath.init(row: modelCount - 1, section: mainSection)
         let items = coordinator.items
         
@@ -306,26 +307,27 @@ extension TableController: UITableViewDropDelegate {
         
         // Update table view
         
-        // Collect source and destination index paths
-        var sourceAndDestinationPaths = sortedSourcePaths
-        sourceAndDestinationPaths.append(destinationIndexPath)
+        /*
+         Three possibilities:
+         
+         1. The destination path is before the earliest source path. Update from the destination path through the latest source path
+         2. The destination path is between the earliest and latest source paths. Update from the earliest through latest souce paths
+         3. The destination path is after the latest source path. Update from the earliest source path through one before the destination path
+         
+         */
         
-        // Sort the paths
-        let unitedPaths = sourceAndDestinationPaths.sorted(by: >)
+        // Set start and end of update
+        guard let topSrc = sortedSourcePaths.last, let bottomSrc = sortedSourcePaths.first else { return }
+        let destination = destinationIndexPath
+        let startUpdatePath = destination < topSrc ? destination : topSrc,
+        endUpdatePath = destination > bottomSrc ? IndexPath.init(row: destination.row - 1, section: destination.section) : bottomSrc
         
-        // Create a collection of every index path between the smallest and largest
-        guard let smallestPath = unitedPaths.last, let largestPath = unitedPaths.first else { return }
-        var pathsToUpdate = [IndexPath]()
-        
-        for row in smallestPath.row...largestPath.row {
-            let newPath = IndexPath.init(row: row, section: mainSection)
-            pathsToUpdate.append(newPath)
-        }
-        
-        // Execute the row updates
+        // Create paths to update. Tracking which are above and below the destination is nice for the animation
         var pathsAboveDestination = [IndexPath]()
         var pathsAtDestinationAndBelow = [IndexPath]()
-        for path in pathsToUpdate {
+
+        for row in startUpdatePath.row...endUpdatePath.row {
+            let path = IndexPath.init(row: row, section: mainSection)
             if path < destinationIndexPath {
                 pathsAboveDestination.append(path)
             } else {
@@ -333,6 +335,7 @@ extension TableController: UITableViewDropDelegate {
             }
         }
         
+        // Animate the row updates
         tableView.reloadRows(at: pathsAboveDestination, with: .top)
         tableView.reloadRows(at: pathsAtDestinationAndBelow, with: .bottom)
     }
