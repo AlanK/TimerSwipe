@@ -106,7 +106,7 @@ class InputView: UIInputView {
         // iOS 10 won’t dynamically resize the text field, so give it a sufficient width based on aspect ratio
         if #available(iOS 11, *) {}
         else {
-            let fallbackTextFieldAspectRatio: CGFloat = 2.5
+            let fallbackTextFieldAspectRatio: CGFloat = 1.5
             textField.widthAnchor.constraint(equalTo: textField.heightAnchor, multiplier: fallbackTextFieldAspectRatio).isActive = true
         }
         
