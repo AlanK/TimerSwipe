@@ -19,23 +19,7 @@ class NavController: UINavigationController {
     
     private let notificationCenter = NotificationCenter.default
     
-    private lazy var timeoutManager = TimeoutManager.init(didTimeout: {
-        // Make any necessary changes to views after being in the background for a long time
-        
-        // Don’t change views if a timer is running or there’s no favorite to change to
-        guard (self.topViewController as? StopwatchKiller)?.timerReady ?? true, let _ = self.model.favorite() else { return }
-        // Don't disrupt an active edit session
-        if (self.topViewController as? TableController)?.isEditing == true { return }
-        // Don't animate going from one timer to another; it looks weird
-        let animated = self.topViewController is MainViewController == false
-        
-        self.loadNavigationStack(animated: animated)
-        
-    }, willTerminate: {
-        // The application is terminating; kill any running timer
-        
-        (self.topViewController as? StopwatchKiller)?.killTimer()
-    })
+    private var timeoutManager: TimeoutManager?
 
     
     /// Underlying model for app
@@ -47,7 +31,23 @@ class NavController: UINavigationController {
         navigationBar.barTintColor = K.tintColor
         navigationBar.tintColor = .white
         
-        timeoutManager.isEnabled = true
+        timeoutManager = TimeoutManager.init(didTimeout: { [unowned self] in
+            // Make any necessary changes to views after being in the background for a long time
+            
+            // Don’t change views if a timer is running or there’s no favorite to change to
+            guard (self.topViewController as? StopwatchKiller)?.timerReady ?? true, let _ = self.model.favorite() else { return }
+            // Don't disrupt an active edit session
+            if (self.topViewController as? TableController)?.isEditing == true { return }
+            // Don't animate going from one timer to another; it looks weird
+            let animated = self.topViewController is MainViewController == false
+            
+            self.loadNavigationStack(animated: animated)
+            
+        }, willTerminate: { [unowned self] in
+            // The application is terminating; kill any running timer
+            
+            (self.topViewController as? StopwatchKiller)?.killTimer()
+        })
         
         loadNavigationStack(animated: false)
     }

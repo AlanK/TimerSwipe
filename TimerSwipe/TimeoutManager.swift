@@ -13,39 +13,29 @@ class TimeoutManager: NSObject {
     private let nc = NotificationCenter.default
     private let timeout: TimeInterval = 300.0
 
-    private let didTimeout: (() -> Void), willTerminate: (() -> Void)
-    
     private var lastEnteredBackground: Date?
     
-    var isEnabled: Bool = false {
-        willSet {
-            if newValue == true {
-                nc.addObserver(forName: .UIApplicationDidEnterBackground, object: nil, queue: nil) {_ in
-                    self.lastEnteredBackground = Date()
-                }
-                nc.addObserver(forName: .UIApplicationDidBecomeActive, object: nil, queue: nil) {_ in
-                    if let date = self.lastEnteredBackground, self.timeout < Date().timeIntervalSince(date) {
-                        self.didTimeout()
-                    }
-                    self.lastEnteredBackground = nil
-                }
-                nc.addObserver(forName: .UIApplicationWillTerminate, object: nil, queue: nil) {_ in
-                    self.willTerminate()
-                }
-            } else {
-                nc.removeObserver(self, name: .UIApplicationDidEnterBackground, object: nil)
-                nc.removeObserver(self, name: .UIApplicationDidBecomeActive, object: nil)
-                nc.removeObserver(self, name: .UIApplicationWillTerminate, object: nil)
-            }
-        }
-    }
-    
     init(didTimeout: @escaping () -> Void, willTerminate: @escaping () -> Void) {
-        self.didTimeout = didTimeout
-        self.willTerminate = willTerminate
+        super.init()
+        
+        nc.addObserver(forName: .UIApplicationDidEnterBackground, object: nil, queue: nil) { [unowned self] _ in
+            self.lastEnteredBackground = Date()
+        }
+        nc.addObserver(forName: .UIApplicationDidBecomeActive, object: nil, queue: nil) { [unowned self] _ in
+            if let date = self.lastEnteredBackground, self.timeout < Date().timeIntervalSince(date) {
+                didTimeout()
+            }
+            self.lastEnteredBackground = nil
+        }
+        nc.addObserver(forName: .UIApplicationWillTerminate, object: nil, queue: nil) {_ in
+            willTerminate()
+        }
+
     }
     
     deinit {
-        self.isEnabled = false
+        nc.removeObserver(self, name: .UIApplicationDidEnterBackground, object: nil)
+        nc.removeObserver(self, name: .UIApplicationDidBecomeActive, object: nil)
+        nc.removeObserver(self, name: .UIApplicationWillTerminate, object: nil)
     }
 }
