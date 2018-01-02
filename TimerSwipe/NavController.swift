@@ -19,6 +19,25 @@ class NavController: UINavigationController {
     
     private let notificationCenter = NotificationCenter.default
     
+    private lazy var timeoutManager = TimeoutManager.init(didTimeout: {
+        // Make any necessary changes to views after being in the background for a long time
+        
+        // Don’t change views if a timer is running or there’s no favorite to change to
+        guard (self.topViewController as? StopwatchKiller)?.timerReady ?? true, let _ = self.model.favorite() else { return }
+        // Don't disrupt an active edit session
+        if (self.topViewController as? TableController)?.isEditing == true { return }
+        // Don't animate going from one timer to another; it looks weird
+        let animated = self.topViewController is MainViewController == false
+        
+        self.loadNavigationStack(animated: animated)
+        
+    }, willTerminate: {
+        // The application is terminating; kill any running timer
+        
+        (self.topViewController as? StopwatchKiller)?.killTimer()
+    })
+
+    
     /// Underlying model for app
     let model: STTimerList = STTimerList.loadExistingModel()
     
@@ -27,6 +46,8 @@ class NavController: UINavigationController {
         navigationBar.barStyle = .black
         navigationBar.barTintColor = K.tintColor
         navigationBar.tintColor = .white
+        
+        timeoutManager.isEnabled = true
         
         loadNavigationStack(animated: false)
     }
@@ -61,19 +82,6 @@ class NavController: UINavigationController {
         setViewControllers(navHierarchy, animated: animated)
     }
     
-    /// Make any necessary changes to views after being in the background for a long time
-    func resetViewsAfterBackgroundTimeout() {
-        // Don’t change views if a timer is running or there’s no favorite to change to
-        guard timerReady, let _ = model.favorite() else {return}
-        // Don't disrupt an active edit session
-        if (topViewController as? TableController)?.isEditing == true {return}
-
-        // Don't animate going from one timer to another; it looks weird
-        let animated = topViewController is MainViewController == false
-        
-        loadNavigationStack(animated: animated)
-    }
-    
     /// Register and unregister for notifications on behalf of other VCs
     private func registerNotifications(_ register: Bool) {
         // UIAccessibilityVoiceOverStatusChanged and NSNotification.Name.UIAccessibilityVoiceOverStatusDidChange are the same notification in iOS 10 and iOS 11
@@ -91,17 +99,5 @@ class NavController: UINavigationController {
     private func forwardVoiceOverNotification(_ notification: Notification) {
         guard let vc = topViewController as? VoiceOverObserver else {return}
         vc.voiceOverStatusDidChange(notification)
-    }
-}
-
-// MARK: - StopwatchKiller
-// Kill the timer when the app lifecycle dictates
-extension NavController: StopwatchKiller {
-    var timerReady: Bool {
-        return (topViewController as? StopwatchKiller)?.timerReady ?? true
-    }
-    // Pass the message to kill the timer to the topmost view controller
-    func killTimer() {
-        (topViewController as? StopwatchKiller)?.killTimer()
     }
 }
