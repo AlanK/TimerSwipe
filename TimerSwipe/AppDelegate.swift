@@ -22,10 +22,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return window?.rootViewController as? StopwatchKiller
     }
     
-    func applicationDidFinishLaunching(_ application: UIApplication) {
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey : Any]? = nil) -> Bool {
         self.window?.tintColor = K.tintColor
         // Shake-to-undo is too fiddly for a three-digit numbers-only text field, so lets turn it off
         UIApplication.shared.applicationSupportsShakeToEdit = false
+        
+        return true
     }
     
     func applicationDidEnterBackground(_ application: UIApplication) {
