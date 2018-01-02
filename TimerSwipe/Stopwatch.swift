@@ -9,7 +9,7 @@
 import Foundation
 
 /// Responsible for providing a locking system (to prevent concurrency), timer completion handlers, and a display updater
-protocol StopwatchDelegate: StopwatchKiller {
+protocol StopwatchDelegate: StopwatchKiller, NSObjectProtocol {
     // NOTE: The indirection in timerReady/lock/unlock allows Stopwatch to be a struct. Don't collapse it all into an unlocked {get set} unless you're prepared to make Stopwatch a class.
     /// Locks to prevent starting a new timer
     func lock()
@@ -31,7 +31,7 @@ protocol StopwatchKiller {
 
 /// The object that runs timers
 struct Stopwatch {
-    private let delegate: StopwatchDelegate
+    private unowned let delegate: StopwatchDelegate
     /// Duration in seconds
     private let duration: TimeInterval
     
