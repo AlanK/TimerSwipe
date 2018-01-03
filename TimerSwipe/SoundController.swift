@@ -17,7 +17,7 @@ enum AudioCue: String {
 
 /// Handles sounds for the main view of the app
 struct SoundController {
-    private let audioSession = AVAudioSession()
+    private let audioSession = AVAudioSession.sharedInstance()
     private let audioPlayers: [AudioCue : AVAudioPlayer?]
     
     init() {
