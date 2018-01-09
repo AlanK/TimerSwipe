@@ -30,6 +30,9 @@
 		5ABEF3311FCF191300655FEE /* SegueMediator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ABEF3301FCF191300655FEE /* SegueMediator.swift */; };
 		5AC60D751FE6D5B3002808C6 /* TableDragDropDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AC60D741FE6D5B3002808C6 /* TableDragDropDelegate.swift */; };
 		5ADB6A181F561562006BEE1B /* InputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ADB6A171F561562006BEE1B /* InputView.swift */; };
+		5ADE6DC81FFD9E0600E8CF8C /* PermissionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ADE6DC71FFD9E0600E8CF8C /* PermissionManager.swift */; };
+		5ADE6DCA1FFDBFCF00E8CF8C /* Permissions.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5ADE6DC91FFDBFCF00E8CF8C /* Permissions.storyboard */; };
+		5ADE6DCD1FFF285000E8CF8C /* PermissionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ADE6DCC1FFF285000E8CF8C /* PermissionController.swift */; };
 		5AF470991FDF040A0014244A /* TextFieldDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF470981FDF040A0014244A /* TextFieldDelegate.swift */; };
 		858480F61FCB55D300DBE466 /* TimeFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 858480F51FCB55D300DBE466 /* TimeFormatter.swift */; };
 		858480F81FCB63EE00DBE466 /* MainVCTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 858480F71FCB63EE00DBE466 /* MainVCTests.swift */; };
@@ -77,6 +80,9 @@
 		5ABEF3301FCF191300655FEE /* SegueMediator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegueMediator.swift; sourceTree = "<group>"; };
 		5AC60D741FE6D5B3002808C6 /* TableDragDropDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableDragDropDelegate.swift; sourceTree = "<group>"; };
 		5ADB6A171F561562006BEE1B /* InputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputView.swift; sourceTree = "<group>"; };
+		5ADE6DC71FFD9E0600E8CF8C /* PermissionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionManager.swift; sourceTree = "<group>"; };
+		5ADE6DC91FFDBFCF00E8CF8C /* Permissions.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Permissions.storyboard; sourceTree = "<group>"; };
+		5ADE6DCC1FFF285000E8CF8C /* PermissionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionController.swift; sourceTree = "<group>"; };
 		5AF470981FDF040A0014244A /* TextFieldDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldDelegate.swift; sourceTree = "<group>"; };
 		858480F51FCB55D300DBE466 /* TimeFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeFormatter.swift; sourceTree = "<group>"; };
 		858480F71FCB63EE00DBE466 /* MainVCTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainVCTests.swift; sourceTree = "<group>"; };
@@ -172,6 +178,7 @@
 			children = (
 				5A03B9AB1D1DDB9800E245C9 /* Main.storyboard */,
 				5A03B9B01D1DDB9800E245C9 /* LaunchScreen.storyboard */,
+				5ADE6DC91FFDBFCF00E8CF8C /* Permissions.storyboard */,
 			);
 			name = Storyboards;
 			sourceTree = "<group>";
@@ -207,10 +214,20 @@
 				5ABEF3301FCF191300655FEE /* SegueMediator.swift */,
 				5AF470981FDF040A0014244A /* TextFieldDelegate.swift */,
 				85B648A91FFB19C3004E85F4 /* TimeoutManager.swift */,
+				5ADE6DCB1FFEF46300E8CF8C /* Permissions */,
 				5AA3E3AB1EEF356600FB5F1D /* Table */,
 				5AA3E3AA1EEF354300FB5F1D /* Main */,
 			);
 			name = "Views and Controllers";
+			sourceTree = "<group>";
+		};
+		5ADE6DCB1FFEF46300E8CF8C /* Permissions */ = {
+			isa = PBXGroup;
+			children = (
+				5ADE6DCC1FFF285000E8CF8C /* PermissionController.swift */,
+				5ADE6DC71FFD9E0600E8CF8C /* PermissionManager.swift */,
+			);
+			name = Permissions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -310,6 +327,7 @@
 				5A7D12D11F0B2ADC00C9B51A /* TS_short_out.aif in Resources */,
 				5A03B9B21D1DDB9800E245C9 /* LaunchScreen.storyboard in Resources */,
 				5A03B9AF1D1DDB9800E245C9 /* Assets.xcassets in Resources */,
+				5ADE6DCA1FFDBFCF00E8CF8C /* Permissions.storyboard in Resources */,
 				5A03B9AD1D1DDB9800E245C9 /* Main.storyboard in Resources */,
 				5A2731E21FD6311100FD5737 /* Localizable.stringsdict in Resources */,
 			);
@@ -337,6 +355,7 @@
 				858480F61FCB55D300DBE466 /* TimeFormatter.swift in Sources */,
 				5A12267E1D5A94C3006D49F1 /* STTimerList.swift in Sources */,
 				5A90785D1EEB8C24006BCDD3 /* Constants.swift in Sources */,
+				5ADE6DCD1FFF285000E8CF8C /* PermissionController.swift in Sources */,
 				5A7159921FCBC35E00BEB5EE /* MainVCStrings.swift in Sources */,
 				85B648AA1FFB19C3004E85F4 /* TimeoutManager.swift in Sources */,
 				5A03B9A81D1DDB9800E245C9 /* AppDelegate.swift in Sources */,
@@ -349,6 +368,7 @@
 				5A591CE91D3AA18E00B9BD3D /* SoundController.swift in Sources */,
 				5A871FFA1D6FC68900B08A05 /* TableCell.swift in Sources */,
 				5AB69EBF1EC799370078DDA5 /* Stopwatch.swift in Sources */,
+				5ADE6DC81FFD9E0600E8CF8C /* PermissionManager.swift in Sources */,
 				5A12267C1D5A80BA006D49F1 /* TableController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

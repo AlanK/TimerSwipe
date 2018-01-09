@@ -38,6 +38,18 @@ extension UIView {
     }
 }
 
+extension UIButton {
+    func lightButtonStyle() {
+        titleLabel?.font = UIFont.systemFont(ofSize: 15.0, weight: .semibold)
+        contentEdgeInsets = UIEdgeInsetsMake(4.0, 8.0, 4.0, 8.0)
+        
+        layer.cornerRadius = K.cornerRadius
+        tintColor = K.tintColor
+        
+        backgroundColor = .white
+    }
+}
+
 /// Common constants
 struct K {
     
@@ -45,6 +57,8 @@ struct K {
     static let tintColor = UIColor(red: 255.0/255.0, green: 35.0/255.0, blue: 180.0/255.0, alpha: 1.0)
     static let fineLineColor = UIColor(white: 2.0/3.0, alpha: 1.0)
     static let largeFont = UIFont.preferredFont(forTextStyle: .title1)
+    static let mediumFont = UIFont.preferredFont(forTextStyle: .title3)
+    static let cornerRadius: CGFloat = 6.0
 
     // MARK: Main Table
     static let editButtonDelay: TimeInterval = 0.5
