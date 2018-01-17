@@ -15,7 +15,7 @@ class TimeoutManager: NSObject {
 
     private var lastEnteredBackground: Date?
     
-    init(didTimeout: @escaping () -> Void, willTerminate: @escaping () -> Void) {
+    init(didTimeout: @escaping () -> Void) {
         super.init()
         
         nc.addObserver(forName: .UIApplicationDidEnterBackground, object: nil, queue: nil) { [unowned self] _ in
@@ -27,15 +27,10 @@ class TimeoutManager: NSObject {
             }
             self.lastEnteredBackground = nil
         }
-        nc.addObserver(forName: .UIApplicationWillTerminate, object: nil, queue: nil) {_ in
-            willTerminate()
-        }
-
     }
     
     deinit {
         nc.removeObserver(self, name: .UIApplicationDidEnterBackground, object: nil)
         nc.removeObserver(self, name: .UIApplicationDidBecomeActive, object: nil)
-        nc.removeObserver(self, name: .UIApplicationWillTerminate, object: nil)
     }
 }

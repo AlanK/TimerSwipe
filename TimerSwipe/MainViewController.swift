@@ -193,14 +193,6 @@ extension MainViewController: StopwatchDelegate {
     
     /// Unlocks the stopwatch when no timer is running
     func unlock() {timerReady = true}
-
-    // This view controller can kill a running timer directly
-    func killTimer() {
-        if timerReady == false {
-            buttonActions()
-            soundController.play(.dieCue)
-        }
-    }
 }
 
 // MARK: - VoiceOverObserver
