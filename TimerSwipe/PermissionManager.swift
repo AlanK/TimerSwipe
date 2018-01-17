@@ -49,7 +49,8 @@ class PermissionManager: NSObject {
     }
     
     private func notificationsAuthorized() {
-        
+        let timerCompleteCategory = UNNotificationCategory(identifier: "TimerCompleteCategory", actions: [], intentIdentifiers: [])
+        center.setNotificationCategories([timerCompleteCategory])
     }
     
     private func requestNotificationAuthorization() {
