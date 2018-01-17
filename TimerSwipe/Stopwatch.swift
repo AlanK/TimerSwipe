@@ -8,6 +8,11 @@
 
 import Foundation
 
+protocol StopwatchNotifier: class {
+    func timer(ends: Date)
+    func timerDidReset()
+}
+
 /// Responsible for providing a locking system (to prevent concurrency), timer completion handlers, and a display updater
 protocol StopwatchDelegate: StopwatchKiller, NSObjectProtocol {
     // NOTE: The indirection in timerReady/lock/unlock allows Stopwatch to be a struct. Don't collapse it all into an unlocked {get set} unless you're prepared to make Stopwatch a class.
@@ -32,12 +37,14 @@ protocol StopwatchKiller {
 /// The object that runs timers
 struct Stopwatch {
     private unowned let delegate: StopwatchDelegate
+    private unowned let notifier: StopwatchNotifier
     /// Duration in seconds
     private let duration: TimeInterval
     
-    init(delegate: StopwatchDelegate, duration: TimeInterval) {
+    init(delegate: StopwatchDelegate, duration: TimeInterval, notifier: StopwatchNotifier) {
         self.delegate = delegate
         self.duration = duration
+        self.notifier = notifier
     }
     
     func startTimer() {
@@ -49,12 +56,14 @@ struct Stopwatch {
             self.tick(timer, until: endTime)
         }
         delegate.timerDid(.start)
+        notifier.timer(ends: endTime)
     }
     
     func clear(timer: Timer? = nil) {
         timer?.invalidate()
         delegate.unlock()
         delegate.updateDisplay(with: duration)
+        notifier.timerDidReset()
     }
     
     /// Called every time the `NSTimer` fires

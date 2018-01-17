@@ -27,7 +27,7 @@ class MainViewController: UIViewController {
     private lazy var duration = providedTimer?.seconds ?? K.defaultDuration
 
     // MARK: Stopwatch Properties
-    private lazy var stopwatch: Stopwatch = Stopwatch.init(delegate: self, duration: duration)
+    private lazy var stopwatch: Stopwatch = Stopwatch.init(delegate: self, duration: duration, notifier: self)
     var timerReady: Bool = true {
         didSet {
             containerViewAction.name = strings.buttonLabel(timerIsReady: timerReady)
@@ -210,3 +210,35 @@ extension MainViewController: VoiceOverObserver {
         handleVoiceOverStatus()
     }
 }
+
+// MARK: - StopwatchNotifier
+
+import UserNotifications
+
+extension MainViewController: StopwatchNotifier {
+    func timer(ends: Date) {
+        let content = UNMutableNotificationContent()
+        content.title = NSString.localizedUserNotificationString(forKey: "Timer Done", arguments: nil)
+        content.body = NSString.localizedUserNotificationString(forKey: "The timer has finished running.", arguments: nil)
+        content.sound = UNNotificationSound(named: AudioCue.endCue.rawValue)
+        
+        let calendar = Calendar.current
+        let dateComponents = calendar.dateComponents([.hour, .minute, .second], from: ends)
+        let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: false)
+        
+        let request = UNNotificationRequest(identifier: K.notificationID, content: content, trigger: trigger)
+        let center = UNUserNotificationCenter.current()
+        center.add(request) { (error: Error?) in
+            if let error = error {
+                print(error)
+            }
+        }
+    }
+    
+    func timerDidReset() {
+        let center = UNUserNotificationCenter.current()
+        center.removePendingNotificationRequests(withIdentifiers: [K.notificationID])
+        center.removeDeliveredNotifications(withIdentifiers: [K.notificationID])
+    }
+}
+

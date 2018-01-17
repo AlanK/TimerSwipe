@@ -84,4 +84,7 @@ struct K {
     // MARK: Item Keys
     static let centisecondsKey = "centiseconds"
     static let isFavoriteKey = "isFavorite"
+    
+    // MARK: Notification Keys
+    static let notificationID = "TimerComplete"
 }
