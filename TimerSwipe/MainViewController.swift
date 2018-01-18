@@ -23,7 +23,26 @@ class MainViewController: UIViewController {
     // MARK: Duration Properties
     var providedTimer: STSavedTimer?
     
-    var endTime: Date?
+    var endTime: Date? {
+        didSet {
+            guard let endTime = endTime else { return }
+            
+            let content = UNMutableNotificationContent()
+            content.title = NSString.localizedUserNotificationString(forKey: "Timer Done", arguments: nil)
+            content.body = NSString.localizedUserNotificationString(forKey: "The timer has finished running.", arguments: nil)
+            content.sound = UNNotificationSound(named: AudioCue.endCue.rawValue)
+            
+            let calendar = Calendar.current
+            let dateComponents = calendar.dateComponents([.hour, .minute, .second], from: endTime)
+            let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: false)
+            
+            let request = UNNotificationRequest(identifier: K.notificationID, content: content, trigger: trigger)
+            let center = UNUserNotificationCenter.current()
+            center.add(request) { (error: Error?) in
+                if let error = error { print(error) }
+            }
+        }
+    }
     
     // Use a timer provided from elsewhere, then a default time
     private lazy var duration = providedTimer?.seconds ?? K.defaultDuration
@@ -211,22 +230,6 @@ import UserNotifications
 
 extension MainViewController: StopwatchNotifier {
     func timer(ends: Date) {
-        let content = UNMutableNotificationContent()
-        content.title = NSString.localizedUserNotificationString(forKey: "Timer Done", arguments: nil)
-        content.body = NSString.localizedUserNotificationString(forKey: "The timer has finished running.", arguments: nil)
-        content.sound = UNNotificationSound(named: AudioCue.endCue.rawValue)
-        
-        let calendar = Calendar.current
-        let dateComponents = calendar.dateComponents([.hour, .minute, .second], from: ends)
-        let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: false)
-        
-        let request = UNNotificationRequest(identifier: K.notificationID, content: content, trigger: trigger)
-        let center = UNUserNotificationCenter.current()
-        center.add(request) { (error: Error?) in
-            if let error = error {
-                print(error)
-            }
-        }
     }
     
     func timerDidReset() {

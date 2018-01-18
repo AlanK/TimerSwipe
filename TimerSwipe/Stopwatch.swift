@@ -9,7 +9,6 @@
 import Foundation
 
 protocol StopwatchNotifier: class {
-    func timer(ends: Date)
     func timerDidReset()
 }
 
@@ -70,7 +69,6 @@ struct Stopwatch {
         }
         
         delegate.timerDid(.start)
-        notifier.timer(ends: endTime)
         
         return endTime
     }
