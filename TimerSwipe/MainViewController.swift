@@ -23,6 +23,8 @@ class MainViewController: UIViewController {
     // MARK: Duration Properties
     var providedTimer: STSavedTimer?
     
+    var endTime: Date?
+    
     // Use a timer provided from elsewhere, then a default time
     private lazy var duration = providedTimer?.seconds ?? K.defaultDuration
 
@@ -107,7 +109,7 @@ class MainViewController: UIViewController {
     }
     
     /// Tells the Stopwatch to start the timer
-    private func start() {stopwatch.startTimer()}
+    private func start() { endTime = stopwatch.startTimer() }
     
     /// Handles taps on the Change/Cancel button
     @objc private func buttonActions() {

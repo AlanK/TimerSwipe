@@ -41,16 +41,38 @@ struct Stopwatch {
         self.notifier = notifier
     }
     
-    func startTimer() {
-        guard delegate.timerReady else {return}
+    /// Returns the exact time at which the timer will end
+    func startTimer() -> Date? {
+        guard delegate.timerReady else { return nil }
         delegate.lock()
+        
         let startTime = Date.init()
         let endTime = Date.init(timeInterval: duration, since: startTime)
-        Timer.scheduledTimer(withTimeInterval: K.hundredthOfASecond, repeats: true) {timer in
-            self.tick(timer, until: endTime)
+        
+        Timer.scheduledTimer(withTimeInterval: K.hundredthOfASecond, repeats: true) { timer in
+            guard self.delegate.timerReady == false else {
+                // If the flag has been set by the delegate, cancel the timer
+                self.clear(timer: timer)
+                self.delegate.timerDid(.cancel)
+                return
+            }
+            
+            let currentTime = Date.init()
+            guard currentTime < endTime else {
+                // If the current time >= the end time, end the timer
+                self.clear(timer: timer)
+                self.delegate.timerDid(.end)
+                return
+            }
+            
+            // Update the stopwatch display
+            self.delegate.updateDisplay(with: endTime.timeIntervalSince(currentTime))
         }
+        
         delegate.timerDid(.start)
         notifier.timer(ends: endTime)
+        
+        return endTime
     }
     
     func clear(timer: Timer? = nil) {
@@ -58,24 +80,5 @@ struct Stopwatch {
         delegate.unlock()
         delegate.updateDisplay(with: duration)
         notifier.timerDidReset()
-    }
-    
-    /// Called every time the `NSTimer` fires
-    private func tick(_ timer: Timer, until endTime: Date) {
-        guard delegate.timerReady == false else {
-            // If the flag has been set by the delegate, cancel the timer
-            clear(timer: timer)
-            delegate.timerDid(.cancel)
-            return
-        }
-        let currentTime = Date.init()
-        guard currentTime < endTime else {
-            // If the current time >= the end time, end the timer
-            clear(timer: timer)
-            delegate.timerDid(.end)
-            return
-        }
-        // Update the stopwatch display
-        delegate.updateDisplay(with: endTime.timeIntervalSince(currentTime))
     }
 }
