@@ -6,6 +6,7 @@
 //  Copyright © 2016 Alan Kantz. All rights reserved.
 //
 
+import UserNotifications
 import UIKit
 
 /// Primary view controller—displays the selected timer
@@ -48,7 +49,7 @@ class MainViewController: UIViewController {
     private lazy var duration = providedTimer?.seconds ?? K.defaultDuration
 
     // MARK: Stopwatch Properties
-    private lazy var stopwatch: Stopwatch = Stopwatch.init(delegate: self, duration: duration, notifier: self)
+    private lazy var stopwatch: Stopwatch = Stopwatch.init(delegate: self, duration: duration)
     var timerReady: Bool = true {
         didSet {
             containerViewAction.name = strings.buttonLabel(timerIsReady: timerReady)
@@ -56,6 +57,12 @@ class MainViewController: UIViewController {
             UIView.performWithoutAnimation {
                 self.button.setTitle(strings.buttonText(timerIsReady: timerReady), for: UIControlState())
                 self.button.layoutIfNeeded()
+            }
+            
+            if timerReady == true {
+                let center = UNUserNotificationCenter.current()
+                center.removePendingNotificationRequests(withIdentifiers: [K.notificationID])
+                center.removeDeliveredNotifications(withIdentifiers: [K.notificationID])
             }
         }
     }
@@ -223,19 +230,3 @@ extension MainViewController: VoiceOverObserver {
         handleVoiceOverStatus()
     }
 }
-
-// MARK: - StopwatchNotifier
-
-import UserNotifications
-
-extension MainViewController: StopwatchNotifier {
-    func timer(ends: Date) {
-    }
-    
-    func timerDidReset() {
-        let center = UNUserNotificationCenter.current()
-        center.removePendingNotificationRequests(withIdentifiers: [K.notificationID])
-        center.removeDeliveredNotifications(withIdentifiers: [K.notificationID])
-    }
-}
-
