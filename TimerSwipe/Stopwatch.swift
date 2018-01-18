@@ -29,20 +29,45 @@ struct Stopwatch {
     /// Duration in seconds
     private let duration: TimeInterval
     
+    private var timer: Timer?
+    
     init(delegate: StopwatchDelegate, duration: TimeInterval) {
         self.delegate = delegate
         self.duration = duration
     }
     
     /// Returns the exact time at which the timer will end
-    func startTimer() -> Date? {
+    mutating func startTimer() -> Date? {
         guard delegate.timerReady else { return nil }
         delegate.lock()
         
         let startTime = Date.init()
         let endTime = Date.init(timeInterval: duration, since: startTime)
+        timer = createTimer(withEndTime: endTime)
         
-        Timer.scheduledTimer(withTimeInterval: K.hundredthOfASecond, repeats: true) { timer in
+        delegate.timerDid(.start)
+        
+        return endTime
+    }
+    
+    func clear(timer: Timer? = nil) {
+        timer?.invalidate()
+        delegate.unlock()
+        delegate.updateDisplay(with: duration)
+    }
+    
+    mutating func sleep() {
+        timer?.invalidate()
+        timer = nil
+    }
+    
+    mutating func wake(withEndTime endTime: Date) {
+        guard timer == nil else { return }
+        timer = createTimer(withEndTime: endTime)
+    }
+    
+    private func createTimer(withEndTime endTime: Date) -> Timer {
+        let timer = Timer.scheduledTimer(withTimeInterval: K.hundredthOfASecond, repeats: true) { timer in
             guard self.delegate.timerReady == false else {
                 // If the flag has been set by the delegate, cancel the timer
                 self.clear(timer: timer)
@@ -62,14 +87,6 @@ struct Stopwatch {
             self.delegate.updateDisplay(with: endTime.timeIntervalSince(currentTime))
         }
         
-        delegate.timerDid(.start)
-        
-        return endTime
-    }
-    
-    func clear(timer: Timer? = nil) {
-        timer?.invalidate()
-        delegate.unlock()
-        delegate.updateDisplay(with: duration)
+        return timer
     }
 }
