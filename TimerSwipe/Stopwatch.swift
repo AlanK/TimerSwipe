@@ -38,10 +38,6 @@ class Stopwatch {
         self.duration = duration
     }
     
-    func ready() {
-        delegate.updateDisplay(with: duration)
-    }
-    
     func start() {
         guard unlocked else { return }
         unlocked = false

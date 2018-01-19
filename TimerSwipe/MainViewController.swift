@@ -58,7 +58,7 @@ class MainViewController: UIViewController {
         didSet {
             timeDisplay.font = MainViewController.timeFont
             // Get an initial value from the stopwatch
-            stopwatch.ready()
+            stopwatch.wake()
         }
     }
     /// The Change/Cancel button
