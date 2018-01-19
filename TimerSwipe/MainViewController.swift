@@ -33,6 +33,16 @@ class MainViewController: UIViewController {
     // MARK: Stopwatch Properties
     lazy var countdown: Countdown = Countdown.init(delegate: self, duration: duration)
     
+    // MARK: Visual Configuration
+    private func configureButton(withTimerReadyStatus timerIsReady: Bool) {
+        containerViewAction.name = strings.buttonLabel(timerIsReady: timerIsReady)
+        // Use performWithoutAnimation to prevent weird flashing as button text animates.
+        UIView.performWithoutAnimation {
+            self.button.setTitle(strings.buttonText(timerIsReady: timerIsReady), for: UIControlState())
+            self.button.layoutIfNeeded()
+        }
+    }
+    
     /// Shows and hides "Swipe to Start" instructions
     private var instructionsVisible = true {
         didSet {
@@ -42,11 +52,6 @@ class MainViewController: UIViewController {
             })
         }
     }
-    
-    private lazy var tapRecognizer = UITapGestureRecognizer.init(target: self, action: #selector(containerViewAsButton(sender:)))
-    
-    private lazy var containerViewAction = UIAccessibilityCustomAction.init(name: strings.buttonLabel(timerIsReady: countdown.ready), target: self, selector: #selector(buttonActions))
-
     
     // MARK: Labels & Buttons
     
@@ -65,7 +70,9 @@ class MainViewController: UIViewController {
         }
     }
     /// The Change/Cancel button
-    @IBOutlet var button: UIButton!
+    @IBOutlet var button: UIButton! {
+        didSet { configureButton(withTimerReadyStatus: true) }
+    }
     @IBOutlet var containerView: UIStackView! {
         didSet {
             containerView.isAccessibilityElement = true
@@ -76,6 +83,10 @@ class MainViewController: UIViewController {
     }
     
     // MARK: Actions
+    
+    private lazy var tapRecognizer = UITapGestureRecognizer.init(target: self, action: #selector(containerViewAsButton(sender:)))
+    
+    private lazy var containerViewAction = UIAccessibilityCustomAction.init(name: strings.buttonLabel(timerIsReady: countdown.ready), target: self, selector: #selector(buttonActions))
     
     // Trigger buttonActions() when tapping the Change/Cancel button
     @IBAction func button(_ sender: AnyObject) {buttonActions()}
@@ -117,6 +128,17 @@ class MainViewController: UIViewController {
         }
     }
     
+    // MARK: Utilities
+    
+    private func handleVoiceOverStatus() {
+        /// Change the text instructions to match the VO-enabled interaction paradigm and make the containerView touch-enabled
+        let voiceOverOn = UIAccessibilityIsVoiceOverRunning()
+        
+        instructionsDisplay.text = strings.textInstructions(voiceOverIsOn: voiceOverOn)
+        voiceOverOn ? containerView.addGestureRecognizer(tapRecognizer) : containerView.removeGestureRecognizer(tapRecognizer)
+        containerView.layoutIfNeeded()
+    }
+
     // MARK: View Lifecycle
     
     override func viewDidLoad() {
@@ -124,7 +146,6 @@ class MainViewController: UIViewController {
         // Customize display based on VoiceOver settings
         handleVoiceOverStatus()
         
-        animateButton(withTimerReadyStatus: true)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -141,24 +162,6 @@ class MainViewController: UIViewController {
         // The display should sleep in other views in the app
         UIApplication.shared.isIdleTimerDisabled = false
         soundController.setActive(false)
-    }
-    
-    private func animateButton(withTimerReadyStatus timerIsReady: Bool) {
-        containerViewAction.name = strings.buttonLabel(timerIsReady: timerIsReady)
-        // Use performWithoutAnimation to prevent weird flashing as button text animates.
-        UIView.performWithoutAnimation {
-            self.button.setTitle(strings.buttonText(timerIsReady: timerIsReady), for: UIControlState())
-            self.button.layoutIfNeeded()
-        }
-    }
-    
-    private func handleVoiceOverStatus() {
-        /// Change the text instructions to match the VO-enabled interaction paradigm and make the containerView touch-enabled
-        let voiceOverOn = UIAccessibilityIsVoiceOverRunning()
-        
-        instructionsDisplay.text = strings.textInstructions(voiceOverIsOn: voiceOverOn)
-        voiceOverOn ? containerView.addGestureRecognizer(tapRecognizer) : containerView.removeGestureRecognizer(tapRecognizer)
-        containerView.layoutIfNeeded()
     }
 }
 
@@ -189,7 +192,7 @@ extension MainViewController: CountdownDelegate {
                 localNotifications.disableNotification()
             }
             
-            animateButton(withTimerReadyStatus: isReady)
+            configureButton(withTimerReadyStatus: isReady)
             containerView.accessibilityLabel = strings.containerViewLabel(timerReady: isReady, timerDuration: duration)
             instructionsVisible = isReady
             
