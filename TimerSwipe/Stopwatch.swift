@@ -58,6 +58,7 @@ class Stopwatch {
     
     private func clear() {
         timer?.invalidate()
+        timer = nil
         expirationDate = nil
         
         timerReady = true
@@ -66,6 +67,7 @@ class Stopwatch {
     
     func sleep() {
         timer?.invalidate()
+        timer = nil
     }
     
     func wake() {
@@ -78,6 +80,7 @@ class Stopwatch {
     }
     
     private func createTimer(withEndTime endTime: Date) {
+        timer?.invalidate()
         timer = Timer.scheduledTimer(withTimeInterval: K.hundredthOfASecond, repeats: true) { timer in
             let currentTime = Date.init()
             guard currentTime < endTime else {
