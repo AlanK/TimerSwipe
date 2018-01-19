@@ -9,7 +9,7 @@
 import Foundation
 
 /// Responsible for providing a locking system (to prevent concurrency), timer completion handlers, and a display updater
-protocol StopwatchDelegate: NSObjectProtocol {
+protocol StopwatchDelegate: class {
     // NOTE: The indirection in timerReady/lock/unlock allows Stopwatch to be a struct. Don't collapse it all into an unlocked {get set} unless you're prepared to make Stopwatch a class.
     /// Reports whether a timer is ready to run
     var timerReady: Bool {get}
