@@ -179,38 +179,35 @@ extension MainViewController: CountdownDelegate {
     */
     func countdownDid(_ status: CountdownStatus) {
         func updateTimerStatus(notice: String? = nil, sound: AudioCue? = nil) {
+            let isReady: Bool
+            switch status {
+            case let .start(expirationDate): isReady = false
+                appStateNotifications.add(onBackground: countdown.sleep, onActive: countdown.wake)
+                localNotifications.enableNotification(on: expirationDate)
+            case .end, .cancel, .expire: isReady = true
+                appStateNotifications.removeAll()
+                localNotifications.disableNotification()
+            }
+            
+            animateButton(withTimerReadyStatus: isReady)
+            containerView.accessibilityLabel = strings.containerViewLabel(timerReady: isReady, timerDuration: duration)
+            instructionsVisible = isReady
+            
             if let sound = sound {
                 soundController.play(sound)
             }
             
-            let ready: Bool
-            switch status {
-            case .start: ready = false
-            case .end, .cancel, .expire: ready = true
+            if let notice = notice {
+                UIAccessibilityPostNotification(UIAccessibilityLayoutChangedNotification, nil)
+                UIAccessibilityPostNotification(UIAccessibilityAnnouncementNotification, notice)
             }
-            
-            animateButton(withTimerReadyStatus: ready)
-            containerView.accessibilityLabel = strings.containerViewLabel(timerReady: ready, timerDuration: duration)
-            instructionsVisible = ready
-            
-            guard let notice = notice else { return }
-            UIAccessibilityPostNotification(UIAccessibilityLayoutChangedNotification, nil)
-            UIAccessibilityPostNotification(UIAccessibilityAnnouncementNotification, notice)
         }
         
         switch status {
-        case let .start(expirationDate): updateTimerStatus(notice: strings.timerStarted, sound: .startCue)
-            appStateNotifications.add(onBackground: countdown.sleep, onActive: countdown.wake)
-            localNotifications.enableNotification(on: expirationDate)
+        case .start: updateTimerStatus(notice: strings.timerStarted, sound: .startCue)
         case .end: updateTimerStatus(notice: strings.timerEnded, sound: .endCue)
-            appStateNotifications.removeAll()
-            localNotifications.disableNotification()
         case .cancel: updateTimerStatus(notice: strings.timerCancelled)
-            appStateNotifications.removeAll()
-            localNotifications.disableNotification()
         case .expire: updateTimerStatus()
-            appStateNotifications.removeAll()
-            localNotifications.disableNotification()
         }
     }
 }
