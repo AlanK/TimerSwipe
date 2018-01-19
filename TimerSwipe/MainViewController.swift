@@ -19,6 +19,7 @@ class MainViewController: UIViewController {
     
     private let timeFormatter = TimeFormatter()
     private let soundController = SoundController()
+    private let localNotifications = LocalNotifications()
     private let strings = MainVCStrings()
     
     // MARK: Duration Properties
@@ -102,7 +103,6 @@ class MainViewController: UIViewController {
     /// Tells the Stopwatch to start the timer
     private func start() {
         countdown.start()
-        enableObservations()
     }
     
     /// Handles taps on the Change/Cancel button
@@ -166,28 +166,6 @@ class MainViewController: UIViewController {
         nc.removeObserver(self, name: .UIApplicationDidBecomeActive, object: nil)
     }
     
-    private func enableNotification(on expirationDate: Date) {
-        let content = UNMutableNotificationContent()
-        content.title = NSString.localizedUserNotificationString(forKey: "Timer Done", arguments: nil)
-        content.body = NSString.localizedUserNotificationString(forKey: "The timer has finished running.", arguments: nil)
-        content.sound = UNNotificationSound(named: AudioCue.endCue.rawValue)
-        
-        let calendar = Calendar.current
-        let dateComponents = calendar.dateComponents([.hour, .minute, .second], from: expirationDate)
-        let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: false)
-        
-        let request = UNNotificationRequest(identifier: K.notificationID, content: content, trigger: trigger)
-        let center = UNUserNotificationCenter.current()
-        center.add(request) { (error: Error?) in
-            if let error = error { print(error) }
-        }
-    }
-    
-    private func disableNotification() {
-        let center = UNUserNotificationCenter.current()
-        center.removePendingNotificationRequests(withIdentifiers: [K.notificationID])
-        center.removeDeliveredNotifications(withIdentifiers: [K.notificationID])
-    }
     
     private func handleVoiceOverStatus() {
         /// Change the text instructions to match the VO-enabled interaction paradigm and make the containerView touch-enabled
@@ -237,16 +215,17 @@ extension MainViewController: CountdownDelegate {
         
         switch status {
         case let .start(expirationDate): updateTimerStatus(notice: strings.timerStarted, sound: .startCue)
-            enableNotification(on: expirationDate)
+            enableObservations()
+            localNotifications.enableNotification(on: expirationDate)
         case .end: updateTimerStatus(notice: strings.timerEnded, sound: .endCue)
             disableObservations()
-            disableNotification()
+            localNotifications.disableNotification()
         case .cancel: updateTimerStatus(notice: strings.timerCancelled)
             disableObservations()
-            disableNotification()
+            localNotifications.disableNotification()
         case .expire: updateTimerStatus()
             disableObservations()
-            disableNotification()
+            localNotifications.disableNotification()
         }
     }
 }
