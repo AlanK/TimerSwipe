@@ -148,6 +148,7 @@
 			children = (
 				5A90785C1EEB8C24006BCDD3 /* Constants.swift */,
 				5A03B9A71D1DDB9800E245C9 /* AppDelegate.swift */,
+				5A23597F20128BC400393EAA /* AppStateNotifications.swift */,
 				5AA3E3AC1EEF360C00FB5F1D /* Views and Controllers */,
 				5AA3E3A81EEF34E900FB5F1D /* Model */,
 				5AA3E3A91EEF34F700FB5F1D /* Storyboards */,
@@ -191,7 +192,6 @@
 			isa = PBXGroup;
 			children = (
 				5AB18AF91D2058CA007B9D9F /* MainViewController.swift */,
-				5A23597F20128BC400393EAA /* AppStateNotifications.swift */,
 				5A23597D20128A5400393EAA /* LocalNotifications.swift */,
 				858480F51FCB55D300DBE466 /* TimeFormatter.swift */,
 				5A7159911FCBC35E00BEB5EE /* MainVCStrings.swift */,

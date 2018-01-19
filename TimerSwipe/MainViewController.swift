@@ -22,7 +22,7 @@ class MainViewController: UIViewController {
     private let localNotifications = LocalNotifications()
     private let strings = MainVCStrings()
     
-    private var appStateNotifications: AppStateNotifications?
+    private var appStateNotifications = AppStateNotifications()
 
     // MARK: Duration Properties
     var providedTimer: STSavedTimer?
@@ -200,16 +200,16 @@ extension MainViewController: CountdownDelegate {
         
         switch status {
         case let .start(expirationDate): updateTimerStatus(notice: strings.timerStarted, sound: .startCue)
-            appStateNotifications = AppStateNotifications.init(onBackground: countdown.sleep, onActive: countdown.wake)
+            appStateNotifications.add(onBackground: countdown.sleep, onActive: countdown.wake)
             localNotifications.enableNotification(on: expirationDate)
         case .end: updateTimerStatus(notice: strings.timerEnded, sound: .endCue)
-            appStateNotifications = nil
+            appStateNotifications.removeAll()
             localNotifications.disableNotification()
         case .cancel: updateTimerStatus(notice: strings.timerCancelled)
-            appStateNotifications = nil
+            appStateNotifications.removeAll()
             localNotifications.disableNotification()
         case .expire: updateTimerStatus()
-            appStateNotifications = nil
+            appStateNotifications.removeAll()
             localNotifications.disableNotification()
         }
     }

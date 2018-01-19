@@ -8,23 +8,26 @@
 
 import UIKit
 
-class AppStateNotifications {
-    
+struct AppStateNotifications {
     let nc = NotificationCenter.default
     
-    let backgroundObserver: NSObjectProtocol, activeObserver: NSObjectProtocol
+    var backgroundObserver = [NSObjectProtocol](), activeObserver = [NSObjectProtocol]()
     
-    init(onBackground: @escaping () -> Void, onActive: @escaping () -> Void) {
-        backgroundObserver = nc.addObserver(forName: .UIApplicationDidEnterBackground, object: nil, queue: nil) { _ in
+    mutating func add(onBackground: @escaping () -> Void, onActive: @escaping () -> Void) {
+        backgroundObserver.append(nc.addObserver(forName: .UIApplicationDidEnterBackground, object: nil, queue: nil) { _ in
             onBackground()
-        }
-        activeObserver = nc.addObserver(forName: .UIApplicationDidBecomeActive, object: nil, queue: nil) { _ in
+        })
+        activeObserver.append(nc.addObserver(forName: .UIApplicationDidBecomeActive, object: nil, queue: nil) { _ in
             onActive()
-        }
+        })
     }
     
-    deinit {
-        nc.removeObserver(backgroundObserver)
-        nc.removeObserver(activeObserver)
+    func removeAll() {
+        for observer in backgroundObserver {
+            nc.removeObserver(observer)
+        }
+        for observer in activeObserver {
+            nc.removeObserver(observer)
+        }
     }
 }

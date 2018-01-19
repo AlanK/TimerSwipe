@@ -14,16 +14,20 @@ class TimeoutManager {
 
     private var lastEnteredBackground: Date?
     
-    private var appStateNotifications: AppStateNotifications?
+    private var appStateNotifications = AppStateNotifications()
     
     init(didTimeout: @escaping () -> Void) {
-        appStateNotifications = AppStateNotifications.init(onBackground: { [unowned self] in
+        appStateNotifications.add(onBackground: { [unowned self] in
             self.lastEnteredBackground = Date()
-        }, onActive: { [unowned self] in
+            }, onActive: { [unowned self] in
             if let date = self.lastEnteredBackground, self.timeout < Date().timeIntervalSince(date) {
                 didTimeout()
             }
             self.lastEnteredBackground = nil
         })
+    }
+    
+    deinit {
+        appStateNotifications.removeAll()
     }
 }
