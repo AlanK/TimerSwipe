@@ -29,7 +29,7 @@ class Stopwatch {
     
     private var unlocked = true
     
-    var timerReady: Bool {
+    var ready: Bool {
         get { return unlocked }
     }
     

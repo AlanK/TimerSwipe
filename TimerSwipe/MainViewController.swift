@@ -42,7 +42,7 @@ class MainViewController: UIViewController {
     
     private lazy var tapRecognizer = UITapGestureRecognizer.init(target: self, action: #selector(containerViewAsButton(sender:)))
     
-    private lazy var containerViewAction = UIAccessibilityCustomAction.init(name: strings.buttonLabel(timerIsReady: stopwatch.timerReady), target: self, selector: #selector(buttonActions))
+    private lazy var containerViewAction = UIAccessibilityCustomAction.init(name: strings.buttonLabel(timerIsReady: stopwatch.ready), target: self, selector: #selector(buttonActions))
 
     
     // MARK: Labels & Buttons
@@ -90,7 +90,7 @@ class MainViewController: UIViewController {
     
     // A two-finger double-tap "magic tap" accessibility command starts/cancels the timer
     override func accessibilityPerformMagicTap() -> Bool {
-        stopwatch.timerReady ? start() : buttonActions()
+        stopwatch.ready ? start() : buttonActions()
         return true
     }
     
@@ -107,7 +107,7 @@ class MainViewController: UIViewController {
     
     /// Handles taps on the Change/Cancel button
     @objc private func buttonActions() {
-        switch stopwatch.timerReady {
+        switch stopwatch.ready {
         // If the change button is tapped, go back one level in the view hierarchy
         case true: self.navigationController?.popViewController(animated: true)
         // If the cancel button is tapped, call setButton(to:) to interrupt the running timer and change the text on the button
