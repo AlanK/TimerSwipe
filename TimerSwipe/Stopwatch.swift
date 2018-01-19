@@ -27,7 +27,11 @@ class Stopwatch {
     
     private var expirationDate: Date?
     
-    var timerReady = true
+    private var unlocked = true
+    
+    var timerReady: Bool {
+        get { return unlocked }
+    }
     
     init(delegate: StopwatchDelegate, duration: TimeInterval) {
         self.delegate = delegate
@@ -39,8 +43,8 @@ class Stopwatch {
     }
     
     func start() {
-        guard timerReady else { return }
-        timerReady = false
+        guard unlocked else { return }
+        unlocked = false
         
         let startTime = Date.init()
         expirationDate = Date.init(timeInterval: duration, since: startTime)
@@ -56,15 +60,6 @@ class Stopwatch {
         delegate.timerDid(.cancel)
     }
     
-    private func clear() {
-        timer?.invalidate()
-        timer = nil
-        expirationDate = nil
-        
-        timerReady = true
-        delegate.updateDisplay(with: duration)
-    }
-    
     func sleep() {
         timer?.invalidate()
         timer = nil
@@ -77,6 +72,15 @@ class Stopwatch {
             return
         }
         createTimer()
+    }
+    
+    private func clear() {
+        timer?.invalidate()
+        timer = nil
+        expirationDate = nil
+        
+        unlocked = true
+        delegate.updateDisplay(with: duration)
     }
     
     private func createTimer() {
