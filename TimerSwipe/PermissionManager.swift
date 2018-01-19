@@ -9,7 +9,7 @@
 import UserNotifications
 import UIKit
 
-class PermissionManager: NSObject {
+class PermissionManager {
     private let center = UNUserNotificationCenter.current()
     private unowned let parentVC: UIViewController
     
@@ -17,7 +17,6 @@ class PermissionManager: NSObject {
     
     init(parentVC: UIViewController) {
         self.parentVC = parentVC
-        super.init()
         getNotificationAuthorizationStatus()
     }
     
