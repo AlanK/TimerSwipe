@@ -135,7 +135,10 @@ class MainViewController: UIViewController {
     }
     
     /// Tells the Stopwatch to start the timer
-    private func start() { endTime = stopwatch.startTimer() }
+    private func start() {
+        endTime = stopwatch.startTimer()
+        timerIsActive()
+    }
     
     /// Handles taps on the Change/Cancel button
     @objc private func buttonActions() {
@@ -173,6 +176,28 @@ class MainViewController: UIViewController {
         soundController.setActive(false)
     }
     
+    private func timerIsActive() {
+        let nc = NotificationCenter.default
+        nc.addObserver(forName: .UIApplicationDidEnterBackground, object: nil, queue: nil) { _ in
+            self.stopwatch.sleep()
+        }
+        nc.addObserver(forName: .UIApplicationDidBecomeActive, object: nil, queue: nil) { _ in
+            guard let endTime = self.endTime, Date.init() < endTime else {
+                self.stopwatch.clear()
+                self.timerDid(.expire)
+                self.disableObservations()
+                return
+            }
+            self.stopwatch.wake(withEndTime: endTime)
+        }
+    }
+    
+    private func disableObservations() {
+        let nc = NotificationCenter.default
+        nc.removeObserver(self, name: .UIApplicationDidEnterBackground, object: nil)
+        nc.removeObserver(self, name: .UIApplicationDidBecomeActive, object: nil)
+    }
+    
     private func handleVoiceOverStatus() {
         /// Change the text instructions to match the VO-enabled interaction paradigm and make the containerView touch-enabled
         let voiceOverOn = UIAccessibilityIsVoiceOverRunning()
@@ -199,20 +224,26 @@ extension MainViewController: StopwatchDelegate {
      - parameter status: whether the timer started, ended, or was cancelled
     */
     func timerDid(_ status: TimerStatus) {
-        func notifyUserOfTimerStatus(notice: String, sound: AudioCue? = nil) {
+        func updateTimerStatus(notice: String? = nil, sound: AudioCue? = nil) {
             if let sound = sound {
                 soundController.play(sound)
             }
+            
             containerView.accessibilityLabel = strings.containerViewLabel(timerReady: (status != .start), timerDuration: duration)
             instructionsVisible = (status != .start)
+            
+            guard let notice = notice else { return }
             UIAccessibilityPostNotification(UIAccessibilityLayoutChangedNotification, nil)
             UIAccessibilityPostNotification(UIAccessibilityAnnouncementNotification, notice)
         }
         
         switch status {
-        case .start: notifyUserOfTimerStatus(notice: strings.timerStarted, sound: .startCue)
-        case .end: notifyUserOfTimerStatus(notice: strings.timerEnded, sound: .endCue)
-        case .cancel: notifyUserOfTimerStatus(notice: strings.timerCancelled)
+        case .start: updateTimerStatus(notice: strings.timerStarted, sound: .startCue)
+        case .end: updateTimerStatus(notice: strings.timerEnded, sound: .endCue)
+            self.disableObservations()
+        case .cancel: updateTimerStatus(notice: strings.timerCancelled)
+            self.disableObservations()
+        case .expire: updateTimerStatus()
         }
     }
     

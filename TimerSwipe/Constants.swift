@@ -24,6 +24,7 @@ enum TimerStatus {
     case start
     case end
     case cancel
+    case expire
 }
 
 extension UIView {
