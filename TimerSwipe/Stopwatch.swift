@@ -52,7 +52,7 @@ class Stopwatch {
         delegate.timerDid(.start(endTime))
     }
     
-    func clear(timer: Timer? = nil) {
+    func clear() {
         timer?.invalidate()
         expirationDate = nil
         
@@ -77,7 +77,7 @@ class Stopwatch {
         let timer = Timer.scheduledTimer(withTimeInterval: K.hundredthOfASecond, repeats: true) { timer in
             guard self.delegate.timerReady == false else {
                 // If the flag has been set by the delegate, cancel the timer
-                self.clear(timer: timer)
+                self.clear()
                 self.delegate.timerDid(.cancel)
                 return
             }
@@ -85,7 +85,7 @@ class Stopwatch {
             let currentTime = Date.init()
             guard currentTime < endTime else {
                 // If the current time >= the end time, end the timer
-                self.clear(timer: timer)
+                self.clear()
                 self.delegate.timerDid(.end)
                 return
             }
