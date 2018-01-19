@@ -24,27 +24,6 @@ class MainViewController: UIViewController {
     // MARK: Duration Properties
     var providedTimer: STSavedTimer?
     
-    var endTime: Date? {
-        didSet {
-            guard let endTime = endTime else { return }
-            
-            let content = UNMutableNotificationContent()
-            content.title = NSString.localizedUserNotificationString(forKey: "Timer Done", arguments: nil)
-            content.body = NSString.localizedUserNotificationString(forKey: "The timer has finished running.", arguments: nil)
-            content.sound = UNNotificationSound(named: AudioCue.endCue.rawValue)
-            
-            let calendar = Calendar.current
-            let dateComponents = calendar.dateComponents([.hour, .minute, .second], from: endTime)
-            let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: false)
-            
-            let request = UNNotificationRequest(identifier: K.notificationID, content: content, trigger: trigger)
-            let center = UNUserNotificationCenter.current()
-            center.add(request) { (error: Error?) in
-                if let error = error { print(error) }
-            }
-        }
-    }
-    
     // Use a timer provided from elsewhere, then a default time
     private lazy var duration = providedTimer?.seconds ?? K.defaultDuration
 
@@ -57,12 +36,6 @@ class MainViewController: UIViewController {
             UIView.performWithoutAnimation {
                 self.button.setTitle(strings.buttonText(timerIsReady: timerReady), for: UIControlState())
                 self.button.layoutIfNeeded()
-            }
-            
-            if timerReady == true {
-                let center = UNUserNotificationCenter.current()
-                center.removePendingNotificationRequests(withIdentifiers: [K.notificationID])
-                center.removeDeliveredNotifications(withIdentifiers: [K.notificationID])
             }
         }
     }
@@ -137,7 +110,7 @@ class MainViewController: UIViewController {
     /// Tells the Stopwatch to start the timer
     private func start() {
         stopwatch.startTimer()
-        timerIsActive()
+        enableObservations()
     }
     
     /// Handles taps on the Change/Cancel button
@@ -176,7 +149,7 @@ class MainViewController: UIViewController {
         soundController.setActive(false)
     }
     
-    private func timerIsActive() {
+    private func enableObservations() {
         let nc = NotificationCenter.default
         nc.addObserver(forName: .UIApplicationDidEnterBackground, object: nil, queue: nil) { _ in
             self.stopwatch.sleep()
@@ -190,6 +163,29 @@ class MainViewController: UIViewController {
         let nc = NotificationCenter.default
         nc.removeObserver(self, name: .UIApplicationDidEnterBackground, object: nil)
         nc.removeObserver(self, name: .UIApplicationDidBecomeActive, object: nil)
+    }
+    
+    private func enableNotification(on expirationDate: Date) {
+        let content = UNMutableNotificationContent()
+        content.title = NSString.localizedUserNotificationString(forKey: "Timer Done", arguments: nil)
+        content.body = NSString.localizedUserNotificationString(forKey: "The timer has finished running.", arguments: nil)
+        content.sound = UNNotificationSound(named: AudioCue.endCue.rawValue)
+        
+        let calendar = Calendar.current
+        let dateComponents = calendar.dateComponents([.hour, .minute, .second], from: expirationDate)
+        let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: false)
+        
+        let request = UNNotificationRequest(identifier: K.notificationID, content: content, trigger: trigger)
+        let center = UNUserNotificationCenter.current()
+        center.add(request) { (error: Error?) in
+            if let error = error { print(error) }
+        }
+    }
+    
+    private func disableNotification() {
+        let center = UNUserNotificationCenter.current()
+        center.removePendingNotificationRequests(withIdentifiers: [K.notificationID])
+        center.removeDeliveredNotifications(withIdentifiers: [K.notificationID])
     }
     
     private func handleVoiceOverStatus() {
@@ -239,13 +235,16 @@ extension MainViewController: StopwatchDelegate {
         
         switch status {
         case let .start(expirationDate): updateTimerStatus(notice: strings.timerStarted, sound: .startCue)
-            endTime = expirationDate
+            enableNotification(on: expirationDate)
         case .end: updateTimerStatus(notice: strings.timerEnded, sound: .endCue)
             disableObservations()
+            disableNotification()
         case .cancel: updateTimerStatus(notice: strings.timerCancelled)
             disableObservations()
+            disableNotification()
         case .expire: updateTimerStatus()
             disableObservations()
+            disableNotification()
         }
     }
     
