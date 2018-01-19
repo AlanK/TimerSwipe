@@ -24,12 +24,14 @@ protocol StopwatchDelegate: NSObjectProtocol {
 }
 
 /// The object that runs timers
-struct Stopwatch {
+class Stopwatch {
     private unowned let delegate: StopwatchDelegate
     /// Duration in seconds
     private let duration: TimeInterval
     
     private var timer: Timer?
+    
+    private var expirationDate: Date?
     
     init(delegate: StopwatchDelegate, duration: TimeInterval) {
         self.delegate = delegate
@@ -37,13 +39,15 @@ struct Stopwatch {
     }
     
     /// Returns the exact time at which the timer will end
-    mutating func startTimer() -> Date? {
+    func startTimer() -> Date? {
         guard delegate.timerReady else { return nil }
         delegate.lock()
         
         let startTime = Date.init()
         let endTime = Date.init(timeInterval: duration, since: startTime)
         timer = createTimer(withEndTime: endTime)
+        
+        expirationDate = endTime
         
         delegate.timerDid(.start)
         
@@ -52,6 +56,8 @@ struct Stopwatch {
     
     func clear(timer: Timer? = nil) {
         timer?.invalidate()
+        expirationDate = nil
+        
         delegate.unlock()
         delegate.updateDisplay(with: duration)
     }
@@ -60,8 +66,13 @@ struct Stopwatch {
         timer?.invalidate()
     }
     
-    mutating func wake(withEndTime endTime: Date) {
-        timer = createTimer(withEndTime: endTime)
+    func wake() {
+        guard let expirationDate = expirationDate, Date.init() < expirationDate else {
+            delegate.timerDid(.expire)
+            clear()
+            return
+        }
+        timer = createTimer(withEndTime: expirationDate)
     }
     
     private func createTimer(withEndTime endTime: Date) -> Timer {

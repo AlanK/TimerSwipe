@@ -182,13 +182,7 @@ class MainViewController: UIViewController {
             self.stopwatch.sleep()
         }
         nc.addObserver(forName: .UIApplicationDidBecomeActive, object: nil, queue: nil) { _ in
-            guard let endTime = self.endTime, Date.init() < endTime else {
-                self.stopwatch.clear()
-                self.timerDid(.expire)
-                self.disableObservations()
-                return
-            }
-            self.stopwatch.wake(withEndTime: endTime)
+            self.stopwatch.wake()
         }
     }
     
@@ -240,10 +234,11 @@ extension MainViewController: StopwatchDelegate {
         switch status {
         case .start: updateTimerStatus(notice: strings.timerStarted, sound: .startCue)
         case .end: updateTimerStatus(notice: strings.timerEnded, sound: .endCue)
-            self.disableObservations()
+            disableObservations()
         case .cancel: updateTimerStatus(notice: strings.timerCancelled)
-            self.disableObservations()
+            disableObservations()
         case .expire: updateTimerStatus()
+            disableObservations()
         }
     }
     
