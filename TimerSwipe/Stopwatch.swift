@@ -8,15 +8,9 @@
 
 import Foundation
 
-/// Responsible for providing a locking system (to prevent concurrency), timer completion handlers, and a display updater
+/// Responsible for handling changes in timer status and providing a display that can be updated
 protocol StopwatchDelegate: class {
-    // NOTE: The indirection in timerReady/lock/unlock allows Stopwatch to be a struct. Don't collapse it all into an unlocked {get set} unless you're prepared to make Stopwatch a class.
-    /// Reports whether a timer is ready to run
-    var timerReady: Bool {get}
-    /// Locks to prevent starting a new timer
-    func lock()
-    /// Unlocks to allow starting a new timer
-    func unlock()
+    var stopwatch: Stopwatch { get }
     /// Handles changes in timer status
     func timerDid(_: TimerStatus)
     /// Updates the stopwatch display with a value in seconds
@@ -33,15 +27,20 @@ class Stopwatch {
     
     private var expirationDate: Date?
     
+    var timerReady = true
+    
     init(delegate: StopwatchDelegate, duration: TimeInterval) {
         self.delegate = delegate
         self.duration = duration
     }
     
-    /// Returns the exact time at which the timer will end
+    func ready() {
+        delegate.updateDisplay(with: duration)
+    }
+    
     func start() {
-        guard delegate.timerReady else { return }
-        delegate.lock()
+        guard timerReady else { return }
+        timerReady = false
         
         let startTime = Date.init()
         expirationDate = Date.init(timeInterval: duration, since: startTime)
@@ -52,11 +51,16 @@ class Stopwatch {
         delegate.timerDid(.start(expirationDate))
     }
     
-    func clear() {
+    func cancel() {
+        clear()
+        delegate.timerDid(.cancel)
+    }
+    
+    private func clear() {
         timer?.invalidate()
         expirationDate = nil
         
-        delegate.unlock()
+        timerReady = true
         delegate.updateDisplay(with: duration)
     }
     
@@ -75,13 +79,6 @@ class Stopwatch {
     
     private func createTimer(withEndTime endTime: Date) {
         timer = Timer.scheduledTimer(withTimeInterval: K.hundredthOfASecond, repeats: true) { timer in
-            guard self.delegate.timerReady == false else {
-                // If the flag has been set by the delegate, cancel the timer
-                self.clear()
-                self.delegate.timerDid(.cancel)
-                return
-            }
-            
             let currentTime = Date.init()
             guard currentTime < endTime else {
                 // If the current time >= the end time, end the timer

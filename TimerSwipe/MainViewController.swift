@@ -28,17 +28,7 @@ class MainViewController: UIViewController {
     private lazy var duration = providedTimer?.seconds ?? K.defaultDuration
 
     // MARK: Stopwatch Properties
-    private lazy var stopwatch: Stopwatch = Stopwatch.init(delegate: self, duration: duration)
-    var timerReady: Bool = true {
-        didSet {
-            containerViewAction.name = strings.buttonLabel(timerIsReady: timerReady)
-            // Use performWithoutAnimation to prevent weird flashing as button text animates.
-            UIView.performWithoutAnimation {
-                self.button.setTitle(strings.buttonText(timerIsReady: timerReady), for: UIControlState())
-                self.button.layoutIfNeeded()
-            }
-        }
-    }
+    lazy var stopwatch: Stopwatch = Stopwatch.init(delegate: self, duration: duration)
     
     /// Shows and hides "Swipe to Start" instructions
     private var instructionsVisible = true {
@@ -52,7 +42,7 @@ class MainViewController: UIViewController {
     
     private lazy var tapRecognizer = UITapGestureRecognizer.init(target: self, action: #selector(containerViewAsButton(sender:)))
     
-    private lazy var containerViewAction = UIAccessibilityCustomAction.init(name: strings.buttonLabel(timerIsReady: timerReady), target: self, selector: #selector(buttonActions))
+    private lazy var containerViewAction = UIAccessibilityCustomAction.init(name: strings.buttonLabel(timerIsReady: stopwatch.timerReady), target: self, selector: #selector(buttonActions))
 
     
     // MARK: Labels & Buttons
@@ -67,6 +57,8 @@ class MainViewController: UIViewController {
     @IBOutlet var timeDisplay: UILabel! {
         didSet {
             timeDisplay.font = MainViewController.timeFont
+            // Get an initial value from the stopwatch
+            stopwatch.ready()
         }
     }
     /// The Change/Cancel button
@@ -98,7 +90,7 @@ class MainViewController: UIViewController {
     
     // A two-finger double-tap "magic tap" accessibility command starts/cancels the timer
     override func accessibilityPerformMagicTap() -> Bool {
-        timerReady ? start() : buttonActions()
+        stopwatch.timerReady ? start() : buttonActions()
         return true
     }
     
@@ -115,11 +107,11 @@ class MainViewController: UIViewController {
     
     /// Handles taps on the Change/Cancel button
     @objc private func buttonActions() {
-        switch timerReady {
+        switch stopwatch.timerReady {
         // If the change button is tapped, go back one level in the view hierarchy
         case true: self.navigationController?.popViewController(animated: true)
         // If the cancel button is tapped, call setButton(to:) to interrupt the running timer and change the text on the button
-        case false: timerReady = true
+        case false: stopwatch.cancel()
         }
     }
     
@@ -127,10 +119,10 @@ class MainViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Ensure the stopwatch and delegate are ready; set the display to the current timer
-        stopwatch.clear()
         // Customize display based on VoiceOver settings
         handleVoiceOverStatus()
+        
+        animateButton(withTimerReadyStatus: true)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -147,6 +139,15 @@ class MainViewController: UIViewController {
         // The display should sleep in other views in the app
         UIApplication.shared.isIdleTimerDisabled = false
         soundController.setActive(false)
+    }
+    
+    private func animateButton(withTimerReadyStatus timerIsReady: Bool) {
+        containerViewAction.name = strings.buttonLabel(timerIsReady: timerIsReady)
+        // Use performWithoutAnimation to prevent weird flashing as button text animates.
+        UIView.performWithoutAnimation {
+            self.button.setTitle(strings.buttonText(timerIsReady: timerIsReady), for: UIControlState())
+            self.button.layoutIfNeeded()
+        }
     }
     
     private func enableObservations() {
@@ -225,6 +226,7 @@ extension MainViewController: StopwatchDelegate {
             case .end, .cancel, .expire: ready = true
             }
             
+            animateButton(withTimerReadyStatus: ready)
             containerView.accessibilityLabel = strings.containerViewLabel(timerReady: ready, timerDuration: duration)
             instructionsVisible = ready
             
@@ -247,12 +249,6 @@ extension MainViewController: StopwatchDelegate {
             disableNotification()
         }
     }
-    
-    /// Locks the stopwatch to prevent multiple timers from running simultaneously
-    func lock() {timerReady = false}
-    
-    /// Unlocks the stopwatch when no timer is running
-    func unlock() {timerReady = true}
 }
 
 // MARK: - VoiceOverObserver
