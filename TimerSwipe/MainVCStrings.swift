@@ -9,7 +9,7 @@
 import Foundation
 
 struct MainVCStrings {
-    // Localized strings for StopwatchDelegate events
+    // Localized strings for CountdownDelegate events
     let timerStarted = NSLocalizedString("timerStarted", value: "Started timer, double-tap to cancel", comment: "The timer has started, double-tap anywhere on the screen to cancel the running timer"),
     timerEnded = NSLocalizedString("timerFinished", value: "Timer finished", comment: "The timer has finished"),
     timerCancelled = NSLocalizedString("timerCancelled", value: "Cancelled timer", comment: "The timer has been cancelled")

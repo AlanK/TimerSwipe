@@ -20,7 +20,7 @@ enum StoryboardID: String {
 }
 
 /// Message announcing changes in timer status
-enum TimerStatus {
+enum CountdownStatus {
     case start(Date)
     case end
     case cancel

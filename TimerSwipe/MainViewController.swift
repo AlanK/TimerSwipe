@@ -28,7 +28,7 @@ class MainViewController: UIViewController {
     private lazy var duration = providedTimer?.seconds ?? K.defaultDuration
 
     // MARK: Stopwatch Properties
-    lazy var stopwatch: Stopwatch = Stopwatch.init(delegate: self, duration: duration)
+    lazy var countdown: Countdown = Countdown.init(delegate: self, duration: duration)
     
     /// Shows and hides "Swipe to Start" instructions
     private var instructionsVisible = true {
@@ -42,7 +42,7 @@ class MainViewController: UIViewController {
     
     private lazy var tapRecognizer = UITapGestureRecognizer.init(target: self, action: #selector(containerViewAsButton(sender:)))
     
-    private lazy var containerViewAction = UIAccessibilityCustomAction.init(name: strings.buttonLabel(timerIsReady: stopwatch.ready), target: self, selector: #selector(buttonActions))
+    private lazy var containerViewAction = UIAccessibilityCustomAction.init(name: strings.buttonLabel(timerIsReady: countdown.ready), target: self, selector: #selector(buttonActions))
 
     
     // MARK: Labels & Buttons
@@ -57,8 +57,8 @@ class MainViewController: UIViewController {
     @IBOutlet var timeDisplay: UILabel! {
         didSet {
             timeDisplay.font = MainViewController.timeFont
-            // Get an initial value from the stopwatch
-            stopwatch.wake()
+            // Get an initial value from the countdown
+            countdown.wake()
         }
     }
     /// The Change/Cancel button
@@ -90,7 +90,7 @@ class MainViewController: UIViewController {
     
     // A two-finger double-tap "magic tap" accessibility command starts/cancels the timer
     override func accessibilityPerformMagicTap() -> Bool {
-        stopwatch.ready ? start() : buttonActions()
+        countdown.ready ? start() : buttonActions()
         return true
     }
     
@@ -101,17 +101,17 @@ class MainViewController: UIViewController {
     
     /// Tells the Stopwatch to start the timer
     private func start() {
-        stopwatch.start()
+        countdown.start()
         enableObservations()
     }
     
     /// Handles taps on the Change/Cancel button
     @objc private func buttonActions() {
-        switch stopwatch.ready {
+        switch countdown.ready {
         // If the change button is tapped, go back one level in the view hierarchy
         case true: self.navigationController?.popViewController(animated: true)
         // If the cancel button is tapped, call setButton(to:) to interrupt the running timer and change the text on the button
-        case false: stopwatch.cancel()
+        case false: countdown.cancel()
         }
     }
     
@@ -153,10 +153,10 @@ class MainViewController: UIViewController {
     private func enableObservations() {
         let nc = NotificationCenter.default
         nc.addObserver(forName: .UIApplicationDidEnterBackground, object: nil, queue: nil) { _ in
-            self.stopwatch.sleep()
+            self.countdown.sleep()
         }
         nc.addObserver(forName: .UIApplicationDidBecomeActive, object: nil, queue: nil) { _ in
-            self.stopwatch.wake()
+            self.countdown.wake()
         }
     }
     
@@ -201,7 +201,7 @@ class MainViewController: UIViewController {
 
 // MARK: - Stopwatch delegate
 
-extension MainViewController: StopwatchDelegate {
+extension MainViewController: CountdownDelegate {
     /**
      Updates the timer display with a time interval.
      - parameter seconds: time remaining as a `TimeInterval`
@@ -214,7 +214,7 @@ extension MainViewController: StopwatchDelegate {
      Handle changes in timer status
      - parameter status: whether the timer started, ended, or was cancelled
     */
-    func timerDid(_ status: TimerStatus) {
+    func countdownDid(_ status: CountdownStatus) {
         func updateTimerStatus(notice: String? = nil, sound: AudioCue? = nil) {
             if let sound = sound {
                 soundController.play(sound)
