@@ -56,13 +56,11 @@ struct Stopwatch {
         delegate.updateDisplay(with: duration)
     }
     
-    mutating func sleep() {
+    func sleep() {
         timer?.invalidate()
-        timer = nil
     }
     
     mutating func wake(withEndTime endTime: Date) {
-        guard timer == nil else { return }
         timer = createTimer(withEndTime: endTime)
     }
     
