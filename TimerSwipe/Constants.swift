@@ -21,7 +21,7 @@ enum StoryboardID: String {
 
 /// Message announcing changes in timer status
 enum TimerStatus {
-    case start
+    case start(Date)
     case end
     case cancel
     case expire

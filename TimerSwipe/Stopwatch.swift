@@ -39,8 +39,8 @@ class Stopwatch {
     }
     
     /// Returns the exact time at which the timer will end
-    func startTimer() -> Date? {
-        guard delegate.timerReady else { return nil }
+    func startTimer() {
+        guard delegate.timerReady else { return }
         delegate.lock()
         
         let startTime = Date.init()
@@ -49,9 +49,7 @@ class Stopwatch {
         
         expirationDate = endTime
         
-        delegate.timerDid(.start)
-        
-        return endTime
+        delegate.timerDid(.start(endTime))
     }
     
     func clear(timer: Timer? = nil) {

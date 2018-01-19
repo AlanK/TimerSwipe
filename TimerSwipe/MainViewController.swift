@@ -136,7 +136,7 @@ class MainViewController: UIViewController {
     
     /// Tells the Stopwatch to start the timer
     private func start() {
-        endTime = stopwatch.startTimer()
+        stopwatch.startTimer()
         timerIsActive()
     }
     
@@ -223,8 +223,14 @@ extension MainViewController: StopwatchDelegate {
                 soundController.play(sound)
             }
             
-            containerView.accessibilityLabel = strings.containerViewLabel(timerReady: (status != .start), timerDuration: duration)
-            instructionsVisible = (status != .start)
+            let ready: Bool
+            switch status {
+            case .start: ready = false
+            case .end, .cancel, .expire: ready = true
+            }
+            
+            containerView.accessibilityLabel = strings.containerViewLabel(timerReady: ready, timerDuration: duration)
+            instructionsVisible = ready
             
             guard let notice = notice else { return }
             UIAccessibilityPostNotification(UIAccessibilityLayoutChangedNotification, nil)
@@ -232,7 +238,8 @@ extension MainViewController: StopwatchDelegate {
         }
         
         switch status {
-        case .start: updateTimerStatus(notice: strings.timerStarted, sound: .startCue)
+        case let .start(expirationDate): updateTimerStatus(notice: strings.timerStarted, sound: .startCue)
+            endTime = expirationDate
         case .end: updateTimerStatus(notice: strings.timerEnded, sound: .endCue)
             disableObservations()
         case .cancel: updateTimerStatus(notice: strings.timerCancelled)
