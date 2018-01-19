@@ -44,12 +44,12 @@ class Stopwatch {
         delegate.lock()
         
         let startTime = Date.init()
-        let endTime = Date.init(timeInterval: duration, since: startTime)
-        timer = createTimer(withEndTime: endTime)
+        expirationDate = Date.init(timeInterval: duration, since: startTime)
         
-        expirationDate = endTime
+        guard let expirationDate = expirationDate else { return }
+        createTimer(withEndTime: expirationDate)
         
-        delegate.timerDid(.start(endTime))
+        delegate.timerDid(.start(expirationDate))
     }
     
     func clear() {
@@ -70,11 +70,11 @@ class Stopwatch {
             clear()
             return
         }
-        timer = createTimer(withEndTime: expirationDate)
+        createTimer(withEndTime: expirationDate)
     }
     
-    private func createTimer(withEndTime endTime: Date) -> Timer {
-        let timer = Timer.scheduledTimer(withTimeInterval: K.hundredthOfASecond, repeats: true) { timer in
+    private func createTimer(withEndTime endTime: Date) {
+        timer = Timer.scheduledTimer(withTimeInterval: K.hundredthOfASecond, repeats: true) { timer in
             guard self.delegate.timerReady == false else {
                 // If the flag has been set by the delegate, cancel the timer
                 self.clear()
@@ -93,7 +93,5 @@ class Stopwatch {
             // Update the stopwatch display
             self.delegate.updateDisplay(with: endTime.timeIntervalSince(currentTime))
         }
-        
-        return timer
     }
 }
