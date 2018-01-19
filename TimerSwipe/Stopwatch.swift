@@ -39,7 +39,7 @@ class Stopwatch {
     }
     
     /// Returns the exact time at which the timer will end
-    func startTimer() {
+    func start() {
         guard delegate.timerReady else { return }
         delegate.lock()
         

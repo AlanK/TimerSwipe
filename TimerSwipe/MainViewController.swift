@@ -109,7 +109,7 @@ class MainViewController: UIViewController {
     
     /// Tells the Stopwatch to start the timer
     private func start() {
-        stopwatch.startTimer()
+        stopwatch.start()
         enableObservations()
     }
     
