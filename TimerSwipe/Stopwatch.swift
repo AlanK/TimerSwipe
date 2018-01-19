@@ -22,13 +22,13 @@ class Stopwatch {
     private unowned let delegate: StopwatchDelegate
     /// Duration in seconds
     private let duration: TimeInterval
-    
+    /// Reference to the current NSTimer
     private var timer: Timer?
-    
+    /// NSDate on which running timer should stop
     private var expirationDate: Date?
-    
+    /// Is the stopwatch ready for a new timer to start?
     private var unlocked = true
-    
+    /// Is the stopwatch ready to start?
     var ready: Bool {
         get { return unlocked }
     }
