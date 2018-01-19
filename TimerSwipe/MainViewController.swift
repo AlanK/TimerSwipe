@@ -22,6 +22,8 @@ class MainViewController: UIViewController {
     private let localNotifications = LocalNotifications()
     private let strings = MainVCStrings()
     
+    private var appStateNotifications: AppStateNotifications?
+
     // MARK: Duration Properties
     var providedTimer: STSavedTimer?
     
@@ -150,23 +152,6 @@ class MainViewController: UIViewController {
         }
     }
     
-    private func enableObservations() {
-        let nc = NotificationCenter.default
-        nc.addObserver(forName: .UIApplicationDidEnterBackground, object: nil, queue: nil) { _ in
-            self.countdown.sleep()
-        }
-        nc.addObserver(forName: .UIApplicationDidBecomeActive, object: nil, queue: nil) { _ in
-            self.countdown.wake()
-        }
-    }
-    
-    private func disableObservations() {
-        let nc = NotificationCenter.default
-        nc.removeObserver(self, name: .UIApplicationDidEnterBackground, object: nil)
-        nc.removeObserver(self, name: .UIApplicationDidBecomeActive, object: nil)
-    }
-    
-    
     private func handleVoiceOverStatus() {
         /// Change the text instructions to match the VO-enabled interaction paradigm and make the containerView touch-enabled
         let voiceOverOn = UIAccessibilityIsVoiceOverRunning()
@@ -215,16 +200,16 @@ extension MainViewController: CountdownDelegate {
         
         switch status {
         case let .start(expirationDate): updateTimerStatus(notice: strings.timerStarted, sound: .startCue)
-            enableObservations()
+            appStateNotifications = AppStateNotifications.init(onBackground: countdown.sleep, onActive: countdown.wake)
             localNotifications.enableNotification(on: expirationDate)
         case .end: updateTimerStatus(notice: strings.timerEnded, sound: .endCue)
-            disableObservations()
+            appStateNotifications = nil
             localNotifications.disableNotification()
         case .cancel: updateTimerStatus(notice: strings.timerCancelled)
-            disableObservations()
+            appStateNotifications = nil
             localNotifications.disableNotification()
         case .expire: updateTimerStatus()
-            disableObservations()
+            appStateNotifications = nil
             localNotifications.disableNotification()
         }
     }

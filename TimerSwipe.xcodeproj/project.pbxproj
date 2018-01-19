@@ -15,7 +15,7 @@
 		5A12267E1D5A94C3006D49F1 /* STTimerList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A12267D1D5A94C3006D49F1 /* STTimerList.swift */; };
 		5A2318CB1FE71CD50065C057 /* TableDragDropTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A2318CA1FE71CD50065C057 /* TableDragDropTests.swift */; };
 		5A23597E20128A5400393EAA /* LocalNotifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A23597D20128A5400393EAA /* LocalNotifications.swift */; };
-		5A23598020128BC400393EAA /* ActiveBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A23597F20128BC400393EAA /* ActiveBackground.swift */; };
+		5A23598020128BC400393EAA /* AppStateNotifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A23597F20128BC400393EAA /* AppStateNotifications.swift */; };
 		5A2731DA1FD6224A00FD5737 /* TableStrings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A2731D91FD6224A00FD5737 /* TableStrings.swift */; };
 		5A2731DE1FD62ED400FD5737 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5A2731DD1FD62ED400FD5737 /* Localizable.strings */; };
 		5A2731E21FD6311100FD5737 /* Localizable.stringsdict in Resources */ = {isa = PBXBuildFile; fileRef = 5A2731E11FD6311100FD5737 /* Localizable.stringsdict */; };
@@ -65,7 +65,7 @@
 		5A12267D1D5A94C3006D49F1 /* STTimerList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STTimerList.swift; sourceTree = "<group>"; };
 		5A2318CA1FE71CD50065C057 /* TableDragDropTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableDragDropTests.swift; sourceTree = "<group>"; };
 		5A23597D20128A5400393EAA /* LocalNotifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalNotifications.swift; sourceTree = "<group>"; };
-		5A23597F20128BC400393EAA /* ActiveBackground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActiveBackground.swift; sourceTree = "<group>"; };
+		5A23597F20128BC400393EAA /* AppStateNotifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStateNotifications.swift; sourceTree = "<group>"; };
 		5A2731D91FD6224A00FD5737 /* TableStrings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableStrings.swift; sourceTree = "<group>"; };
 		5A2731DD1FD62ED400FD5737 /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
 		5A2731E11FD6311100FD5737 /* Localizable.stringsdict */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; path = Localizable.stringsdict; sourceTree = "<group>"; };
@@ -191,7 +191,7 @@
 			isa = PBXGroup;
 			children = (
 				5AB18AF91D2058CA007B9D9F /* MainViewController.swift */,
-				5A23597F20128BC400393EAA /* ActiveBackground.swift */,
+				5A23597F20128BC400393EAA /* AppStateNotifications.swift */,
 				5A23597D20128A5400393EAA /* LocalNotifications.swift */,
 				858480F51FCB55D300DBE466 /* TimeFormatter.swift */,
 				5A7159911FCBC35E00BEB5EE /* MainVCStrings.swift */,
@@ -365,7 +365,7 @@
 				5ADE6DCD1FFF285000E8CF8C /* PermissionController.swift in Sources */,
 				5A7159921FCBC35E00BEB5EE /* MainVCStrings.swift in Sources */,
 				85B648AA1FFB19C3004E85F4 /* TimeoutManager.swift in Sources */,
-				5A23598020128BC400393EAA /* ActiveBackground.swift in Sources */,
+				5A23598020128BC400393EAA /* AppStateNotifications.swift in Sources */,
 				5A03B9A81D1DDB9800E245C9 /* AppDelegate.swift in Sources */,
 				5AF470991FDF040A0014244A /* TextFieldDelegate.swift in Sources */,
 				5A2731DA1FD6224A00FD5737 /* TableStrings.swift in Sources */,
