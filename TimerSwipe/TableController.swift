@@ -26,7 +26,7 @@ class TableController: UITableViewController {
     /// The label serving as the table footer
     @IBOutlet var footer: UILabel!
     
-    private lazy var textFieldDelegate = TextFieldDelegate.init(.tableController(createNewTimer))
+    private lazy var textFieldDelegate = TableTFDelegate.init(completionHandler: createNewTimer)
     /// The view which can create new timers
     private lazy var keyboardAccessoryView: InputView = {
         let view = InputView(frame: .zero, inputViewStyle: .default)

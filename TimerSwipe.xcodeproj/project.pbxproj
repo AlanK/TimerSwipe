@@ -35,7 +35,7 @@
 		5ADE6DC81FFD9E0600E8CF8C /* PermissionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ADE6DC71FFD9E0600E8CF8C /* PermissionManager.swift */; };
 		5ADE6DCA1FFDBFCF00E8CF8C /* Permissions.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5ADE6DC91FFDBFCF00E8CF8C /* Permissions.storyboard */; };
 		5ADE6DCD1FFF285000E8CF8C /* PermissionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ADE6DCC1FFF285000E8CF8C /* PermissionController.swift */; };
-		5AF470991FDF040A0014244A /* TextFieldDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF470981FDF040A0014244A /* TextFieldDelegate.swift */; };
+		5AF470991FDF040A0014244A /* TableTFDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF470981FDF040A0014244A /* TableTFDelegate.swift */; };
 		858480F61FCB55D300DBE466 /* TimeFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 858480F51FCB55D300DBE466 /* TimeFormatter.swift */; };
 		858480F81FCB63EE00DBE466 /* MainVCTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 858480F71FCB63EE00DBE466 /* MainVCTests.swift */; };
 		858480FA1FCB657E00DBE466 /* GeneralTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 858480F91FCB657E00DBE466 /* GeneralTests.swift */; };
@@ -87,7 +87,7 @@
 		5ADE6DC71FFD9E0600E8CF8C /* PermissionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionManager.swift; sourceTree = "<group>"; };
 		5ADE6DC91FFDBFCF00E8CF8C /* Permissions.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Permissions.storyboard; sourceTree = "<group>"; };
 		5ADE6DCC1FFF285000E8CF8C /* PermissionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionController.swift; sourceTree = "<group>"; };
-		5AF470981FDF040A0014244A /* TextFieldDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldDelegate.swift; sourceTree = "<group>"; };
+		5AF470981FDF040A0014244A /* TableTFDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableTFDelegate.swift; sourceTree = "<group>"; };
 		858480F51FCB55D300DBE466 /* TimeFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeFormatter.swift; sourceTree = "<group>"; };
 		858480F71FCB63EE00DBE466 /* MainVCTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainVCTests.swift; sourceTree = "<group>"; };
 		858480F91FCB657E00DBE466 /* GeneralTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralTests.swift; sourceTree = "<group>"; };
@@ -218,7 +218,7 @@
 			children = (
 				5AA3E3AD1EEF36C400FB5F1D /* NavController.swift */,
 				5ABEF3301FCF191300655FEE /* SegueMediator.swift */,
-				5AF470981FDF040A0014244A /* TextFieldDelegate.swift */,
+				5AF470981FDF040A0014244A /* TableTFDelegate.swift */,
 				85B648A91FFB19C3004E85F4 /* TimeoutManager.swift */,
 				5ADE6DCB1FFEF46300E8CF8C /* Permissions */,
 				5AA3E3AB1EEF356600FB5F1D /* Table */,
@@ -367,7 +367,7 @@
 				85B648AA1FFB19C3004E85F4 /* TimeoutManager.swift in Sources */,
 				5A23598020128BC400393EAA /* AppStateNotifications.swift in Sources */,
 				5A03B9A81D1DDB9800E245C9 /* AppDelegate.swift in Sources */,
-				5AF470991FDF040A0014244A /* TextFieldDelegate.swift in Sources */,
+				5AF470991FDF040A0014244A /* TableTFDelegate.swift in Sources */,
 				5A2731DA1FD6224A00FD5737 /* TableStrings.swift in Sources */,
 				5ABEF3311FCF191300655FEE /* SegueMediator.swift in Sources */,
 				5AB18AFA1D2058CA007B9D9F /* MainViewController.swift in Sources */,

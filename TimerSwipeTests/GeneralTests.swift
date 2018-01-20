@@ -25,7 +25,7 @@ class GeneralTests: XCTestCase {
     
     func testTextFieldDelegateCharacterRejection() {
         let textField = UITextField()
-        let textFieldDelegate = TextFieldDelegate.init(.tableController({}))
+        let textFieldDelegate = TableTFDelegate.init(completionHandler: {})
         
         textField.delegate = textFieldDelegate
         
@@ -53,7 +53,7 @@ class GeneralTests: XCTestCase {
         var dummyVar = false
         
         let textField = UITextField()
-        let textFieldDelegate = TextFieldDelegate.init(.tableController({dummyVar = true}))
+        let textFieldDelegate = TableTFDelegate.init(completionHandler: { dummyVar = true })
         
         textField.delegate = textFieldDelegate
         
