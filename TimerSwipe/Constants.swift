@@ -13,10 +13,21 @@ enum SegueID: String {
     case tableToTimer = "tableToTimer"
 }
 
-/// Exhaustive list of storyboard identifiers
-enum StoryboardID: String {
+/// Exhaustive list of storyboards
+enum Storyboards: String {
+    case main = "Main"
+    case permissions = "Permissions"
+}
+
+/// Exhaustive list of main storyboard identifiers
+enum MainID: String {
     case mainView = "mainView"
     case tableView = "tableView"
+}
+
+/// Exhaustive list of permissions storyboard identifiers
+enum PermissionsID: String {
+    case permissionController = "PermissionController"
 }
 
 /// Message announcing changes in timer status

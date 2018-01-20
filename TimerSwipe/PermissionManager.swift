@@ -37,9 +37,9 @@ struct PermissionManager {
     }
     
     private func notificationsNotDetermined() {
-        let storyboard = UIStoryboard.init(name: "Permissions", bundle: Bundle.main)
+        let storyboard = UIStoryboard.init(name: Storyboards.permissions.rawValue, bundle: Bundle.main)
         
-        guard let presenter = storyboard.instantiateViewController(withIdentifier: "PermissionController") as? PermissionPresenter else { return }
+        guard let presenter = storyboard.instantiateViewController(withIdentifier: PermissionsID.permissionController.rawValue) as? PermissionPresenter else { return }
         presenter.request {
             UNUserNotificationCenter.current().requestAuthorization(options: [.sound, .alert]) { (isAuthorized, error) in
                 if let error = error { print(error) }
