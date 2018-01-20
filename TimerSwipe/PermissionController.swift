@@ -12,7 +12,7 @@ class PermissionController: UIViewController {
     private static let permissionText = NSLocalizedString("permissionRequest", value: "TimerSwipe can alert you when your timer has finished, even if you are in another app and TimerSwipe is no longer running.\n\nIt must ask for your permission to enable or disable this feature.", comment: "")
     private static let doneText = NSLocalizedString("doneText", value: "You can turn local notifications on and off in the Settings app under Notifications → TimerSwipe.", comment: "")
 
-    var permissionRequest: (() -> Void)?
+    private var permissionRequest: (() -> Void)?
     
     @IBOutlet var textArea: UITextView! {
         didSet {
@@ -49,8 +49,14 @@ class PermissionController: UIViewController {
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
+}
+
+extension PermissionController: PermissionDelegate {
+    func request(handler: @escaping () -> Void) {
+        permissionRequest = handler
+    }
     
-    func transitionFromPermissionToDone() {
+    func wrapUp() {
         DispatchQueue.main.async {
             UIView.animate(withDuration: 0.0) {
                 self.permissionButton.isHidden = true

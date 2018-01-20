@@ -9,6 +9,13 @@
 import UserNotifications
 import UIKit
 
+protocol PermissionDelegate: class {
+    func request(handler: @escaping () -> Void)
+    func wrapUp()
+}
+
+typealias PermissionPresenter = UIViewController & PermissionDelegate
+
 struct PermissionManager {
     private let center = UNUserNotificationCenter.current()
     private unowned var parentVC: UIViewController
@@ -32,30 +39,25 @@ struct PermissionManager {
     private func notificationsNotDetermined() {
         let storyboard = UIStoryboard.init(name: "Permissions", bundle: Bundle.main)
         
-        guard let vc = storyboard.instantiateViewController(withIdentifier: "PermissionController") as? PermissionController else { return }
-        vc.permissionRequest = { self.requestNotificationAuthorization(permissionController: vc) }
-        
+        guard let presenter = storyboard.instantiateViewController(withIdentifier: "PermissionController") as? PermissionPresenter else { return }
+        presenter.request {
+            UNUserNotificationCenter.current().requestAuthorization(options: [.sound, .alert]) { (isAuthorized, error) in
+                if let error = error { print(error) }
+                
+                presenter.wrapUp()
+                
+                isAuthorized ? self.notificationsAuthorized() : self.notificationsDenied()
+            }
+        }
         DispatchQueue.main.async {
-            self.parentVC.showDetailViewController(vc, sender: nil)
+            self.parentVC.showDetailViewController(presenter, sender: nil)
         }
     }
     
-    private func notificationsDenied() {
-        
-    }
+    private func notificationsDenied() { }
     
     private func notificationsAuthorized() {
         let timerCompleteCategory = UNNotificationCategory(identifier: "TimerCompleteCategory", actions: [], intentIdentifiers: [])
         center.setNotificationCategories([timerCompleteCategory])
-    }
-    
-    private func requestNotificationAuthorization(permissionController: PermissionController) {
-        UNUserNotificationCenter.current().requestAuthorization(options: [.sound, .alert]) { (isAuthorized, error) in
-            if let error = error { print(error) }
-            
-            permissionController.transitionFromPermissionToDone()
-            
-            isAuthorized ? self.notificationsAuthorized() : self.notificationsDenied()
-        }
     }
 }
