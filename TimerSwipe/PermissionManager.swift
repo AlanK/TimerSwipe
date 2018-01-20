@@ -9,11 +9,9 @@
 import UserNotifications
 import UIKit
 
-class PermissionManager {
+struct PermissionManager {
     private let center = UNUserNotificationCenter.current()
-    private unowned let parentVC: UIViewController
-    
-    private weak var permissionController: PermissionController?
+    private unowned var parentVC: UIViewController
     
     init(parentVC: UIViewController) {
         self.parentVC = parentVC
@@ -35,8 +33,7 @@ class PermissionManager {
         let storyboard = UIStoryboard.init(name: "Permissions", bundle: Bundle.main)
         
         guard let vc = storyboard.instantiateViewController(withIdentifier: "PermissionController") as? PermissionController else { return }
-        vc.permissionRequest = self.requestNotificationAuthorization
-        permissionController = vc
+        vc.permissionRequest = { self.requestNotificationAuthorization(permissionController: vc) }
         
         DispatchQueue.main.async {
             self.parentVC.showDetailViewController(vc, sender: nil)
@@ -52,12 +49,11 @@ class PermissionManager {
         center.setNotificationCategories([timerCompleteCategory])
     }
     
-    private func requestNotificationAuthorization() {
+    private func requestNotificationAuthorization(permissionController: PermissionController) {
         UNUserNotificationCenter.current().requestAuthorization(options: [.sound, .alert]) { (isAuthorized, error) in
             if let error = error { print(error) }
             
-            self.permissionController?.transitionFromPermissionToDone()
-            self.permissionController = nil
+            permissionController.transitionFromPermissionToDone()
             
             isAuthorized ? self.notificationsAuthorized() : self.notificationsDenied()
         }
