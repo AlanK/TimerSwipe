@@ -8,11 +8,23 @@
 
 import UIKit
 
+protocol PermissionControllerDelegate {
+    func askMyPermission(_ permissionController: PermissionController)
+    func done(_ permissionController: PermissionController)
+}
+
 class PermissionController: UIViewController {
     private static let permissionText = NSLocalizedString("permissionRequest", value: "TimerSwipe can alert you when your timer has finished, even if you are in another app and TimerSwipe is no longer running.\n\nIt must ask for your permission to enable or disable this feature.", comment: "")
     private static let doneText = NSLocalizedString("doneText", value: "You can turn local notifications on and off in the Settings app under Notifications → TimerSwipe.", comment: "")
+    
+    static func instantiate(with delegate: PermissionControllerDelegate) -> PermissionController {
+        let storyboard = UIStoryboard.init(name: Storyboards.permissions.rawValue, bundle: Bundle.main)
+        let pc = storyboard.instantiateViewController(withIdentifier: PermissionsID.permissionController.rawValue) as! PermissionController
+        pc.delegate = delegate
+        return pc
+    }
 
-    private var permissionRequest: (() -> Void)?
+    private var delegate: PermissionControllerDelegate!
     
     @IBOutlet var textArea: UITextView! {
         didSet {
@@ -31,11 +43,11 @@ class PermissionController: UIViewController {
     }
     
     @IBAction func permissionButtonAction(_ sender: Any) {
-        permissionRequest?()
+        delegate.askMyPermission(self)
     }
     
     @IBAction func doneButtonAction(_ sender: Any) {
-        self.dismiss(animated: true, completion: nil)
+        delegate.done(self)
     }
     
 
@@ -48,12 +60,6 @@ class PermissionController: UIViewController {
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
-    }
-}
-
-extension PermissionController: PermissionDelegate {
-    func request(handler: @escaping () -> Void) {
-        permissionRequest = handler
     }
     
     func wrapUp() {

@@ -9,13 +9,6 @@
 import UserNotifications
 import UIKit
 
-protocol PermissionDelegate: class {
-    func request(handler: @escaping () -> Void)
-    func wrapUp()
-}
-
-typealias PermissionPresenter = UIViewController & PermissionDelegate
-
 struct PermissionManager {
     private let center = UNUserNotificationCenter.current()
     private unowned var parentVC: UIViewController
@@ -37,18 +30,7 @@ struct PermissionManager {
     }
     
     private func notificationsNotDetermined() {
-        let storyboard = UIStoryboard.init(name: Storyboards.permissions.rawValue, bundle: Bundle.main)
-        
-        guard let presenter = storyboard.instantiateViewController(withIdentifier: PermissionsID.permissionController.rawValue) as? PermissionPresenter else { return }
-        presenter.request {
-            UNUserNotificationCenter.current().requestAuthorization(options: [.sound, .alert]) { (isAuthorized, error) in
-                if let error = error { print(error) }
-                
-                presenter.wrapUp()
-                
-                isAuthorized ? self.notificationsAuthorized() : self.notificationsDenied()
-            }
-        }
+        let presenter = PermissionController.instantiate(with: self)
         DispatchQueue.main.async {
             self.parentVC.showDetailViewController(presenter, sender: nil)
         }
@@ -59,5 +41,20 @@ struct PermissionManager {
     private func notificationsAuthorized() {
         let timerCompleteCategory = UNNotificationCategory(identifier: "TimerCompleteCategory", actions: [], intentIdentifiers: [])
         center.setNotificationCategories([timerCompleteCategory])
+    }
+}
+
+extension PermissionManager: PermissionControllerDelegate {
+    func askMyPermission(_ permissionController: PermissionController) {
+        UNUserNotificationCenter.current().requestAuthorization(options: [.sound, .alert]) { (isAuthorized, error) in
+            if let error = error { print(error) }
+            
+            permissionController.wrapUp()
+            isAuthorized ? self.notificationsAuthorized() : self.notificationsDenied()
+        }
+    }
+    
+    func done(_ permissionController: PermissionController) {
+        permissionController.dismiss(animated: true, completion: nil)
     }
 }
