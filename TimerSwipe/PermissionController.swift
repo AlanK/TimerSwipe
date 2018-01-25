@@ -14,7 +14,7 @@ protocol PermissionControllerDelegate {
 }
 
 class PermissionController: UIViewController {
-    private static let permissionText = NSLocalizedString("permissionRequest", value: "TimerSwipe can alert you when your timer has finished, even if you are in another app and TimerSwipe is no longer running.\n\nIt must ask for your permission to enable or disable this feature.", comment: "")
+    private static let permissionText = NSLocalizedString("permissionRequest", value: "TimerSwipe can alert you when your timer has finished, even if you are in another app.\n\nIt must ask for your permission to enable or disable this feature.", comment: "")
     private static let doneText = NSLocalizedString("doneText", value: "You can turn local notifications on or off in the Settings app under Notifications → TimerSwipe.", comment: "")
     
     static func instantiate(with delegate: PermissionControllerDelegate) -> PermissionController {
@@ -25,6 +25,12 @@ class PermissionController: UIViewController {
     }
 
     private var delegate: PermissionControllerDelegate!
+    
+    @IBOutlet var mainView: UIView! {
+        didSet {
+            mainView.backgroundColor = K.tintColor
+        }
+    }
     
     @IBOutlet var textArea: UITextView! {
         didSet {
@@ -39,6 +45,7 @@ class PermissionController: UIViewController {
     @IBOutlet var doneButton: UIButton! {
         didSet {
             doneButton.lightButtonStyle()
+            doneButton.isHidden = true
         }
     }
     
@@ -48,14 +55,6 @@ class PermissionController: UIViewController {
     
     @IBAction func doneButtonAction(_ sender: Any) {
         delegate.done(self)
-    }
-    
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        view.backgroundColor = K.tintColor
-        doneButton.isHidden = true
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {

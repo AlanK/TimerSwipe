@@ -20,17 +20,17 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" axis="vertical" alignment="center" spacing="30" translatesAutoresizingMaskIntoConstraints="NO" id="K3j-nu-ELi">
-                                <rect key="frame" x="17" y="216" width="286" height="156"/>
+                                <rect key="frame" x="32" y="228" width="256" height="132"/>
                                 <subviews>
                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" verticalCompressionResistancePriority="999" preservesSuperviewLayoutMargins="YES" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" editable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cOw-NC-yka">
-                                        <rect key="frame" x="-17" y="0.0" width="0.0" height="24"/>
+                                        <rect key="frame" x="-32" y="0.0" width="0.0" height="0.0"/>
                                         <string key="text">TimerSwipe can alert you when a timer has finished, even if you are in another app and TimerSwipe is no longer running. It must ask for your permission one time to enable or disable this feature.</string>
                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleTitle2"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                     </textView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nPf-vS-UKr">
-                                        <rect key="frame" x="44.5" y="54" width="197" height="36"/>
+                                        <rect key="frame" x="128" y="30" width="197" height="36"/>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleTitle3"/>
                                         <state key="normal" title="Ask For My Permission"/>
                                         <connections>
@@ -38,7 +38,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="48A-HC-ByD" userLabel="Done Button">
-                                        <rect key="frame" x="119.5" y="120" width="47" height="36"/>
+                                        <rect key="frame" x="128" y="96" width="47" height="36"/>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleTitle3"/>
                                         <state key="normal" title="Done"/>
                                         <connections>
@@ -59,6 +59,7 @@
                     <navigationItem key="navigationItem" title="Timer Notifications" id="oLc-q8-yAi"/>
                     <connections>
                         <outlet property="doneButton" destination="48A-HC-ByD" id="fsu-DK-sBP"/>
+                        <outlet property="mainView" destination="j1c-1t-6NI" id="usS-QQ-DUU"/>
                         <outlet property="permissionButton" destination="nPf-vS-UKr" id="ECI-Wu-kAs"/>
                         <outlet property="textArea" destination="cOw-NC-yka" id="gdk-SR-EeM"/>
                     </connections>
