@@ -10,6 +10,8 @@ import Foundation
 
 /// The model on which the app is based
 class STTimerList: NSObject, NSCoding {
+    private let applicationShortcuts = ApplicationShortcuts()
+    
     /// Array of timers
     private var timers: [STSavedTimer]
     
@@ -158,7 +160,9 @@ extension STTimerList {
             model = STTimerList()
             model.loadSampleTimers()
         }
-        
+        // Update the application shortcuts in case this is the first time we're running a version that supports application shortcuts
+        model.applicationShortcuts.updateShortcuts(from: model)
+
         return model
     }
 }
@@ -170,6 +174,7 @@ extension STTimerList {
     func saveData() {
         let persistentList = NSKeyedArchiver.archivedData(withRootObject: self)
         UserDefaults.standard.set(persistentList, forKey: K.persistedList)
+        applicationShortcuts.updateShortcuts(from: self)
         print("Saved data!")
     }
 }

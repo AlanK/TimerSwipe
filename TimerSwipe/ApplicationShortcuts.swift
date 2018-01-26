@@ -35,10 +35,10 @@ struct ApplicationShortcuts {
         
         // Create the shortcut and add it to the newShortcuts array
         for index in 0..<logicalMaxShortcuts {
-            let userInfoValue = timerList[index]
-            let seconds = Int(userInfoValue.seconds)
+            let timer = timerList[index]
+            let seconds = Int(timer.seconds)
             let localizedTitle = NSLocalizedString("quickActionTitle", value: "\(seconds)-Second Timer", comment: "A timer of [seconds]-second duration")
-            let userInfo = [userInfoKey : userInfoValue]
+            let userInfo = [userInfoKey : seconds]
 
             let shortcut = UIApplicationShortcutItem.init(type: type, localizedTitle: localizedTitle, localizedSubtitle: nil, icon: nil, userInfo: userInfo)
             newShortcuts.append(shortcut)
