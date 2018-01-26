@@ -9,7 +9,9 @@
 import Foundation
 
 /// Model representation of a user-created timer
-class STSavedTimer: NSObject, NSCoding {
+class STSavedTimer: NSObject, NSSecureCoding {
+    static let supportsSecureCoding: Bool = true
+    
     private static let centisecondsPerSecond = 100.0
     /// Timer duration in seconds
     let seconds: TimeInterval
