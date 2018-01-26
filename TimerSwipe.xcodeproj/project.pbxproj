@@ -19,6 +19,7 @@
 		5A2731DA1FD6224A00FD5737 /* TableStrings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A2731D91FD6224A00FD5737 /* TableStrings.swift */; };
 		5A2731DE1FD62ED400FD5737 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5A2731DD1FD62ED400FD5737 /* Localizable.strings */; };
 		5A2731E21FD6311100FD5737 /* Localizable.stringsdict in Resources */ = {isa = PBXBuildFile; fileRef = 5A2731E11FD6311100FD5737 /* Localizable.stringsdict */; };
+		5A297B4C201B99A500E1E722 /* ApplicationShortcuts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A297B4B201B99A500E1E722 /* ApplicationShortcuts.swift */; };
 		5A4DC9181D596D460009446B /* STSavedTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A4DC9171D596D460009446B /* STSavedTimer.swift */; };
 		5A591CE91D3AA18E00B9BD3D /* SoundController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A591CE81D3AA18E00B9BD3D /* SoundController.swift */; };
 		5A7159921FCBC35E00BEB5EE /* MainVCStrings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A7159911FCBC35E00BEB5EE /* MainVCStrings.swift */; };
@@ -69,6 +70,7 @@
 		5A2731D91FD6224A00FD5737 /* TableStrings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableStrings.swift; sourceTree = "<group>"; };
 		5A2731DD1FD62ED400FD5737 /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
 		5A2731E11FD6311100FD5737 /* Localizable.stringsdict */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; path = Localizable.stringsdict; sourceTree = "<group>"; };
+		5A297B4B201B99A500E1E722 /* ApplicationShortcuts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationShortcuts.swift; sourceTree = "<group>"; };
 		5A4DC9171D596D460009446B /* STSavedTimer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STSavedTimer.swift; sourceTree = "<group>"; };
 		5A591CE81D3AA18E00B9BD3D /* SoundController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoundController.swift; sourceTree = "<group>"; };
 		5A6E07951F8C443200B7062A /* TS_short_warn.aif */ = {isa = PBXFileReference; lastKnownFileType = file; path = TS_short_warn.aif; sourceTree = "<group>"; };
@@ -174,6 +176,7 @@
 			children = (
 				5A4DC9171D596D460009446B /* STSavedTimer.swift */,
 				5A12267D1D5A94C3006D49F1 /* STTimerList.swift */,
+				5A297B4B201B99A500E1E722 /* ApplicationShortcuts.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -365,6 +368,7 @@
 				5ADE6DCD1FFF285000E8CF8C /* PermissionController.swift in Sources */,
 				5A7159921FCBC35E00BEB5EE /* MainVCStrings.swift in Sources */,
 				85B648AA1FFB19C3004E85F4 /* TimeoutManager.swift in Sources */,
+				5A297B4C201B99A500E1E722 /* ApplicationShortcuts.swift in Sources */,
 				5A23598020128BC400393EAA /* AppStateNotifications.swift in Sources */,
 				5A03B9A81D1DDB9800E245C9 /* AppDelegate.swift in Sources */,
 				5AF470991FDF040A0014244A /* TableTFDelegate.swift in Sources */,
