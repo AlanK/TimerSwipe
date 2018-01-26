@@ -30,6 +30,7 @@ struct ApplicationShortcuts {
         // Number of shortcuts can't exceed system max or number of timers
         let logicalMaxShortcuts = count < systemDefinedMaxShortcuts ? count : systemDefinedMaxShortcuts
         let userInfoKey = type
+        let icon = UIApplicationShortcutIcon.init(type: UIApplicationShortcutIconType.time)
 
         var newShortcuts = [UIApplicationShortcutItem]()
         
@@ -40,7 +41,7 @@ struct ApplicationShortcuts {
             let localizedTitle = NSLocalizedString("quickActionTitle", value: "\(seconds)-Second Timer", comment: "A timer of [seconds]-second duration")
             let userInfo = [userInfoKey : seconds]
 
-            let shortcut = UIApplicationShortcutItem.init(type: type, localizedTitle: localizedTitle, localizedSubtitle: nil, icon: nil, userInfo: userInfo)
+            let shortcut = UIApplicationShortcutItem.init(type: type, localizedTitle: localizedTitle, localizedSubtitle: nil, icon: icon, userInfo: userInfo)
             newShortcuts.append(shortcut)
         }
         UIApplication.shared.shortcutItems = newShortcuts
