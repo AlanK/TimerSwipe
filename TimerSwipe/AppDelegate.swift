@@ -19,4 +19,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         return true
     }
+    
+    func application(_ application: UIApplication, performActionFor shortcutItem: UIApplicationShortcutItem, completionHandler: @escaping (Bool) -> Void) {
+        let applicationShortcuts = ApplicationShortcuts()
+        var success = false
+        defer { completionHandler(success) }
+        
+        guard let timer = applicationShortcuts.performActionFor(shortcutItem), let nav = window?.rootViewController as? NavController else { return }
+        nav.loadNavigationStack(animated: false, with: timer)
+        success = true
+    }
 }
