@@ -67,6 +67,10 @@ class NavController: UINavigationController {
     }
     
     func loadNavigationStack(animated: Bool, with providedTimer: STSavedTimer? = nil) {
+        if let countdownDelegate = topViewController as? CountdownDelegate {
+            countdownDelegate.countdown.cancel()
+        }
+        
         guard let storyboard = storyboard else {return}
         // Make sure the table view is in the view hierarchy
         let tableVC = storyboard.instantiateViewController(withIdentifier: MainID.tableView.rawValue)
