@@ -66,7 +66,7 @@ class NavController: UINavigationController {
         registerNotifications(false)
     }
     
-    func loadNavigationStack(animated: Bool) {
+    func loadNavigationStack(animated: Bool, with providedTimer: STSavedTimer? = nil) {
         guard let storyboard = storyboard else {return}
         // Make sure the table view is in the view hierarchy
         let tableVC = storyboard.instantiateViewController(withIdentifier: MainID.tableView.rawValue)
@@ -75,11 +75,11 @@ class NavController: UINavigationController {
         vc.model = model
         var navHierarchy: [UIViewController] = [vc]
         
-        if let favorite = model.favorite() {
+        if let providedTimer = providedTimer ?? model.favorite() {
             let mainVC = storyboard.instantiateViewController(withIdentifier: MainID.mainView.rawValue)
             
             guard let vc = mainVC as? MainViewController else { return }
-            vc.providedTimer = favorite
+            vc.providedTimer = providedTimer
             navHierarchy.append(vc)
         }
         setViewControllers(navHierarchy, animated: animated)
