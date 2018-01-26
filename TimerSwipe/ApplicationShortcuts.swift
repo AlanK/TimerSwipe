@@ -45,4 +45,11 @@ struct ApplicationShortcuts {
         }
         UIApplication.shared.shortcutItems = newShortcuts
     }
+    
+    func performActionFor(_ shortcut: UIApplicationShortcutItem) -> STSavedTimer? {
+        guard shortcut.type == type, let seconds = shortcut.userInfo?[type] as? Int else { return nil }
+        let timeInterval = Double(seconds)
+        let timer = STSavedTimer.init(seconds: timeInterval)
+        return timer
+    }
 }
