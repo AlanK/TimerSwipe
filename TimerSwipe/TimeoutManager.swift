@@ -10,7 +10,7 @@ import Foundation
 
 /// Implements a timeout behavior after the background has been in the background for a long time
 class TimeoutManager {
-    private let timeout: TimeInterval = 3.0
+    private let timeout: TimeInterval = 300.0
 
     private var lastEnteredBackground: Date?
     
