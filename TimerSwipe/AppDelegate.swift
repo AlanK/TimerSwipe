@@ -17,16 +17,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Shake-to-undo is too fiddly for a three-digit numbers-only text field, so lets turn it off
         UIApplication.shared.applicationSupportsShakeToEdit = false
         
-        return true
+        guard let launchOptions = launchOptions else { return true }
+        guard let shortcutItem = launchOptions[UIApplicationLaunchOptionsKey.shortcutItem] as? UIApplicationShortcutItem else { return false }
+        return launchTimer(with: shortcutItem)
     }
     
     func application(_ application: UIApplication, performActionFor shortcutItem: UIApplicationShortcutItem, completionHandler: @escaping (Bool) -> Void) {
+        let success = launchTimer(with: shortcutItem)
+        completionHandler(success)
+    }
+    
+    private func launchTimer(with shortcutItem: UIApplicationShortcutItem) -> Bool {
         let applicationShortcuts = ApplicationShortcuts()
-        var success = false
-        defer { completionHandler(success) }
-        
-        guard let timer = applicationShortcuts.performActionFor(shortcutItem), let nav = window?.rootViewController as? NavController else { return }
+        guard let timer = applicationShortcuts.performActionFor(shortcutItem), let nav = window?.rootViewController as? NavController else { return false }
         nav.loadNavigationStack(animated: false, with: timer)
-        success = true
+        return true
     }
 }
