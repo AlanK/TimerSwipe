@@ -38,19 +38,20 @@ class STTimerList: NSObject, NSCoding {
     func updateFavorite(at index: Int) -> [Int] {
         var updatedTimers = [index]
         
-        switch timers[index].isFavorite {
-        case true:
-            timers[index].isFavorite = false
-        case false:
-            for i in 0..<timers.count {
-                if timers[i].isFavorite {
-                    timers[i].isFavorite = false
-                    updatedTimers.append(i)
+        serialQueue.sync {
+            switch timers[index].isFavorite {
+            case true: timers[index].isFavorite = false
+            case false:
+                for i in 0..<timers.count {
+                    if timers[i].isFavorite {
+                        timers[i].isFavorite = false
+                        updatedTimers.append(i)
+                    }
                 }
+                timers[index].isFavorite = true
             }
-            timers[index].isFavorite = true
         }
-        print(updatedTimers)
+        
         return updatedTimers
     }
     
