@@ -38,6 +38,11 @@ enum CountdownStatus {
     case expire
 }
 
+/// Valid types for `UIApplicationShortcutItem`
+enum ShortcutTypes: String {
+    case timer = "timer"
+}
+
 extension UIView {
     /// Recursively find and return the topmost superview
     var supremeView: UIView {

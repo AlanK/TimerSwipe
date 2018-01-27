@@ -10,7 +10,7 @@ import UIKit
 
 struct ApplicationShortcuts {
     let systemDefinedMaxShortcuts = 4
-    let type = "timer"
+    let type = ShortcutTypes.timer.rawValue
 
     var existingShortcuts: [UIApplicationShortcutItem]? {
         get { return UIApplication.shared.shortcutItems }
