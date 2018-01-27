@@ -83,7 +83,10 @@ class STTimerList: NSObject, NSCoding {
 
     /// Remove and return a timer from a specified index
     func remove(at: Int) -> STSavedTimer {
-        let timer = timers.remove(at: at)
+        var timer: STSavedTimer!
+        
+        serialQueue.sync { timer = timers.remove(at: at) }
+        
         return timer
     }
     
@@ -107,28 +110,51 @@ class STTimerList: NSObject, NSCoding {
     
     /// Return the timer marked `isFavorite`
     func favorite() -> STSavedTimer? {
-        for timer in timers {
-            if timer.isFavorite {return timer}
+        var favorite: STSavedTimer?
+        
+        serialQueue.sync {
+            for timer in timers {
+                if timer.isFavorite {
+                    favorite = timer
+                    break
+                }
+            }
         }
-        return nil
+        
+        return favorite
     }
     
     func favoriteIndex() -> Int? {
-        guard timers.isEmpty == false else {return nil}
-        for index in 0..<timers.count {
-            if timers[index].isFavorite {return index}
+        var favoriteIndex: Int?
+        
+        serialQueue.sync {
+            guard timers.isEmpty == false else { return }
+            for index in 0..<timers.count {
+                if timers[index].isFavorite { favoriteIndex = index }
+            }
         }
-        return nil
+        
+        return favoriteIndex
     }
     
     func count() -> Int {
-        return timers.count
+        var count: Int!
+        
+        serialQueue.sync { count = timers.count }
+        
+        return count
     }
     
     // MARK: Subscript
     
     subscript(index: Int) -> STSavedTimer {
-        get {return timers[index]}
+        get {
+            var savedTimer: STSavedTimer!
+            
+            serialQueue.sync { savedTimer = timers[index] }
+            
+            return savedTimer
+        }
         set (newValue) {
             timers[index] = newValue
             validate()
