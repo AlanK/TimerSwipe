@@ -10,8 +10,6 @@ import Foundation
 
 /// The model on which the app is based
 class STTimerList: NSObject, NSCoding {
-    private let applicationShortcuts = ApplicationShortcuts()
-    
     private let serialQueue = DispatchQueue.init(label: "serialQueue", qos: .userInitiated)
     
     /// Array of timers
@@ -59,26 +57,34 @@ class STTimerList: NSObject, NSCoding {
     
     /// Append a timer
     func append(timer: STSavedTimer) {
-        timers.append(timer)
-        validate()
+        serialQueue.async {
+            self.timers.append(timer)
+            self.validate()
+        }
     }
 
     /// Replace the existing array of timers with a new array
     private func load(timerArray: [STSavedTimer]) {
-        timers = timerArray
-        validate()
+        serialQueue.async {
+            self.timers = timerArray
+            self.validate()
+        }
     }
     
     /// Insert a new timer at a specified index
     func insert(_ newElement: STSavedTimer, at index: Int) {
-        timers.insert(newElement, at: index)
-        validate()
+        serialQueue.async {
+            self.timers.insert(newElement, at: index)
+            self.validate()
+        }
     }
     
     /// Insert an array of timers at a specified index
     func insert(_ newTimers: [STSavedTimer], at index: Int) {
-        timers.insert(contentsOf: newTimers, at: index)
-        validate()
+        serialQueue.async {
+            self.timers.insert(contentsOf: newTimers, at: index)
+            self.validate()
+        }
     }
 
     /// Remove and return a timer from a specified index
@@ -94,14 +100,16 @@ class STTimerList: NSObject, NSCoding {
     
     /// Enforce <= 1 favorite timer
     private func validate() {
-        guard timers.isEmpty == false else {return}
-        var foundAFavorite = false
-        for timer in timers {
-            switch foundAFavorite {
-            // Set flag once a favorite has been found
-            case false: if timer.isFavorite {foundAFavorite = true}
-            // Once the flag has been set, all other timers must not be favorite
-            case true: timer.isFavorite = false
+        serialQueue.async {
+            guard self.timers.isEmpty == false else { return }
+            var foundAFavorite = false
+            for timer in self.timers {
+                switch foundAFavorite {
+                // Set flag once a favorite has been found
+                case false: if timer.isFavorite { foundAFavorite = true }
+                // Once the flag has been set, all other timers must not be favorite
+                case true: timer.isFavorite = false
+                }
             }
         }
     }
@@ -156,19 +164,65 @@ class STTimerList: NSObject, NSCoding {
             return savedTimer
         }
         set (newValue) {
-            timers[index] = newValue
-            validate()
+            serialQueue.async {
+                self.timers[index] = newValue
+                self.validate()
+            }
         }
     }
     
     // MARK: NSCoding
     
-    func encode(with aCoder: NSCoder) {aCoder.encode(timers, forKey: K.timersKey)}
+    func encode(with aCoder: NSCoder) {
+        // Be careful about where you call this
+        aCoder.encode(self.timers, forKey: K.timersKey)
+    }
     
     required convenience init?(coder aDecoder: NSCoder) {
         guard let timers = aDecoder.decodeObject(forKey: K.timersKey) as? [STSavedTimer] else {return nil}
         self.init(timers: timers)
     }    
+}
+
+// MARK: - Update Shortcuts
+
+import UIKit
+
+extension STTimerList {
+    private func updateShortcuts() {
+        serialQueue.async {
+            let systemDefinedMaxShortcuts = 4
+            let type = ShortcutTypes.timer.rawValue
+            let count = self.timers.count
+            
+            // If there are no timers, clear all the shortcut items
+            guard count > 0 else {
+                UIApplication.shared.shortcutItems = nil
+                return
+            }
+            
+            // Number of shortcuts can't exceed system max or number of timers
+            let logicalMaxShortcuts = count < systemDefinedMaxShortcuts ? count : systemDefinedMaxShortcuts
+            let userInfoKey = type
+            let icon = UIApplicationShortcutIcon.init(type: UIApplicationShortcutIconType.time)
+            
+            var newShortcuts = [UIApplicationShortcutItem]()
+            
+            // Create the shortcut and add it to the newShortcuts array
+            for index in 0..<logicalMaxShortcuts {
+                let timer = self.timers[index]
+                let seconds = Int(timer.seconds)
+                let localizedTitle = NSLocalizedString("quickActionTitle", value: "\(seconds)-Second Timer", comment: "A timer of [seconds]-second duration")
+                let userInfo = [userInfoKey : seconds]
+                
+                let shortcut = UIApplicationShortcutItem.init(type: type, localizedTitle: localizedTitle, localizedSubtitle: nil, icon: icon, userInfo: userInfo)
+                newShortcuts.append(shortcut)
+            }
+            DispatchQueue.main.async {
+                UIApplication.shared.shortcutItems = newShortcuts
+            }
+        }
+    }
 }
 
 // MARK: - Sample Timers
@@ -190,7 +244,7 @@ extension STTimerList {
             model.loadSampleTimers()
         }
         // Update the application shortcuts in case this is the first time we're running a version that supports application shortcuts
-        model.applicationShortcuts.updateShortcuts(from: model)
+        model.updateShortcuts()
 
         return model
     }
@@ -201,9 +255,11 @@ extension STTimerList {
 extension STTimerList {
     /// Archive the STTimerList
     func saveData() {
-        let persistentList = NSKeyedArchiver.archivedData(withRootObject: self)
-        UserDefaults.standard.set(persistentList, forKey: K.persistedList)
-        applicationShortcuts.updateShortcuts(from: self)
-        print("Saved data!")
+        serialQueue.async {
+            let persistentList = NSKeyedArchiver.archivedData(withRootObject: self)
+            UserDefaults.standard.set(persistentList, forKey: K.persistedList)
+            print("Saved data!")
+            self.updateShortcuts()
+        }
     }
 }

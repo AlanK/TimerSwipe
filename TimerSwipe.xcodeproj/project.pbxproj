@@ -151,6 +151,7 @@
 				5A90785C1EEB8C24006BCDD3 /* Constants.swift */,
 				5A03B9A71D1DDB9800E245C9 /* AppDelegate.swift */,
 				5A23597F20128BC400393EAA /* AppStateNotifications.swift */,
+				5A297B4B201B99A500E1E722 /* ApplicationShortcuts.swift */,
 				5AA3E3AC1EEF360C00FB5F1D /* Views and Controllers */,
 				5AA3E3A81EEF34E900FB5F1D /* Model */,
 				5AA3E3A91EEF34F700FB5F1D /* Storyboards */,
@@ -176,7 +177,6 @@
 			children = (
 				5A4DC9171D596D460009446B /* STSavedTimer.swift */,
 				5A12267D1D5A94C3006D49F1 /* STTimerList.swift */,
-				5A297B4B201B99A500E1E722 /* ApplicationShortcuts.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
