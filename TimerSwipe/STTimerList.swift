@@ -12,6 +12,8 @@ import Foundation
 class STTimerList: NSObject, NSCoding {
     private let applicationShortcuts = ApplicationShortcuts()
     
+    private let serialQueue = DispatchQueue.init(label: "serialQueue", qos: .userInitiated)
+    
     /// Array of timers
     private var timers: [STSavedTimer]
     
