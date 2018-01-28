@@ -51,18 +51,16 @@ class STTimerList: NSObject, NSCoding {
     private func internalUpdateFavorite(at index: Int) -> [Int] {
         var updatedTimers = [index]
         
-        serialQueue.sync {
-            switch timers[index].isFavorite {
-            case true: timers[index].isFavorite = false
-            case false:
-                for i in 0..<timers.count {
-                    if timers[i].isFavorite {
-                        timers[i].isFavorite = false
-                        updatedTimers.append(i)
-                    }
+        switch timers[index].isFavorite {
+        case true: timers[index].isFavorite = false
+        case false:
+            for i in 0..<timers.count {
+                if timers[i].isFavorite {
+                    timers[i].isFavorite = false
+                    updatedTimers.append(i)
                 }
-                timers[index].isFavorite = true
             }
+            timers[index].isFavorite = true
         }
         
         return updatedTimers
@@ -281,7 +279,12 @@ extension STTimerList: Model {
     }
     
     func updateFavorite(at index: Int) -> [Int] {
-        let indicesOfChangedTimers = internalUpdateFavorite(at: index)
+        var indicesOfChangedTimers: [Int]!
+        
+        serialQueue.sync {
+            indicesOfChangedTimers = internalUpdateFavorite(at: index)
+        }
+        
         return indicesOfChangedTimers
     }
     
