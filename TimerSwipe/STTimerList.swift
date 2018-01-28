@@ -70,10 +70,8 @@ class STTimerList: NSObject, NSCoding {
     
     /// Append a timer
     private func internalAppend(timer: STSavedTimer) {
-        serialQueue.async {
-            self.timers.append(timer)
-            self.validate()
-        }
+        timers.append(timer)
+        validate()
     }
 
     /// Replace the existing array of timers with a new array
@@ -289,7 +287,9 @@ extension STTimerList: Model {
     }
     
     func append(timer: STSavedTimer) {
-        internalAppend(timer: timer)
+        serialQueue.async {
+            self.internalAppend(timer: timer)
+        }
     }
     
     func remove(at index: Int) -> STSavedTimer {
