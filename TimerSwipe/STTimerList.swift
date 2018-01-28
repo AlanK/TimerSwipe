@@ -249,7 +249,7 @@ extension STTimerList {
 
 extension STTimerList {
     /// Set the timer array to a developer-chosen default set of timers
-    func loadSampleTimers() {
+    private func loadSampleTimers() {
         load(timerArray: [STSavedTimer(seconds: 60.0), STSavedTimer(seconds: 30.0, isFavorite: true), STSavedTimer(seconds: 15.0)])
     }
     
