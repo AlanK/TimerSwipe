@@ -8,19 +8,19 @@
 
 import Foundation
 
-//protocol Model {
-//    subscript(index: Int) -> STSavedTimer { get set }
-//
-//    var favorite: STSavedTimer? { get }
-//    var favoriteIndex: Int? { get }
-//    var count: Int { get }
-//
-//    func updateFavorite(at: Int) -> [Int]
-//    func append(timer: STSavedTimer)
-//    func insert(_: STSavedTimer, at: Int)
-//    func insert(_: [STSavedTimer], at: Int)
-//    func remove(at: Int) -> STSavedTimer
-//}
+protocol Model {
+    subscript(index: Int) -> STSavedTimer { get set }
+
+    var favorite: STSavedTimer? { get }
+    var favoriteIndex: Int? { get }
+    var count: Int { get }
+
+    func updateFavorite(at: Int) -> [Int]
+    func append(timer: STSavedTimer)
+    func insert(_: STSavedTimer, at: Int)
+    func insert(_: [STSavedTimer], at: Int)
+    func remove(at: Int) -> STSavedTimer
+}
 
 /// The model on which the app is based
 class STTimerList: NSObject, NSCoding {
@@ -282,4 +282,8 @@ extension STTimerList {
             self.updateShortcuts()
         }
     }
+}
+
+extension STTimerList: Model {
+    
 }
