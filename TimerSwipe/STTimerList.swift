@@ -20,6 +20,9 @@ protocol Model {
     func insert(_: STSavedTimer, at: Int)
     func insert(_: [STSavedTimer], at: Int)
     func remove(at: Int) -> STSavedTimer
+    func saveData()
+    
+    static func loadExistingModel() -> STTimerList
 }
 
 /// The model on which the app is based
