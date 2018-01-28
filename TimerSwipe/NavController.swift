@@ -24,7 +24,7 @@ class NavController: UINavigationController {
 
     
     /// Underlying model for app
-    let model: STTimerList = STTimerList.loadExistingModel()
+    let model: Model = STTimerList.loadExistingModel()
     
     override func viewDidLoad() {
         super.viewDidLoad()

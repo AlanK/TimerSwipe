@@ -11,7 +11,7 @@ import UIKit
 /// The main table in the app
 class TableController: UITableViewController {
     /// App model must be injected by parent
-    var model: STTimerList?
+    var model: Model?
     
     private lazy var dragDropDelegate = TableDragDropDelegate.init(self, tableModelDragDropDelegate: self)
     
