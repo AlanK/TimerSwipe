@@ -41,8 +41,8 @@ class TableController: UITableViewController {
     private let sectionsInTableView = 1, mainSection = 0
     
     lazy var accessibleFirstFocus: UIResponder? = {
-        guard let model = model, model.count() > 0 else { return nil }
-        let index = model.favoriteIndex() ?? 0
+        guard let model = model, model.count > 0 else { return nil }
+        let index = model.favoriteIndex ?? 0
         return self.tableView.cellForRow(at: IndexPath.init(row: index, section: mainSection))
     }()
     
@@ -102,7 +102,7 @@ class TableController: UITableViewController {
     
     override func numberOfSections(in tableView: UITableView) -> Int { return sectionsInTableView }
     
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int { return model?.count() ?? 0 }
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int { return model?.count ?? 0 }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellID, for: indexPath)
@@ -121,7 +121,7 @@ class TableController: UITableViewController {
         tableView.deleteRows(at: [indexPath], with: .automatic)
         refreshEditButton()
         // You shouldn't toggle setEditing within this method, so GCD to the rescue
-        if model.count() == 0 {
+        if model.count == 0 {
             let nearFuture = DispatchTime.now() + K.editButtonDelay
             let work = DispatchWorkItem {
                 self.setEditing(false, animated: false)
@@ -150,7 +150,7 @@ class TableController: UITableViewController {
         // Create a new timer
         guard let model = model else { return }
         let newTimer = STSavedTimer(seconds: userSelectedTime)
-        let newIndexPath = IndexPath(row: model.count(), section: mainSection)
+        let newIndexPath = IndexPath(row: model.count, section: mainSection)
         // Append, save, and update view
         model.append(timer: newTimer)
         model.saveData()
@@ -162,7 +162,7 @@ class TableController: UITableViewController {
     
     /// Enable the Edit button when the table has one or more rows
     func refreshEditButton() {
-        let numberOfTimers = model?.count() ?? 0
+        let numberOfTimers = model?.count ?? 0
         self.navigationItem.leftBarButtonItem?.isEnabled = numberOfTimers > 0
     }
     

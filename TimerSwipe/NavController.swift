@@ -36,7 +36,7 @@ class NavController: UINavigationController {
             // Make any necessary changes to views after being in the background for a long time
             
             // Don’t change views if a timer is running or there’s no favorite to change to
-            guard (self.topViewController as? CountdownDelegate)?.countdown.ready ?? true, let _ = self.model.favorite() else { return }
+            guard (self.topViewController as? CountdownDelegate)?.countdown.ready ?? true, let _ = self.model.favorite else { return }
             // Don't disrupt an active edit session
             if (self.topViewController as? TableController)?.isEditing == true { return }
             // Don't animate going from one timer to another; it looks weird
@@ -80,7 +80,7 @@ class NavController: UINavigationController {
         vc.model = model
         var navHierarchy: [UIViewController] = [vc]
         
-        if let providedTimer = providedTimer ?? model.favorite() {
+        if let providedTimer = providedTimer ?? model.favorite {
             let mainVC = storyboard.instantiateViewController(withIdentifier: MainID.mainView.rawValue)
             
             guard let vc = mainVC as? MainViewController else { return }

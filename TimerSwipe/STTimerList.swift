@@ -10,11 +10,11 @@ import Foundation
 
 //protocol Model {
 //    subscript(index: Int) -> STSavedTimer { get set }
-//    
+//
 //    var favorite: STSavedTimer? { get }
 //    var favoriteIndex: Int? { get }
 //    var count: Int { get }
-//    
+//
 //    func updateFavorite(at: Int) -> [Int]
 //    func append(timer: STSavedTimer)
 //    func insert(_: STSavedTimer, at: Int)
@@ -131,40 +131,46 @@ class STTimerList: NSObject, NSCoding {
     // MARK: Properties
     
     /// Return the timer marked `isFavorite`
-    func favorite() -> STSavedTimer? {
-        var favorite: STSavedTimer?
-        
-        serialQueue.sync {
-            for timer in timers {
-                if timer.isFavorite {
-                    favorite = timer
-                    break
+    var favorite: STSavedTimer? {
+        get {
+            var favorite: STSavedTimer?
+            
+            serialQueue.sync {
+                for timer in timers {
+                    if timer.isFavorite {
+                        favorite = timer
+                        break
+                    }
                 }
             }
+            
+            return favorite
         }
-        
-        return favorite
     }
     
-    func favoriteIndex() -> Int? {
-        var favoriteIndex: Int?
-        
-        serialQueue.sync {
-            guard timers.isEmpty == false else { return }
-            for index in 0..<timers.count {
-                if timers[index].isFavorite { favoriteIndex = index }
+    var favoriteIndex: Int? {
+        get {
+            var favoriteIndex: Int?
+            
+            serialQueue.sync {
+                guard timers.isEmpty == false else { return }
+                for index in 0..<timers.count {
+                    if timers[index].isFavorite { favoriteIndex = index }
+                }
             }
+            
+            return favoriteIndex
         }
-        
-        return favoriteIndex
     }
     
-    func count() -> Int {
-        var count: Int!
-        
-        serialQueue.sync { count = timers.count }
-        
-        return count
+    var count: Int {
+        get {
+            var count: Int!
+            
+            serialQueue.sync { count = timers.count }
+            
+            return count
+        }
     }
     
     // MARK: Subscript
