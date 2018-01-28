@@ -48,7 +48,7 @@ class STTimerList: NSObject, NSCoding {
     // MARK: Favorites
     
     /// Toggle favorite status of a specific timer and return an array of all timers with favorite status changed
-    func updateFavorite(at index: Int) -> [Int] {
+    private func internalUpdateFavorite(at index: Int) -> [Int] {
         var updatedTimers = [index]
         
         serialQueue.sync {
@@ -71,7 +71,7 @@ class STTimerList: NSObject, NSCoding {
     // MARK: Add & Remove
     
     /// Append a timer
-    func append(timer: STSavedTimer) {
+    private func internalAppend(timer: STSavedTimer) {
         serialQueue.async {
             self.timers.append(timer)
             self.validate()
@@ -87,7 +87,7 @@ class STTimerList: NSObject, NSCoding {
     }
     
     /// Insert a new timer at a specified index
-    func insert(_ newElement: STSavedTimer, at index: Int) {
+    private func internalInsert(_ newElement: STSavedTimer, at index: Int) {
         serialQueue.async {
             self.timers.insert(newElement, at: index)
             self.validate()
@@ -95,7 +95,7 @@ class STTimerList: NSObject, NSCoding {
     }
     
     /// Insert an array of timers at a specified index
-    func insert(_ newTimers: [STSavedTimer], at index: Int) {
+    private func internalInsert(_ newTimers: [STSavedTimer], at index: Int) {
         serialQueue.async {
             self.timers.insert(contentsOf: newTimers, at: index)
             self.validate()
@@ -103,7 +103,7 @@ class STTimerList: NSObject, NSCoding {
     }
 
     /// Remove and return a timer from a specified index
-    func remove(at: Int) -> STSavedTimer {
+    private func internalRemove(at: Int) -> STSavedTimer {
         var timer: STSavedTimer!
         
         serialQueue.sync { timer = timers.remove(at: at) }
@@ -125,69 +125,6 @@ class STTimerList: NSObject, NSCoding {
                 // Once the flag has been set, all other timers must not be favorite
                 case true: timer.isFavorite = false
                 }
-            }
-        }
-    }
-    
-    // MARK: Properties
-    
-    /// Return the timer marked `isFavorite`
-    var favorite: STSavedTimer? {
-        get {
-            var favorite: STSavedTimer?
-            
-            serialQueue.sync {
-                for timer in timers {
-                    if timer.isFavorite {
-                        favorite = timer
-                        break
-                    }
-                }
-            }
-            
-            return favorite
-        }
-    }
-    
-    var favoriteIndex: Int? {
-        get {
-            var favoriteIndex: Int?
-            
-            serialQueue.sync {
-                guard timers.isEmpty == false else { return }
-                for index in 0..<timers.count {
-                    if timers[index].isFavorite { favoriteIndex = index }
-                }
-            }
-            
-            return favoriteIndex
-        }
-    }
-    
-    var count: Int {
-        get {
-            var count: Int!
-            
-            serialQueue.sync { count = timers.count }
-            
-            return count
-        }
-    }
-    
-    // MARK: Subscript
-    
-    subscript(index: Int) -> STSavedTimer {
-        get {
-            var savedTimer: STSavedTimer!
-            
-            serialQueue.sync { savedTimer = timers[index] }
-            
-            return savedTimer
-        }
-        set (newValue) {
-            serialQueue.async {
-                self.timers[index] = newValue
-                self.validate()
             }
         }
     }
@@ -275,7 +212,7 @@ extension STTimerList {
 
 extension STTimerList {
     /// Archive the STTimerList
-    func saveData() {
+    private func internalSaveData() {
         serialQueue.async {
             let persistentList = NSKeyedArchiver.archivedData(withRootObject: self)
             UserDefaults.standard.set(persistentList, forKey: K.persistedList)
@@ -286,5 +223,90 @@ extension STTimerList {
 }
 
 extension STTimerList: Model {
+    // MARK: Properties
     
+    /// Return the timer marked `isFavorite`
+    var favorite: STSavedTimer? {
+        get {
+            var favorite: STSavedTimer?
+            
+            serialQueue.sync {
+                for timer in timers {
+                    if timer.isFavorite {
+                        favorite = timer
+                        break
+                    }
+                }
+            }
+            
+            return favorite
+        }
+    }
+    
+    var favoriteIndex: Int? {
+        get {
+            var favoriteIndex: Int?
+            
+            serialQueue.sync {
+                guard timers.isEmpty == false else { return }
+                for index in 0..<timers.count {
+                    if timers[index].isFavorite { favoriteIndex = index }
+                }
+            }
+            
+            return favoriteIndex
+        }
+    }
+    
+    var count: Int {
+        get {
+            var count: Int!
+            
+            serialQueue.sync { count = timers.count }
+            
+            return count
+        }
+    }
+    
+    func saveData() {
+        internalSaveData()
+    }
+    
+    func insert(_ newTimers: [STSavedTimer], at index: Int) {
+        internalInsert(newTimers, at: index)
+    }
+    
+    func insert(_ newElement: STSavedTimer, at index: Int) {
+        internalInsert(newElement, at: index)
+    }
+    
+    func updateFavorite(at index: Int) -> [Int] {
+        let indicesOfChangedTimers = internalUpdateFavorite(at: index)
+        return indicesOfChangedTimers
+    }
+    
+    func append(timer: STSavedTimer) {
+        internalAppend(timer: timer)
+    }
+    
+    func remove(at index: Int) -> STSavedTimer {
+        let removedTimer = internalRemove(at: index)
+        return removedTimer
+    }
+    
+    subscript(index: Int) -> STSavedTimer {
+        get {
+            var savedTimer: STSavedTimer!
+            
+            serialQueue.sync { savedTimer = timers[index] }
+            
+            return savedTimer
+        }
+        set (newValue) {
+            serialQueue.async {
+                self.timers[index] = newValue
+                self.validate()
+            }
+        }
+    }
 }
