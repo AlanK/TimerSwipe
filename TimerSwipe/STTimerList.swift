@@ -84,10 +84,8 @@ class STTimerList: NSObject, NSCoding {
     
     /// Insert a new timer at a specified index
     private func internalInsert(_ newElement: STSavedTimer, at index: Int) {
-        serialQueue.async {
-            self.timers.insert(newElement, at: index)
-            self.validate()
-        }
+        timers.insert(newElement, at: index)
+        validate()
     }
     
     /// Insert an array of timers at a specified index
@@ -267,7 +265,7 @@ extension STTimerList: Model {
     }
     
     func insert(_ newElement: STSavedTimer, at index: Int) {
-        internalInsert(newElement, at: index)
+        serialQueue.async { self.internalInsert(newElement, at: index) }
     }
     
     func updateFavorite(at index: Int) -> [Int] {
