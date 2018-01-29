@@ -31,8 +31,6 @@ class STTimerList: NSObject, NSCoding {
     /// Serial queue upon which all reads and writes occur when going through the Model protocol conformance extension
     private let serialQueue: DispatchQueue
     
-    private let applicationShortcuts = ApplicationShortcuts()
-    
     /// Array of timers
     private var timers: [STSavedTimer]
     
@@ -117,6 +115,43 @@ class STTimerList: NSObject, NSCoding {
     }    
 }
 
+// MARK: - Update Shortcuts
+
+import UIKit
+
+extension STTimerList {
+    private func updateShortcuts() {
+        let systemDefinedMaxShortcuts = 4
+        let type = ShortcutTypes.timer.rawValue
+        let count = timers.count
+        
+        // If there are no timers, clear all the shortcut items
+        guard count > 0 else {
+            UIApplication.shared.shortcutItems = nil
+            return
+        }
+        
+        // Number of shortcuts can't exceed system max or number of timers
+        let logicalMaxShortcuts = count < systemDefinedMaxShortcuts ? count : systemDefinedMaxShortcuts
+        let userInfoKey = type
+        let icon = UIApplicationShortcutIcon.init(type: UIApplicationShortcutIconType.time)
+        
+        var newShortcuts = [UIApplicationShortcutItem]()
+        
+        // Create the shortcut and add it to the newShortcuts array
+        for index in 0..<logicalMaxShortcuts {
+            let timer = timers[index]
+            let seconds = Int(timer.seconds)
+            let localizedTitle = NSLocalizedString("quickActionTitle", value: "\(seconds)-Second Timer", comment: "A timer of [seconds]-second duration")
+            let userInfo = [userInfoKey : seconds]
+            
+            let shortcut = UIApplicationShortcutItem.init(type: type, localizedTitle: localizedTitle, localizedSubtitle: nil, icon: icon, userInfo: userInfo)
+            newShortcuts.append(shortcut)
+        }
+        DispatchQueue.main.async { UIApplication.shared.shortcutItems = newShortcuts }
+    }
+}
+
 // MARK: - Load
 
 extension STTimerList {
@@ -130,7 +165,7 @@ extension STTimerList {
             model = STTimerList.init(timers: [STSavedTimer(seconds: 60.0), STSavedTimer(seconds: 30.0, isFavorite: true), STSavedTimer(seconds: 15.0)])
         }
         // Update the application shortcuts in case this is the first time we're running a version that supports application shortcuts
-        model.applicationShortcuts.updateShortcuts(with: model)
+        model.updateShortcuts()
         return model
     }
 }
@@ -142,7 +177,7 @@ extension STTimerList {
         let persistentList = NSKeyedArchiver.archivedData(withRootObject: self)
         UserDefaults.standard.set(persistentList, forKey: K.persistedList)
         print("Saved data!")
-        applicationShortcuts.updateShortcuts(with: self)
+        updateShortcuts()
     }
 }
 
