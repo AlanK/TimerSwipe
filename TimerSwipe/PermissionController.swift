@@ -15,6 +15,7 @@ protocol PermissionControllerDelegate {
 
 class PermissionController: UIViewController {
     private static let permissionText = NSLocalizedString("permissionRequest", value: "TimerSwipe can alert you when your timer has finished, even if you are in another app.\n\nIt must ask for your permission to enable or disable this feature.", comment: "")
+    
     private static let doneText = NSLocalizedString("doneText", value: "You can turn local notifications on or off in the Settings app under Notifications → TimerSwipe.", comment: "")
     
     static func instantiate(with delegate: PermissionControllerDelegate) -> PermissionController {
@@ -27,38 +28,26 @@ class PermissionController: UIViewController {
     private var delegate: PermissionControllerDelegate!
     
     @IBOutlet var mainView: UIView! {
-        didSet {
-            mainView.backgroundColor = K.tintColor
-        }
+        didSet { mainView.backgroundColor = K.tintColor }
     }
     
     @IBOutlet var textArea: UITextView! {
-        didSet {
-            textArea.text = PermissionController.permissionText
-        }
+        didSet { textArea.text = PermissionController.permissionText }
     }
+    
     @IBOutlet var permissionButton: UIButton! {
-        didSet {
-            permissionButton.lightButtonStyle()
-        }
+        didSet { permissionButton.lightButtonStyle() }
     }
+    
     @IBOutlet var doneButton: UIButton! {
-        didSet {
-            doneButton.lightButtonStyle()
-        }
+        didSet { doneButton.lightButtonStyle() }
     }
     
-    @IBAction func permissionButtonAction(_ sender: Any) {
-        delegate.askMyPermission(self)
-    }
+    @IBAction func permissionButtonAction(_ sender: Any) { delegate.askMyPermission(self) }
     
-    @IBAction func doneButtonAction(_ sender: Any) {
-        delegate.done(self)
-    }
+    @IBAction func doneButtonAction(_ sender: Any) { delegate.done(self) }
     
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
-    }
+    override var preferredStatusBarStyle: UIStatusBarStyle { return .lightContent }
     
     func wrapUp() {
         UIView.animate(withDuration: 0.0, animations: {
