@@ -71,12 +71,6 @@ class STTimerList: NSObject, NSCoding {
         validate()
     }
 
-    /// Replace the existing array of timers with a new array
-    private func load(timerArray: [STSavedTimer]) {
-        timers = timerArray
-        validate()
-    }
-    
     /// Insert a new timer at a specified index
     private func internalInsert(_ newElement: STSavedTimer, at index: Int) {
         timers.insert(newElement, at: index)
@@ -126,20 +120,14 @@ class STTimerList: NSObject, NSCoding {
 // MARK: - Load
 
 extension STTimerList {
-    /// Set the timer array to a developer-chosen default set of timers
-    private func loadSampleTimers() {
-        load(timerArray: [STSavedTimer(seconds: 60.0), STSavedTimer(seconds: 30.0, isFavorite: true), STSavedTimer(seconds: 15.0)])
-    }
-    
-    static func loadExistingModel() -> STTimerList {
+    static func loadExistingModel() -> Model {
         let model: STTimerList
         // Try to load the model from UserDefaults
         if let archivedData = UserDefaults.standard.object(forKey: K.persistedList) as? Data, let extractedModel = NSKeyedUnarchiver.unarchiveObject(with: archivedData) as? STTimerList {
             model = extractedModel
         } else {
             // No model extracted; give up and load the default model
-            model = STTimerList()
-            model.loadSampleTimers()
+            model = STTimerList.init(timers: [STSavedTimer(seconds: 60.0), STSavedTimer(seconds: 30.0, isFavorite: true), STSavedTimer(seconds: 15.0)])
         }
         // Update the application shortcuts in case this is the first time we're running a version that supports application shortcuts
         model.applicationShortcuts.updateShortcuts(with: model)
