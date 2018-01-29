@@ -101,16 +101,14 @@ class STTimerList: NSObject, NSCoding {
     
     /// Enforce <= 1 favorite timer
     private func validate() {
-        serialQueue.async {
-            guard self.timers.isEmpty == false else { return }
-            var foundAFavorite = false
-            for timer in self.timers {
-                switch foundAFavorite {
-                // Set flag once a favorite has been found
-                case false: if timer.isFavorite { foundAFavorite = true }
-                // Once the flag has been set, all other timers must not be favorite
-                case true: timer.isFavorite = false
-                }
+        guard timers.isEmpty == false else { return }
+        var foundAFavorite = false
+        for timer in timers {
+            switch foundAFavorite {
+            // Set flag once a favorite has been found
+            case false: if timer.isFavorite { foundAFavorite = true }
+            // Once the flag has been set, all other timers must not be favorite
+            case true: timer.isFavorite = false
             }
         }
     }
