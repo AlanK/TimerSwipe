@@ -9,7 +9,7 @@
 import Foundation
 
 // MARK: Model Protocol
-
+/// Model is a threadsafe abstraction `for STTimerList`
 protocol Model {
     subscript(index: Int) -> STSavedTimer { get set }
 
