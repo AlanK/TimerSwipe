@@ -15,7 +15,11 @@ protocol PermissionControllerDelegate {
 
 class PermissionController: UIViewController {
     
+    // MARK: Dependencies
+    
     private var delegate: PermissionControllerDelegate!
+    
+    // MARK: Initializers
     
     static func instantiate(with delegate: PermissionControllerDelegate) -> PermissionController {
         let storyboard = UIStoryboard.init(name: Storyboards.permissions.rawValue, bundle: Bundle.main)
@@ -23,6 +27,8 @@ class PermissionController: UIViewController {
         pc.delegate = delegate
         return pc
     }
+    
+    // MARK: Properties
 
     override var preferredStatusBarStyle: UIStatusBarStyle { return .lightContent }
     
@@ -42,6 +48,8 @@ class PermissionController: UIViewController {
         didSet { doneButton.lightButtonStyle() }
     }
     
+    // MARK: Actions
+    
     @IBAction func permissionButtonAction(_ sender: Any) { delegate.askMyPermission(self) }
     
     @IBAction func doneButtonAction(_ sender: Any) { delegate.done(self) }
@@ -58,6 +66,8 @@ class PermissionController: UIViewController {
             }
         }
     }
+    
+    // MARK: Type
     
     private static let permissionText = NSLocalizedString("permissionRequest", value: "TimerSwipe can alert you when your timer has finished, even if you are in another app.\n\nIt must ask for your permission to enable or disable this feature.", comment: "")
     
