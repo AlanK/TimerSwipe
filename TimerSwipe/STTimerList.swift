@@ -8,6 +8,8 @@
 
 import Foundation
 
+// MARK: Model Protocol
+
 protocol Model {
     subscript(index: Int) -> STSavedTimer { get set }
 
@@ -22,6 +24,8 @@ protocol Model {
     func remove(at: Int) -> STSavedTimer
     func saveData()
 }
+
+// MARK: - Timer List
 
 /// The model on which the app is based
 class STTimerList: NSObject, NSCoding {
@@ -164,7 +168,7 @@ extension STTimerList {
     }
 }
 
-// MARK: - Sample Timers
+// MARK: - Load
 
 extension STTimerList {
     /// Set the timer array to a developer-chosen default set of timers
@@ -200,6 +204,8 @@ extension STTimerList {
         updateShortcuts()
     }
 }
+
+// MARK: - Model Conformance
 
 extension STTimerList: Model {
     // MARK: Properties
@@ -246,6 +252,8 @@ extension STTimerList: Model {
             return count
         }
     }
+    
+    // MARK: Methods
     
     func saveData() {
         serialQueue.async { self.internalSaveData() }
