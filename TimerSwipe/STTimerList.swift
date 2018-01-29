@@ -163,7 +163,6 @@ extension STTimerList {
             let shortcut = UIApplicationShortcutItem.init(type: type, localizedTitle: localizedTitle, localizedSubtitle: nil, icon: icon, userInfo: userInfo)
             newShortcuts.append(shortcut)
         }
-        
         DispatchQueue.main.async { UIApplication.shared.shortcutItems = newShortcuts }
     }
 }
@@ -188,13 +187,11 @@ extension STTimerList {
         }
         // Update the application shortcuts in case this is the first time we're running a version that supports application shortcuts
         model.updateShortcuts()
-
         return model
     }
 }
 
 // MARK: - Save to Disk
-
 extension STTimerList {
     /// Archive the STTimerList
     private func internalSaveData() {
@@ -206,15 +203,12 @@ extension STTimerList {
 }
 
 // MARK: - Model Conformance
-
 extension STTimerList: Model {
     // MARK: Properties
-    
     /// Return the timer marked `isFavorite`
     var favorite: STSavedTimer? {
         get {
             var favorite: STSavedTimer?
-            
             serialQueue.sync {
                 for timer in timers {
                     if timer.isFavorite {
@@ -223,7 +217,6 @@ extension STTimerList: Model {
                     }
                 }
             }
-            
             return favorite
         }
     }
@@ -231,14 +224,12 @@ extension STTimerList: Model {
     var favoriteIndex: Int? {
         get {
             var favoriteIndex: Int?
-            
             serialQueue.sync {
                 guard timers.isEmpty == false else { return }
                 for index in 0..<timers.count {
                     if timers[index].isFavorite { favoriteIndex = index }
                 }
             }
-            
             return favoriteIndex
         }
     }
@@ -246,9 +237,7 @@ extension STTimerList: Model {
     var count: Int {
         get {
             var count: Int!
-            
             serialQueue.sync { count = timers.count }
-            
             return count
         }
     }
@@ -269,34 +258,24 @@ extension STTimerList: Model {
     
     func updateFavorite(at index: Int) -> [Int] {
         var indicesOfChangedTimers: [Int]!
-        
-        serialQueue.sync {
-            indicesOfChangedTimers = internalUpdateFavorite(at: index)
-        }
-        
+        serialQueue.sync { indicesOfChangedTimers = internalUpdateFavorite(at: index) }
         return indicesOfChangedTimers
     }
     
     func append(timer: STSavedTimer) {
-        serialQueue.async {
-            self.internalAppend(timer: timer)
-        }
+        serialQueue.async { self.internalAppend(timer: timer) }
     }
     
     func remove(at index: Int) -> STSavedTimer {
         var removedTimer: STSavedTimer!
-        
         serialQueue.sync { removedTimer = internalRemove(at: index) }
-        
         return removedTimer
     }
     
     subscript(index: Int) -> STSavedTimer {
         get {
             var savedTimer: STSavedTimer!
-            
             serialQueue.sync { savedTimer = timers[index] }
-            
             return savedTimer
         }
         set (newValue) {
