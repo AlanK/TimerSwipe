@@ -26,7 +26,6 @@ protocol Model {
 }
 
 // MARK: - Timer List
-
 /// The model on which the app is based
 class STTimerList: NSObject, NSCoding {
     private let serialQueue = DispatchQueue.init(label: "serialQueue", qos: .userInitiated)
@@ -50,11 +49,9 @@ class STTimerList: NSObject, NSCoding {
     }
     
     // MARK: Favorites
-    
     /// Toggle favorite status of a specific timer and return an array of all timers with favorite status changed
     private func internalUpdateFavorite(at index: Int) -> [Int] {
         var updatedTimers = [index]
-        
         switch timers[index].isFavorite {
         case true: timers[index].isFavorite = false
         case false:
@@ -66,12 +63,10 @@ class STTimerList: NSObject, NSCoding {
             }
             timers[index].isFavorite = true
         }
-        
         return updatedTimers
     }
     
     // MARK: Add & Remove
-    
     /// Append a timer
     private func internalAppend(timer: STSavedTimer) {
         timers.append(timer)
@@ -125,7 +120,7 @@ class STTimerList: NSObject, NSCoding {
     }
     
     required convenience init?(coder aDecoder: NSCoder) {
-        guard let timers = aDecoder.decodeObject(forKey: K.timersKey) as? [STSavedTimer] else {return nil}
+        guard let timers = aDecoder.decodeObject(forKey: K.timersKey) as? [STSavedTimer] else { return nil }
         self.init(timers: timers)
     }    
 }
