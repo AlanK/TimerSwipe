@@ -48,8 +48,9 @@ extension PermissionManager: PermissionControllerDelegate {
     func askMyPermission(_ permissionController: PermissionController) {
         UNUserNotificationCenter.current().requestAuthorization(options: [.sound, .alert]) { (isAuthorized, error) in
             if let error = error { print(error) }
-            
-            permissionController.wrapUp()
+            DispatchQueue.main.async {
+                permissionController.wrapUp()
+            }
             isAuthorized ? self.notificationsAuthorized() : self.notificationsDenied()
         }
     }

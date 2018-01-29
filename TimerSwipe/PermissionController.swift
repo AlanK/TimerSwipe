@@ -62,12 +62,11 @@ class PermissionController: UIViewController {
     }
     
     func wrapUp() {
-        DispatchQueue.main.async {
-            UIView.animate(withDuration: 0.0) {
-                self.permissionButton.isHidden = true
-                self.doneButton.isHidden = false
-                self.view.layoutIfNeeded()
-            }
+        UIView.animate(withDuration: 0.0, animations: {
+            self.permissionButton.isHidden = true
+            self.doneButton.isHidden = false
+            self.view.layoutIfNeeded()
+        }) { _ in
             UIView.animate(withDuration: K.keyboardAnimationDuration) {
                 self.textArea.text = PermissionController.doneText
                 self.view.layoutIfNeeded()
