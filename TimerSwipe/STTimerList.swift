@@ -99,12 +99,8 @@ class STTimerList: NSObject, NSCoding {
     }
 
     /// Remove and return a timer from a specified index
-    private func internalRemove(at: Int) -> STSavedTimer {
-        var timer: STSavedTimer!
-        
-        serialQueue.sync { timer = timers.remove(at: at) }
-        
-        return timer
+    private func internalRemove(at index: Int) -> STSavedTimer {
+        return timers.remove(at: index)
     }
     
     // MARK: Validate
@@ -293,7 +289,10 @@ extension STTimerList: Model {
     }
     
     func remove(at index: Int) -> STSavedTimer {
-        let removedTimer = internalRemove(at: index)
+        var removedTimer: STSavedTimer!
+        
+        serialQueue.sync { removedTimer = internalRemove(at: index) }
+        
         return removedTimer
     }
     
