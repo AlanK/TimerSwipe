@@ -194,12 +194,10 @@ extension STTimerList {
 extension STTimerList {
     /// Archive the STTimerList
     private func internalSaveData() {
-        serialQueue.async {
-            let persistentList = NSKeyedArchiver.archivedData(withRootObject: self)
-            UserDefaults.standard.set(persistentList, forKey: K.persistedList)
-            print("Saved data!")
-            self.updateShortcuts()
-        }
+        let persistentList = NSKeyedArchiver.archivedData(withRootObject: self)
+        UserDefaults.standard.set(persistentList, forKey: K.persistedList)
+        print("Saved data!")
+        updateShortcuts()
     }
 }
 
@@ -250,7 +248,7 @@ extension STTimerList: Model {
     }
     
     func saveData() {
-        internalSaveData()
+        serialQueue.async { self.internalSaveData() }
     }
     
     func insert(_ newTimers: [STSavedTimer], at index: Int) {
