@@ -45,7 +45,6 @@ class PermissionController: UIViewController {
     @IBOutlet var doneButton: UIButton! {
         didSet {
             doneButton.lightButtonStyle()
-            doneButton.isHidden = true
         }
     }
     
