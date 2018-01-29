@@ -28,7 +28,8 @@ protocol Model {
 // MARK: - Timer List
 /// The model on which the app is based
 class STTimerList: NSObject, NSCoding {
-    private let serialQueue = DispatchQueue.init(label: "serialQueue", qos: .userInitiated)
+    /// Serial queue upon which all reads and writes occur when going through the Model protocol conformance extension
+    private let serialQueue: DispatchQueue
     
     /// Array of timers
     private var timers: [STSavedTimer]
@@ -36,8 +37,9 @@ class STTimerList: NSObject, NSCoding {
     // MARK: Initializers
     
     /// Memberwise initializer
-    init(timers: [STSavedTimer] = [STSavedTimer]()) {
+    init(timers: [STSavedTimer] = [STSavedTimer](), serialQueue: DispatchQueue = DispatchQueue.init(label: "serialQueue", qos: .userInitiated)) {
         self.timers = timers
+        self.serialQueue = serialQueue
         super.init()
         self.validate()
     }
