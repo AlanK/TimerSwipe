@@ -36,16 +36,10 @@ class STTimerList: NSObject, NSCoding {
     // MARK: Initializers
     
     /// Memberwise initializer
-    init(timers: [STSavedTimer]) {
+    init(timers: [STSavedTimer] = [STSavedTimer]()) {
         self.timers = timers
         super.init()
         self.validate()
-    }
-    
-    /// Initialize with no timers
-    override init() {
-        self.timers = [STSavedTimer]()
-        super.init()
     }
     
     // MARK: Favorites
