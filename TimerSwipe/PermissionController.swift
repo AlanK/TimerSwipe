@@ -14,9 +14,8 @@ protocol PermissionControllerDelegate {
 }
 
 class PermissionController: UIViewController {
-    private static let permissionText = NSLocalizedString("permissionRequest", value: "TimerSwipe can alert you when your timer has finished, even if you are in another app.\n\nIt must ask for your permission to enable or disable this feature.", comment: "")
     
-    private static let doneText = NSLocalizedString("doneText", value: "You can turn local notifications on or off in the Settings app under Notifications → TimerSwipe.", comment: "")
+    private var delegate: PermissionControllerDelegate!
     
     static func instantiate(with delegate: PermissionControllerDelegate) -> PermissionController {
         let storyboard = UIStoryboard.init(name: Storyboards.permissions.rawValue, bundle: Bundle.main)
@@ -25,7 +24,7 @@ class PermissionController: UIViewController {
         return pc
     }
 
-    private var delegate: PermissionControllerDelegate!
+    override var preferredStatusBarStyle: UIStatusBarStyle { return .lightContent }
     
     @IBOutlet var mainView: UIView! {
         didSet { mainView.backgroundColor = K.tintColor }
@@ -47,8 +46,6 @@ class PermissionController: UIViewController {
     
     @IBAction func doneButtonAction(_ sender: Any) { delegate.done(self) }
     
-    override var preferredStatusBarStyle: UIStatusBarStyle { return .lightContent }
-    
     func wrapUp() {
         UIView.animate(withDuration: 0.0, animations: {
             self.permissionButton.isHidden = true
@@ -61,4 +58,8 @@ class PermissionController: UIViewController {
             }
         }
     }
+    
+    private static let permissionText = NSLocalizedString("permissionRequest", value: "TimerSwipe can alert you when your timer has finished, even if you are in another app.\n\nIt must ask for your permission to enable or disable this feature.", comment: "")
+    
+    private static let doneText = NSLocalizedString("doneText", value: "You can turn local notifications on or off in the Settings app under Notifications → TimerSwipe.", comment: "")
 }
