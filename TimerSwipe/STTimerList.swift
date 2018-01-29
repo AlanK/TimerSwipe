@@ -76,10 +76,8 @@ class STTimerList: NSObject, NSCoding {
 
     /// Replace the existing array of timers with a new array
     private func load(timerArray: [STSavedTimer]) {
-        serialQueue.async {
-            self.timers = timerArray
-            self.validate()
-        }
+        timers = timerArray
+        validate()
     }
     
     /// Insert a new timer at a specified index
