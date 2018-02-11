@@ -105,4 +105,7 @@ struct K {
     
     // MARK: Notification Keys
     static let notificationID = "TimerComplete"
+    
+    // MARK: Announcment Keys
+    static let announcementKey = "announce"
 }

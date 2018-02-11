@@ -8,6 +8,34 @@
 
 import UIKit
 
-struct TimeAnnounceMentPreference {
+struct TimeAnnouncementPreference: Codable {
+    var preference: Bool {
+        didSet { save() }
+    }
     
+    init() {
+        if let dataFromDisk = defaults.data(forKey: K.announcementKey),
+            let decodedDataFromDisk = try? decoder.decode(TimeAnnouncementPreference.self, from: dataFromDisk) {
+            self.preference = decodedDataFromDisk.preference
+        } else {
+            print("Could not load announcement preference")
+            self.preference = false
+        }
+    }
+    
+    private let defaults = UserDefaults.standard
+    private let encoder = JSONEncoder()
+    private let decoder = JSONDecoder()
+    private let queue = DispatchQueue.init(label: "preferences", qos: .utility)
+    
+    private func save() {
+        queue.async {
+            guard let encoded = try? self.encoder.encode(self) else { print("Could not save time announcement preference."); return }
+            self.defaults.set(encoded, forKey: K.announcementKey)
+        }
+    }
+    
+    private enum CodingKeys: String, CodingKey {
+        case preference
+    }
 }
