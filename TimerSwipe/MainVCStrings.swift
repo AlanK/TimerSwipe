@@ -59,4 +59,11 @@ struct MainVCStrings {
             return NSLocalizedString("runningTimer", value: "Running \(textDuration)-second timer, cancels timer", comment: "Running {whole number}-second timer (When activated, this button) cancels the timer")
         }
     }
+    
+    func timeRemaining(_ wholeSeconds: Int) -> String {
+        switch wholeSeconds > K.almostDone {
+        case true: return NSLocalizedString("timeRemaining", value: "\(wholeSeconds) seconds remaining", comment: "")
+        case false: return NSLocalizedString("abbreviatedTimeRemaining", value: "\(wholeSeconds)", comment: "The shortest way of expressing a whole number of seconds")
+        }
+    }
 }
