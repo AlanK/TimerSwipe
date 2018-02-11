@@ -85,6 +85,7 @@ struct K {
     static let instructionsAnimationDuration: TimeInterval = 0.2
     static let enabledAlpha: CGFloat = 1.0
     static let disabledAlpha: CGFloat = 0.2
+    static let almostDone: Int = 9
     
     // MARK: Keyboard Animation
     static let keyboardAnimationDuration: TimeInterval = 1.0/3.0

@@ -20,9 +20,11 @@ class MainViewController: UIViewController {
     private let timeFormatter = TimeFormatter()
     private let soundController = SoundController()
     private let localNotifications = LocalNotifications()
+    private let announcementPreference = TimeAnnouncementPreference()
     private let strings = MainVCStrings()
     
     private var appStateNotifications = AppStateNotifications()
+    private var timeRemainingAnnouncements = [Timer]()
 
     // MARK: Duration Properties
     var providedTimer: STSavedTimer?
@@ -138,6 +140,22 @@ class MainViewController: UIViewController {
         voiceOverOn ? containerView.addGestureRecognizer(tapRecognizer) : containerView.removeGestureRecognizer(tapRecognizer)
         containerView.layoutIfNeeded()
     }
+    
+    private func configureTimeAnnouncements(for expirationDate: Date) {
+        func announceTimeRemaining(_ seconds: TimeInterval, forTimerEnding date: Date, abbreviated: Bool) {
+            let dateOfAnnouncement = date - seconds
+            _ = Timer(fire: dateOfAnnouncement, interval: 0.0, repeats: false) {_ in
+                UIAccessibilityPostNotification(UIAccessibilityAnnouncementNotification, <#T##argument: Any?##Any?#>)
+            }
+        }
+    }
+    
+    private func cancelTimeAnnouncements() {
+        for timer in timeRemainingAnnouncements {
+            timer.invalidate()
+        }
+        timeRemainingAnnouncements.removeAll()
+    }
 
     // MARK: View Lifecycle
     
@@ -187,6 +205,7 @@ extension MainViewController: CountdownDelegate {
             case let .start(expirationDate): isReady = false
                 appStateNotifications.add(onBackground: countdown.sleep, onActive: countdown.wake)
                 localNotifications.enableNotification(on: expirationDate)
+                configureTimeAnnouncements(for: expirationDate)
             case .end, .cancel, .expire: isReady = true
                 appStateNotifications.removeAll()
                 localNotifications.disableNotification()
