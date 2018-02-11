@@ -20,10 +20,10 @@ class MainViewController: UIViewController {
     private let timeFormatter = TimeFormatter()
     private let soundController = SoundController()
     private let localNotifications = LocalNotifications()
-    private let announcementPreference = TimeAnnouncementPreference()
     private let strings = MainVCStrings()
     
     private var appStateNotifications = AppStateNotifications()
+    private var announcementPreference = TimeAnnouncementPreference()
     private var timeRemainingAnnouncements = [Timer]()
 
     // MARK: Duration Properties
@@ -37,7 +37,7 @@ class MainViewController: UIViewController {
     
     // MARK: Visual Configuration
     private func configureButton(withTimerReadyStatus timerIsReady: Bool) {
-        containerViewAction.name = strings.buttonLabel(timerIsReady: timerIsReady)
+        primaryContainerAction.name = strings.buttonLabel(timerIsReady: timerIsReady)
         // Use performWithoutAnimation to prevent weird flashing as button text animates.
         UIView.performWithoutAnimation {
             self.button.setTitle(strings.buttonText(timerIsReady: timerIsReady), for: UIControlState())
@@ -79,7 +79,7 @@ class MainViewController: UIViewController {
         didSet {
             containerView.isAccessibilityElement = true
             containerView.accessibilityTraits = UIAccessibilityTraitSummaryElement
-            containerView.accessibilityCustomActions = [containerViewAction]
+            containerView.accessibilityCustomActions = [primaryContainerAction, toggleAnnouncementsAction]
             containerView.accessibilityLabel = strings.containerViewLabel(timerReady: true, timerDuration: duration)
         }
     }
@@ -88,7 +88,9 @@ class MainViewController: UIViewController {
     
     private lazy var tapRecognizer = UITapGestureRecognizer.init(target: self, action: #selector(containerViewAsButton(sender:)))
     
-    private lazy var containerViewAction = UIAccessibilityCustomAction.init(name: strings.buttonLabel(timerIsReady: countdown.ready), target: self, selector: #selector(buttonActions))
+    private lazy var primaryContainerAction = UIAccessibilityCustomAction.init(name: strings.buttonLabel(timerIsReady: countdown.ready), target: self, selector: #selector(buttonActions))
+    
+    private lazy var toggleAnnouncementsAction = UIAccessibilityCustomAction.init(name: strings.preferenceInstructions(currentStatus: announcementPreference.preference), target: self, selector: #selector(toggleAnnouncements))
     
     // Trigger buttonActions() when tapping the Change/Cancel button
     @IBAction func button(_ sender: AnyObject) {buttonActions()}
@@ -130,6 +132,15 @@ class MainViewController: UIViewController {
         }
     }
     
+    @objc private func toggleAnnouncements() -> Bool {
+        announcementPreference.preference = !(announcementPreference.preference)
+        toggleAnnouncementsAction.name = strings.preferenceInstructions(currentStatus: announcementPreference.preference)
+        
+        print(announcementPreference.preference)
+        
+        return true
+    }
+    
     // MARK: Utilities
     
     private func handleVoiceOverStatus() {
@@ -142,11 +153,28 @@ class MainViewController: UIViewController {
     }
     
     private func configureTimeAnnouncements(for expirationDate: Date) {
-        func announceTimeRemaining(_ seconds: TimeInterval, forTimerEnding date: Date, abbreviated: Bool) {
-            let dateOfAnnouncement = date - seconds
-            _ = Timer(fire: dateOfAnnouncement, interval: 0.0, repeats: false) {_ in
-                UIAccessibilityPostNotification(UIAccessibilityAnnouncementNotification, <#T##argument: Any?##Any?#>)
+        var announcementTimes = [3.0, 2.0, 1.0]
+        
+        if duration >= 15.0 { announcementTimes.append(10.0)}
+        if duration >= 45.0 { announcementTimes.append(30.0) }
+        if duration >= 120.0 {
+            var secondsIndex = 60.0
+            
+            while secondsIndex + 60.0 <= duration {
+                announcementTimes.append(secondsIndex)
+                secondsIndex += 60.0
             }
+        }
+        
+        for timeRemaining in announcementTimes {
+            let dateOfAnnouncement = expirationDate - timeRemaining
+            let timeFromNow = dateOfAnnouncement.timeIntervalSince(Date())
+            let timer = Timer.scheduledTimer(withTimeInterval: timeFromNow, repeats: false) {_ in
+                guard self.announcementPreference.preference else { return }
+                UIAccessibilityPostNotification(UIAccessibilityAnnouncementNotification, self.strings.timeRemaining(timeRemaining))
+            }
+            
+            timeRemainingAnnouncements.append(timer)
         }
     }
     
@@ -209,6 +237,7 @@ extension MainViewController: CountdownDelegate {
             case .end, .cancel, .expire: isReady = true
                 appStateNotifications.removeAll()
                 localNotifications.disableNotification()
+                cancelTimeAnnouncements()
             }
             
             configureButton(withTimerReadyStatus: isReady)
