@@ -8,6 +8,7 @@
 
 import UIKit
 
+/// Handles reading and writing a user preference: whether or not to announce time remaining when VoiceOver is enabled
 struct TimeAnnouncementPreference: Codable {
     init() {
         if let dataFromDisk = defaults.data(forKey: K.announcementKey),
@@ -16,11 +17,13 @@ struct TimeAnnouncementPreference: Codable {
         } else { print("Could not load announcement preference") }
     }
     
+    // Default to false if the user has never set a preference
     var preference: Bool {
         get { return internalPreference ?? false }
         set { internalPreference = newValue }
     }
     
+    // The preference is trinary, so it remembers if the user has never set it
     private var internalPreference: Bool? {
         didSet { save() }
     }
@@ -30,6 +33,7 @@ struct TimeAnnouncementPreference: Codable {
     private let decoder = JSONDecoder()
     private let queue = DispatchQueue.init(label: "preferences", qos: .utility)
     
+    // Write the preference to disk on a utility queue
     private func save() {
         queue.async {
             guard let encoded = try? self.encoder.encode(self) else {
@@ -40,5 +44,6 @@ struct TimeAnnouncementPreference: Codable {
         }
     }
     
+    // Only encode `internalPreference`
     private enum CodingKeys: String, CodingKey { case internalPreference }
 }
