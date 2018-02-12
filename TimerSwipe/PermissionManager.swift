@@ -10,14 +10,23 @@ import UserNotifications
 import UIKit
 
 struct PermissionManager {
-    private let center = UNUserNotificationCenter.current()
+    // MARK: Dependencies
+    /// The view controller that owns the permission manager
     private unowned var parentVC: UIViewController
     
+    // MARK: Initializers
     init(parentVC: UIViewController) {
         self.parentVC = parentVC
         getNotificationAuthorizationStatus()
     }
     
+    // MARK: Properties
+    
+    private let center = UNUserNotificationCenter.current()
+    
+    // MARK: Methods
+    
+    /// Retrieves local notification preferences
     private func getNotificationAuthorizationStatus() {
         center.getNotificationSettings() { (settings) in
             
@@ -29,22 +38,29 @@ struct PermissionManager {
         }
     }
     
+    /// Presents a permission controller modally if local notification preferences have never been set
     private func notificationsNotDetermined() {
-        let presenter = PermissionController.instantiate(with: self)
+        let vc = PermissionController.instantiate(with: self)
         DispatchQueue.main.async {
-            self.parentVC.showDetailViewController(presenter, sender: nil)
+            self.parentVC.showDetailViewController(vc, sender: nil)
         }
     }
     
+    /// Takes no action of local notifications are disabled
     private func notificationsDenied() { }
     
+    
+    /// Configures local notifications if they are enabled
     private func notificationsAuthorized() {
         let timerCompleteCategory = UNNotificationCategory(identifier: "TimerCompleteCategory", actions: [], intentIdentifiers: [])
         center.setNotificationCategories([timerCompleteCategory])
     }
 }
 
+// MARK: - Permission Controller Delegate
 extension PermissionManager: PermissionControllerDelegate {
+    // MARK: Methods
+    
     func askMyPermission(_ permissionController: PermissionController) {
         UNUserNotificationCenter.current().requestAuthorization(options: [.sound, .alert]) { (isAuthorized, error) in
             if let error = error { print(error) }
