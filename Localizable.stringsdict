@@ -18,7 +18,7 @@
 			<string>%d seconds</string>
 		</dict>
 	</dict>
-	<key>number_of_minutes</key>
+	<key>number_of_minutes_remaining</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>
 		<string>%#@value@</string>
@@ -29,9 +29,9 @@
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>one</key>
-			<string>%d minute</string>
+			<string>%d minute remaining</string>
 			<key>other</key>
-			<string>%d minutes</string>
+			<string>%d minutes remaining</string>
 		</dict>
 	</dict>
 </dict>

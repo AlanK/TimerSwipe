@@ -20,11 +20,10 @@ class MainViewController: UIViewController {
     private let timeFormatter = TimeFormatter()
     private let soundController = SoundController()
     private let localNotifications = LocalNotifications()
+    private let timeAnnouncementController = TimeAnnouncementController()
     private let strings = MainVCStrings()
     
     private var appStateNotifications = AppStateNotifications()
-    private var announcementPreference = TimeAnnouncementPreference()
-    private var timeRemainingAnnouncements = [Timer]()
 
     // MARK: Duration Properties
     var providedTimer: STSavedTimer?
@@ -90,7 +89,7 @@ class MainViewController: UIViewController {
     
     private lazy var primaryContainerAction = UIAccessibilityCustomAction.init(name: strings.buttonLabel(timerIsReady: countdown.ready), target: self, selector: #selector(buttonActions))
     
-    private lazy var toggleAnnouncementsAction = UIAccessibilityCustomAction.init(name: strings.preferenceInstructions(currentStatus: announcementPreference.preference), target: self, selector: #selector(toggleAnnouncements))
+    private lazy var toggleAnnouncementsAction = UIAccessibilityCustomAction.init(name: timeAnnouncementController.preferenceInstructions(), target: self, selector: #selector(toggleAnnouncements))
     
     // Trigger buttonActions() when tapping the Change/Cancel button
     @IBAction func button(_ sender: AnyObject) {buttonActions()}
@@ -133,15 +132,12 @@ class MainViewController: UIViewController {
     }
     
     @objc private func toggleAnnouncements() -> Bool {
-        announcementPreference.preference = !(announcementPreference.preference)
-        toggleAnnouncementsAction.name = strings.preferenceInstructions(currentStatus: announcementPreference.preference)
-        
-        print(announcementPreference.preference)
-        
+        timeAnnouncementController.togglePreference()
+        toggleAnnouncementsAction.name = timeAnnouncementController.preferenceInstructions()
         return true
     }
     
-    // MARK: Utilities
+    // MARK: Accessability
     
     private func handleVoiceOverStatus() {
         /// Change the text instructions to match the VO-enabled interaction paradigm and make the containerView touch-enabled
@@ -152,38 +148,13 @@ class MainViewController: UIViewController {
         containerView.layoutIfNeeded()
     }
     
-    private func configureTimeAnnouncements(for expirationDate: Date) {
-        var announcementTimes = [3.0, 2.0, 1.0]
-        
-        if duration >= 15.0 { announcementTimes.append(10.0)}
-        if duration >= 45.0 { announcementTimes.append(30.0) }
-        if duration >= 120.0 {
-            var secondsIndex = 60.0
-            
-            while secondsIndex + 60.0 <= duration {
-                announcementTimes.append(secondsIndex)
-                secondsIndex += 60.0
-            }
-        }
-        
-        for timeRemaining in announcementTimes {
-            let dateOfAnnouncement = expirationDate - timeRemaining
-            let timeFromNow = dateOfAnnouncement.timeIntervalSince(Date())
-            let timer = Timer.scheduledTimer(withTimeInterval: timeFromNow, repeats: false) {_ in
-                guard self.announcementPreference.preference else { return }
-                UIAccessibilityPostNotification(UIAccessibilityAnnouncementNotification, self.strings.timeRemaining(timeRemaining))
-            }
-            
-            timeRemainingAnnouncements.append(timer)
-        }
-    }
-    
-    private func cancelTimeAnnouncements() {
-        for timer in timeRemainingAnnouncements {
-            timer.invalidate()
-        }
-        timeRemainingAnnouncements.removeAll()
-    }
+//    private func configureTimeAnnouncements(for expirationDate: Date) {
+//        timeAnnouncementController.configureTimeAnnouncements(for: expirationDate, duration: duration)
+//    }
+//    
+//    private func cancelTimeAnnouncements() {
+//        timeAnnouncementController.cancelTimeAnnouncements()
+//    }
 
     // MARK: View Lifecycle
     
@@ -233,11 +204,11 @@ extension MainViewController: CountdownDelegate {
             case let .start(expirationDate): isReady = false
                 appStateNotifications.add(onBackground: countdown.sleep, onActive: countdown.wake)
                 localNotifications.enableNotification(on: expirationDate)
-                configureTimeAnnouncements(for: expirationDate)
+                timeAnnouncementController.configureTimeAnnouncements(for: expirationDate, duration: duration)
             case .end, .cancel, .expire: isReady = true
                 appStateNotifications.removeAll()
                 localNotifications.disableNotification()
-                cancelTimeAnnouncements()
+                timeAnnouncementController.cancelTimeAnnouncements()
             }
             
             configureButton(withTimerReadyStatus: isReady)

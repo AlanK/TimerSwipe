@@ -59,30 +59,4 @@ struct MainVCStrings {
             return NSLocalizedString("runningTimer", value: "Running \(textDuration)-second timer, cancels timer", comment: "Running {whole number}-second timer (When activated, this button) cancels the timer")
         }
     }
-    
-    func timeRemaining(_ seconds: TimeInterval) -> String {
-        let wholeSeconds = Int(seconds)
-        let wholeMinutes = wholeSeconds/60
-        let remainderSeconds = wholeSeconds%60
-        
-        func numberOfMinutes(_ minutes: Int) -> String {
-            let format = NSLocalizedString("number_of_minutes", comment: "")
-            return String.localizedStringWithFormat(format, minutes)
-        }
-        
-        if wholeMinutes > 0 && remainderSeconds == 0 {
-            return numberOfMinutes(wholeMinutes) + NSLocalizedString("__Remaining", value: " remaining", comment: "Appended to a whole number of minutes and the word 'minutes', so 'x minutes remaining'")
-        } else if seconds > K.smallAmountOfTime {
-            return NSLocalizedString("timeRemaining", value: "\(wholeSeconds) seconds remaining", comment: "")
-        } else {
-            return NSLocalizedString("abbreviatedTimeRemaining", value: "\(wholeSeconds)", comment: "The shortest way of expressing a whole number of seconds")
-        }
-    }
-    
-    func preferenceInstructions(currentStatus: Bool) -> String {
-        switch currentStatus {
-        case true: return NSLocalizedString("turnOffAnnouncementPreference", value: "Turn off time remaining announcements", comment: "")
-        case false: return NSLocalizedString("turnOnAnnouncementPreference", value: "Turn on time remaining announcements", comment: "")
-        }
-    }
 }

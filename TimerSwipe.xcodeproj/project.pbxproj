@@ -13,6 +13,7 @@
 		5A03B9B21D1DDB9800E245C9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5A03B9B01D1DDB9800E245C9 /* LaunchScreen.storyboard */; };
 		5A12267C1D5A80BA006D49F1 /* TableController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A12267B1D5A80BA006D49F1 /* TableController.swift */; };
 		5A12267E1D5A94C3006D49F1 /* STTimerList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A12267D1D5A94C3006D49F1 /* STTimerList.swift */; };
+		5A1B03AE2031FDEB00704D00 /* TimeAnnouncementController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A1B03AD2031FDEB00704D00 /* TimeAnnouncementController.swift */; };
 		5A2318CB1FE71CD50065C057 /* TableDragDropTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A2318CA1FE71CD50065C057 /* TableDragDropTests.swift */; };
 		5A23597E20128A5400393EAA /* LocalNotifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A23597D20128A5400393EAA /* LocalNotifications.swift */; };
 		5A23598020128BC400393EAA /* AppStateNotifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A23597F20128BC400393EAA /* AppStateNotifications.swift */; };
@@ -65,6 +66,7 @@
 		5A03B9B31D1DDB9800E245C9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5A12267B1D5A80BA006D49F1 /* TableController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableController.swift; sourceTree = "<group>"; };
 		5A12267D1D5A94C3006D49F1 /* STTimerList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STTimerList.swift; sourceTree = "<group>"; };
+		5A1B03AD2031FDEB00704D00 /* TimeAnnouncementController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeAnnouncementController.swift; sourceTree = "<group>"; };
 		5A2318CA1FE71CD50065C057 /* TableDragDropTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableDragDropTests.swift; sourceTree = "<group>"; };
 		5A23597D20128A5400393EAA /* LocalNotifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalNotifications.swift; sourceTree = "<group>"; };
 		5A23597F20128BC400393EAA /* AppStateNotifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStateNotifications.swift; sourceTree = "<group>"; };
@@ -198,6 +200,7 @@
 			isa = PBXGroup;
 			children = (
 				5AB18AF91D2058CA007B9D9F /* MainViewController.swift */,
+				5A1B03AD2031FDEB00704D00 /* TimeAnnouncementController.swift */,
 				5A23597D20128A5400393EAA /* LocalNotifications.swift */,
 				858480F51FCB55D300DBE466 /* TimeFormatter.swift */,
 				5A7159911FCBC35E00BEB5EE /* MainVCStrings.swift */,
@@ -377,6 +380,7 @@
 				5AF470991FDF040A0014244A /* TableTFDelegate.swift in Sources */,
 				5A2731DA1FD6224A00FD5737 /* TableStrings.swift in Sources */,
 				5ABEF3311FCF191300655FEE /* SegueMediator.swift in Sources */,
+				5A1B03AE2031FDEB00704D00 /* TimeAnnouncementController.swift in Sources */,
 				5AB18AFA1D2058CA007B9D9F /* MainViewController.swift in Sources */,
 				5A44E74C2030BF7E0093983C /* TimeAnnouncementPreference.swift in Sources */,
 				5AA3E3AE1EEF36C400FB5F1D /* NavController.swift in Sources */,
