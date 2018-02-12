@@ -10,17 +10,19 @@ import UIKit
 
 struct TimeAnnouncementPreference: Codable {
     var preference: Bool {
+        get { return internalPreference ?? false }
+        set { internalPreference = newValue }
+    }
+    
+    private var internalPreference: Bool? {
         didSet { save() }
     }
     
     init() {
         if let dataFromDisk = defaults.data(forKey: K.announcementKey),
             let decodedDataFromDisk = try? decoder.decode(TimeAnnouncementPreference.self, from: dataFromDisk) {
-            self.preference = decodedDataFromDisk.preference
-        } else {
-            print("Could not load announcement preference")
-            self.preference = false
-        }
+            self.internalPreference = decodedDataFromDisk.internalPreference
+        } else { print("Could not load announcement preference") }
     }
     
     private let defaults = UserDefaults.standard
@@ -30,12 +32,15 @@ struct TimeAnnouncementPreference: Codable {
     
     private func save() {
         queue.async {
-            guard let encoded = try? self.encoder.encode(self) else { print("Could not save time announcement preference."); return }
+            guard let encoded = try? self.encoder.encode(self) else {
+                print("Could not save time announcement preference.")
+                return
+            }
             self.defaults.set(encoded, forKey: K.announcementKey)
         }
     }
     
     private enum CodingKeys: String, CodingKey {
-        case preference
+        case internalPreference
     }
 }
