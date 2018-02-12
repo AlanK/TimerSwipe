@@ -123,14 +123,7 @@ class MainViewController: UIViewController {
     }
     
     /// Handles taps on the Change/Cancel button
-    @objc private func buttonActions() {
-        switch countdown.ready {
-        // If the change button is tapped, go back one level in the view hierarchy
-        case true: self.navigationController?.popViewController(animated: true)
-        // If the cancel button is tapped, call setButton(to:) to interrupt the running timer and change the text on the button
-        case false: countdown.cancel()
-        }
-    }
+    @objc private func buttonActions() { countdown.ready ? _ = navigationController?.popViewController(animated: true) : countdown.cancel() }
     
     @objc private func toggleAnnouncements() -> Bool {
         timeAnnouncementController.togglePreference()
