@@ -74,6 +74,7 @@ class MainViewController: UIViewController {
     @IBOutlet var button: UIButton! {
         didSet { configureButton(withTimerReadyStatus: true) }
     }
+    
     @IBOutlet var containerView: UIStackView! {
         didSet {
             containerView.isAccessibilityElement = true
@@ -148,14 +149,6 @@ class MainViewController: UIViewController {
         containerView.layoutIfNeeded()
     }
     
-//    private func configureTimeAnnouncements(for expirationDate: Date) {
-//        timeAnnouncementController.configureTimeAnnouncements(for: expirationDate, duration: duration)
-//    }
-//    
-//    private func cancelTimeAnnouncements() {
-//        timeAnnouncementController.cancelTimeAnnouncements()
-//    }
-
     // MARK: View Lifecycle
     
     override func viewDidLoad() {
