@@ -12,12 +12,12 @@ import UIKit
 protocol PermissionControllerDelegate {
     /**
      Ask the user for permission to display local notifications
-     - parameter permissionController: The sender
+     - parameter permissionController: This permission controller
      */
     func askMyPermission(_ permissionController: PermissionController)
     /**
      Do any cleanup and dismiss the `PermissionController`
-     - parameter permissionController: The sender
+     - parameter permissionController: This permission controller
      */
     func done(_ permissionController: PermissionController)
 }
@@ -42,7 +42,7 @@ class PermissionController: UIViewController {
     }
     
     // MARK: Properties
-    /// Makes the status bar white with a transparent background
+    /// Makes status bar text white with a transparent background
     override var preferredStatusBarStyle: UIStatusBarStyle { return .lightContent }
     
     @IBOutlet var mainView: UIView! {
@@ -50,7 +50,9 @@ class PermissionController: UIViewController {
     }
     
     @IBOutlet var textArea: UITextView! {
-        didSet { textArea.text = PermissionController.permissionText }
+        didSet {
+            textArea.text = NSLocalizedString("TimerSwipe can alert you when your timer has finished, even if you are in another app.\n\nIt must ask for your permission to enable or disable this feature.", comment: "")
+        }
     }
     
     @IBOutlet var permissionButton: UIButton! {
@@ -68,7 +70,7 @@ class PermissionController: UIViewController {
     @IBAction func doneButtonAction(_ sender: Any) { delegate.done(self) }
     
     // MARK: Methods
-    /// Advance this permission controller from its initial state to its final 
+    /// Advance this permission controller from its initial state to its final state
     func wrapUp() {
         UIView.animate(withDuration: 0.0, animations: {
             self.permissionButton.isHidden = true
@@ -76,15 +78,10 @@ class PermissionController: UIViewController {
             self.view.layoutIfNeeded()
         }) { _ in
             UIView.animate(withDuration: K.keyboardAnimationDuration) {
-                self.textArea.text = PermissionController.doneText
+                self.textArea.text = NSLocalizedString("You can turn local notifications on or off in the Settings app under Notifications → TimerSwipe.",
+                                                       comment: "")
                 self.view.layoutIfNeeded()
             }
         }
     }
-    
-    // MARK: Type Properties
-    
-    private static let permissionText = NSLocalizedString("permissionRequest", value: "TimerSwipe can alert you when your timer has finished, even if you are in another app.\n\nIt must ask for your permission to enable or disable this feature.", comment: "")
-    
-    private static let doneText = NSLocalizedString("doneText", value: "You can turn local notifications on or off in the Settings app under Notifications → TimerSwipe.", comment: "")
 }
