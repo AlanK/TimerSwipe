@@ -185,16 +185,9 @@ extension STTimerList: Model {
     /// Return the timer marked `isFavorite`
     var favorite: STSavedTimer? {
         get {
-            var favorite: STSavedTimer?
-            serialQueue.sync {
-                for timer in timers {
-                    if timer.isFavorite {
-                        favorite = timer
-                        break
-                    }
-                }
+            return serialQueue.sync {
+                timers.first { $0.isFavorite }
             }
-            return favorite
         }
     }
     
@@ -208,9 +201,7 @@ extension STTimerList: Model {
     
     var count: Int {
         get {
-            var count: Int!
-            serialQueue.sync { count = timers.count }
-            return count
+            return serialQueue.sync { timers.count }
         }
     }
     
@@ -229,9 +220,7 @@ extension STTimerList: Model {
     }
     
     func updateFavorite(at index: Int) -> [Int] {
-        var indicesOfChangedTimers: [Int]!
-        serialQueue.sync { indicesOfChangedTimers = internalUpdateFavorite(at: index) }
-        return indicesOfChangedTimers
+        return serialQueue.sync { internalUpdateFavorite(at: index) }
     }
     
     func append(timer: STSavedTimer) {
@@ -239,16 +228,12 @@ extension STTimerList: Model {
     }
     
     func remove(at index: Int) -> STSavedTimer {
-        var removedTimer: STSavedTimer!
-        serialQueue.sync { removedTimer = internalRemove(at: index) }
-        return removedTimer
+        return serialQueue.sync { internalRemove(at: index) }
     }
     
     subscript(index: Int) -> STSavedTimer {
         get {
-            var savedTimer: STSavedTimer!
-            serialQueue.sync { savedTimer = timers[index] }
-            return savedTimer
+            return serialQueue.sync { timers[index] }
         }
         set (newValue) {
             serialQueue.async {
