@@ -178,25 +178,19 @@ extension STTimerList: Model {
     // MARK: Properties
     /// Return the timer marked `isFavorite`
     var favorite: STSavedTimer? {
-        get {
-            return serialQueue.sync {
-                timers.first { $0.isFavorite }
-            }
+        return serialQueue.sync {
+            timers.first { $0.isFavorite }
         }
     }
     
     var favoriteIndex: Int? {
-        get {
-            return serialQueue.sync {
-                timers.index { $0.isFavorite }
-            }
+        return serialQueue.sync {
+            timers.index { $0.isFavorite }
         }
     }
     
     var count: Int {
-        get {
-            return serialQueue.sync { timers.count }
-        }
+        return serialQueue.sync { timers.count }
     }
     
     // MARK: Methods
