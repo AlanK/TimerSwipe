@@ -200,14 +200,9 @@ extension STTimerList: Model {
     
     var favoriteIndex: Int? {
         get {
-            var favoriteIndex: Int?
-            serialQueue.sync {
-                guard timers.isEmpty == false else { return }
-                for index in 0..<timers.count {
-                    if timers[index].isFavorite { favoriteIndex = index }
-                }
+            return serialQueue.sync {
+                timers.index { $0.isFavorite }
             }
-            return favoriteIndex
         }
     }
     
