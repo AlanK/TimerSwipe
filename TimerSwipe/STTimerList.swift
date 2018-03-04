@@ -135,19 +135,18 @@ extension STTimerList {
         let userInfoKey = type
         let icon = UIApplicationShortcutIcon.init(type: UIApplicationShortcutIconType.time)
         
-        var newShortcuts = [UIApplicationShortcutItem]()
-        
-        // Create the shortcut and add it to the newShortcuts array
-        for index in 0..<logicalMaxShortcuts {
-            let timer = timers[index]
+        // Grab just the timers that should have shortcuts
+        let timersToUse = timers[..<logicalMaxShortcuts]
+        // Create the shortcuts
+        let shortcuts = timersToUse.map { timer -> UIApplicationShortcutItem in
             let seconds = Int(timer.seconds)
             let localizedTitle = NSLocalizedString("quickActionTitle", value: "\(seconds)-Second Timer", comment: "A timer of [seconds]-second duration")
             let userInfo = [userInfoKey : seconds]
             
-            let shortcut = UIApplicationShortcutItem.init(type: type, localizedTitle: localizedTitle, localizedSubtitle: nil, icon: icon, userInfo: userInfo)
-            newShortcuts.append(shortcut)
+            return UIApplicationShortcutItem.init(type: type, localizedTitle: localizedTitle, localizedSubtitle: nil, icon: icon, userInfo: userInfo)
         }
-        DispatchQueue.main.async { UIApplication.shared.shortcutItems = newShortcuts }
+        // Save the shortcuts
+        DispatchQueue.main.async { UIApplication.shared.shortcutItems = shortcuts }
     }
 }
 
