@@ -47,19 +47,18 @@ class STTimerList: NSObject, NSCoding {
     // MARK: Favorites
     /// Toggle favorite status of a specific timer and return an array of all timers with favorite status changed
     private func internalUpdateFavorite(at index: Int) -> [Int] {
-        var updatedTimers = [index]
-        switch timers[index].isFavorite {
-        case true: timers[index].isFavorite = false
-        case false:
-            for i in 0..<timers.count {
-                if timers[i].isFavorite {
-                    timers[i].isFavorite = false
-                    updatedTimers.append(i)
-                }
-            }
-            timers[index].isFavorite = true
+        guard timers[index].isFavorite == false else {
+            timers[index].isFavorite = false
+            return [index]
         }
-        return updatedTimers
+        var indices = zip(timers.indices, timers)
+            .filter { (i, timer) in timer.isFavorite }
+            .map { (i, timer) in i }
+        indices.append(index)
+        
+        timers[index].isFavorite = true
+        
+        return indices
     }
     
     // MARK: Add & Remove
