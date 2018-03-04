@@ -130,12 +130,12 @@ extension STTimerList {
         }
         
         // Number of shortcuts can't exceed system max or number of timers
-        let logicalMaxShortcuts = count < systemDefinedMaxShortcuts ? count : systemDefinedMaxShortcuts
+        let numberOfShortcuts = count < systemDefinedMaxShortcuts ? count : systemDefinedMaxShortcuts
         let userInfoKey = type
         let icon = UIApplicationShortcutIcon.init(type: UIApplicationShortcutIconType.time)
         
         // Grab just the timers that should have shortcuts
-        let timersToUse = timers[..<logicalMaxShortcuts]
+        let timersToUse = timers[timers.startIndex..<numberOfShortcuts]
         // Create the shortcuts
         let shortcuts = timersToUse.map { timer -> UIApplicationShortcutItem in
             let seconds = Int(timer.seconds)
