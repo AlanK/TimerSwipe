@@ -89,15 +89,10 @@ class STTimerList: NSObject, NSCoding {
     
     /// Enforce <= 1 favorite timer
     private func validate() {
-        // Get every timer marked favorite
-        let timersMarkedFavorite = timers.filter { $0.isFavorite == true }
-        
-        // If there are too many favorites…
-        guard timersMarkedFavorite.count > 1 else { return }
-        // Create an ArraySlice of the excess favorites
-        let excessFavorites = timersMarkedFavorite[1...]
-        // Mark the excess favorites isFavorite = false
-        _ = excessFavorites.map { $0.isFavorite = false }
+        // Filter timers marked favorite, leave the first one alone, and mark the rest not favorite
+        _ = timers.filter { $0.isFavorite == true }
+            .dropFirst()
+            .map { $0.isFavorite = false }
     }
     
     // MARK: NSCoding
