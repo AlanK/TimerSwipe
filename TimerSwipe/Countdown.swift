@@ -35,9 +35,9 @@ class Countdown {
     // MARK: Properties
     /// Is the countdown ready to start?
     var ready: Bool { return unlocked }
-    /// Reference to the current NSTimer
+    /// Reference to the current Timer
     private var timer: Timer?
-    /// NSDate on which running timer should stop
+    /// Date on which running timer should stop
     private var expirationDate: Date?
     /// Is the countdown ready for a new timer to start?
     private var unlocked = true
