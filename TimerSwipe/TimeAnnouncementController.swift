@@ -16,8 +16,8 @@ struct TimeAnnouncementController {
     // MARK: Properties
     var preferenceInstructions: String {
         switch model.preference {
-        case true: return NSLocalizedString("turnOffAnnouncementPreference", value: "Turn off time remaining announcements", comment: "")
-        case false: return NSLocalizedString("turnOnAnnouncementPreference", value: "Turn on time remaining announcements", comment: "")
+        case true: return NSLocalizedString("Turn off time-remaining announcements", comment: "")
+        case false: return NSLocalizedString("Turn on time-remaining announcements", comment: "")
         }
     }
     
