@@ -14,6 +14,12 @@ struct TimeAnnouncementController {
     private var model = TimeAnnouncementPreference()
     
     // MARK: Properties
+    var preferenceInstructions: String {
+        switch model.preference {
+        case true: return NSLocalizedString("turnOffAnnouncementPreference", value: "Turn off time remaining announcements", comment: "")
+        case false: return NSLocalizedString("turnOnAnnouncementPreference", value: "Turn on time remaining announcements", comment: "")
+        }
+    }
     
     private var scheduledAnnouncements = [Timer]()
     
@@ -51,13 +57,6 @@ struct TimeAnnouncementController {
     
     mutating func togglePreference() { model.preference = !(model.preference) }
 
-    func preferenceInstructions() -> String {
-        switch model.preference {
-        case true: return NSLocalizedString("turnOffAnnouncementPreference", value: "Turn off time remaining announcements", comment: "")
-        case false: return NSLocalizedString("turnOnAnnouncementPreference", value: "Turn on time remaining announcements", comment: "")
-        }
-    }
-    
     private func timeRemaining(_ seconds: TimeInterval) -> String {
         let smallNumberOfSeconds = Int(K.smallAmountOfTime)
         let wholeSeconds = Int(seconds)

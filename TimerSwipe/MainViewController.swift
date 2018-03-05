@@ -90,7 +90,7 @@ class MainViewController: UIViewController {
     
     private lazy var primaryContainerAction = UIAccessibilityCustomAction.init(name: strings.buttonLabel(timerIsReady: countdown.ready), target: self, selector: #selector(buttonActions))
     
-    private lazy var toggleAnnouncementsAction = UIAccessibilityCustomAction.init(name: timeAnnouncementController.preferenceInstructions(), target: self, selector: #selector(toggleAnnouncements))
+    private lazy var toggleAnnouncementsAction = UIAccessibilityCustomAction.init(name: timeAnnouncementController.preferenceInstructions, target: self, selector: #selector(toggleAnnouncements))
     
     // Trigger buttonActions() when tapping the Change/Cancel button
     @IBAction func button(_ sender: AnyObject) {buttonActions()}
@@ -127,7 +127,7 @@ class MainViewController: UIViewController {
     
     @objc private func toggleAnnouncements() -> Bool {
         timeAnnouncementController.togglePreference()
-        toggleAnnouncementsAction.name = timeAnnouncementController.preferenceInstructions()
+        toggleAnnouncementsAction.name = timeAnnouncementController.preferenceInstructions
         return true
     }
     
