@@ -9,36 +9,34 @@
 import Foundation
 
 /// Implements a timeout behavior after the app has been in the background for a long time
-class TimeoutManager {
+struct TimeoutManager {
     // MARK: Dependencies
     
     private let timeout: TimeInterval
-    private var appStateNotifications: AppStateNotifications
+    private let nc: NotificationCenter
 
     // MARK: Initializers
 
-    init(_ timeout: TimeInterval = 300.0, appStateNotifications: AppStateNotifications = AppStateNotifications(), didTimeout: @escaping () -> Void) {
+    init(_ timeout: TimeInterval = 300.0, nc: NotificationCenter = NotificationCenter.default, didTimeout: @escaping () -> Void) {
         self.timeout = timeout
-        self.appStateNotifications = appStateNotifications
+        self.nc = nc
         
-        monitorTimeout(didTimeout)
+        observeTimeout(didTimeout)
     }
-    
-    deinit { appStateNotifications.removeAll() }
-
-    // MARK: Properties
-    
-    private var lastEnteredBackground: Date?
     
     // MARK: Methods
     
-    private func monitorTimeout(_ didTimeout: @escaping () -> Void) {
-        self.appStateNotifications.add(onBackground: { [unowned self] in self.lastEnteredBackground = Date() },
-                                       onActive: { [unowned self] in
-                                        if let date = self.lastEnteredBackground, self.timeout < Date().timeIntervalSince(date) {
-                                            didTimeout()
-                                        }
-                                        self.lastEnteredBackground = nil
-        })
+    private func observeTimeout(_ didTimeout: @escaping () -> Void) {
+        // Create a background observation that will capture when the app enters the background and create an active observation…
+        _ = self.nc.addObserver(forName: .UIApplicationDidEnterBackground, object: nil, queue: nil) { _ in
+            let lastEnteredBackground = Date()
+            
+            var activeObservation: NSObjectProtocol?
+            // … that will check for timeout, initiate the timeout logic, and remove itself from the notification center
+            activeObservation = self.nc.addObserver(forName: .UIApplicationDidBecomeActive, object: nil, queue: nil) { _ in
+                if self.timeout < Date().timeIntervalSince(lastEnteredBackground) { didTimeout() }
+                self.nc.removeObserver(activeObservation!)
+            }
+        }
     }
 }
