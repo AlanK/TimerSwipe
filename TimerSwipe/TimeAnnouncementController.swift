@@ -14,12 +14,13 @@ class TimeAnnouncementController: NSObject {
     
     func configureTimeAnnouncements(for expirationDate: Date, duration: TimeInterval) {
         scheduledAnnouncements = (1..<Int(duration))
-            .filter { announcementTime in
-                if announcementTime <= 3 { return true }
-                if announcementTime == 10 && duration >= 15 { return true }
-                if announcementTime == 30 && duration >= 45 { return true }
-                if (announcementTime >= 120) && (announcementTime <= Int(duration - 60.0)) && (announcementTime % 60 == 0) { return true }
-                return false
+            .filter {
+                switch $0 {
+                case 1...3: return true
+                case 10, 30: return duration >= TimeInterval(3 * $0 / 2)
+                case 60...: return $0 + 60 <= Int(duration) && $0 % 60 == 0
+                default: return false
+                }
             }
             .map { TimeInterval($0) }
             .map { secondsRemaining -> Timer in
