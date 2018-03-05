@@ -20,9 +20,9 @@ class MainViewController: UIViewController {
     private let timeFormatter = TimeFormatter()
     private let soundController = SoundController()
     private let localNotifications = LocalNotifications()
-    private let timeAnnouncementController = TimeAnnouncementController()
     private let strings = MainVCStrings()
     
+    private var timeAnnouncementController = TimeAnnouncementController()
     private var appStateNotifications = AppStateNotifications()
 
     // MARK: Duration Properties

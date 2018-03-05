@@ -8,11 +8,14 @@
 
 import UIKit
 
-class TimeAnnouncementController: NSObject {
+struct TimeAnnouncementController {
     private var model = TimeAnnouncementPreference()
     private var scheduledAnnouncements = [Timer]()
     
-    func configureTimeAnnouncements(for expirationDate: Date, duration: TimeInterval) {
+    mutating func configureTimeAnnouncements(for expirationDate: Date, duration: TimeInterval) {
+        let model = self.model
+        let timeRemaining = self.timeRemaining
+        
         scheduledAnnouncements = (1..<Int(duration))
             .filter {
                 switch $0 {
@@ -27,19 +30,19 @@ class TimeAnnouncementController: NSObject {
             let dateOfAnnouncement = expirationDate - secondsRemaining
             let timeInterval = dateOfAnnouncement.timeIntervalSince(Date())
             
-            return Timer.scheduledTimer(withTimeInterval: timeInterval, repeats: false) {_ in
-                guard self.model.preference == true else { return }
-                UIAccessibilityPostNotification(UIAccessibilityAnnouncementNotification, self.timeRemaining(secondsRemaining))
+            return Timer.scheduledTimer(withTimeInterval: timeInterval, repeats: false) { _ in
+                guard model.preference == true else { return }
+                UIAccessibilityPostNotification(UIAccessibilityAnnouncementNotification, timeRemaining(secondsRemaining))
             }
         }
     }
     
-    func cancelTimeAnnouncements() {
+    mutating func cancelTimeAnnouncements() {
         scheduledAnnouncements.forEach { $0.invalidate() }
         scheduledAnnouncements = [Timer]()
     }
     
-    func togglePreference() {
+    mutating func togglePreference() {
         model.preference = !(model.preference)
     }
 
