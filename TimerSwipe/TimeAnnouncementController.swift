@@ -13,20 +13,16 @@ class TimeAnnouncementController: NSObject {
     private var scheduledAnnouncements = [Timer]()
     
     func configureTimeAnnouncements(for expirationDate: Date, duration: TimeInterval) {
-        var announcementTimes = [3.0, 2.0, 1.0]
-        
-        if duration >= 15.0 { announcementTimes.append(10.0) }
-        if duration >= 45.0 { announcementTimes.append(30.0) }
-        if duration >= 120.0 {
-            var secondsIndex = 60.0
-            
-            while secondsIndex + 60.0 <= duration {
-                announcementTimes.append(secondsIndex)
-                secondsIndex += 60.0
+        scheduledAnnouncements = (1..<Int(duration))
+            .filter { announcementTime in
+                if announcementTime <= 3 { return true }
+                if announcementTime == 10 && duration >= 15 { return true }
+                if announcementTime == 30 && duration >= 45 { return true }
+                if (announcementTime >= 120) && (announcementTime <= Int(duration - 60.0)) && (announcementTime % 60 == 0) { return true }
+                return false
             }
-        }
-        
-        scheduledAnnouncements.append(contentsOf: announcementTimes.map { secondsRemaining -> Timer in
+            .map { TimeInterval($0) }
+            .map { secondsRemaining -> Timer in
             let dateOfAnnouncement = expirationDate - secondsRemaining
             let timeInterval = dateOfAnnouncement.timeIntervalSince(Date())
             
@@ -34,7 +30,7 @@ class TimeAnnouncementController: NSObject {
                 guard self.model.preference == true else { return }
                 UIAccessibilityPostNotification(UIAccessibilityAnnouncementNotification, self.timeRemaining(secondsRemaining))
             }
-        })
+        }
     }
     
     func cancelTimeAnnouncements() {
