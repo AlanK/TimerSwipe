@@ -19,22 +19,30 @@ protocol CountdownDelegate: class {
 
 /// The object that runs countdowns
 class Countdown {
+    // MARK: Dependencies
+    
     private unowned let delegate: CountdownDelegate
     /// Duration in seconds
     private let duration: TimeInterval
+    
+    // MARK: Initializers
+    
+    init(delegate: CountdownDelegate, duration: TimeInterval) {
+        self.delegate = delegate
+        self.duration = duration
+    }
+    
+    // MARK: Properties
+    /// Is the countdown ready to start?
+    var ready: Bool { return unlocked }
     /// Reference to the current NSTimer
     private var timer: Timer?
     /// NSDate on which running timer should stop
     private var expirationDate: Date?
     /// Is the countdown ready for a new timer to start?
     private var unlocked = true
-    /// Is the countdown ready to start?
-    var ready: Bool { return unlocked }
     
-    init(delegate: CountdownDelegate, duration: TimeInterval) {
-        self.delegate = delegate
-        self.duration = duration
-    }
+    // MARK: Methods
     
     func start() {
         guard unlocked else { return }
