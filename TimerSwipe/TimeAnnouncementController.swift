@@ -42,9 +42,7 @@ struct TimeAnnouncementController {
         scheduledAnnouncements = [Timer]()
     }
     
-    mutating func togglePreference() {
-        model.preference = !(model.preference)
-    }
+    mutating func togglePreference() { model.preference = !(model.preference) }
 
     func preferenceInstructions() -> String {
         switch model.preference {
@@ -55,8 +53,8 @@ struct TimeAnnouncementController {
     
     func timeRemaining(_ seconds: TimeInterval) -> String {
         let wholeSeconds = Int(seconds)
-        let wholeMinutes = wholeSeconds/60
-        let remainderSeconds = wholeSeconds%60
+        let wholeMinutes = wholeSeconds / 60
+        let remainderSeconds = wholeSeconds % 60
         
         if wholeMinutes > 0 && remainderSeconds == 0 {
             let format = NSLocalizedString("number_of_minutes_remaining", comment: "")
