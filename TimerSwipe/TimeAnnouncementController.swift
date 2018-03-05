@@ -9,8 +9,15 @@
 import UIKit
 
 struct TimeAnnouncementController {
+    // MARK: Dependencies
+    
     private var model = TimeAnnouncementPreference()
+    
+    // MARK: Properties
+    
     private var scheduledAnnouncements = [Timer]()
+    
+    // MARK: Methods
     
     mutating func configureTimeAnnouncements(for expirationDate: Date, duration: TimeInterval) {
         let model = self.model
