@@ -9,9 +9,19 @@
 import UIKit
 
 struct AppStateNotifications {
-    let nc = NotificationCenter.default
+    // MARK: Dependencies
     
-    var backgroundObserver = [NSObjectProtocol](), activeObserver = [NSObjectProtocol]()
+    private let nc: NotificationCenter
+    
+    // MARK: Initializers
+    
+    init(_ nc: NotificationCenter = NotificationCenter.default) { self.nc = nc }
+    
+    // MARK: Properties
+    
+    private var backgroundObserver = [NSObjectProtocol](), activeObserver = [NSObjectProtocol]()
+    
+    // MARK: Methods
     
     mutating func add(onBackground: @escaping () -> Void, onActive: @escaping () -> Void) {
         backgroundObserver.append(nc.addObserver(forName: .UIApplicationDidEnterBackground,
@@ -25,8 +35,11 @@ struct AppStateNotifications {
                                              using: { _ in onActive() }))
     }
     
-    func removeAll() {
+    mutating func removeAll() {
         backgroundObserver.forEach { nc.removeObserver($0) }
         activeObserver.forEach { nc.removeObserver($0) }
+        
+        backgroundObserver = []
+        activeObserver = []
     }
 }
