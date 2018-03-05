@@ -51,14 +51,19 @@ class STTimerList: NSObject, NSCoding {
             timers[index].isFavorite = false
             return [index]
         }
-        let existingFavoritesWithIndices = zip(timers, timers.indices)
-            .filter { (timer, i) in timer.isFavorite }
-        var indices = existingFavoritesWithIndices.map { (timer, i) in i }
-        indices.append(index)
         
-        existingFavoritesWithIndices.forEach { (timer, i) in timer.isFavorite = false}
+        // This filtering, mapping, and looping is a little weird. I think it is running into the Swift 4 tuple-in-a-closure issue
+        
+        // Create an array of all existing favorite timers with their indices
+        let oldFavesIndexed = zip(timers, timers.indices).filter { (timer, i) in timer.isFavorite }
+        // Mark them all not favorite
+        oldFavesIndexed.forEach { (timer, i) in timer.isFavorite = false }
+        // Grab just the indices of the old favorites
+        var indices = oldFavesIndexed.map { (timer, i) in i }
+        
         timers[index].isFavorite = true
-        
+        indices.append(index)
+
         return indices
     }
     
