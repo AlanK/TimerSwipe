@@ -51,18 +51,22 @@ struct TimeAnnouncementController {
         }
     }
     
-    func timeRemaining(_ seconds: TimeInterval) -> String {
+    private func timeRemaining(_ seconds: TimeInterval) -> String {
+        let smallNumberOfSeconds = Int(K.smallAmountOfTime)
         let wholeSeconds = Int(seconds)
         let wholeMinutes = wholeSeconds / 60
         let remainderSeconds = wholeSeconds % 60
         
-        if wholeMinutes > 0 && remainderSeconds == 0 {
-            let format = NSLocalizedString("number_of_minutes_remaining", comment: "")
-            return String.localizedStringWithFormat(format, wholeMinutes)
-        } else if seconds > K.smallAmountOfTime {
+        switch wholeSeconds {
+        case 1..<smallNumberOfSeconds:
+            return NSLocalizedString("abbreviatedTimeRemaining", value: "\(wholeSeconds)", comment: "A whole number of seconds (concisely)")
+        case smallNumberOfSeconds..<60:
             return NSLocalizedString("timeRemaining", value: "\(wholeSeconds) seconds remaining", comment: "")
-        } else {
-            return NSLocalizedString("abbreviatedTimeRemaining", value: "\(wholeSeconds)", comment: "The shortest way of expressing a whole number of seconds")
+        case 60...:
+            // I haven't made a string formatter to handle minutes + seconds, so this hack lives for now.
+            let format = NSLocalizedString("number_of_minutes_remaining", comment: "")
+            return remainderSeconds == 0 ? String.localizedStringWithFormat(format, wholeMinutes) : ""
+        default: return ""
         }
     }
 }
