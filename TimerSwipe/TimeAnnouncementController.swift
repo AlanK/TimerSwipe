@@ -34,7 +34,7 @@ class TimeAnnouncementController: NSObject {
     }
     
     func cancelTimeAnnouncements() {
-        _ = scheduledAnnouncements.map { $0.invalidate() }
+        scheduledAnnouncements.forEach { $0.invalidate() }
         scheduledAnnouncements = [Timer]()
     }
     

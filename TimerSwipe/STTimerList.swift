@@ -56,7 +56,7 @@ class STTimerList: NSObject, NSCoding {
         var indices = existingFavoritesWithIndices.map { (timer, i) in i }
         indices.append(index)
         
-        _ = existingFavoritesWithIndices.map { (timer, i) in timer.isFavorite = false}
+        existingFavoritesWithIndices.forEach { (timer, i) in timer.isFavorite = false}
         timers[index].isFavorite = true
         
         return indices
@@ -91,9 +91,9 @@ class STTimerList: NSObject, NSCoding {
     /// Enforce <= 1 favorite timer
     private func validate() {
         // Filter timers marked favorite, leave the first one alone, and mark the rest not favorite
-        _ = timers.filter { $0.isFavorite == true }
+        timers.filter { $0.isFavorite == true }
             .dropFirst()
-            .map { $0.isFavorite = false }
+            .forEach { $0.isFavorite = false }
     }
     
     // MARK: NSCoding
