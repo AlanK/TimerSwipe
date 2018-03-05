@@ -11,7 +11,11 @@ import UIKit
 struct TimeAnnouncementController {
     // MARK: Dependencies
     
-    private var model = TimeAnnouncementPreference()
+    private var model: TimeAnnouncementPreference
+    
+    // MARK: Initializers
+    
+    init(_ model: TimeAnnouncementPreference = TimeAnnouncementPreference()) { self.model = model }
     
     // MARK: Properties
     
@@ -53,7 +57,13 @@ struct TimeAnnouncementController {
         scheduledAnnouncements = [Timer]()
     }
     
-    mutating func togglePreference() { model.preference = !(model.preference) }
+    mutating func togglePreference(_ newPref: Bool? = nil) {
+        guard let newPref = newPref else {
+            model.preference = !(model.preference)
+            return
+        }
+        model.preference = newPref
+    }
 
     private func timeRemaining(_ seconds: TimeInterval) -> String {
         let smallNumberOfSeconds = Int(K.smallAmountOfTime)
