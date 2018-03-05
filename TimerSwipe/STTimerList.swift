@@ -51,11 +51,12 @@ class STTimerList: NSObject, NSCoding {
             timers[index].isFavorite = false
             return [index]
         }
-        var indices = zip(timers.indices, timers)
-            .filter { (i, timer) in timer.isFavorite }
-            .map { (i, timer) in i }
+        let existingFavoritesWithIndices = zip(timers, timers.indices)
+            .filter { (timer, i) in timer.isFavorite }
+        var indices = existingFavoritesWithIndices.map { (timer, i) in i }
         indices.append(index)
         
+        _ = existingFavoritesWithIndices.map { (timer, i) in timer.isFavorite = false}
         timers[index].isFavorite = true
         
         return indices
