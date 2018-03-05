@@ -14,20 +14,19 @@ struct AppStateNotifications {
     var backgroundObserver = [NSObjectProtocol](), activeObserver = [NSObjectProtocol]()
     
     mutating func add(onBackground: @escaping () -> Void, onActive: @escaping () -> Void) {
-        backgroundObserver.append(nc.addObserver(forName: .UIApplicationDidEnterBackground, object: nil, queue: nil) { _ in
-            onBackground()
-        })
-        activeObserver.append(nc.addObserver(forName: .UIApplicationDidBecomeActive, object: nil, queue: nil) { _ in
-            onActive()
-        })
+        backgroundObserver.append(nc.addObserver(forName: .UIApplicationDidEnterBackground,
+                                                 object: nil,
+                                                 queue: nil,
+                                                 using: { _ in onBackground() }))
+        
+        activeObserver.append(nc.addObserver(forName: .UIApplicationDidBecomeActive,
+                                             object: nil,
+                                             queue: nil,
+                                             using: { _ in onActive() }))
     }
     
     func removeAll() {
-        for observer in backgroundObserver {
-            nc.removeObserver(observer)
-        }
-        for observer in activeObserver {
-            nc.removeObserver(observer)
-        }
+        backgroundObserver.forEach { nc.removeObserver($0) }
+        activeObserver.forEach { nc.removeObserver($0) }
     }
 }
