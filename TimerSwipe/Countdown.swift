@@ -29,9 +29,7 @@ class Countdown {
     /// Is the countdown ready for a new timer to start?
     private var unlocked = true
     /// Is the countdown ready to start?
-    var ready: Bool {
-        get { return unlocked }
-    }
+    var ready: Bool { return unlocked }
     
     init(delegate: CountdownDelegate, duration: TimeInterval) {
         self.delegate = delegate
