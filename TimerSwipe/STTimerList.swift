@@ -120,7 +120,7 @@ extension STTimerList {
         
         // If there are no timers, clear all the shortcut items
         guard count > 0 else {
-            UIApplication.shared.shortcutItems = nil
+            DispatchQueue.main.async { UIApplication.shared.shortcutItems = nil }
             return
         }
         
