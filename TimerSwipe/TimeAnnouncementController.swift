@@ -26,16 +26,15 @@ class TimeAnnouncementController: NSObject {
             }
         }
         
-        for timeRemaining in announcementTimes {
-            let dateOfAnnouncement = expirationDate - timeRemaining
-            let timeFromNow = dateOfAnnouncement.timeIntervalSince(Date())
-            let timer = Timer.scheduledTimer(withTimeInterval: timeFromNow, repeats: false) {_ in
-                guard self.model.preference else { return }
-                UIAccessibilityPostNotification(UIAccessibilityAnnouncementNotification, self.timeRemaining(timeRemaining))
-            }
+        scheduledAnnouncements.append(contentsOf: announcementTimes.map { secondsRemaining -> Timer in
+            let dateOfAnnouncement = expirationDate - secondsRemaining
+            let timeInterval = dateOfAnnouncement.timeIntervalSince(Date())
             
-            scheduledAnnouncements.append(timer)
-        }
+            return Timer.scheduledTimer(withTimeInterval: timeInterval, repeats: false) {_ in
+                guard self.model.preference == true else { return }
+                UIAccessibilityPostNotification(UIAccessibilityAnnouncementNotification, self.timeRemaining(secondsRemaining))
+            }
+        })
     }
     
     func cancelTimeAnnouncements() {
