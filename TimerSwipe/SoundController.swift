@@ -16,10 +16,13 @@ enum AudioCue: String {
 
 /// Handles sounds for the main view of the app
 struct SoundController {
-    private let audioSession = AVAudioSession.sharedInstance()
-    private let audioPlayers: [AudioCue : AVAudioPlayer?]
+    // MARK: Dependencies
     
-    init() {
+    private let audioSession: AVAudioSession
+    
+    init(audioSession: AVAudioSession = AVAudioSession.sharedInstance()) {
+        self.audioSession = audioSession
+        
         /**
          Create an `AVAudioPlayer` from a filename
          - parameter cue: An audio cue
@@ -39,6 +42,11 @@ struct SoundController {
         catch {print("Could not set AVAudioSession category, mode, or options: \(error)")}
     }
     
+    // MARK: Properties
+    
+    private let audioPlayers: [AudioCue : AVAudioPlayer?]
+
+    // MARK: Methods
     /**
      Activate or deactivate the audio session
      - parameter active: Whether the audio session should be activated or deactivated
