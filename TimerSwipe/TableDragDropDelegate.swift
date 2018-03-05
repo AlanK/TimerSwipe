@@ -13,8 +13,8 @@ protocol TableModelDragDropDelegate: NSObjectProtocol {
 }
 
 class TableDragDropDelegate: NSObject {
-    private let tableViewDataSource: UITableViewDataSource
-    private let tableModelDragDropDelegate: TableModelDragDropDelegate
+    private unowned let tableViewDataSource: UITableViewDataSource
+    private unowned let tableModelDragDropDelegate: TableModelDragDropDelegate
     
     init(_ tableViewDataSource: UITableViewDataSource, tableModelDragDropDelegate: TableModelDragDropDelegate) {
         self.tableViewDataSource = tableViewDataSource
