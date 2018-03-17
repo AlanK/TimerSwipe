@@ -13,6 +13,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey : Any]? = nil) -> Bool {
+        let storyboard = UIStoryboard.init(name: "Main", bundle: Bundle.main)
+        let firstVC = storyboard.instantiateInitialViewController()
+        window = UIWindow(frame: UIScreen.main.bounds)
+        window!.rootViewController = firstVC
+        window!.makeKeyAndVisible()
+        
         self.window?.tintColor = K.tintColor
         // Shake-to-undo is too fiddly for a three-digit numbers-only text field, so lets turn it off
         UIApplication.shared.applicationSupportsShakeToEdit = false
