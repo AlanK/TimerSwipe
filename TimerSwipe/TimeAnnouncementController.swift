@@ -8,6 +8,7 @@
 
 import UIKit
 
+/// Makes UIAccessibility announcements as the timer counts down
 struct TimeAnnouncementController {
     // MARK: Dependencies
     
