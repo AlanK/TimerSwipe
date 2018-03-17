@@ -8,6 +8,7 @@
 
 import UIKit
 
+/// Helps its owner object add and remove notification center observations
 struct AppStateNotifications {
     // MARK: Dependencies
     
