@@ -19,7 +19,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window!.rootViewController = firstVC
         window!.makeKeyAndVisible()
         
-        self.window?.tintColor = K.tintColor
+        window!.tintColor = K.tintColor
         // Shake-to-undo is too fiddly for a three-digit numbers-only text field, so lets turn it off
         UIApplication.shared.applicationSupportsShakeToEdit = false
         
