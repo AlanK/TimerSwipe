@@ -8,6 +8,7 @@
 
 import UserNotifications
 
+/// Creates local notifications for app events
 struct LocalNotifications {
     
     let center = UNUserNotificationCenter.current()
