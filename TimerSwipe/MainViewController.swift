@@ -11,10 +11,6 @@ import UIKit
 
 /// Primary view controller—displays the selected timer
 class MainViewController: UIViewController {
-    // MARK: Class Properties
-    /// Font settings for the timer display
-    private static let timeFont = UIFont.monospacedDigitSystemFont(ofSize: 64.0, weight: UIFont.Weight.regular)
-    
     // MARK: - Instance
     
     private let timeFormatter = TimeFormatter()
@@ -65,7 +61,7 @@ class MainViewController: UIViewController {
     /// The "00:00.00" label
     @IBOutlet var timeDisplay: UILabel! {
         didSet {
-            timeDisplay.font = MainViewController.timeFont
+            timeDisplay.font = UIFont.monospacedDigitSystemFont(ofSize: 64.0, weight: UIFont.Weight.regular)
             // Get an initial value from the countdown
             countdown.wake()
         }
