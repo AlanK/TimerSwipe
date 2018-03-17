@@ -11,23 +11,24 @@ import UIKit
 
 /// Primary view controller—displays the selected timer
 class MainViewController: UIViewController {
-    // MARK: - Instance
+    // MARK: Dependencies
     
-    private let timeFormatter = TimeFormatter()
     private let soundController = SoundController()
     private let localNotifications = LocalNotifications()
+    
+    var providedTimer: STSavedTimer?
+    
+    // Use a timer provided from elsewhere, then a default time
+    private lazy var duration = providedTimer?.seconds ?? K.defaultDuration
+    
+    // MARK: Helpers
+    
+    private let timeFormatter = TimeFormatter()
     private let strings = MainVCStrings()
     
     private var timeAnnouncementController = TimeAnnouncementController()
     private var appStateNotifications = AppStateNotifications()
 
-    // MARK: Duration Properties
-    var providedTimer: STSavedTimer?
-    
-    // Use a timer provided from elsewhere, then a default time
-    private lazy var duration = providedTimer?.seconds ?? K.defaultDuration
-
-    // MARK: Stopwatch Properties
     lazy var countdown: Countdown = Countdown.init(delegate: self, duration: duration)
     
     // MARK: Visual Configuration
