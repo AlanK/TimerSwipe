@@ -48,13 +48,15 @@ class NavController: UINavigationController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         // Registering and unregistering for notifications should be paired in viewWillAppear(_:) and viewWillDisappear(_:)
-        registerNotifications(true)
+        voiceOverHandler.registerNotifications(true)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        registerNotifications(false)
+        voiceOverHandler.registerNotifications(false)
     }
+    
+    private lazy var voiceOverHandler = VoiceOverHandler() { [weak self] in return self?.topViewController as? VoiceOverObserver }
     
     func loadNavigationStack(animated: Bool, with providedTimer: STSavedTimer? = nil) {
         // If there's a timer running, cancel it. Don't try to cancel it if it isn't, running, though, to avoid weird crashes on launch from a shortcut item.
@@ -78,28 +80,5 @@ class NavController: UINavigationController {
             navHierarchy.append(vc)
         }
         setViewControllers(navHierarchy, animated: animated)
-    }
-    
-    var voiceOverObservation: NSObjectProtocol?
-    
-    /// Register and unregister for notifications on behalf of other VCs
-    private func registerNotifications(_ register: Bool) {
-        // UIAccessibilityVoiceOverStatusChanged and NSNotification.Name.UIAccessibilityVoiceOverStatusDidChange are the same notification in iOS 10 and iOS 11
-        let voiceOverNotice: NSNotification.Name
-        if #available(iOS 11.0, *) { voiceOverNotice = .UIAccessibilityVoiceOverStatusDidChange }
-        else { voiceOverNotice = NSNotification.Name(rawValue: UIAccessibilityVoiceOverStatusChanged) }
-        
-        switch register {
-        case true: voiceOverObservation = notificationCenter.addObserver(forName: voiceOverNotice, object: nil, queue: nil, using: forwardVoiceOverNotification(_:))
-        case false:
-            guard let voiceOverObservation = voiceOverObservation else { return }
-            notificationCenter.removeObserver(voiceOverObservation, name: voiceOverNotice, object: nil)
-        }
-    }
-    
-    /// Forwards the UIAccessibilityVoiceOverStatusChanged/.UIAccessibilityVoiceOverStatusDidChange notification to the topmost VC if it conforms to the VoiceOverObserver protocol
-    private func forwardVoiceOverNotification(_ notification: Notification) {
-        guard let vc = topViewController as? VoiceOverObserver else { return }
-        vc.voiceOverStatusDidChange(notification)
     }
 }
