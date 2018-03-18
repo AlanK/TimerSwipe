@@ -84,8 +84,8 @@ class NavController: UINavigationController {
     private func registerNotifications(_ register: Bool) {
         // UIAccessibilityVoiceOverStatusChanged and NSNotification.Name.UIAccessibilityVoiceOverStatusDidChange are the same notification in iOS 10 and iOS 11
         let voiceOverNotice: NSNotification.Name
-        if #available(iOS 11.0, *) {voiceOverNotice = .UIAccessibilityVoiceOverStatusDidChange}
-        else {voiceOverNotice = NSNotification.Name(rawValue: UIAccessibilityVoiceOverStatusChanged)}
+        if #available(iOS 11.0, *) { voiceOverNotice = .UIAccessibilityVoiceOverStatusDidChange }
+        else { voiceOverNotice = NSNotification.Name(rawValue: UIAccessibilityVoiceOverStatusChanged) }
         
         switch register {
         case true: notificationCenter.addObserver(forName: voiceOverNotice, object: nil, queue: nil, using: forwardVoiceOverNotification(_:))
@@ -95,7 +95,7 @@ class NavController: UINavigationController {
     
     /// Forwards the UIAccessibilityVoiceOverStatusChanged/.UIAccessibilityVoiceOverStatusDidChange notification to the topmost VC if it conforms to the VoiceOverObserver protocol
     private func forwardVoiceOverNotification(_ notification: Notification) {
-        guard let vc = topViewController as? VoiceOverObserver else {return}
+        guard let vc = topViewController as? VoiceOverObserver else { return }
         vc.voiceOverStatusDidChange(notification)
     }
 }
