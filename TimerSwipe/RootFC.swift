@@ -27,7 +27,6 @@ class RootFC: UIViewController {
     override func viewDidLoad() {
         _ = PermissionManager(parentVC: self)
         addChildToRootView(navController)
-        
     }
     
     // MARK: Properties
