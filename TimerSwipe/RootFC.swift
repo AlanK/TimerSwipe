@@ -63,10 +63,8 @@ class RootFC: UIViewController {
     
     // MARK: Properties
     
-    lazy var nav: NavController = {
-        // I am handling initialization of the Nav Controller here instead of in the Nav Controller itself because my ultimate goal is to eliminate the Nav Controller and replace it with an ordinary UINavigationController.
-        let storyboard = UIStoryboard.init(name: "Main", bundle: Bundle.main)
-        let nc = storyboard.instantiateInitialViewController() as! NavController
+    lazy var nav: UINavigationController = {
+        let nc = UINavigationController()
         
         nc.navigationBar.barStyle = .black
         nc.navigationBar.barTintColor = K.tintColor
