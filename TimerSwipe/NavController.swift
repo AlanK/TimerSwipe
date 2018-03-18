@@ -80,6 +80,8 @@ class NavController: UINavigationController {
         setViewControllers(navHierarchy, animated: animated)
     }
     
+    var voiceOverObservation: NSObjectProtocol?
+    
     /// Register and unregister for notifications on behalf of other VCs
     private func registerNotifications(_ register: Bool) {
         // UIAccessibilityVoiceOverStatusChanged and NSNotification.Name.UIAccessibilityVoiceOverStatusDidChange are the same notification in iOS 10 and iOS 11
@@ -88,8 +90,10 @@ class NavController: UINavigationController {
         else { voiceOverNotice = NSNotification.Name(rawValue: UIAccessibilityVoiceOverStatusChanged) }
         
         switch register {
-        case true: notificationCenter.addObserver(forName: voiceOverNotice, object: nil, queue: nil, using: forwardVoiceOverNotification(_:))
-        case false: notificationCenter.removeObserver(self, name: voiceOverNotice, object: nil)
+        case true: voiceOverObservation = notificationCenter.addObserver(forName: voiceOverNotice, object: nil, queue: nil, using: forwardVoiceOverNotification(_:))
+        case false:
+            guard let voiceOverObservation = voiceOverObservation else { return }
+            notificationCenter.removeObserver(voiceOverObservation, name: voiceOverNotice, object: nil)
         }
     }
     
