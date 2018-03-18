@@ -49,6 +49,10 @@ class RootFC: UIViewController {
         let nc = storyboard.instantiateInitialViewController() as! NavController
         nc.model = model
         
+        nc.navigationBar.barStyle = .black
+        nc.navigationBar.barTintColor = K.tintColor
+        nc.navigationBar.tintColor = .white
+        
         return nc
     }()
     

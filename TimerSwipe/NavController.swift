@@ -16,9 +16,6 @@ class NavController: UINavigationController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationBar.barStyle = .black
-        navigationBar.barTintColor = K.tintColor
-        navigationBar.tintColor = .white
         
         _ = TimeoutManager { [unowned self] in
             // Make any necessary changes to views after being in the background for a long time
