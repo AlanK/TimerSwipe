@@ -39,9 +39,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     private func launchTimer(with shortcutItem: UIApplicationShortcutItem) -> Bool {
-        
-        // TODO: This is broken right now because it assumes a NavController is the root view controller
-        
         let applicationShortcuts = ApplicationShortcuts()
         guard let timer = applicationShortcuts.performActionFor(shortcutItem), let root = window?.rootViewController as? RootFC else { return false }
         root.loadNavigationStack(animated: false, with: model, providedTimer: timer)
