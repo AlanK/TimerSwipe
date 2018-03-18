@@ -28,24 +28,27 @@ class RootFC: UIViewController {
         super.viewDidLoad()
         
         _ = PermissionManager(parentVC: self)
-        addChildToRootView(navController)
+        addChildToRootView(self.nav)
         
         // Make any necessary changes to views after being in the background for a long time
-        _ = TimeoutManager { [unowned self] in
-            
+        let nav = self.nav
+        let model = self.model!
+        _ = TimeoutManager {
             // TODO: Refactor this.
             
             // Don’t change views if a timer is running or there’s no favorite to change to
-            guard (self.navController.topViewController as? CountdownDelegate)?.countdown.ready ?? true, let _ = self.model.favorite else { return }
+            guard (nav.topViewController as? CountdownDelegate)?.countdown.ready ?? true, let _ = model.favorite else { return }
             // Don't disrupt an active edit session
-            if (self.navController.topViewController as? TableController)?.isEditing == true { return }
+            if (nav.topViewController as? TableController)?.isEditing == true { return }
             
             // Don't animate going from one timer to another; it looks weird
-            let animated = !(self.navController.topViewController is MainViewController)
-            self.navController.loadNavigationStack(animated: animated)
+            let animated = !(nav.topViewController is MainViewController)
+            nav.loadNavigationStack(animated: animated)
         }
         
-        navController.loadNavigationStack(animated: true)
+        // TODO: Loading the navigation stack outside the NavController.viewDidLoad() causes a visual flash of incorrect comment. Fix!
+        
+        nav.loadNavigationStack(animated: true)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -62,7 +65,7 @@ class RootFC: UIViewController {
     
     // MARK: Properties
     
-    lazy var navController: NavController = {
+    lazy var nav: NavController = {
         // I am handling initialization of the Nav Controller here instead of in the Nav Controller itself because my ultimate goal is to eliminate the Nav Controller and replace it with an ordinary UINavigationController.
         let storyboard = UIStoryboard.init(name: "Main", bundle: Bundle.main)
         let nc = storyboard.instantiateInitialViewController() as! NavController
@@ -75,6 +78,6 @@ class RootFC: UIViewController {
         return nc
     }()
     
-    private lazy var voiceOverHandler = VoiceOverHandler() { [unowned self] in return self.navController.topViewController as? VoiceOverObserver }
+    private lazy var voiceOverHandler = VoiceOverHandler() { [unowned self] in return self.nav.topViewController as? VoiceOverObserver }
 
 }
