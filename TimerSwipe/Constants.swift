@@ -60,6 +60,7 @@ extension UIViewController {
         childVC.didMove(toParentViewController: self)
     }
     
+    /// Remove this view controller from a parent view controller
     func remove() {
         guard let _ = parent else { return }
         willMove(toParentViewController: nil)
