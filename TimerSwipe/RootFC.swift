@@ -29,6 +29,23 @@ class RootFC: UIViewController {
         
         _ = PermissionManager(parentVC: self)
         addChildToRootView(navController)
+        
+        // Make any necessary changes to views after being in the background for a long time
+        _ = TimeoutManager { [unowned self] in
+            
+            // TODO: Refactor this.
+            
+            // Don’t change views if a timer is running or there’s no favorite to change to
+            guard (self.navController.topViewController as? CountdownDelegate)?.countdown.ready ?? true, let _ = self.model.favorite else { return }
+            // Don't disrupt an active edit session
+            if (self.navController.topViewController as? TableController)?.isEditing == true { return }
+            
+            // Don't animate going from one timer to another; it looks weird
+            let animated = !(self.navController.topViewController is MainViewController)
+            self.navController.loadNavigationStack(animated: animated)
+        }
+        
+        navController.loadNavigationStack(animated: true)
     }
     
     override func viewWillAppear(_ animated: Bool) {

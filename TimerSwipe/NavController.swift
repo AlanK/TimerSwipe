@@ -14,26 +14,6 @@ class NavController: UINavigationController {
     /// Underlying model for app
     var model: Model!
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        _ = TimeoutManager { [unowned self] in
-            // Make any necessary changes to views after being in the background for a long time
-            
-            // Don’t change views if a timer is running or there’s no favorite to change to
-            guard (self.topViewController as? CountdownDelegate)?.countdown.ready ?? true, let _ = self.model.favorite else { return }
-            // Don't disrupt an active edit session
-            if (self.topViewController as? TableController)?.isEditing == true { return }
-            // Don't animate going from one timer to another; it looks weird
-            let animated = self.topViewController is MainViewController == false
-            
-            self.loadNavigationStack(animated: animated)
-            
-        }
-        
-        loadNavigationStack(animated: false)
-    }
-    
     func loadNavigationStack(animated: Bool, with providedTimer: STSavedTimer? = nil) {
         // If there's a timer running, cancel it. Don't try to cancel it if it isn't, running, though, to avoid weird crashes on launch from a shortcut item.
         if let countdownDelegate = topViewController as? CountdownDelegate, countdownDelegate.countdown.ready == false {
