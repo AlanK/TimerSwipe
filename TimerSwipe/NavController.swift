@@ -11,10 +11,7 @@ import UIKit
 /// Root navigation controller for app
 class NavController: UINavigationController {
     
-    /// Underlying model for app
-    var model: Model!
-    
-    func loadNavigationStack(animated: Bool, with providedTimer: STSavedTimer? = nil) {
+    func loadNavigationStack(animated: Bool, with model: Model, providedTimer: STSavedTimer? = nil) {
         // If there's a timer running, cancel it. Don't try to cancel it if it isn't, running, though, to avoid weird crashes on launch from a shortcut item.
         if let countdownDelegate = topViewController as? CountdownDelegate, countdownDelegate.countdown.ready == false {
             countdownDelegate.countdown.cancel()

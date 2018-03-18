@@ -12,9 +12,10 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     
+    // Get the model for the rest of the app
+    let model = STTimerList.loadExistingModel()
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey : Any]? = nil) -> Bool {
-        // Get the model for the rest of the app
-        let model = STTimerList.loadExistingModel()
         
         // Set the root VC
         let firstVC = RootFC.instantiate(with: model)
@@ -43,7 +44,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         let applicationShortcuts = ApplicationShortcuts()
         guard let timer = applicationShortcuts.performActionFor(shortcutItem), let nav = window?.rootViewController as? NavController else { return false }
-        nav.loadNavigationStack(animated: false, with: timer)
+        nav.loadNavigationStack(animated: false, with: model, providedTimer: timer)
         return true
     }
 }

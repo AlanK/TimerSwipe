@@ -29,23 +29,23 @@ class RootFC: UIViewController {
         
         _ = PermissionManager(parentVC: self)
         
-        nav.loadNavigationStack(animated: false)
+        nav.loadNavigationStack(animated: false, with: model)
         addChildToRootView(nav)
         
         // Make any necessary changes to views after being in the background for a long time
         let n = nav
-        let model = self.model!
+        let m = self.model!
         _ = TimeoutManager {
             // TODO: Refactor this.
             
             // Don’t change views if a timer is running or there’s no favorite to change to
-            guard (n.topViewController as? CountdownDelegate)?.countdown.ready ?? true, let _ = model.favorite else { return }
+            guard (n.topViewController as? CountdownDelegate)?.countdown.ready ?? true, let _ = m.favorite else { return }
             // Don't disrupt an active edit session
             if (n.topViewController as? TableController)?.isEditing == true { return }
             
             // Don't animate going from one timer to another; it looks weird
             let animated = !(n.topViewController is MainViewController)
-            n.loadNavigationStack(animated: animated)
+            n.loadNavigationStack(animated: animated, with: m)
         }
     }
     
@@ -67,7 +67,6 @@ class RootFC: UIViewController {
         // I am handling initialization of the Nav Controller here instead of in the Nav Controller itself because my ultimate goal is to eliminate the Nav Controller and replace it with an ordinary UINavigationController.
         let storyboard = UIStoryboard.init(name: "Main", bundle: Bundle.main)
         let nc = storyboard.instantiateInitialViewController() as! NavController
-        nc.model = model
         
         nc.navigationBar.barStyle = .black
         nc.navigationBar.barTintColor = K.tintColor
