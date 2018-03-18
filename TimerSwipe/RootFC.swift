@@ -11,10 +11,14 @@ import UIKit
 class RootFC: UIViewController {
     // MARK: Dependencies
     
+    private var model: Model!
+    
     // MARK: Initializers
     
-    static func instantiate() -> RootFC {
+    static func instantiate(with model: Model) -> RootFC {
         let fc = RootFC.init(nibName: nil, bundle: nil)
+        fc.model = model
+        
         return fc
     }
     
@@ -30,6 +34,7 @@ class RootFC: UIViewController {
     lazy var navController: NavController = {
         let storyboard = UIStoryboard.init(name: "Main", bundle: Bundle.main)
         let nc = storyboard.instantiateInitialViewController() as! NavController
+        nc.model = model
         
         return nc
     }()

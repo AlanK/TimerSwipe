@@ -13,12 +13,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey : Any]? = nil) -> Bool {
-        let firstVC = RootFC.instantiate()
+        // Get the model for the rest of the app
+        let model = STTimerList.loadExistingModel()
+        
+        // Set the root VC
+        let firstVC = RootFC.instantiate(with: model)
         window = UIWindow(frame: UIScreen.main.bounds)
         window!.rootViewController = firstVC
         window!.makeKeyAndVisible()
         
         window!.tintColor = K.tintColor
+        
         // Shake-to-undo is too fiddly for a three-digit numbers-only text field, so lets turn it off
         UIApplication.shared.applicationSupportsShakeToEdit = false
         
