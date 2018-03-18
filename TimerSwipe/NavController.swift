@@ -17,8 +17,6 @@ protocol VoiceOverObserver {
 /// Root navigation controller for app
 class NavController: UINavigationController {
     
-    private let notificationCenter = NotificationCenter.default
-    
     /// Underlying model for app
     var model: Model!
     
