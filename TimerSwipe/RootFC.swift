@@ -63,7 +63,7 @@ class RootFC: UIViewController {
     
     // MARK: Properties
     
-    lazy var nav: UINavigationController = {
+    let nav: UINavigationController = {
         let nc = UINavigationController()
         
         nc.navigationBar.barStyle = .black
