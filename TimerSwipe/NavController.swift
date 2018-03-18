@@ -20,8 +20,6 @@ class NavController: UINavigationController {
     private let notificationCenter = NotificationCenter.default
     
     private var timeoutManager: TimeoutManager?
-    private var permissionManager: PermissionManager?
-
     
     /// Underlying model for app
     var model: Model!
@@ -53,12 +51,6 @@ class NavController: UINavigationController {
         super.viewWillAppear(animated)
         // Registering and unregistering for notifications should be paired in viewWillAppear(_:) and viewWillDisappear(_:)
         registerNotifications(true)
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        
-        permissionManager = PermissionManager.init(parentVC: self)
     }
     
     override func viewWillDisappear(_ animated: Bool) {

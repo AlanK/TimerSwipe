@@ -9,12 +9,14 @@
 import UserNotifications
 import UIKit
 
+/// Asks the user’s permission to display local notifications.
 struct PermissionManager {
     // MARK: Dependencies
     /// The view controller that owns the permission manager
     private unowned var parentVC: UIViewController
     
     // MARK: Initializers
+    /// Ask the user’s permission to display local notifications. Does not need to be retained.
     init(parentVC: UIViewController) {
         self.parentVC = parentVC
         getNotificationAuthorizationStatus()
