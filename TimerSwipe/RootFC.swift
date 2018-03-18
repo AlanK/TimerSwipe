@@ -24,6 +24,8 @@ class RootFC: UIViewController {
     
     // MARK: Overrides
     
+    override var childViewControllerForStatusBarStyle: UIViewController? { return nav }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
