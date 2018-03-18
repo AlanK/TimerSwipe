@@ -28,27 +28,25 @@ class RootFC: UIViewController {
         super.viewDidLoad()
         
         _ = PermissionManager(parentVC: self)
-        addChildToRootView(self.nav)
+        
+        nav.loadNavigationStack(animated: false)
+        addChildToRootView(nav)
         
         // Make any necessary changes to views after being in the background for a long time
-        let nav = self.nav
+        let n = nav
         let model = self.model!
         _ = TimeoutManager {
             // TODO: Refactor this.
             
             // Don’t change views if a timer is running or there’s no favorite to change to
-            guard (nav.topViewController as? CountdownDelegate)?.countdown.ready ?? true, let _ = model.favorite else { return }
+            guard (n.topViewController as? CountdownDelegate)?.countdown.ready ?? true, let _ = model.favorite else { return }
             // Don't disrupt an active edit session
-            if (nav.topViewController as? TableController)?.isEditing == true { return }
+            if (n.topViewController as? TableController)?.isEditing == true { return }
             
             // Don't animate going from one timer to another; it looks weird
-            let animated = !(nav.topViewController is MainViewController)
-            nav.loadNavigationStack(animated: animated)
+            let animated = !(n.topViewController is MainViewController)
+            n.loadNavigationStack(animated: animated)
         }
-        
-        // TODO: Loading the navigation stack outside the NavController.viewDidLoad() causes a visual flash of incorrect comment. Fix!
-        
-        nav.loadNavigationStack(animated: true)
     }
     
     override func viewWillAppear(_ animated: Bool) {
