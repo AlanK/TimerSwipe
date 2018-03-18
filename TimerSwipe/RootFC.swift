@@ -29,6 +29,18 @@ class RootFC: UIViewController {
         addChildToRootView(navController)
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        // Make sure registering is paired with unregistering in viewWillDisappear
+        voiceOverHandler.registerNotifications(true)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        // Make sure unregistering is paired with registering in viewWillAppear
+        voiceOverHandler.registerNotifications(false)
+    }
+    
     // MARK: Properties
     
     lazy var navController: NavController = {
@@ -39,4 +51,7 @@ class RootFC: UIViewController {
         
         return nc
     }()
+    
+    private lazy var voiceOverHandler = VoiceOverHandler() { [unowned self] in return self.navController.topViewController as? VoiceOverObserver }
+
 }
