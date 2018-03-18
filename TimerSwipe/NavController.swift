@@ -8,12 +8,6 @@
 
 import UIKit
 
-/// This protocol should be adopted by any object that wants to respond to changes in VoiceOver status
-protocol VoiceOverObserver {
-    /// This function is called whenever VoiceOver status changes and is passed the relevant notification
-    func voiceOverStatusDidChange(_: Notification?)
-}
-
 /// Root navigation controller for app
 class NavController: UINavigationController {
     

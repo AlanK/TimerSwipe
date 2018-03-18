@@ -8,6 +8,12 @@
 
 import UIKit
 
+/// This protocol should be adopted by any object that wants to respond to changes in VoiceOver status
+protocol VoiceOverObserver {
+    /// This function is called whenever VoiceOver status changes and is passed the relevant notification
+    func voiceOverStatusDidChange(_: Notification?)
+}
+
 /// Registers for VoiceOver status notifications and passes them to a single computed observer
 struct VoiceOverHandler {
     // MARK: Dependencies
