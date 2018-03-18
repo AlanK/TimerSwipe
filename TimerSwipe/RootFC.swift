@@ -29,13 +29,13 @@ class RootFC: UIViewController {
         
         _ = PermissionManager(parentVC: self)
         
-        nav.loadNavigationStack(animated: false, with: model)
+        loadNavigationStack(animated: false, with: model)
         addChildToRootView(nav)
         
         // Make any necessary changes to views after being in the background for a long time
         let n = nav
         let m = self.model!
-        _ = TimeoutManager {
+        _ = TimeoutManager { [unowned self] in
             // TODO: Refactor this.
             
             // Don’t change views if a timer is running or there’s no favorite to change to
@@ -45,7 +45,7 @@ class RootFC: UIViewController {
             
             // Don't animate going from one timer to another; it looks weird
             let animated = !(n.topViewController is MainViewController)
-            n.loadNavigationStack(animated: animated, with: m)
+            self.loadNavigationStack(animated: animated, with: m)
         }
     }
     
@@ -76,5 +76,30 @@ class RootFC: UIViewController {
     }()
     
     private lazy var voiceOverHandler = VoiceOverHandler() { [unowned self] in return self.nav.topViewController as? VoiceOverObserver }
-
+    
+    // MARK: Methods
+    
+    func loadNavigationStack(animated: Bool, with model: Model, providedTimer: STSavedTimer? = nil) {
+        // If there's a timer running, cancel it. Don't try to cancel it if it isn't, running, though, to avoid weird crashes on launch from a shortcut item.
+        if let countdownDelegate = nav.topViewController as? CountdownDelegate, countdownDelegate.countdown.ready == false {
+            countdownDelegate.countdown.cancel()
+        }
+        
+        let storyboard = UIStoryboard.init(name: "Main", bundle: Bundle.main)
+        // Make sure the table view is in the view hierarchy
+        let tableVC = storyboard.instantiateViewController(withIdentifier: MainID.tableView.rawValue)
+        
+        guard let vc = tableVC as? TableController else { return }
+        vc.model = model
+        var navHierarchy: [UIViewController] = [vc]
+        
+        if let providedTimer = providedTimer ?? model.favorite {
+            let mainVC = storyboard.instantiateViewController(withIdentifier: MainID.mainView.rawValue)
+            
+            guard let vc = mainVC as? MainViewController else { return }
+            vc.providedTimer = providedTimer
+            navHierarchy.append(vc)
+        }
+        nav.setViewControllers(navHierarchy, animated: animated)
+    }
 }

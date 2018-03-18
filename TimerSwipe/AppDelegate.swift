@@ -43,8 +43,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // TODO: This is broken right now because it assumes a NavController is the root view controller
         
         let applicationShortcuts = ApplicationShortcuts()
-        guard let timer = applicationShortcuts.performActionFor(shortcutItem), let nav = window?.rootViewController as? NavController else { return false }
-        nav.loadNavigationStack(animated: false, with: model, providedTimer: timer)
+        guard let timer = applicationShortcuts.performActionFor(shortcutItem), let root = window?.rootViewController as? RootFC else { return false }
+        root.loadNavigationStack(animated: false, with: model, providedTimer: timer)
         return true
     }
 }
