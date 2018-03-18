@@ -32,6 +32,7 @@ class RootFC: UIViewController {
     // MARK: Properties
     
     lazy var navController: NavController = {
+        // I am handling initialization of the Nav Controller here instead of in the Nav Controller itself because my ultimate goal is to eliminate the Nav Controller and replace it with an ordinary UINavigationController.
         let storyboard = UIStoryboard.init(name: "Main", bundle: Bundle.main)
         let nc = storyboard.instantiateInitialViewController() as! NavController
         nc.model = model
