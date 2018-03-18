@@ -43,6 +43,31 @@ enum ShortcutTypes: String {
     case timer = "timer"
 }
 
+extension UIViewController {
+    func addChild(_ childVC: UIViewController, to view: UIView) {
+        addChildViewController(childVC)
+        view.addSubview(childVC.view)
+        
+        childVC.didMove(toParentViewController: self)
+    }
+    
+    func addChildToRootView(_ childVC: UIViewController) {
+        addChildViewController(childVC)
+        view.addSubview(childVC.view)
+        childVC.view.frame = view.bounds
+        childVC.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        
+        childVC.didMove(toParentViewController: self)
+    }
+    
+    func remove() {
+        guard let _ = parent else { return }
+        willMove(toParentViewController: nil)
+        removeFromParentViewController()
+        view.removeFromSuperview()
+    }
+}
+
 extension UIView {
     /// Recursively find and return the topmost superview
     var supremeView: UIView {
