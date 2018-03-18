@@ -27,15 +27,18 @@ struct TimeoutManager {
     // MARK: Methods
     
     private func observeTimeout(_ didTimeout: @escaping () -> Void) {
+        let timeout = self.timeout
+        let nc = self.nc
+        
         // Create a background observation that will capture when the app enters the background and create an active observation…
-        _ = self.nc.addObserver(forName: .UIApplicationDidEnterBackground, object: nil, queue: nil) { _ in
+        _ = nc.addObserver(forName: .UIApplicationDidEnterBackground, object: nil, queue: nil) { _ in
             let lastEnteredBackground = Date()
             
             var activeObservation: NSObjectProtocol?
             // … that will check for timeout, initiate the timeout logic, and remove itself from the notification center
-            activeObservation = self.nc.addObserver(forName: .UIApplicationDidBecomeActive, object: nil, queue: nil) { _ in
-                if self.timeout < Date().timeIntervalSince(lastEnteredBackground) { didTimeout() }
-                self.nc.removeObserver(activeObservation!)
+            activeObservation = nc.addObserver(forName: .UIApplicationDidBecomeActive, object: nil, queue: nil) { _ in
+                if timeout < Date().timeIntervalSince(lastEnteredBackground) { didTimeout() }
+                nc.removeObserver(activeObservation!)
             }
         }
     }
