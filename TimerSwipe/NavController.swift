@@ -19,8 +19,6 @@ class NavController: UINavigationController {
     
     private let notificationCenter = NotificationCenter.default
     
-    private var timeoutManager: TimeoutManager?
-    
     /// Underlying model for app
     var model: Model!
     
@@ -30,7 +28,7 @@ class NavController: UINavigationController {
         navigationBar.barTintColor = K.tintColor
         navigationBar.tintColor = .white
         
-        timeoutManager = TimeoutManager.init(didTimeout: { [unowned self] in
+        _ = TimeoutManager { [unowned self] in
             // Make any necessary changes to views after being in the background for a long time
             
             // Don’t change views if a timer is running or there’s no favorite to change to
@@ -42,7 +40,7 @@ class NavController: UINavigationController {
             
             self.loadNavigationStack(animated: animated)
             
-        })
+        }
         
         loadNavigationStack(animated: false)
     }
