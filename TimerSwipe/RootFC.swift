@@ -106,17 +106,14 @@ extension RootFC: TableControllerDelegate {
 }
 
 extension RootFC: MainViewControllerDelegate {
-    private func commonAction(_ vc: MainViewController) {
-        vc.countdown.ready ? _ = nav.popViewController(animated: true) : vc.countdown.cancel()
-    }
+    private func commonAction(_ vc: MainViewController) { vc.countdown.ready ? _ = nav.popViewController(animated: true) : vc.countdown.cancel() }
     
-    private func startEndCountdown(_ vc: MainViewController) {
-        vc.countdown.ready ? vc.countdown.start() : vc.countdown.cancel()
-    }
+    private func startEndCountdown(_ vc: MainViewController) { vc.countdown.ready ? vc.countdown.start() : vc.countdown.cancel() }
     
     func swipe(_ vc: MainViewController) { vc.countdown.start() }
     
     func buttonActivated(_ button: UIButton, vc: MainViewController) { commonAction(vc) }
+    
     func containerViewAlternateActivated(_ vc: MainViewController) { commonAction(vc) }
 
     func accessibleEscapeActivated(_ vc: MainViewController) -> Bool {
