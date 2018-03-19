@@ -86,9 +86,7 @@ class MainViewController: UIViewController {
     
     /// The "Swipe to Start" label
     @IBOutlet var instructionsDisplay: UILabel! {
-        didSet {
-            instructionsDisplay.text = strings.textInstructions(voiceOverIsOn: false)
-        }
+        didSet { instructionsDisplay.text = strings.textInstructions(voiceOverIsOn: false) }
     }
     /// The "00:00.00" label
     @IBOutlet var timeDisplay: UILabel! {
@@ -205,7 +203,5 @@ extension MainViewController: CountdownDelegate {
 // MARK: - VoiceOverObserver
 // Receive notifications when VoiceOver status changes
 extension MainViewController: VoiceOverObserver {
-    func voiceOverStatusDidChange(_: Notification? = nil) {
-        handleVoiceOverStatus()
-    }
+    func voiceOverStatusDidChange(_: Notification? = nil) { handleVoiceOverStatus() }
 }
