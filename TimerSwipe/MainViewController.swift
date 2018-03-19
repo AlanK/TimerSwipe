@@ -77,10 +77,10 @@ class MainViewController: UIViewController {
     @IBAction func button(_ sender: AnyObject) { delegate.buttonActivated(button, vc: self) }
     
     // A swipe in any direction on the window fires start()
-    @IBAction func swipeRight(_ sender: AnyObject) {delegate.swipe(self)}
-    @IBAction func swipeLeft(_ sender: AnyObject) {delegate.swipe(self)}
-    @IBAction func swipeUp(_ sender: AnyObject) {delegate.swipe(self)}
-    @IBAction func swipeDown(_ sender: AnyObject) {delegate.swipe(self)}
+    @IBAction func swipeRight(_ sender: AnyObject) { delegate.swipe(self) }
+    @IBAction func swipeLeft(_ sender: AnyObject) { delegate.swipe(self) }
+    @IBAction func swipeUp(_ sender: AnyObject) { delegate.swipe(self) }
+    @IBAction func swipeDown(_ sender: AnyObject) { delegate.swipe(self) }
     
     // MARK: Outlets
     
