@@ -67,7 +67,7 @@ class TableController: UITableViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         // Make sure keyboard accessory view isn’t stuck to the bottom of the screen when we unwind to this view
-        if keyboardAccessoryView.isVisible {exitKeyboardAccessoryView()}
+        if keyboardAccessoryView.isVisible { exitKeyboardAccessoryView() }
         
         super.viewWillDisappear(animated)
     }
@@ -89,7 +89,8 @@ class TableController: UITableViewController {
     /// The table-add button
     @IBOutlet var addButton: UIBarButtonItem! {
         didSet {
-            addButton.accessibilityHint = NSLocalizedString("Creates a new timer", comment: "Allows the user to create a new timer of their preferred duration")
+            addButton.accessibilityHint = NSLocalizedString("Creates a new timer",
+                                                            comment: "Allows the user to create a new timer of their preferred duration")
         }
     }
     
@@ -217,9 +218,7 @@ class TableController: UITableViewController {
     }
     
     @objc func createNewTimer() {
-        defer {
-            exitKeyboardAccessoryView()
-        }
+        defer { exitKeyboardAccessoryView() }
         // Create a valid userSelectedTime or exit early
         guard let text = keyboardAccessoryView.textField.text, let userTimeInSeconds = Int(text), userTimeInSeconds > 0 else {return}
         let userSelectedTime = TimeInterval(userTimeInSeconds)
@@ -299,13 +298,9 @@ extension TableController: TableCellDelegate {
 
 extension TableController {
     
-    override var canBecomeFirstResponder: Bool {
-        return true
-    }
+    override var canBecomeFirstResponder: Bool { return true }
     
-    override var inputAccessoryView: UIView? {
-        return keyboardAccessoryView
-    }
+    override var inputAccessoryView: UIView? { return keyboardAccessoryView }
     
     override func accessibilityPerformEscape() -> Bool {
         exitKeyboardAccessoryView()
@@ -315,7 +310,5 @@ extension TableController {
 
 // MARK: - VoiceOver Observer
 extension TableController: VoiceOverObserver {
-    func voiceOverStatusDidChange(_: Notification? = nil) {
-        handleVoiceOverStatus()
-    }
+    func voiceOverStatusDidChange(_: Notification? = nil) { handleVoiceOverStatus() }
 }
