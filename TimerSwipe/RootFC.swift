@@ -106,29 +106,29 @@ extension RootFC: TableControllerDelegate {
 }
 
 extension RootFC: MainViewControllerDelegate {
-    private func commonAction(_ vc: MainViewController) { vc.countdown.ready ? _ = nav.popViewController(animated: true) : vc.countdown.cancel() }
+    private func changeTimerOrCancelCountdown(_ vc: MainViewController) { vc.countdown.ready ? _ = nav.popViewController(animated: true) : vc.countdown.cancel() }
     
-    private func startEndCountdown(_ vc: MainViewController) { vc.countdown.ready ? vc.countdown.start() : vc.countdown.cancel() }
+    private func startOrEndCountdown(_ vc: MainViewController) { vc.countdown.ready ? vc.countdown.start() : vc.countdown.cancel() }
     
     func swipe(_ vc: MainViewController) { vc.countdown.start() }
     
-    func buttonActivated(_ button: UIButton, vc: MainViewController) { commonAction(vc) }
+    func buttonActivated(_ button: UIButton, vc: MainViewController) { changeTimerOrCancelCountdown(vc) }
     
-    func containerViewAlternateActivated(_ vc: MainViewController) { commonAction(vc) }
+    func containerViewAlternateActivated(_ vc: MainViewController) { changeTimerOrCancelCountdown(vc) }
 
     func accessibleEscapeActivated(_ vc: MainViewController) -> Bool {
-        commonAction(vc)
+        changeTimerOrCancelCountdown(vc)
         return true
     }
     
     func magicTapActivated(_ vc: MainViewController) -> Bool {
-        startEndCountdown(vc)
+        startOrEndCountdown(vc)
         return true
     }
     
     func containerViewActivated(_ vc: MainViewController, sender: UITapGestureRecognizer) {
         guard sender.state == .ended else {return}
-        startEndCountdown(vc)
+        startOrEndCountdown(vc)
     }
     
     func containerViewToggleActivated(_ vc: MainViewController) { vc.timeAnnouncementController.togglePreference() }
