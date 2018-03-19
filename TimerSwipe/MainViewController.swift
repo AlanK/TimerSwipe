@@ -16,6 +16,7 @@ protocol MainViewControllerDelegate: AnyObject {
     func accessibleEscapeActivated(_: MainViewController) -> Bool
     func containerViewAlternateActivated(_: MainViewController)
     func containerViewActivated(_: MainViewController, sender: UITapGestureRecognizer)
+    func containerViewToggleActivated(_: MainViewController)
 }
 
 /// Primary view controller—displays the selected timer
@@ -141,7 +142,7 @@ class MainViewController: UIViewController {
     
     @objc func containerViewActivated(sender: UITapGestureRecognizer) { delegate.containerViewActivated(self, sender: sender) }
     
-    @objc func toggleAnnouncements() { timeAnnouncementController.togglePreference() }
+    @objc func toggleAnnouncements() { delegate.containerViewToggleActivated(self) }
     
     private func handleVoiceOverStatus() {
         /// Change the text instructions to match the VO-enabled interaction paradigm and make the containerView touch-enabled
