@@ -29,7 +29,7 @@ class MainViewController: UIViewController {
     // MARK: Initializers
     
     static func instantiate(with delegate: MainViewControllerDelegate, timer: STSavedTimer) -> MainViewController {
-        let storyboard = UIStoryboard.init(name: "MainViewController", bundle: Bundle.main)
+        let storyboard = UIStoryboard(name: "MainViewController", bundle: Bundle.main)
         let vc = storyboard.instantiateViewController(withIdentifier: MainID.mainView.rawValue) as! MainViewController
         
         vc.delegate = delegate
@@ -70,7 +70,7 @@ class MainViewController: UIViewController {
     @IBAction func swipeUp(_ sender: AnyObject) { delegate.swipe(self) }
     @IBAction func swipeDown(_ sender: AnyObject) { delegate.swipe(self) }
     
-    private lazy var tapRecognizer = UITapGestureRecognizer.init(target: self, action: #selector(containerViewActivated(sender:)))
+    private lazy var tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(containerViewActivated(sender:)))
     @objc func containerViewActivated(sender: UITapGestureRecognizer) { delegate.containerViewActivated(self, sender: sender) }
     
     @objc func containerAlternateActivated() { delegate.containerViewAlternateActivated(self) }
@@ -102,7 +102,7 @@ class MainViewController: UIViewController {
     
     // MARK: Properties
     
-    lazy var countdown: Countdown = Countdown.init(delegate: self, duration: duration)
+    lazy var countdown: Countdown = Countdown(delegate: self, duration: duration)
     
     var timeAnnouncementController = TimeAnnouncementController()
     private var appStateNotifications = AppStateNotifications()
