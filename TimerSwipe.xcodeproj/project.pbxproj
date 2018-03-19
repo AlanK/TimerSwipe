@@ -193,10 +193,10 @@
 		5AA3E3A91EEF34F700FB5F1D /* Storyboards */ = {
 			isa = PBXGroup;
 			children = (
-				5AD81F4D205F4F0500490859 /* MainViewController.storyboard */,
-				5A03B9AB1D1DDB9800E245C9 /* Main.storyboard */,
 				5A03B9B01D1DDB9800E245C9 /* LaunchScreen.storyboard */,
+				5A03B9AB1D1DDB9800E245C9 /* Main.storyboard */,
 				5ADE6DC91FFDBFCF00E8CF8C /* Permissions.storyboard */,
+				5AD81F4D205F4F0500490859 /* MainViewController.storyboard */,
 			);
 			name = Storyboards;
 			sourceTree = "<group>";
