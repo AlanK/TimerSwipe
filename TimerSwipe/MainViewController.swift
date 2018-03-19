@@ -13,13 +13,7 @@ import UIKit
 class MainViewController: UIViewController {
     // MARK: Dependencies
     
-    private let soundController = SoundController()
-    private let localNotifications = LocalNotifications()
-    
-    var providedTimer: STSavedTimer?
-    
-    // Use a timer provided from elsewhere, then a default time
-    private lazy var duration = providedTimer?.seconds ?? K.defaultDuration
+    var providedTimer: STSavedTimer!
     
     // MARK: Initializers
     
@@ -32,37 +26,61 @@ class MainViewController: UIViewController {
         return vc
     }
     
-    // MARK: Helpers
+    // MARK: Overrides
     
-    private let timeFormatter = TimeFormatter()
-    private let strings = MainVCStrings()
-    
-    private var timeAnnouncementController = TimeAnnouncementController()
-    private var appStateNotifications = AppStateNotifications()
-
-    lazy var countdown: Countdown = Countdown.init(delegate: self, duration: duration)
-    
-    // MARK: Visual Configuration
-    private func configureButton(withTimerReadyStatus timerIsReady: Bool) {
-        primaryContainerAction.name = strings.buttonLabel(timerIsReady: timerIsReady)
-        // Use performWithoutAnimation to prevent weird flashing as button text animates.
-        UIView.performWithoutAnimation {
-            self.button.setTitle(strings.buttonText(timerIsReady: timerIsReady), for: UIControlState())
-            self.button.layoutIfNeeded()
-        }
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        // Customize display based on VoiceOver settings
+        handleVoiceOverStatus()
+        
     }
     
-    /// Shows and hides "Swipe to Start" instructions
-    private var instructionsVisible = true {
-        didSet {
-            let alpha = instructionsVisible ? K.enabledAlpha : K.disabledAlpha
-            UIView.animate(withDuration: K.instructionsAnimationDuration, delay: 0, options: .curveLinear, animations: {
-                self.instructionsDisplay.alpha = alpha
-            })
-        }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        // The display shouldn’t sleep while this view is visible since the user expects to start a timer when they can’t see the screen
+        UIApplication.shared.isIdleTimerDisabled = true
+        self.navigationController?.setNavigationBarHidden(true, animated: true)
+        soundController.setActive(true)
+        handleVoiceOverStatus()
     }
     
-    // MARK: Labels & Buttons
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        // The display should sleep in other views in the app
+        UIApplication.shared.isIdleTimerDisabled = false
+        soundController.setActive(false)
+    }
+    
+    // A two-finger double-tap "magic tap" accessibility command starts/cancels the timer
+    override func accessibilityPerformMagicTap() -> Bool {
+        countdown.ready ? start() : buttonActions()
+        return true
+    }
+    
+    // Map the two-finger z-shaped "escape" accessibility command to the Change/Cancel button
+    override func accessibilityPerformEscape() -> Bool {
+        buttonActions()
+        return true
+    }
+    
+    // MARK: Actions
+    
+    private lazy var tapRecognizer = UITapGestureRecognizer.init(target: self, action: #selector(containerViewAsButton(sender:)))
+    
+    private lazy var primaryContainerAction = UIAccessibilityCustomAction.init(name: strings.buttonLabel(timerIsReady: countdown.ready), target: self, selector: #selector(buttonActions))
+    
+    private lazy var toggleAnnouncementsAction = UIAccessibilityCustomAction.init(name: timeAnnouncementController.preferenceInstructions, target: self, selector: #selector(toggleAnnouncements))
+    
+    // Trigger buttonActions() when tapping the Change/Cancel button
+    @IBAction func button(_ sender: AnyObject) {buttonActions()}
+    
+    // A swipe in any direction on the window fires start()
+    @IBAction func swipeRight(_ sender: AnyObject) {start()}
+    @IBAction func swipeLeft(_ sender: AnyObject) {start()}
+    @IBAction func swipeUp(_ sender: AnyObject) {start()}
+    @IBAction func swipeDown(_ sender: AnyObject) {start()}
+    
+    // MARK: Outlets
     
     /// The "Swipe to Start" label
     @IBOutlet var instructionsDisplay: UILabel! {
@@ -92,32 +110,39 @@ class MainViewController: UIViewController {
         }
     }
     
-    // MARK: Actions
+    // MARK: Properties
     
-    private lazy var tapRecognizer = UITapGestureRecognizer.init(target: self, action: #selector(containerViewAsButton(sender:)))
+    lazy var countdown: Countdown = Countdown.init(delegate: self, duration: duration)
     
-    private lazy var primaryContainerAction = UIAccessibilityCustomAction.init(name: strings.buttonLabel(timerIsReady: countdown.ready), target: self, selector: #selector(buttonActions))
+    private var timeAnnouncementController = TimeAnnouncementController()
+    private var appStateNotifications = AppStateNotifications()
     
-    private lazy var toggleAnnouncementsAction = UIAccessibilityCustomAction.init(name: timeAnnouncementController.preferenceInstructions, target: self, selector: #selector(toggleAnnouncements))
-    
-    // Trigger buttonActions() when tapping the Change/Cancel button
-    @IBAction func button(_ sender: AnyObject) {buttonActions()}
-    // Map the two-finger z-shaped "escape" accessibility command to the Change/Cancel button
-    override func accessibilityPerformEscape() -> Bool {
-        buttonActions()
-        return true
+    /// Shows and hides "Swipe to Start" instructions
+    private var instructionsVisible = true {
+        didSet {
+            let alpha = instructionsVisible ? K.enabledAlpha : K.disabledAlpha
+            UIView.animate(withDuration: K.instructionsAnimationDuration, delay: 0, options: .curveLinear, animations: {
+                self.instructionsDisplay.alpha = alpha
+            })
+        }
     }
     
-    // A swipe in any direction on the window fires start()
-    @IBAction func swipeRight(_ sender: AnyObject) {start()}
-    @IBAction func swipeLeft(_ sender: AnyObject) {start()}
-    @IBAction func swipeUp(_ sender: AnyObject) {start()}
-    @IBAction func swipeDown(_ sender: AnyObject) {start()}
+    private lazy var duration = providedTimer.seconds
     
-    // A two-finger double-tap "magic tap" accessibility command starts/cancels the timer
-    override func accessibilityPerformMagicTap() -> Bool {
-        countdown.ready ? start() : buttonActions()
-        return true
+    private let soundController = SoundController()
+    private let localNotifications = LocalNotifications()
+    private let timeFormatter = TimeFormatter()
+    private let strings = MainVCStrings()
+    
+    // MARK: Methods
+    
+    private func configureButton(withTimerReadyStatus timerIsReady: Bool) {
+        primaryContainerAction.name = strings.buttonLabel(timerIsReady: timerIsReady)
+        // Use performWithoutAnimation to prevent weird flashing as button text animates.
+        UIView.performWithoutAnimation {
+            self.button.setTitle(strings.buttonText(timerIsReady: timerIsReady), for: UIControlState())
+            self.button.layoutIfNeeded()
+        }
     }
     
     @objc func containerViewAsButton(sender: UITapGestureRecognizer) {
@@ -139,8 +164,6 @@ class MainViewController: UIViewController {
         return true
     }
     
-    // MARK: Accessability
-    
     private func handleVoiceOverStatus() {
         /// Change the text instructions to match the VO-enabled interaction paradigm and make the containerView touch-enabled
         let voiceOverOn = UIAccessibilityIsVoiceOverRunning()
@@ -150,30 +173,6 @@ class MainViewController: UIViewController {
         containerView.layoutIfNeeded()
     }
     
-    // MARK: View Lifecycle
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // Customize display based on VoiceOver settings
-        handleVoiceOverStatus()
-        
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        // The display shouldn’t sleep while this view is visible since the user expects to start a timer when they can’t see the screen
-        UIApplication.shared.isIdleTimerDisabled = true
-        self.navigationController?.setNavigationBarHidden(true, animated: true)
-        soundController.setActive(true)
-        handleVoiceOverStatus()
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        // The display should sleep in other views in the app
-        UIApplication.shared.isIdleTimerDisabled = false
-        soundController.setActive(false)
-    }
 }
 
 // MARK: - Stopwatch delegate
