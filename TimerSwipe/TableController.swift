@@ -16,7 +16,7 @@ protocol TableControllerDelegate: AnyObject {
 class TableController: UITableViewController {
     // MARK: Dependencies
     /// App model must be injected by parent
-    var model: Model!
+    private var model: Model!
     
     private weak var delegate: TableControllerDelegate!
     
