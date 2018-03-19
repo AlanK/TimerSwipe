@@ -98,29 +98,14 @@ class MainViewController: UIViewController {
     }
     
     @IBOutlet var containerView: UIStackView! {
-        didSet { containerViewAccessorizer(containerView, owner: self) }
-    }
-    
-    private func containerViewAccessorizer(_ view: UIView, owner: MainViewController) {
-        let primaryAction = CustomAccessibilityAction(target: owner, selector: #selector(buttonActions)) { [unowned owner] in
-            return owner.strings.buttonLabel(timerIsReady: owner.countdown.ready)
-        }
-        
-        let toggleAction = CustomAccessibilityAction(target: owner, selector: #selector(toggleAnnouncements)) { [unowned owner] in
-            return owner.timeAnnouncementController.preferenceInstructions
-        }
-        
-        view.isAccessibilityElement = true
-        view.accessibilityTraits = UIAccessibilityTraitSummaryElement
-        view.accessibilityCustomActions = [primaryAction, toggleAction]
-        view.accessibilityLabel = owner.strings.containerViewLabel(timerReady: true, timerDuration: owner.duration)
+        didSet { ContainerViewAccessorizer().configure(containerView, owner: self) }
     }
     
     // MARK: Properties
     
     lazy var countdown: Countdown = Countdown.init(delegate: self, duration: duration)
     
-    private var timeAnnouncementController = TimeAnnouncementController()
+    var timeAnnouncementController = TimeAnnouncementController()
     private var appStateNotifications = AppStateNotifications()
     
     /// Shows and hides "Swipe to Start" instructions
@@ -133,12 +118,12 @@ class MainViewController: UIViewController {
         }
     }
     
-    private lazy var duration = providedTimer.seconds
+    lazy var duration = providedTimer.seconds
     
     private let soundController = SoundController()
     private let localNotifications = LocalNotifications()
     private let timeFormatter = TimeFormatter()
-    private let strings = MainVCStrings()
+    let strings = MainVCStrings()
     
     // MARK: Methods
     
@@ -161,9 +146,9 @@ class MainViewController: UIViewController {
     }
     
     /// Handles taps on the Change/Cancel button
-    @objc private func buttonActions() { countdown.ready ? _ = navigationController?.popViewController(animated: true) : countdown.cancel() }
+    @objc func buttonActions() { countdown.ready ? _ = navigationController?.popViewController(animated: true) : countdown.cancel() }
     
-    @objc private func toggleAnnouncements() -> Bool {
+    @objc func toggleAnnouncements() -> Bool {
         timeAnnouncementController.togglePreference()
         return true
     }
