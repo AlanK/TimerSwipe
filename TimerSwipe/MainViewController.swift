@@ -31,7 +31,8 @@ class MainViewController: UIViewController {
     static func instantiate(with delegate: MainViewControllerDelegate, timer: STSavedTimer) -> MainViewController {
         let storyboard = UIStoryboard.init(name: "MainViewController", bundle: Bundle.main)
         let vc = storyboard.instantiateViewController(withIdentifier: MainID.mainView.rawValue) as! MainViewController
-
+        
+        vc.delegate = delegate
         vc.providedTimer = timer
         
         return vc
