@@ -94,6 +94,7 @@ class RootFC: UIViewController {
         var navHierarchy: [UIViewController] = [vc]
         
         if let providedTimer = providedTimer ?? model.favorite {
+            let storyboard = UIStoryboard.init(name: "MainViewController", bundle: Bundle.main)
             let mainVC = storyboard.instantiateViewController(withIdentifier: MainID.mainView.rawValue)
             
             guard let vc = mainVC as? MainViewController else { return }

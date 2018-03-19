@@ -98,7 +98,7 @@
                                 <connections>
                                     <outlet property="favoriteIcon" destination="C23-7f-YoB" id="MhY-r4-qFx"/>
                                     <outlet property="secondsLabel" destination="lv9-sQ-pS8" id="jAS-J0-E6u"/>
-                                    <segue destination="BYZ-38-t0r" kind="show" identifier="tableToTimer" id="GPC-Yi-0fL"/>
+                                    <segue destination="KuU-yl-DWh" kind="show" identifier="tableToTimer" id="GPC-Yi-0fL"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -135,113 +135,6 @@
             </objects>
             <point key="canvasLocation" x="285" y="321.12676056338029"/>
         </scene>
-        <!--Main View Controller-->
-        <scene sceneID="tne-QT-ifu">
-            <objects>
-                <viewController storyboardIdentifier="mainView" useStoryboardIdentifierAsRestorationIdentifier="YES" id="BYZ-38-t0r" customClass="MainViewController" customModule="TimerSwipe" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
-                        <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <stackView opaque="NO" contentMode="center" horizontalHuggingPriority="750" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" axis="vertical" distribution="equalSpacing" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="F3f-0s-rqz">
-                                <rect key="frame" x="16" y="257.5" width="343" height="152.5"/>
-                                <subviews>
-                                    <label userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" text="Swipe to Start" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="74y-S5-5gr" userLabel="Top Label">
-                                        <rect key="frame" x="-16" y="0.0" width="0.0" height="24"/>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <accessibility key="accessibilityConfiguration">
-                                            <accessibilityTraits key="traits" staticText="YES" notEnabled="YES"/>
-                                            <bool key="isElement" value="NO"/>
-                                        </accessibility>
-                                        <fontDescription key="fontDescription" style="UICTFontTextStyleTitle3"/>
-                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="753" verticalCompressionResistancePriority="753" text="00:00.00" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kn3-O2-ymo" userLabel="Time">
-                                        <rect key="frame" x="-16" y="32" width="0.0" height="76.5"/>
-                                        <accessibility key="accessibilityConfiguration">
-                                            <accessibilityTraits key="traits" notEnabled="YES" updatesFrequently="YES"/>
-                                            <bool key="isElement" value="NO"/>
-                                        </accessibility>
-                                        <gestureRecognizers/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="64"/>
-                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <button opaque="NO" contentMode="center" horizontalCompressionResistancePriority="752" verticalCompressionResistancePriority="752" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yum-AW-GvH" userLabel="Bottom Button">
-                                        <rect key="frame" x="137" y="116.5" width="69" height="36"/>
-                                        <accessibility key="accessibilityConfiguration">
-                                            <accessibilityTraits key="traits" button="YES" updatesFrequently="YES"/>
-                                        </accessibility>
-                                        <fontDescription key="fontDescription" style="UICTFontTextStyleTitle3"/>
-                                        <state key="normal" title="Change"/>
-                                        <attributedString key="userComments">
-                                            <fragment content="Tap this button to change the timer">
-                                                <attributes>
-                                                    <font key="NSFont" metaFont="smallSystem"/>
-                                                    <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
-                                                </attributes>
-                                            </fragment>
-                                        </attributedString>
-                                        <connections>
-                                            <action selector="button:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ceb-WU-pa9"/>
-                                        </connections>
-                                    </button>
-                                </subviews>
-                                <constraints>
-                                    <constraint firstItem="74y-S5-5gr" firstAttribute="width" secondItem="Kn3-O2-ymo" secondAttribute="width" id="NeR-Yd-DYm"/>
-                                </constraints>
-                            </stackView>
-                        </subviews>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <gestureRecognizers/>
-                        <constraints>
-                            <constraint firstAttribute="trailingMargin" secondItem="F3f-0s-rqz" secondAttribute="trailing" id="Bxh-rJ-Jz4"/>
-                            <constraint firstItem="F3f-0s-rqz" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="cfr-Kb-FtS"/>
-                            <constraint firstItem="F3f-0s-rqz" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="mBc-Zf-Ckc"/>
-                        </constraints>
-                        <connections>
-                            <outletCollection property="gestureRecognizers" destination="iu1-W6-3dE" appends="YES" id="vOO-zn-J0U"/>
-                            <outletCollection property="gestureRecognizers" destination="BUd-Ub-Zt7" appends="YES" id="u3q-53-Tnt"/>
-                            <outletCollection property="gestureRecognizers" destination="LVv-oa-87s" appends="YES" id="5Rk-SY-LS0"/>
-                            <outletCollection property="gestureRecognizers" destination="F4s-7J-Mun" appends="YES" id="yLj-XZ-tPl"/>
-                        </connections>
-                    </view>
-                    <connections>
-                        <outlet property="button" destination="yum-AW-GvH" id="XN3-PN-cy0"/>
-                        <outlet property="containerView" destination="F3f-0s-rqz" id="7s2-qr-qm1"/>
-                        <outlet property="instructionsDisplay" destination="74y-S5-5gr" id="Mwc-fu-1O6"/>
-                        <outlet property="timeDisplay" destination="Kn3-O2-ymo" id="drX-9g-UjM"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
-                <swipeGestureRecognizer direction="right" id="iu1-W6-3dE" userLabel="Swipe Right">
-                    <connections>
-                        <action selector="swipeRight:" destination="BYZ-38-t0r" id="SfV-0U-3zi"/>
-                    </connections>
-                </swipeGestureRecognizer>
-                <swipeGestureRecognizer direction="left" id="BUd-Ub-Zt7" userLabel="Swipe Left">
-                    <connections>
-                        <action selector="swipeLeft:" destination="BYZ-38-t0r" id="5sj-I9-rRP"/>
-                    </connections>
-                </swipeGestureRecognizer>
-                <swipeGestureRecognizer direction="up" id="LVv-oa-87s" userLabel="Swipe Up">
-                    <connections>
-                        <action selector="swipeUp:" destination="BYZ-38-t0r" id="PPy-4v-yN9"/>
-                    </connections>
-                </swipeGestureRecognizer>
-                <swipeGestureRecognizer direction="down" id="F4s-7J-Mun" userLabel="Swipe Down">
-                    <connections>
-                        <action selector="swipeDown:" destination="BYZ-38-t0r" id="Rwu-Vn-2Sp"/>
-                    </connections>
-                </swipeGestureRecognizer>
-            </objects>
-            <point key="canvasLocation" x="1052" y="322"/>
-        </scene>
         <!--Navigation Controller-->
         <scene sceneID="2fh-Z3-vSW">
             <objects>
@@ -259,6 +152,14 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="H2x-lF-UZw" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-470" y="322"/>
+        </scene>
+        <!--mainView-->
+        <scene sceneID="EJD-vk-V4D">
+            <objects>
+                <viewControllerPlaceholder storyboardIdentifier="mainView" storyboardName="MainViewController" referencedIdentifier="mainView" id="KuU-yl-DWh" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="4WH-eF-zsb" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1052" y="322"/>
         </scene>
     </scenes>
     <resources>
