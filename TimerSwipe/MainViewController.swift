@@ -12,6 +12,9 @@ import UIKit
 protocol MainViewControllerDelegate: AnyObject {
     func swipe(_: MainViewController)
     func buttonActivated(_: UIButton, vc: MainViewController)
+    func magicTapActivated(_ : MainViewController) -> Bool
+    func accessibleEscapeActivated(_: MainViewController) -> Bool
+    func containerViewActivated(_: MainViewController)
 }
 
 /// Primary view controller—displays the selected timer
@@ -58,16 +61,10 @@ class MainViewController: UIViewController {
     }
     
     // A two-finger double-tap "magic tap" accessibility command starts/cancels the timer
-    override func accessibilityPerformMagicTap() -> Bool {
-        countdown.ready ? countdown.start() : buttonActions()
-        return true
-    }
+    override func accessibilityPerformMagicTap() -> Bool { return delegate.magicTapActivated(self) }
     
     // Map the two-finger z-shaped "escape" accessibility command to the Change/Cancel button
-    override func accessibilityPerformEscape() -> Bool {
-        buttonActions()
-        return true
-    }
+    override func accessibilityPerformEscape() -> Bool { return delegate.accessibleEscapeActivated(self) }
     
     // MARK: Actions
     
@@ -141,13 +138,14 @@ class MainViewController: UIViewController {
         }
     }
     
+    @objc func containerAlternateAction() {
+        delegate.containerViewActivated(self)
+    }
+    
     @objc func containerViewAsButton(sender: UITapGestureRecognizer) {
         guard sender.state == .ended else {return}
         _ = accessibilityPerformMagicTap()
     }
-    
-    /// Handles taps on the Change/Cancel button
-    @objc func buttonActions() { countdown.ready ? _ = navigationController?.popViewController(animated: true) : countdown.cancel() }
     
     @objc func toggleAnnouncements() { timeAnnouncementController.togglePreference() }
     
