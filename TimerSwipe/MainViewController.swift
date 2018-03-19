@@ -67,9 +67,7 @@ class MainViewController: UIViewController {
     override func accessibilityPerformEscape() -> Bool { return delegate.accessibleEscapeActivated(self) }
     
     // MARK: Actions
-    
-    private lazy var tapRecognizer = UITapGestureRecognizer.init(target: self, action: #selector(containerViewActivated(sender:)))
-    
+
     @IBAction func button(_ sender: AnyObject) { delegate.buttonActivated(button, vc: self) }
     
     // A swipe in any direction on the window fires start()
@@ -77,6 +75,12 @@ class MainViewController: UIViewController {
     @IBAction func swipeLeft(_ sender: AnyObject) { delegate.swipe(self) }
     @IBAction func swipeUp(_ sender: AnyObject) { delegate.swipe(self) }
     @IBAction func swipeDown(_ sender: AnyObject) { delegate.swipe(self) }
+    
+    private lazy var tapRecognizer = UITapGestureRecognizer.init(target: self, action: #selector(containerViewActivated(sender:)))
+    @objc func containerViewActivated(sender: UITapGestureRecognizer) { delegate.containerViewActivated(self, sender: sender) }
+    
+    @objc func containerAlternateActivated() { delegate.containerViewAlternateActivated(self) }
+    @objc func toggleAnnouncements() { delegate.containerViewToggleActivated(self) }
     
     // MARK: Outlets
     
@@ -136,12 +140,6 @@ class MainViewController: UIViewController {
             self.button.layoutIfNeeded()
         }
     }
-    
-    @objc func containerAlternateActivated() { delegate.containerViewAlternateActivated(self) }
-    
-    @objc func containerViewActivated(sender: UITapGestureRecognizer) { delegate.containerViewActivated(self, sender: sender) }
-    
-    @objc func toggleAnnouncements() { delegate.containerViewToggleActivated(self) }
     
     private func handleVoiceOverStatus() {
         /// Change the text instructions to match the VO-enabled interaction paradigm and make the containerView touch-enabled
