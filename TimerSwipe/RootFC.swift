@@ -130,7 +130,5 @@ extension RootFC: MainViewControllerDelegate {
         vc.countdown.ready ? vc.countdown.start() : vc.countdown.cancel()
     }
     
-    func containerViewToggleActivated(_ vc: MainViewController) {
-        vc.timeAnnouncementController.togglePreference()
-    }
+    func containerViewToggleActivated(_ vc: MainViewController) { vc.timeAnnouncementController.togglePreference() }
 }
