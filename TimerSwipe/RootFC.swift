@@ -86,7 +86,7 @@ class RootFC: UIViewController {
             countdownDelegate.countdown.cancel()
         }
         
-        let vc = TableController.instantiate(with: model)
+        let vc = TableController.instantiate(with: self, model: model)
         var navHierarchy: [UIViewController] = [vc]
         
         if let providedTimer = providedTimer ?? model.favorite {
@@ -94,5 +94,13 @@ class RootFC: UIViewController {
             navHierarchy.append(vc)
         }
         nav.setViewControllers(navHierarchy, animated: animated)
+    }
+}
+
+extension RootFC: TableControllerDelegate {
+    func tableView(_ model: Model, tableController: TableController, didSelectRowAt indexPath: IndexPath) {
+        let timer = model[indexPath.row]
+        let vc = MainViewController.instantiate(with: timer)
+        nav.pushViewController(vc, animated: true)
     }
 }

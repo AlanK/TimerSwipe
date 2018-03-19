@@ -98,7 +98,6 @@
                                 <connections>
                                     <outlet property="favoriteIcon" destination="C23-7f-YoB" id="MhY-r4-qFx"/>
                                     <outlet property="secondsLabel" destination="lv9-sQ-pS8" id="jAS-J0-E6u"/>
-                                    <segue destination="KuU-yl-DWh" kind="show" identifier="tableToTimer" id="GPC-Yi-0fL"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>

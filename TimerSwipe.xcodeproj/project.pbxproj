@@ -31,7 +31,6 @@
 		5A90785D1EEB8C24006BCDD3 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A90785C1EEB8C24006BCDD3 /* Constants.swift */; };
 		5AB18AFA1D2058CA007B9D9F /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AB18AF91D2058CA007B9D9F /* MainViewController.swift */; };
 		5AB69EBF1EC799370078DDA5 /* Countdown.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AB69EBE1EC799370078DDA5 /* Countdown.swift */; };
-		5ABEF3311FCF191300655FEE /* SegueMediator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ABEF3301FCF191300655FEE /* SegueMediator.swift */; };
 		5AC60D751FE6D5B3002808C6 /* TableDragDropDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AC60D741FE6D5B3002808C6 /* TableDragDropDelegate.swift */; };
 		5AD81F4A205EA4D800490859 /* RootFC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AD81F49205EA4D800490859 /* RootFC.swift */; };
 		5AD81F4C205EB94E00490859 /* VoiceOverHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AD81F4B205EB94E00490859 /* VoiceOverHandler.swift */; };
@@ -90,7 +89,6 @@
 		5A90785C1EEB8C24006BCDD3 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		5AB18AF91D2058CA007B9D9F /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		5AB69EBE1EC799370078DDA5 /* Countdown.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Countdown.swift; sourceTree = "<group>"; };
-		5ABEF3301FCF191300655FEE /* SegueMediator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegueMediator.swift; sourceTree = "<group>"; };
 		5AC60D741FE6D5B3002808C6 /* TableDragDropDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableDragDropDelegate.swift; sourceTree = "<group>"; };
 		5AD81F49205EA4D800490859 /* RootFC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootFC.swift; sourceTree = "<group>"; };
 		5AD81F4B205EB94E00490859 /* VoiceOverHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoiceOverHandler.swift; sourceTree = "<group>"; };
@@ -238,7 +236,6 @@
 			children = (
 				5AD81F49205EA4D800490859 /* RootFC.swift */,
 				5AD81F4B205EB94E00490859 /* VoiceOverHandler.swift */,
-				5ABEF3301FCF191300655FEE /* SegueMediator.swift */,
 				5AF470981FDF040A0014244A /* TableTFDelegate.swift */,
 				85B648A91FFB19C3004E85F4 /* TimeoutManager.swift */,
 				5ADE6DCB1FFEF46300E8CF8C /* Permissions */,
@@ -393,7 +390,6 @@
 				5A03B9A81D1DDB9800E245C9 /* AppDelegate.swift in Sources */,
 				5AF470991FDF040A0014244A /* TableTFDelegate.swift in Sources */,
 				5A2731DA1FD6224A00FD5737 /* TableStrings.swift in Sources */,
-				5ABEF3311FCF191300655FEE /* SegueMediator.swift in Sources */,
 				5A1B03AE2031FDEB00704D00 /* TimeAnnouncementController.swift in Sources */,
 				5AB18AFA1D2058CA007B9D9F /* MainViewController.swift in Sources */,
 				5A44E74C2030BF7E0093983C /* TimeAnnouncementPreference.swift in Sources */,

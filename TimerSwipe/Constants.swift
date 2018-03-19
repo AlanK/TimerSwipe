@@ -8,11 +8,6 @@
 
 import UIKit
 
-/// Exhaustive list of storyboard segue identifiers
-enum SegueID: String {
-    case tableToTimer = "tableToTimer"
-}
-
 /// Exhaustive list of storyboards
 enum Storyboards: String {
     case main = "Main"

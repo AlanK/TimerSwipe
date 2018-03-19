@@ -8,19 +8,26 @@
 
 import UIKit
 
+protocol TableControllerDelegate: AnyObject {
+    func tableView(_: Model, tableController: TableController, didSelectRowAt: IndexPath)
+}
+
 /// The main table in the app
 class TableController: UITableViewController {
     // MARK: Dependencies
     /// App model must be injected by parent
     var model: Model!
     
+    private weak var delegate: TableControllerDelegate!
+    
     // MARK: Initializers
     
-    static func instantiate(with model: Model) -> TableController {
+    static func instantiate(with delegate: TableControllerDelegate, model: Model) -> TableController {
         let storyboard = UIStoryboard.init(name: "TableController", bundle: Bundle.main)
         let vc = storyboard.instantiateViewController(withIdentifier: MainID.tableView.rawValue) as! TableController
         
         vc.model = model
+        vc.delegate = delegate
         
         return vc
     }
@@ -142,6 +149,10 @@ class TableController: UITableViewController {
         model.saveData()
     }
     
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        delegate.tableView(model, tableController: self, didSelectRowAt: indexPath)
+    }
+    
     // MARK: Properties
     
     private lazy var dragDropDelegate = TableDragDropDelegate.init(self, tableModelDragDropDelegate: self)
@@ -233,15 +244,6 @@ class TableController: UITableViewController {
         
         footer.text = TableStrings.footerText(voiceOverOn: voiceOverOn)
         tableView.tableFooterView?.layoutIfNeeded()
-    }
-    
-    // MARK: Navigation
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // More segues might exist in the future, so let's keep this short and factor out the realy work
-        if segue.identifier == SegueID.tableToTimer.rawValue {
-            SegueMediator.fromTableControllerToMainViewController(segue: segue, sender: sender)
-        }
     }
 }
 
