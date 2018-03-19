@@ -13,7 +13,7 @@ import UIKit
 class MainViewController: UIViewController {
     // MARK: Dependencies
     
-    var providedTimer: STSavedTimer!
+    private var providedTimer: STSavedTimer!
     
     // MARK: Initializers
     
