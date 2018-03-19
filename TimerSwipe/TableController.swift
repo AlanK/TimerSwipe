@@ -10,8 +10,23 @@ import UIKit
 
 /// The main table in the app
 class TableController: UITableViewController {
+    // MARK: Dependencies
+    
     /// App model must be injected by parent
     var model: Model?
+    
+    // MARK: Initializers
+    
+    static func instantiate(with model: Model) -> TableController {
+        let storyboard = UIStoryboard.init(name: "TableController", bundle: Bundle.main)
+        let vc = storyboard.instantiateViewController(withIdentifier: MainID.tableView.rawValue) as! TableController
+        
+        vc.model = model
+        
+        return vc
+    }
+    
+    // MARK: Properties
     
     private lazy var dragDropDelegate = TableDragDropDelegate.init(self, tableModelDragDropDelegate: self)
     

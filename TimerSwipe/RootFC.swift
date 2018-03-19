@@ -85,12 +85,7 @@ class RootFC: UIViewController {
             countdownDelegate.countdown.cancel()
         }
         
-        let storyboard = UIStoryboard.init(name: "TableController", bundle: Bundle.main)
-        // Make sure the table view is in the view hierarchy
-        let tableVC = storyboard.instantiateViewController(withIdentifier: MainID.tableView.rawValue)
-        
-        guard let vc = tableVC as? TableController else { return }
-        vc.model = model
+        let vc = TableController.instantiate(with: model)
         var navHierarchy: [UIViewController] = [vc]
         
         if let providedTimer = providedTimer ?? model.favorite {
