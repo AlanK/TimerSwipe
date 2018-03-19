@@ -194,9 +194,7 @@ extension MainViewController: CountdownDelegate {
             containerView.accessibilityLabel = strings.containerViewLabel(timerReady: isReady, timerDuration: duration)
             instructionsVisible = isReady
             
-            if let sound = sound {
-                soundController.play(sound)
-            }
+            if let sound = sound { soundController.play(sound) }
             
             if let notice = notice {
                 UIAccessibilityPostNotification(UIAccessibilityLayoutChangedNotification, nil)
