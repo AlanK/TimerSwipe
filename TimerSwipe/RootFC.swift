@@ -110,6 +110,10 @@ extension RootFC: MainViewControllerDelegate {
         vc.countdown.ready ? _ = nav.popViewController(animated: true) : vc.countdown.cancel()
     }
     
+    private func startEndCountdown(_ vc: MainViewController) {
+        vc.countdown.ready ? vc.countdown.start() : vc.countdown.cancel()
+    }
+    
     func swipe(_ vc: MainViewController) { vc.countdown.start() }
     
     func buttonActivated(_ button: UIButton, vc: MainViewController) { commonAction(vc) }
@@ -121,13 +125,13 @@ extension RootFC: MainViewControllerDelegate {
     }
     
     func magicTapActivated(_ vc: MainViewController) -> Bool {
-        vc.countdown.ready ? vc.countdown.start() : vc.countdown.cancel()
+        startEndCountdown(vc)
         return true
     }
     
     func containerViewActivated(_ vc: MainViewController, sender: UITapGestureRecognizer) {
         guard sender.state == .ended else {return}
-        vc.countdown.ready ? vc.countdown.start() : vc.countdown.cancel()
+        startEndCountdown(vc)
     }
     
     func containerViewToggleActivated(_ vc: MainViewController) { vc.timeAnnouncementController.togglePreference() }
