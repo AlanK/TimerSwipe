@@ -9,15 +9,20 @@
 import UserNotifications
 import UIKit
 
+protocol MainViewControllerDelegate: AnyObject {
+    
+}
+
 /// Primary view controller—displays the selected timer
 class MainViewController: UIViewController {
     // MARK: Dependencies
     
     private var providedTimer: STSavedTimer!
+    private weak var delegate: MainViewControllerDelegate!
     
     // MARK: Initializers
     
-    static func instantiate(with timer: STSavedTimer) -> MainViewController {
+    static func instantiate(with delegate: MainViewControllerDelegate, timer: STSavedTimer) -> MainViewController {
         let storyboard = UIStoryboard.init(name: "MainViewController", bundle: Bundle.main)
         let vc = storyboard.instantiateViewController(withIdentifier: MainID.mainView.rawValue) as! MainViewController
 

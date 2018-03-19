@@ -90,7 +90,7 @@ class RootFC: UIViewController {
         var navHierarchy: [UIViewController] = [vc]
         
         if let providedTimer = providedTimer ?? model.favorite {
-            let vc = MainViewController.instantiate(with: providedTimer)
+            let vc = MainViewController.instantiate(with: self, timer: providedTimer)
             navHierarchy.append(vc)
         }
         nav.setViewControllers(navHierarchy, animated: animated)
@@ -100,7 +100,11 @@ class RootFC: UIViewController {
 extension RootFC: TableControllerDelegate {
     func tableView(_ model: Model, tableController: TableController, didSelectRowAt indexPath: IndexPath) {
         let timer = model[indexPath.row]
-        let vc = MainViewController.instantiate(with: timer)
+        let vc = MainViewController.instantiate(with: self, timer: timer)
         nav.pushViewController(vc, animated: true)
     }
+}
+
+extension RootFC: MainViewControllerDelegate {
+    
 }
