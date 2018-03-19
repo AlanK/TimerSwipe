@@ -21,6 +21,17 @@ class MainViewController: UIViewController {
     // Use a timer provided from elsewhere, then a default time
     private lazy var duration = providedTimer?.seconds ?? K.defaultDuration
     
+    // MARK: Initializers
+    
+    static func instantiate(with timer: STSavedTimer) -> MainViewController {
+        let storyboard = UIStoryboard.init(name: "MainViewController", bundle: Bundle.main)
+        let vc = storyboard.instantiateViewController(withIdentifier: MainID.mainView.rawValue) as! MainViewController
+
+        vc.providedTimer = timer
+        
+        return vc
+    }
+    
     // MARK: Helpers
     
     private let timeFormatter = TimeFormatter()
