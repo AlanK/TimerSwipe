@@ -10,7 +10,7 @@ import UIKit
 
 struct ContainerViewAccessorizer {
     func configure(_ view: UIView, owner: MainViewController) {
-        let primaryAction = CustomAccessibilityAction(target: owner, selector: #selector(MainViewController.containerAlternateAction)) { [unowned owner] in
+        let primaryAction = CustomAccessibilityAction(target: owner, selector: #selector(MainViewController.containerAlternateActivated)) { [unowned owner] in
             return owner.strings.buttonLabel(timerIsReady: owner.countdown.ready)
         }
         

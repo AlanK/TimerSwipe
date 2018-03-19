@@ -113,7 +113,7 @@ extension RootFC: MainViewControllerDelegate {
     func swipe(_ vc: MainViewController) { vc.countdown.start() }
     
     func buttonActivated(_ button: UIButton, vc: MainViewController) { commonAction(vc) }
-    func containerViewActivated(_ vc: MainViewController) { commonAction(vc) }
+    func containerViewAlternateActivated(_ vc: MainViewController) { commonAction(vc) }
 
     func accessibleEscapeActivated(_ vc: MainViewController) -> Bool {
         commonAction(vc)
@@ -123,5 +123,10 @@ extension RootFC: MainViewControllerDelegate {
     func magicTapActivated(_ vc: MainViewController) -> Bool {
         vc.countdown.ready ? vc.countdown.start() : vc.countdown.cancel()
         return true
+    }
+    
+    func containerViewActivated(_ vc: MainViewController, sender: UITapGestureRecognizer) {
+        guard sender.state == .ended else {return}
+        vc.countdown.ready ? vc.countdown.start() : vc.countdown.cancel()
     }
 }

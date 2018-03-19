@@ -14,7 +14,8 @@ protocol MainViewControllerDelegate: AnyObject {
     func buttonActivated(_: UIButton, vc: MainViewController)
     func magicTapActivated(_ : MainViewController) -> Bool
     func accessibleEscapeActivated(_: MainViewController) -> Bool
-    func containerViewActivated(_: MainViewController)
+    func containerViewAlternateActivated(_: MainViewController)
+    func containerViewActivated(_: MainViewController, sender: UITapGestureRecognizer)
 }
 
 /// Primary view controller—displays the selected timer
@@ -66,7 +67,7 @@ class MainViewController: UIViewController {
     
     // MARK: Actions
     
-    private lazy var tapRecognizer = UITapGestureRecognizer.init(target: self, action: #selector(containerViewAsButton(sender:)))
+    private lazy var tapRecognizer = UITapGestureRecognizer.init(target: self, action: #selector(containerViewActivated(sender:)))
     
     // Trigger buttonActions() when tapping the Change/Cancel button
     @IBAction func button(_ sender: AnyObject) { delegate.buttonActivated(button, vc: self) }
@@ -136,14 +137,9 @@ class MainViewController: UIViewController {
         }
     }
     
-    @objc func containerAlternateAction() {
-        delegate.containerViewActivated(self)
-    }
+    @objc func containerAlternateActivated() { delegate.containerViewAlternateActivated(self) }
     
-    @objc func containerViewAsButton(sender: UITapGestureRecognizer) {
-        guard sender.state == .ended else {return}
-        _ = accessibilityPerformMagicTap()
-    }
+    @objc func containerViewActivated(sender: UITapGestureRecognizer) { delegate.containerViewActivated(self, sender: sender) }
     
     @objc func toggleAnnouncements() { timeAnnouncementController.togglePreference() }
     
