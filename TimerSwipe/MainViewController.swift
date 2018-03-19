@@ -97,7 +97,7 @@ class MainViewController: UIViewController {
     }
     
     @IBOutlet var containerView: UIStackView! {
-        didSet { ContainerViewAccessorizer().configure(containerView, owner: self) }
+        didSet { ContainerViewAccessorizer().configure(containerView, owner: self, duration: duration) }
     }
     
     // MARK: Properties
@@ -117,7 +117,7 @@ class MainViewController: UIViewController {
         }
     }
     
-    lazy var duration = providedTimer.seconds
+    private lazy var duration = providedTimer.seconds
     
     private let soundController = SoundController()
     private let localNotifications = LocalNotifications()
