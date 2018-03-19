@@ -71,7 +71,7 @@ class MainViewController: UIViewController {
     @IBAction func swipeDown(_ sender: AnyObject) { delegate.swipe(self) }
     
     private lazy var tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(containerViewActivated(sender:)))
-    @objc func containerViewActivated(sender: UITapGestureRecognizer) { delegate.containerViewActivated(self, sender: sender) }
+    @objc private func containerViewActivated(sender: UITapGestureRecognizer) { delegate.containerViewActivated(self, sender: sender) }
     
     @objc func containerAlternateActivated() { delegate.containerViewAlternateActivated(self) }
     @objc func toggleAnnouncements() { delegate.containerViewToggleActivated(self) }
