@@ -33,7 +33,7 @@ class TableController: UITableViewController {
     /// The table-add button
     @IBOutlet var addButton: UIBarButtonItem! {
         didSet {
-            addButton.accessibilityHint = NSLocalizedString("addToTableButton", value: "Creates a new timer", comment: "Allows the user to create a new timer of their preferred duration")
+            addButton.accessibilityHint = NSLocalizedString("Creates a new timer", comment: "Allows the user to create a new timer of their preferred duration")
         }
     }
     /// The UIView containing the table footer
