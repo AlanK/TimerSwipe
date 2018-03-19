@@ -35,19 +35,20 @@ class RootFC: UIViewController {
         addChildToRootView(nav)
         
         // Make any necessary changes to views after being in the background for a long time
-        let n = nav
-        let m = self.model!
         _ = TimeoutManager { [unowned self] in
             // TODO: Refactor this.
             
+            let topVC = self.nav.topViewController
+            let model = self.model!
+            
             // Don’t change views if a timer is running or there’s no favorite to change to
-            guard (n.topViewController as? CountdownDelegate)?.countdown.ready ?? true, let _ = m.favorite else { return }
+            guard (topVC as? CountdownDelegate)?.countdown.ready ?? true, let _ = model.favorite else { return }
             // Don't disrupt an active edit session
-            if (n.topViewController as? TableController)?.isEditing == true { return }
+            if (topVC as? TableController)?.isEditing == true { return }
             
             // Don't animate going from one timer to another; it looks weird
-            let animated = !(n.topViewController is MainViewController)
-            self.loadNavigationStack(animated: animated, with: m)
+            let animated = !(topVC is MainViewController)
+            self.loadNavigationStack(animated: animated, with: model)
         }
     }
     
