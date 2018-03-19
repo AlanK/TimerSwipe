@@ -40,13 +40,6 @@ class MainViewController: UIViewController {
     
     // MARK: Overrides
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // Customize display based on VoiceOver settings
-        handleVoiceOverStatus()
-        
-    }
-    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         // The display shouldn’t sleep while this view is visible since the user expects to start a timer when they can’t see the screen
