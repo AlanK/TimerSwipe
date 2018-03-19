@@ -10,7 +10,8 @@ import UserNotifications
 import UIKit
 
 protocol MainViewControllerDelegate: AnyObject {
-    
+    func swipe(_: MainViewController)
+    func buttonActivated(_: UIButton, vc: MainViewController)
 }
 
 /// Primary view controller—displays the selected timer
@@ -58,7 +59,7 @@ class MainViewController: UIViewController {
     
     // A two-finger double-tap "magic tap" accessibility command starts/cancels the timer
     override func accessibilityPerformMagicTap() -> Bool {
-        countdown.ready ? start() : buttonActions()
+        countdown.ready ? countdown.start() : buttonActions()
         return true
     }
     
@@ -73,13 +74,13 @@ class MainViewController: UIViewController {
     private lazy var tapRecognizer = UITapGestureRecognizer.init(target: self, action: #selector(containerViewAsButton(sender:)))
     
     // Trigger buttonActions() when tapping the Change/Cancel button
-    @IBAction func button(_ sender: AnyObject) {buttonActions()}
+    @IBAction func button(_ sender: AnyObject) { delegate.buttonActivated(button, vc: self) }
     
     // A swipe in any direction on the window fires start()
-    @IBAction func swipeRight(_ sender: AnyObject) {start()}
-    @IBAction func swipeLeft(_ sender: AnyObject) {start()}
-    @IBAction func swipeUp(_ sender: AnyObject) {start()}
-    @IBAction func swipeDown(_ sender: AnyObject) {start()}
+    @IBAction func swipeRight(_ sender: AnyObject) {delegate.swipe(self)}
+    @IBAction func swipeLeft(_ sender: AnyObject) {delegate.swipe(self)}
+    @IBAction func swipeUp(_ sender: AnyObject) {delegate.swipe(self)}
+    @IBAction func swipeDown(_ sender: AnyObject) {delegate.swipe(self)}
     
     // MARK: Outlets
     
@@ -143,11 +144,6 @@ class MainViewController: UIViewController {
     @objc func containerViewAsButton(sender: UITapGestureRecognizer) {
         guard sender.state == .ended else {return}
         _ = accessibilityPerformMagicTap()
-    }
-    
-    /// Tells the Stopwatch to start the timer
-    private func start() {
-        countdown.start()
     }
     
     /// Handles taps on the Change/Cancel button

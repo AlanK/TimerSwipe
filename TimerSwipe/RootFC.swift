@@ -106,5 +106,9 @@ extension RootFC: TableControllerDelegate {
 }
 
 extension RootFC: MainViewControllerDelegate {
+    func swipe(_ vc: MainViewController) { vc.countdown.start() }
     
+    func buttonActivated(_ button: UIButton, vc: MainViewController) {
+        vc.buttonActions()
+    }
 }
