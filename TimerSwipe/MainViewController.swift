@@ -23,9 +23,9 @@ protocol MainViewControllerDelegate: AnyObject {
 class MainViewController: UIViewController {
     // MARK: Dependencies
     
-    private var providedTimer: STSavedTimer!
     private weak var delegate: MainViewControllerDelegate!
-    
+    private var providedTimer: STSavedTimer!
+
     // MARK: Initializers
     
     static func instantiate(with delegate: MainViewControllerDelegate, timer: STSavedTimer) -> MainViewController {
@@ -84,11 +84,11 @@ class MainViewController: UIViewController {
     @objc func toggleAnnouncements() { delegate.containerViewToggleActivated(self) }
     
     // MARK: Outlets
-    
     /// The "Swipe to Start" label
     @IBOutlet var instructionsDisplay: UILabel! {
         didSet { instructionsDisplay.text = strings.textInstructions(voiceOverIsOn: false) }
     }
+    
     /// The "00:00.00" label
     @IBOutlet var timeDisplay: UILabel! {
         didSet {
@@ -97,6 +97,7 @@ class MainViewController: UIViewController {
             countdown.wake()
         }
     }
+    
     /// The Change/Cancel button
     @IBOutlet var button: UIButton! {
         didSet { configureButton(withTimerReadyStatus: true) }
