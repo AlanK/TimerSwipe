@@ -70,7 +70,6 @@ class MainViewController: UIViewController {
     
     private lazy var tapRecognizer = UITapGestureRecognizer.init(target: self, action: #selector(containerViewActivated(sender:)))
     
-    // Trigger buttonActions() when tapping the Change/Cancel button
     @IBAction func button(_ sender: AnyObject) { delegate.buttonActivated(button, vc: self) }
     
     // A swipe in any direction on the window fires start()
