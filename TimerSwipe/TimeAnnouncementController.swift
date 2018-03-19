@@ -28,7 +28,7 @@ struct TimeAnnouncementController {
     
     // MARK: Methods
     
-    mutating func configureTimeAnnouncements(for expirationDate: Date, duration: TimeInterval) {
+    mutating func startTimeAnnouncements(for expirationDate: Date, duration: TimeInterval) {
         let model = self.model
         let timeRemaining = self.timeRemaining
         

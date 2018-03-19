@@ -197,7 +197,7 @@ extension MainViewController: CountdownDelegate {
             case let .start(expirationDate): isReady = false
                 appStateNotifications.add(onBackground: countdown.sleep, onActive: countdown.wake)
                 localNotifications.enableNotification(on: expirationDate)
-                timeAnnouncementController.configureTimeAnnouncements(for: expirationDate, duration: duration)
+                timeAnnouncementController.startTimeAnnouncements(for: expirationDate, duration: duration)
             case .end, .cancel, .expire: isReady = true
                 appStateNotifications.removeAll()
                 localNotifications.disableNotification()
