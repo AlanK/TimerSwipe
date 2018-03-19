@@ -98,20 +98,22 @@ class MainViewController: UIViewController {
     }
     
     @IBOutlet var containerView: UIStackView! {
-        didSet {
-            let primaryAction = CustomAccessibilityAction(target: self, selector: #selector(buttonActions)) { [unowned self] in
-                return self.strings.buttonLabel(timerIsReady: self.countdown.ready)
-            }
-            
-            let toggleAction = CustomAccessibilityAction(target: self, selector: #selector(toggleAnnouncements)) { [unowned self] in
-                return self.timeAnnouncementController.preferenceInstructions
-            }
-            
-            containerView.isAccessibilityElement = true
-            containerView.accessibilityTraits = UIAccessibilityTraitSummaryElement
-            containerView.accessibilityCustomActions = [primaryAction, toggleAction]
-            containerView.accessibilityLabel = strings.containerViewLabel(timerReady: true, timerDuration: duration)
+        didSet { containerViewAccessorizer(containerView, owner: self) }
+    }
+    
+    private func containerViewAccessorizer(_ view: UIView, owner: MainViewController) {
+        let primaryAction = CustomAccessibilityAction(target: owner, selector: #selector(buttonActions)) { [unowned owner] in
+            return owner.strings.buttonLabel(timerIsReady: owner.countdown.ready)
         }
+        
+        let toggleAction = CustomAccessibilityAction(target: owner, selector: #selector(toggleAnnouncements)) { [unowned owner] in
+            return owner.timeAnnouncementController.preferenceInstructions
+        }
+        
+        view.isAccessibilityElement = true
+        view.accessibilityTraits = UIAccessibilityTraitSummaryElement
+        view.accessibilityCustomActions = [primaryAction, toggleAction]
+        view.accessibilityLabel = owner.strings.containerViewLabel(timerReady: true, timerDuration: owner.duration)
     }
     
     // MARK: Properties
