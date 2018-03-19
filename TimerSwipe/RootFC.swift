@@ -85,7 +85,7 @@ class RootFC: UIViewController {
             countdownDelegate.countdown.cancel()
         }
         
-        let storyboard = UIStoryboard.init(name: "Main", bundle: Bundle.main)
+        let storyboard = UIStoryboard.init(name: "TableController", bundle: Bundle.main)
         // Make sure the table view is in the view hierarchy
         let tableVC = storyboard.instantiateViewController(withIdentifier: MainID.tableView.rawValue)
         
