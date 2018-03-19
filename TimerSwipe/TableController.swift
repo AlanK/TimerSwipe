@@ -11,7 +11,6 @@ import UIKit
 /// The main table in the app
 class TableController: UITableViewController {
     // MARK: Dependencies
-    
     /// App model must be injected by parent
     var model: Model!
     
@@ -26,47 +25,7 @@ class TableController: UITableViewController {
         return vc
     }
     
-    // MARK: Properties
-    
-    private lazy var dragDropDelegate = TableDragDropDelegate.init(self, tableModelDragDropDelegate: self)
-    
-    /// The table-add button
-    @IBOutlet var addButton: UIBarButtonItem! {
-        didSet {
-            addButton.accessibilityHint = NSLocalizedString("Creates a new timer", comment: "Allows the user to create a new timer of their preferred duration")
-        }
-    }
-    /// The UIView containing the table footer
-    @IBOutlet var footerContainer: UIView!
-    /// The label serving as the table footer
-    @IBOutlet var footer: UILabel!
-    
-    private lazy var textFieldDelegate = TableTFDelegate.init(completionHandler: createNewTimer)
-    /// The view which can create new timers
-    private lazy var keyboardAccessoryView: InputView = {
-        let view = InputView(frame: .zero, inputViewStyle: .default)
-        view.cancelButton.addTarget(self, action: #selector(exitKeyboardAccessoryView), for: .touchUpInside)
-        view.addButton.addTarget(self, action: #selector(createNewTimer), for: .touchUpInside)
-        view.textField.addTarget(self, action: #selector(textInTextFieldChanged(_:)), for: UIControlEvents.editingChanged)
-        view.textField.delegate = textFieldDelegate
-        return view
-    }()
-    
-    private let cellID = "STTableViewCell"
-    private let sectionsInTableView = 1, mainSection = 0
-    
-    lazy var accessibleFirstFocus: UIResponder? = {
-        guard model.count > 0 else { return nil }
-        let index = model.favoriteIndex ?? 0
-        return self.tableView.cellForRow(at: IndexPath.init(row: index, section: mainSection))
-    }()
-    
-    @IBAction func inputNewTimer(_ sender: Any) {
-        keyboardAccessoryView.addButton.isEnabled = false
-        makeKAV(visible: true)
-    }
-    
-    // MARK: View controller
+    // MARK: Overrides
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -113,7 +72,34 @@ class TableController: UITableViewController {
         super.viewWillDisappear(animated)
     }
     
-    // MARK: Table view data source
+    override func setEditing(_ editing: Bool, animated: Bool) {
+        model.saveData()
+        super.setEditing(editing, animated: animated)
+    }
+    
+    // MARK: Actions
+    
+    @IBAction func inputNewTimer(_ sender: Any) {
+        keyboardAccessoryView.addButton.isEnabled = false
+        makeKAV(visible: true)
+    }
+    
+    // MARK: Outlets
+    
+    /// The table-add button
+    @IBOutlet var addButton: UIBarButtonItem! {
+        didSet {
+            addButton.accessibilityHint = NSLocalizedString("Creates a new timer", comment: "Allows the user to create a new timer of their preferred duration")
+        }
+    }
+    
+    /// The UIView containing the table footer
+    @IBOutlet var footerContainer: UIView!
+    
+    /// The label serving as the table footer
+    @IBOutlet var footer: UILabel!
+    
+    // MARK: Data Source
     
     override func numberOfSections(in tableView: UITableView) -> Int { return sectionsInTableView }
     
@@ -155,10 +141,31 @@ class TableController: UITableViewController {
         model.saveData()
     }
     
-    override func setEditing(_ editing: Bool, animated: Bool) {
-        model.saveData()
-        super.setEditing(editing, animated: animated)
-    }
+    // MARK: Properties
+    
+    private lazy var dragDropDelegate = TableDragDropDelegate.init(self, tableModelDragDropDelegate: self)
+    private lazy var textFieldDelegate = TableTFDelegate.init(completionHandler: createNewTimer)
+    
+    /// The view which can create new timers
+    private lazy var keyboardAccessoryView: InputView = {
+        let view = InputView(frame: .zero, inputViewStyle: .default)
+        view.cancelButton.addTarget(self, action: #selector(exitKeyboardAccessoryView), for: .touchUpInside)
+        view.addButton.addTarget(self, action: #selector(createNewTimer), for: .touchUpInside)
+        view.textField.addTarget(self, action: #selector(textInTextFieldChanged(_:)), for: UIControlEvents.editingChanged)
+        view.textField.delegate = textFieldDelegate
+        return view
+    }()
+    
+    lazy var accessibleFirstFocus: UIResponder? = {
+        guard model.count > 0 else { return nil }
+        let index = model.favoriteIndex ?? 0
+        return self.tableView.cellForRow(at: IndexPath.init(row: index, section: mainSection))
+    }()
+    
+    private let cellID = "STTableViewCell"
+    private let sectionsInTableView = 1, mainSection = 0
+    
+    // MARK: Methods
     
     func commitTimer(_ userSelectedTime: TimeInterval) {
         // Create a new timer
@@ -240,6 +247,7 @@ class TableController: UITableViewController {
 }
 
 // MARK: - Table Model Drag Drop Delegate
+
 extension TableController: TableModelDragDropDelegate {
     func updateModelOnDrop(_ sourcePaths: [IndexPath], targetIndexPath: IndexPath) -> Bool {
         let sourcePathsInReverseIndexOrder = sourcePaths.sorted(by: >)
@@ -266,6 +274,7 @@ extension TableController: TableModelDragDropDelegate {
 }
 
 // MARK: - Table Cell Delegate
+
 extension TableController: TableCellDelegate {
     /// Handles taps on the custom accessory view on the table view cells
     func cellButtonTapped(cell: TableCell) {
@@ -287,6 +296,7 @@ extension TableController: TableCellDelegate {
 }
 
 // MARK: - Input Accessory Controller
+
 extension TableController {
     
     override var canBecomeFirstResponder: Bool {
