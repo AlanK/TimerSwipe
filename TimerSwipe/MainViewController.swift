@@ -67,10 +67,6 @@ class MainViewController: UIViewController {
     
     private lazy var tapRecognizer = UITapGestureRecognizer.init(target: self, action: #selector(containerViewAsButton(sender:)))
     
-    private lazy var primaryContainerAction = UIAccessibilityCustomAction.init(name: strings.buttonLabel(timerIsReady: countdown.ready), target: self, selector: #selector(buttonActions))
-    
-    private lazy var toggleAnnouncementsAction = UIAccessibilityCustomAction.init(name: timeAnnouncementController.preferenceInstructions, target: self, selector: #selector(toggleAnnouncements))
-    
     // Trigger buttonActions() when tapping the Change/Cancel button
     @IBAction func button(_ sender: AnyObject) {buttonActions()}
     
@@ -103,9 +99,17 @@ class MainViewController: UIViewController {
     
     @IBOutlet var containerView: UIStackView! {
         didSet {
+            let primaryAction = CustomAccessibilityAction(target: self, selector: #selector(buttonActions)) { [unowned self] in
+                return self.strings.buttonLabel(timerIsReady: self.countdown.ready)
+            }
+            
+            let toggleAction = CustomAccessibilityAction(target: self, selector: #selector(toggleAnnouncements)) { [unowned self] in
+                return self.timeAnnouncementController.preferenceInstructions
+            }
+            
             containerView.isAccessibilityElement = true
             containerView.accessibilityTraits = UIAccessibilityTraitSummaryElement
-            containerView.accessibilityCustomActions = [primaryContainerAction, toggleAnnouncementsAction]
+            containerView.accessibilityCustomActions = [primaryAction, toggleAction]
             containerView.accessibilityLabel = strings.containerViewLabel(timerReady: true, timerDuration: duration)
         }
     }
@@ -137,7 +141,6 @@ class MainViewController: UIViewController {
     // MARK: Methods
     
     private func configureButton(withTimerReadyStatus timerIsReady: Bool) {
-        primaryContainerAction.name = strings.buttonLabel(timerIsReady: timerIsReady)
         // Use performWithoutAnimation to prevent weird flashing as button text animates.
         UIView.performWithoutAnimation {
             self.button.setTitle(strings.buttonText(timerIsReady: timerIsReady), for: UIControlState())
@@ -160,7 +163,6 @@ class MainViewController: UIViewController {
     
     @objc private func toggleAnnouncements() -> Bool {
         timeAnnouncementController.togglePreference()
-        toggleAnnouncementsAction.name = timeAnnouncementController.preferenceInstructions
         return true
     }
     
