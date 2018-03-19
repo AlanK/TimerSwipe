@@ -148,10 +148,7 @@ class MainViewController: UIViewController {
     /// Handles taps on the Change/Cancel button
     @objc func buttonActions() { countdown.ready ? _ = navigationController?.popViewController(animated: true) : countdown.cancel() }
     
-    @objc func toggleAnnouncements() -> Bool {
-        timeAnnouncementController.togglePreference()
-        return true
-    }
+    @objc func toggleAnnouncements() { timeAnnouncementController.togglePreference() }
     
     private func handleVoiceOverStatus() {
         /// Change the text instructions to match the VO-enabled interaction paradigm and make the containerView touch-enabled
