@@ -60,10 +60,8 @@ class MainViewController: UIViewController {
         soundController.setActive(false)
     }
     
-    // A two-finger double-tap "magic tap" accessibility command starts/cancels the timer
     override func accessibilityPerformMagicTap() -> Bool { return delegate.magicTapActivated(self) }
     
-    // Map the two-finger z-shaped "escape" accessibility command to the Change/Cancel button
     override func accessibilityPerformEscape() -> Bool { return delegate.accessibleEscapeActivated(self) }
     
     // MARK: Actions
