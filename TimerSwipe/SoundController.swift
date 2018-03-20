@@ -14,6 +14,10 @@ enum AudioCue: String {
     case endCue = "TS_short_out.aif"
 }
 
+protocol SoundPlayer {
+    func play(_: AudioCue)
+}
+
 /// Handles sounds for the main view of the app
 struct SoundController {
     // MARK: Dependencies
@@ -76,3 +80,7 @@ struct SoundController {
         audioPlayer?.prepareToPlay()
     }
 }
+
+extension SoundController: SoundPlayer {  }
+
+
