@@ -38,6 +38,7 @@
 		5AD81F522060102700490859 /* CustomAccessibilityAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AD81F512060102700490859 /* CustomAccessibilityAction.swift */; };
 		5AD81F5420601FA100490859 /* ContainerHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AD81F5320601FA100490859 /* ContainerHandler.swift */; };
 		5AD81F5620609E0600490859 /* InstructionsHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AD81F5520609E0600490859 /* InstructionsHandler.swift */; };
+		5AD81F582060A59300490859 /* ButtonHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AD81F572060A59300490859 /* ButtonHandler.swift */; };
 		5ADB6A181F561562006BEE1B /* InputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ADB6A171F561562006BEE1B /* InputView.swift */; };
 		5ADE6DC81FFD9E0600E8CF8C /* PermissionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ADE6DC71FFD9E0600E8CF8C /* PermissionManager.swift */; };
 		5ADE6DCA1FFDBFCF00E8CF8C /* Permissions.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5ADE6DC91FFDBFCF00E8CF8C /* Permissions.storyboard */; };
@@ -97,6 +98,7 @@
 		5AD81F512060102700490859 /* CustomAccessibilityAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAccessibilityAction.swift; sourceTree = "<group>"; };
 		5AD81F5320601FA100490859 /* ContainerHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainerHandler.swift; sourceTree = "<group>"; };
 		5AD81F5520609E0600490859 /* InstructionsHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstructionsHandler.swift; sourceTree = "<group>"; };
+		5AD81F572060A59300490859 /* ButtonHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonHandler.swift; sourceTree = "<group>"; };
 		5ADB6A171F561562006BEE1B /* InputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputView.swift; sourceTree = "<group>"; };
 		5ADE6DC71FFD9E0600E8CF8C /* PermissionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionManager.swift; sourceTree = "<group>"; };
 		5ADE6DC91FFDBFCF00E8CF8C /* Permissions.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Permissions.storyboard; sourceTree = "<group>"; };
@@ -210,6 +212,7 @@
 			isa = PBXGroup;
 			children = (
 				5AB18AF91D2058CA007B9D9F /* MainViewController.swift */,
+				5AD81F572060A59300490859 /* ButtonHandler.swift */,
 				5AD81F5520609E0600490859 /* InstructionsHandler.swift */,
 				5AD81F5320601FA100490859 /* ContainerHandler.swift */,
 				5A1B03AD2031FDEB00704D00 /* TimeAnnouncementController.swift */,
@@ -395,6 +398,7 @@
 				5A2731DA1FD6224A00FD5737 /* TableStrings.swift in Sources */,
 				5A1B03AE2031FDEB00704D00 /* TimeAnnouncementController.swift in Sources */,
 				5AB18AFA1D2058CA007B9D9F /* MainViewController.swift in Sources */,
+				5AD81F582060A59300490859 /* ButtonHandler.swift in Sources */,
 				5A44E74C2030BF7E0093983C /* TimeAnnouncementPreference.swift in Sources */,
 				5A4DC9181D596D460009446B /* STSavedTimer.swift in Sources */,
 				5AD81F4A205EA4D800490859 /* RootFC.swift in Sources */,

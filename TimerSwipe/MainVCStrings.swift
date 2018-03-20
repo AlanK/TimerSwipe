@@ -17,17 +17,4 @@ struct MainVCStrings {
     timerCancelled = NSLocalizedString("Cancelled timer",
                                        comment: "The timer has been cancelled")
     
-    /// Returns a localized string with text for the Change/Cancel button
-    func buttonText(timerIsReady: Bool) -> String {
-        switch timerIsReady {
-        case true: return NSLocalizedString("changeButton",
-                                            value: "Change",
-                                            comment: "Change which timer is displayed")
-        case false: return NSLocalizedString("cancelButton",
-                                             value: "Cancel",
-                                             comment: "Cancel the timer that is currently running")
-        }
-    }
-    
-    
 }

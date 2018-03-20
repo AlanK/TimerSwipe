@@ -91,7 +91,7 @@ class MainViewController: UIViewController {
     
     /// The Change/Cancel button
     @IBOutlet var button: UIButton! {
-        didSet { setButtonTitle(button, withTimerReadyStatus: true) }
+        didSet { buttonHandler.setTitle(withTimerReadyStatus: true) }
     }
     
     @IBOutlet var containerView: UIStackView! {
@@ -106,6 +106,7 @@ class MainViewController: UIViewController {
     private var appStateNotifications = AppStateNotifications()
     
     private lazy var duration = providedTimer.seconds
+    private lazy var buttonHandler = ButtonHandler(button)
     private lazy var containerHandler = ContainerHandler(containerView, vc: self)
     private lazy var instructionsHandler = InstructionsHandler(instructionsDisplay)
 
@@ -115,14 +116,6 @@ class MainViewController: UIViewController {
     private let strings = MainVCStrings()
     
     // MARK: Methods
-    
-    private func setButtonTitle(_ button: UIButton, withTimerReadyStatus timerIsReady: Bool) {
-        // Use performWithoutAnimation to prevent weird flashing as button text animates.
-        UIView.performWithoutAnimation {
-            button.setTitle(strings.buttonText(timerIsReady: timerIsReady), for: UIControlState())
-            button.layoutIfNeeded()
-        }
-    }
     
     private func handleVoiceOverStatus() {
         /// Change the text instructions to match the VO-enabled interaction paradigm and make the containerView touch-enabled
@@ -163,7 +156,7 @@ extension MainViewController: CountdownDelegate {
                 timeAnnouncementController.cancelTimeAnnouncements()
             }
             
-            setButtonTitle(button, withTimerReadyStatus: isReady)
+            buttonHandler.setTitle(withTimerReadyStatus: isReady)
             containerHandler.label(timerReady: isReady, duration: duration)
             instructionsHandler.animate(to: isReady)
             
