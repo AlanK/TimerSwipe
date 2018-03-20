@@ -25,20 +25,19 @@ class MainViewController: UIViewController {
     
     private weak var delegate: MainViewControllerDelegate!
     private var providedTimer: STSavedTimer!
-    
+    private var countdown: Countdown!
+
     private let soundController = SoundController()
     private let localNotifications = LocalNotifications()
     private let timeFormatter = TimeFormatter()
 
+    private var appStateNotifications = AppStateNotifications()
+    
     private lazy var buttonHandler = ButtonHandler(button)
     private lazy var containerHandler = ContainerHandler(containerView, vc: self)
     private lazy var instructionsHandler = InstructionsHandler(instructionsDisplay)
     
-    private lazy var countdown: Countdown = Countdown(delegate: self, duration: duration)
-    
     var timeAnnouncementController = TimeAnnouncementController()
-    
-    private var appStateNotifications = AppStateNotifications()
     
     // MARK: Initializers
     
@@ -48,6 +47,7 @@ class MainViewController: UIViewController {
         
         vc.delegate = delegate
         vc.providedTimer = timer
+        vc.countdown = Countdown(delegate: vc, duration: vc.providedTimer.seconds)
         
         return vc
     }
