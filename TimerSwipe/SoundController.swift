@@ -50,6 +50,10 @@ struct SoundController {
     
     // MARK: Properties
     
+    var isActive: Bool { return internalIsActive }
+    
+    private var internalIsActive = false
+    
     private let audioPlayers: [AudioCue : AVAudioPlayer?]
 
     // MARK: Methods
@@ -57,8 +61,11 @@ struct SoundController {
      Activate or deactivate the audio session
      - parameter active: Whether the audio session should be activated or deactivated
      */
-    func setActive(_ active: Bool) {
-        do { try audioSession.setActive(active) }
+    mutating func setActive(_ active: Bool) {
+        do {
+            try audioSession.setActive(active)
+            internalIsActive = active
+        }
         catch { print("Could not setActive(\(active)) AVAudioSession: \(error)") }
         
         // When activating the audio session, it is nice to prepare the sounds proactively.

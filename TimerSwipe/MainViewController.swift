@@ -27,7 +27,7 @@ class MainViewController: UIViewController {
     private var timer: STSavedTimer!
     private var countdown: Countdown!
 
-    private let soundController = SoundController()
+    private var soundController = SoundController()
     private let localNotifications = LocalNotifications()
     private let timeFormatter = TimeFormatter()
 
