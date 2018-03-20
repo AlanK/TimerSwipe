@@ -106,9 +106,11 @@ extension RootFC: TableControllerDelegate {
 }
 
 extension RootFC: MainViewControllerDelegate {
-    private func changeTimerOrCancelCountdown(_ vc: MainViewController) { vc.countdownIsReady ? _ = nav.popViewController(animated: true) : vc.cancelCountdown() }
+    private func changeTimerOrCancelCountdown(_ vc: MainViewController) { vc.countdownIsReady ? leaveMainViewController() : vc.cancelCountdown() }
     
     private func startOrEndCountdown(_ vc: MainViewController) { vc.countdownIsReady ? vc.startCountdown() : vc.cancelCountdown() }
+    
+    private func leaveMainViewController() { _ = nav.popViewController(animated: true) }
     
     func swipe(_ vc: MainViewController) { vc.startCountdown() }
     
