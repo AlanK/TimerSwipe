@@ -24,7 +24,7 @@ class MainViewController: UIViewController {
     // MARK: Dependencies
     
     private weak var delegate: MainViewControllerDelegate!
-    private var providedTimer: STSavedTimer!
+    private var timer: STSavedTimer!
     private var countdown: Countdown!
 
     private let soundController = SoundController()
@@ -46,8 +46,8 @@ class MainViewController: UIViewController {
         let vc = storyboard.instantiateViewController(withIdentifier: MainID.mainView.rawValue) as! MainViewController
         
         vc.delegate = delegate
-        vc.providedTimer = timer
-        vc.countdown = Countdown(delegate: vc, duration: vc.providedTimer.seconds)
+        vc.timer = timer
+        vc.countdown = Countdown(delegate: vc, duration: vc.timer.seconds)
         
         return vc
     }
@@ -113,7 +113,7 @@ class MainViewController: UIViewController {
     
     // MARK: Properties
     
-    private var duration: TimeInterval { return providedTimer.seconds }
+    private var duration: TimeInterval { return timer.seconds }
     
     // MARK: Methods
     
