@@ -113,7 +113,6 @@ class MainViewController: UIViewController {
     private let soundController = SoundController()
     private let localNotifications = LocalNotifications()
     private let timeFormatter = TimeFormatter()
-    private let strings = MainVCStrings()
     
     // MARK: Methods
     
@@ -142,7 +141,7 @@ extension MainViewController: CountdownDelegate {
      - parameter status: whether the timer started, ended, or was cancelled
     */
     func countdownDid(_ status: CountdownStatus) {
-        func updateTimerStatus(notice: String? = nil, sound: AudioCue? = nil) {
+        func updateTimerStatus(sound: AudioCue? = nil) {
             let isReady: Bool
             switch status {
             case let .start(expirationDate): isReady = false
@@ -161,17 +160,16 @@ extension MainViewController: CountdownDelegate {
             
             if let sound = sound { soundController.play(sound) }
             
-            if let notice = notice {
+            if let notice = status.notice {
                 UIAccessibilityPostNotification(UIAccessibilityLayoutChangedNotification, nil)
                 UIAccessibilityPostNotification(UIAccessibilityAnnouncementNotification, notice)
             }
         }
         
         switch status {
-        case .start: updateTimerStatus(notice: strings.timerStarted, sound: .startCue)
-        case .end: updateTimerStatus(notice: strings.timerEnded, sound: .endCue)
-        case .cancel: updateTimerStatus(notice: strings.timerCancelled)
-        case .expire: updateTimerStatus()
+        case .start: updateTimerStatus(sound: .startCue)
+        case .end: updateTimerStatus(sound: .endCue)
+        case .cancel, .expire: updateTimerStatus()
         }
     }
 }

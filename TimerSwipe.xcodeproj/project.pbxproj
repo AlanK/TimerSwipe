@@ -24,7 +24,6 @@
 		5A44E74C2030BF7E0093983C /* TimeAnnouncementPreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A44E74B2030BF7E0093983C /* TimeAnnouncementPreference.swift */; };
 		5A4DC9181D596D460009446B /* STSavedTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A4DC9171D596D460009446B /* STSavedTimer.swift */; };
 		5A591CE91D3AA18E00B9BD3D /* SoundController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A591CE81D3AA18E00B9BD3D /* SoundController.swift */; };
-		5A7159921FCBC35E00BEB5EE /* MainVCStrings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A7159911FCBC35E00BEB5EE /* MainVCStrings.swift */; };
 		5A7D12D01F0B2ADC00C9B51A /* TS_short_in.aif in Resources */ = {isa = PBXBuildFile; fileRef = 5A7D12CE1F0B2ADC00C9B51A /* TS_short_in.aif */; };
 		5A7D12D11F0B2ADC00C9B51A /* TS_short_out.aif in Resources */ = {isa = PBXBuildFile; fileRef = 5A7D12CF1F0B2ADC00C9B51A /* TS_short_out.aif */; };
 		5A871FFA1D6FC68900B08A05 /* TableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A871FF91D6FC68900B08A05 /* TableCell.swift */; };
@@ -83,7 +82,6 @@
 		5A4DC9171D596D460009446B /* STSavedTimer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STSavedTimer.swift; sourceTree = "<group>"; };
 		5A591CE81D3AA18E00B9BD3D /* SoundController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoundController.swift; sourceTree = "<group>"; };
 		5A6E07951F8C443200B7062A /* TS_short_warn.aif */ = {isa = PBXFileReference; lastKnownFileType = file; path = TS_short_warn.aif; sourceTree = "<group>"; };
-		5A7159911FCBC35E00BEB5EE /* MainVCStrings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainVCStrings.swift; sourceTree = "<group>"; };
 		5A7D12CE1F0B2ADC00C9B51A /* TS_short_in.aif */ = {isa = PBXFileReference; lastKnownFileType = file; name = TS_short_in.aif; path = "../../TS Sounds/TS_short_in.aif"; sourceTree = "<group>"; };
 		5A7D12CF1F0B2ADC00C9B51A /* TS_short_out.aif */ = {isa = PBXFileReference; lastKnownFileType = file; name = TS_short_out.aif; path = "../../TS Sounds/TS_short_out.aif"; sourceTree = "<group>"; };
 		5A871FF91D6FC68900B08A05 /* TableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableCell.swift; sourceTree = "<group>"; };
@@ -218,7 +216,6 @@
 				5A1B03AD2031FDEB00704D00 /* TimeAnnouncementController.swift */,
 				5A23597D20128A5400393EAA /* LocalNotifications.swift */,
 				858480F51FCB55D300DBE466 /* TimeFormatter.swift */,
-				5A7159911FCBC35E00BEB5EE /* MainVCStrings.swift */,
 				5AB69EBE1EC799370078DDA5 /* Countdown.swift */,
 				5A591CE81D3AA18E00B9BD3D /* SoundController.swift */,
 			);
@@ -388,7 +385,6 @@
 				5A12267E1D5A94C3006D49F1 /* STTimerList.swift in Sources */,
 				5A90785D1EEB8C24006BCDD3 /* Constants.swift in Sources */,
 				5ADE6DCD1FFF285000E8CF8C /* PermissionController.swift in Sources */,
-				5A7159921FCBC35E00BEB5EE /* MainVCStrings.swift in Sources */,
 				85B648AA1FFB19C3004E85F4 /* TimeoutManager.swift in Sources */,
 				5AD81F5420601FA100490859 /* ContainerHandler.swift in Sources */,
 				5A297B4C201B99A500E1E722 /* ApplicationShortcuts.swift in Sources */,
