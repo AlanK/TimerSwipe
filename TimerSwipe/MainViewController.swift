@@ -107,16 +107,6 @@ class MainViewController: UIViewController {
     var timeAnnouncementController = TimeAnnouncementController()
     private var appStateNotifications = AppStateNotifications()
     
-    /// Shows and hides "Swipe to Start" instructions
-    private var instructionsVisible = true {
-        didSet {
-            let alpha = instructionsVisible ? K.enabledAlpha : K.disabledAlpha
-            UIView.animate(withDuration: K.instructionsAnimationDuration, delay: 0, options: .curveLinear, animations: {
-                self.instructionsDisplay.alpha = alpha
-            })
-        }
-    }
-    
     private lazy var duration = providedTimer.seconds
     
     private let soundController = SoundController()
@@ -176,8 +166,12 @@ extension MainViewController: CountdownDelegate {
             
             setButtonTitle(button, withTimerReadyStatus: isReady)
             containerView.accessibilityLabel = strings.containerViewLabel(timerReady: isReady, timerDuration: duration)
-            instructionsVisible = isReady
             
+            let alpha = isReady ? K.enabledAlpha : K.disabledAlpha
+            UIView.animate(withDuration: K.instructionsAnimationDuration, delay: 0, options: .curveLinear, animations: {
+                self.instructionsDisplay.alpha = alpha
+            })
+
             if let sound = sound { soundController.play(sound) }
             
             if let notice = notice {
