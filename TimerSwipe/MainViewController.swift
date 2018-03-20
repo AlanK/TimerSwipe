@@ -112,9 +112,7 @@ class MainViewController: UIViewController {
     private let soundController = SoundController()
     private let localNotifications = LocalNotifications()
     private let timeFormatter = TimeFormatter()
-    
-    let strings = MainVCStrings()
-    
+    private let strings = MainVCStrings()
     
     // MARK: Methods
     
