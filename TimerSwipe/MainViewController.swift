@@ -97,7 +97,7 @@ class MainViewController: UIViewController {
     }
     
     @IBOutlet var containerView: UIStackView! {
-        didSet { ContainerViewAccessorizer().configure(containerView, owner: self, duration: duration) }
+        didSet { containerHandler.configure(containerView, owner: self, duration: duration) }
     }
     
     // MARK: Properties
@@ -114,6 +114,8 @@ class MainViewController: UIViewController {
     private let timeFormatter = TimeFormatter()
     let strings = MainVCStrings()
     
+    private let containerHandler = ContainerViewAccessorizer()
+    
     // MARK: Methods
     
     private func setButtonTitle(_ button: UIButton, withTimerReadyStatus timerIsReady: Bool) {
@@ -129,8 +131,7 @@ class MainViewController: UIViewController {
         let voiceOverOn = UIAccessibilityIsVoiceOverRunning()
         
         instructionsDisplay.text = strings.textInstructions(voiceOverIsOn: voiceOverOn)
-        voiceOverOn ? containerView.addGestureRecognizer(tapRecognizer) : containerView.removeGestureRecognizer(tapRecognizer)
-        containerView.layoutIfNeeded()
+        containerHandler.voiceOver(containerView, voiceOverOn: voiceOverOn, recognizer: tapRecognizer)
     }
     
 }
@@ -165,7 +166,7 @@ extension MainViewController: CountdownDelegate {
             }
             
             setButtonTitle(button, withTimerReadyStatus: isReady)
-            containerView.accessibilityLabel = strings.containerViewLabel(timerReady: isReady, timerDuration: duration)
+            containerHandler.label(containerView, timerReady: isReady, duration: duration)
             
             let alpha = isReady ? K.enabledAlpha : K.disabledAlpha
             UIView.animate(withDuration: K.instructionsAnimationDuration, delay: 0, options: .curveLinear, animations: {
