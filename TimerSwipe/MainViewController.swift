@@ -70,9 +70,7 @@ class MainViewController: UIViewController {
     @IBAction func swipeUp(_ sender: AnyObject) { delegate.swipe(self) }
     @IBAction func swipeDown(_ sender: AnyObject) { delegate.swipe(self) }
     
-    private lazy var tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(containerViewActivated(sender:)))
-    @objc private func containerViewActivated(sender: UITapGestureRecognizer) { delegate.containerViewActivated(self, sender: sender) }
-    
+    @objc func containerViewActivated(sender: UITapGestureRecognizer) { delegate.containerViewActivated(self, sender: sender) }
     @objc func containerAlternateActivated() { delegate.containerViewAlternateActivated(self) }
     @objc func toggleAnnouncements() { delegate.containerViewToggleActivated(self) }
     
@@ -114,7 +112,7 @@ class MainViewController: UIViewController {
     private let timeFormatter = TimeFormatter()
     let strings = MainVCStrings()
     
-    private let containerHandler = ContainerViewAccessorizer()
+    private lazy var containerHandler = ContainerViewAccessorizer(self)
     
     // MARK: Methods
     
@@ -131,7 +129,7 @@ class MainViewController: UIViewController {
         let voiceOverOn = UIAccessibilityIsVoiceOverRunning()
         
         instructionsDisplay.text = strings.textInstructions(voiceOverIsOn: voiceOverOn)
-        containerHandler.voiceOver(containerView, voiceOverOn: voiceOverOn, recognizer: tapRecognizer)
+        containerHandler.voiceOver(containerView, voiceOverOn: voiceOverOn)
     }
     
 }
