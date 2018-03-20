@@ -24,10 +24,10 @@ class MainViewController: UIViewController {
     // MARK: Dependencies
     
     private weak var delegate: MainViewControllerDelegate!
+    private var sound: SoundPlayer!
     private var timer: STSavedTimer!
     private var countdown: Countdown!
 
-    private var soundController = SoundController()
     private let localNotifications = LocalNotifications()
     private let timeFormatter = TimeFormatter()
 
@@ -41,11 +41,12 @@ class MainViewController: UIViewController {
     
     // MARK: Initializers
     
-    static func instantiate(with delegate: MainViewControllerDelegate, timer: STSavedTimer) -> MainViewController {
+    static func instantiate(with delegate: MainViewControllerDelegate, sound: SoundPlayer, timer: STSavedTimer) -> MainViewController {
         let storyboard = UIStoryboard(name: "MainViewController", bundle: Bundle.main)
         let vc = storyboard.instantiateViewController(withIdentifier: MainID.mainView.rawValue) as! MainViewController
         
         vc.delegate = delegate
+        vc.sound = sound
         vc.timer = timer
         vc.countdown = Countdown(delegate: vc, duration: vc.timer.seconds)
         
@@ -59,7 +60,6 @@ class MainViewController: UIViewController {
         // The display shouldn’t sleep while this view is visible since the user expects to start a timer when they can’t see the screen
         UIApplication.shared.isIdleTimerDisabled = true
         navigationController?.setNavigationBarHidden(true, animated: true)
-        soundController.setActive(true)
         handleVoiceOverStatus()
     }
     
@@ -67,7 +67,6 @@ class MainViewController: UIViewController {
         super.viewWillDisappear(animated)
         // The display should sleep in other views in the app
         UIApplication.shared.isIdleTimerDisabled = false
-        soundController.setActive(false)
     }
     
     override func accessibilityPerformMagicTap() -> Bool { return delegate.magicTapActivated(self) }
@@ -148,7 +147,7 @@ extension MainViewController: CountdownDelegate {
      - parameter status: whether the timer started, ended, or was cancelled
     */
     func countdownDid(_ status: Countdown.Status) {
-        func updateTimerStatus(sound: AudioCue? = nil) {
+        func updateTimerStatus(cue: AudioCue? = nil) {
             let ready: Bool
             switch status {
             case let .start(expirationDate): ready = false
@@ -165,7 +164,7 @@ extension MainViewController: CountdownDelegate {
             containerHandler.label(timerIs: ready, duration: duration)
             instructionsHandler.animate(timerIs: ready)
             
-            if let sound = sound { soundController.play(sound) }
+            if let cue = cue { sound.play(cue) }
             
             if let notice = status.notice {
                 UIAccessibilityPostNotification(UIAccessibilityLayoutChangedNotification, nil)
@@ -174,8 +173,8 @@ extension MainViewController: CountdownDelegate {
         }
         
         switch status {
-        case .start: updateTimerStatus(sound: .startCue)
-        case .end: updateTimerStatus(sound: .endCue)
+        case .start: updateTimerStatus(cue: .startCue)
+        case .end: updateTimerStatus(cue: .endCue)
         case .cancel, .expire: updateTimerStatus()
         }
     }

@@ -12,6 +12,8 @@ class RootFC: UIViewController {
     // MARK: Dependencies
     
     private var model: Model!
+    private var soundController = SoundController()
+    private var appStateNotifications = AppStateNotifications()
     
     // MARK: Initializers
     
@@ -34,6 +36,12 @@ class RootFC: UIViewController {
         loadNavigationStack(animated: false, with: model)
         addChildToRootView(nav)
         
+        appStateNotifications.add(onBackground: { [unowned self] in
+            if self.soundController.isActive { self.soundController.setActive(false) }
+        }) { [unowned self] in
+            self.setSoundControllerStatus()
+        }
+        
         // Make any necessary changes to views after being in the background for a long time
         _ = TimeoutManager { [unowned self] in
             // TODO: Refactor this.
@@ -47,8 +55,8 @@ class RootFC: UIViewController {
             if (topVC as? TableController)?.isEditing == true { return }
             
             // Don't animate going from one timer to another; it looks weird
-            let animated = !(topVC is MainViewController)
-            self.loadNavigationStack(animated: animated, with: model)
+            let leavingTableController = !(topVC is MainViewController)
+            self.loadNavigationStack(animated: leavingTableController, with: model)
         }
     }
     
@@ -76,6 +84,8 @@ class RootFC: UIViewController {
         return nc
     }()
     
+    private var soundControllerShouldBeActive: Bool { return nav.topViewController is MainViewController }
+    
     private lazy var voiceOverHandler = VoiceOverHandler() { [unowned self] in return self.nav.topViewController as? VoiceOverObserver }
     
     // MARK: Methods
@@ -90,18 +100,28 @@ class RootFC: UIViewController {
         var navHierarchy: [UIViewController] = [vc]
         
         if let providedTimer = providedTimer ?? model.favorite {
-            let vc = MainViewController.instantiate(with: self, timer: providedTimer)
+            let vc = MainViewController.instantiate(with: self, sound: soundController, timer: providedTimer)
             navHierarchy.append(vc)
         }
+        
         nav.setViewControllers(navHierarchy, animated: animated)
+        setSoundControllerStatus()
+    }
+    
+    func setSoundControllerStatus() {
+        guard soundController.isActive == soundControllerShouldBeActive else {
+            soundController.setActive(soundControllerShouldBeActive)
+            return
+        }
     }
 }
 
 extension RootFC: TableControllerDelegate {
     func tableView(_ model: Model, tableController: TableController, didSelectRowAt indexPath: IndexPath) {
         let timer = model[indexPath.row]
-        let vc = MainViewController.instantiate(with: self, timer: timer)
+        let vc = MainViewController.instantiate(with: self, sound: soundController, timer: timer)
         nav.pushViewController(vc, animated: true)
+        setSoundControllerStatus()
     }
 }
 
@@ -110,7 +130,10 @@ extension RootFC: MainViewControllerDelegate {
     
     private func startOrEndCountdown(_ vc: MainViewController) { vc.countdownIsReady ? vc.startCountdown() : vc.cancelCountdown() }
     
-    private func leaveMainViewController() { _ = nav.popViewController(animated: true) }
+    private func leaveMainViewController() {
+        _ = nav.popViewController(animated: true)
+        setSoundControllerStatus()
+    }
     
     func swipe(_ vc: MainViewController) { vc.startCountdown() }
     
