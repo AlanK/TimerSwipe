@@ -25,7 +25,7 @@ struct ContainerHandler {
     
     func configure(owner: MainViewController, duration: TimeInterval) {
         let primaryAction = CustomAccessibilityAction(target: owner, selector: #selector(MainViewController.containerAlternateActivated)) { [unowned owner] in
-            switch owner.countdownReady {
+            switch owner.countdownIsReady {
             case true:
                 return NSLocalizedString("Change timer", comment: "Change the timer by selecting another one")
             case false:

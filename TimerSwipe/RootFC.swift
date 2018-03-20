@@ -42,7 +42,7 @@ class RootFC: UIViewController {
             let model = self.model!
             
             // Don’t change views if a timer is running or there’s no favorite to change to
-            guard (topVC as? CountdownDelegate)?.countdownReady ?? true, let _ = model.favorite else { return }
+            guard (topVC as? CountdownDelegate)?.countdownIsReady ?? true, let _ = model.favorite else { return }
             // Don't disrupt an active edit session
             if (topVC as? TableController)?.isEditing == true { return }
             
@@ -82,8 +82,8 @@ class RootFC: UIViewController {
     
     func loadNavigationStack(animated: Bool, with model: Model, providedTimer: STSavedTimer? = nil) {
         // If there's a timer running, cancel it. Don't try to cancel it if it isn't, running, though, to avoid weird crashes on launch from a shortcut item.
-        if let countdownDelegate = nav.topViewController as? CountdownDelegate, countdownDelegate.countdownReady == false {
-            countdownDelegate.countdownCancel()
+        if let countdownDelegate = nav.topViewController as? CountdownDelegate, countdownDelegate.countdownIsReady == false {
+            countdownDelegate.cancelCountdown()
         }
         
         let vc = TableController.instantiate(with: self, model: model)
@@ -106,11 +106,11 @@ extension RootFC: TableControllerDelegate {
 }
 
 extension RootFC: MainViewControllerDelegate {
-    private func changeTimerOrCancelCountdown(_ vc: MainViewController) { vc.countdownReady ? _ = nav.popViewController(animated: true) : vc.countdownCancel() }
+    private func changeTimerOrCancelCountdown(_ vc: MainViewController) { vc.countdownIsReady ? _ = nav.popViewController(animated: true) : vc.cancelCountdown() }
     
-    private func startOrEndCountdown(_ vc: MainViewController) { vc.countdownReady ? vc.countdownStart() : vc.countdownCancel() }
+    private func startOrEndCountdown(_ vc: MainViewController) { vc.countdownIsReady ? vc.startCountdown() : vc.cancelCountdown() }
     
-    func swipe(_ vc: MainViewController) { vc.countdownStart() }
+    func swipe(_ vc: MainViewController) { vc.startCountdown() }
     
     func buttonActivated(_ button: UIButton, vc: MainViewController) { changeTimerOrCancelCountdown(vc) }
     

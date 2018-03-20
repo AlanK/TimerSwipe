@@ -15,11 +15,11 @@ protocol CountdownDelegate: class {
     /// Updates the countdown display with a value in seconds
     func updateDisplay(with: TimeInterval)
     
-    var countdownReady: Bool { get }
+    var countdownIsReady: Bool { get }
     
-    func countdownStart()
+    func startCountdown()
     
-    func countdownCancel()
+    func cancelCountdown()
 }
 
 /// The object that runs countdowns

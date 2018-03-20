@@ -129,11 +129,11 @@ class MainViewController: UIViewController {
 // MARK: - Stopwatch delegate
 
 extension MainViewController: CountdownDelegate {
-    var countdownReady: Bool { return countdown.ready }
+    var countdownIsReady: Bool { return countdown.ready }
     
-    func countdownStart() { countdown.start() }
+    func startCountdown() { countdown.start() }
     
-    func countdownCancel() { countdown.cancel() }
+    func cancelCountdown() { countdown.cancel() }
     
     /**
      Updates the timer display with a time interval.
