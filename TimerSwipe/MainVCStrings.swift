@@ -29,18 +29,5 @@ struct MainVCStrings {
         }
     }
     
-    /**
-     Text for visible instructions depending on VoiceOver Status
-     - parameter voiceOverOn: the status of VoiceOver
-     - returns: instructions to display to the user
-     */
-    func textInstructions(voiceOverIsOn: Bool) -> String {
-        switch voiceOverIsOn {
-        case true: return NSLocalizedString("Double-Tap to Start",
-                                            comment: "Double-tap anywhere on the screen to start the timer")
-        case false: return NSLocalizedString("Swipe to Start",
-                                             comment: "Swipe anywhere on the screen in any direction to start the timer")
-        }
-    }
     
 }

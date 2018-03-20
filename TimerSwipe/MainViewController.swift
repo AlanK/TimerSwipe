@@ -77,7 +77,7 @@ class MainViewController: UIViewController {
     // MARK: Outlets
     /// The "Swipe to Start" label
     @IBOutlet var instructionsDisplay: UILabel! {
-        didSet { instructionsDisplay.text = strings.textInstructions(voiceOverIsOn: false) }
+        didSet { instructionsHandler.setText(voiceOverOn: UIAccessibilityIsVoiceOverRunning()) }
     }
     
     /// The "00:00.00" label
@@ -107,6 +107,7 @@ class MainViewController: UIViewController {
     
     private lazy var duration = providedTimer.seconds
     private lazy var containerHandler = ContainerViewAccessorizer(containerView, vc: self)
+    private lazy var instructionsHandler = InstructionsHandler(instructionsDisplay)
 
     private let soundController = SoundController()
     private let localNotifications = LocalNotifications()
@@ -129,7 +130,7 @@ class MainViewController: UIViewController {
         /// Change the text instructions to match the VO-enabled interaction paradigm and make the containerView touch-enabled
         let voiceOverOn = UIAccessibilityIsVoiceOverRunning()
         
-        instructionsDisplay.text = strings.textInstructions(voiceOverIsOn: voiceOverOn)
+        instructionsHandler.setText(voiceOverOn: voiceOverOn)
         containerHandler.voiceOver(voiceOverOn: voiceOverOn)
     }
     
@@ -166,11 +167,8 @@ extension MainViewController: CountdownDelegate {
             
             setButtonTitle(button, withTimerReadyStatus: isReady)
             containerHandler.label(timerReady: isReady, duration: duration)
+            instructionsHandler.animate(to: isReady)
             
-            UIView.animate(withDuration: K.instructionsAnimationDuration, delay: 0, options: .curveLinear, animations: {
-                self.instructionsDisplay.alpha = isReady ? K.enabledAlpha : K.disabledAlpha
-            })
-
             if let sound = sound { soundController.play(sound) }
             
             if let notice = notice {
