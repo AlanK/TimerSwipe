@@ -106,13 +106,14 @@ class MainViewController: UIViewController {
     private var appStateNotifications = AppStateNotifications()
     
     private lazy var duration = providedTimer.seconds
-    
+    private lazy var containerHandler = ContainerViewAccessorizer(containerView, vc: self)
+
     private let soundController = SoundController()
     private let localNotifications = LocalNotifications()
     private let timeFormatter = TimeFormatter()
+    
     let strings = MainVCStrings()
     
-    private lazy var containerHandler = ContainerViewAccessorizer(containerView, vc: self)
     
     // MARK: Methods
     

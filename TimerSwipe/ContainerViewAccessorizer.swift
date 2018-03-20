@@ -20,7 +20,12 @@ struct ContainerViewAccessorizer {
     
     func configure(owner: MainViewController, duration: TimeInterval) {
         let primaryAction = CustomAccessibilityAction(target: owner, selector: #selector(MainViewController.containerAlternateActivated)) { [unowned owner] in
-            return owner.strings.buttonLabel(timerIsReady: owner.countdown.ready)
+            switch owner.countdown.ready {
+            case true: return NSLocalizedString("Change timer",
+                                                comment: "Change the timer by selecting another one")
+            case false: return NSLocalizedString("Cancel timer",
+                                                 comment: "Cancel the running timer")
+            }
         }
         
         let toggleAction = CustomAccessibilityAction(target: owner, selector: #selector(MainViewController.toggleAnnouncements)) { [unowned owner] in
@@ -59,5 +64,4 @@ struct ContainerViewAccessorizer {
             comment: "Running {whole number}-second timer. (This button) cancels the timer")
         }
     }
-
 }

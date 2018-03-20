@@ -29,16 +29,6 @@ struct MainVCStrings {
         }
     }
     
-    /// Returns a localized string with VoiceOver instructions for the Change/Cancel button
-    func buttonLabel(timerIsReady: Bool) -> String {
-        switch timerIsReady {
-        case true: return NSLocalizedString("Change timer",
-                                            comment: "Change the timer by selecting another one")
-        case false: return NSLocalizedString("Cancel timer",
-                                             comment: "Cancel the running timer")
-        }
-    }
-    
     /**
      Text for visible instructions depending on VoiceOver Status
      - parameter voiceOverOn: the status of VoiceOver
