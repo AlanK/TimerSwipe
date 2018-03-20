@@ -87,7 +87,7 @@ class RootFC: UIViewController {
     
     // MARK: Methods
     
-    func loadNavigationStack(animated: Bool, with model: Model, providedTimer: STSavedTimer? = nil) {
+    func loadNavigationStack(animated: Bool, with model: Model, timer: STSavedTimer? = nil) {
         // If there's a timer running, cancel it. Don't try to cancel it if it isn't, running, though, to avoid weird crashes on launch from a shortcut item.
         if let countdownDelegate = nav.topViewController as? CountdownDelegate, countdownDelegate.countdownIsReady == false {
             countdownDelegate.cancelCountdown()
@@ -96,8 +96,8 @@ class RootFC: UIViewController {
         let vc = TableController.instantiate(with: self, model: model)
         var navHierarchy: [UIViewController] = [vc]
         
-        if let providedTimer = providedTimer ?? model.favorite {
-            let vc = MainViewController.instantiate(with: self, sound: soundController, timer: providedTimer)
+        if let timer = timer ?? model.favorite {
+            let vc = MainViewController.instantiate(with: self, sound: soundController, timer: timer)
             navHierarchy.append(vc)
         }
         
