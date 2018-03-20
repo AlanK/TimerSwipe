@@ -44,7 +44,7 @@ class MainViewController: UIViewController {
         super.viewWillAppear(animated)
         // The display shouldn’t sleep while this view is visible since the user expects to start a timer when they can’t see the screen
         UIApplication.shared.isIdleTimerDisabled = true
-        self.navigationController?.setNavigationBarHidden(true, animated: true)
+        navigationController?.setNavigationBarHidden(true, animated: true)
         soundController.setActive(true)
         handleVoiceOverStatus()
     }
