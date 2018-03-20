@@ -147,7 +147,7 @@ extension MainViewController: CountdownDelegate {
      Handle changes in timer status
      - parameter status: whether the timer started, ended, or was cancelled
     */
-    func countdownDid(_ status: CountdownStatus) {
+    func countdownDid(_ status: Countdown.Status) {
         func updateTimerStatus(sound: AudioCue? = nil) {
             let ready: Bool
             switch status {

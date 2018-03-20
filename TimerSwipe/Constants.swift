@@ -25,26 +25,6 @@ enum PermissionsID: String {
     case permissionController = "PermissionController"
 }
 
-/// Message announcing changes in timer status
-enum CountdownStatus {
-    case start(Date)
-    case end
-    case cancel
-    case expire
-    
-    var notice: String? {
-        switch self {
-        case .start:
-            return NSLocalizedString("Started timer, double-tap to cancel", comment: "The timer has started, double-tap on the screen to cancel it")
-        case .end:
-            return NSLocalizedString("Timer finished", comment: "The timer has finished")
-        case .cancel:
-            return NSLocalizedString("Cancelled timer", comment: "The timer has been cancelled")
-        case .expire: return nil
-        }
-    }
-}
-
 /// Valid types for `UIApplicationShortcutItem`
 enum ShortcutTypes: String {
     case timer = "timer"

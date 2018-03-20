@@ -11,7 +11,7 @@ import Foundation
 /// Responsible for handling changes in countdown status and providing a display that can be updated
 protocol CountdownDelegate: class {
     /// Handles changes in countdown status
-    func countdownDid(_: CountdownStatus)
+    func countdownDid(_: Countdown.Status)
     /// Updates the countdown display with a value in seconds
     func updateDisplay(with: TimeInterval)
     
@@ -102,6 +102,27 @@ class Countdown {
             
             // Update the countdown display
             self.delegate.updateDisplay(with: expirationDate.timeIntervalSince(currentTime))
+        }
+    }
+    
+    // MARK: Nested Types
+    /// Message announcing changes in timer status
+    enum Status {
+        case start(Date)
+        case end
+        case cancel
+        case expire
+        
+        var notice: String? {
+            switch self {
+            case .start:
+                return NSLocalizedString("Started timer, double-tap to cancel", comment: "The timer has started, double-tap on the screen to cancel it")
+            case .end:
+                return NSLocalizedString("Timer finished", comment: "The timer has finished")
+            case .cancel:
+                return NSLocalizedString("Cancelled timer", comment: "The timer has been cancelled")
+            case .expire: return nil
+            }
         }
     }
 }
