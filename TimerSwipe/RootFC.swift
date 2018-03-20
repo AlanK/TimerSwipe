@@ -50,10 +50,16 @@ class RootFC: UIViewController {
             let topVC = self.nav.topViewController
             let model = self.model!
             
-            // Don’t change views if a timer is running or there’s no favorite to change to
-            guard (topVC as? CountdownDelegate)?.countdownIsReady ?? true, let _ = model.favorite else { return }
+            // Don’t change views if a timer is running
+            if let vc = topVC as? CountdownDelegate {
+                guard vc.countdownIsReady else { return }
+            }
+            // Don't change views if there is no favorite to change to
+            guard let _ = model.favorite else { return }
             // Don't disrupt an active edit session
-            if (topVC as? TableController)?.isEditing == true { return }
+            if let vc = topVC as? TableController {
+                if vc.isEditing { return }
+            }
             
             // Don't animate going from one timer to another; it looks weird
             let leavingTableController = !(topVC is MainViewController)
