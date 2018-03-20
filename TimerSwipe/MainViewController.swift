@@ -167,9 +167,8 @@ extension MainViewController: CountdownDelegate {
             setButtonTitle(button, withTimerReadyStatus: isReady)
             containerHandler.label(timerReady: isReady, duration: duration)
             
-            let alpha = isReady ? K.enabledAlpha : K.disabledAlpha
             UIView.animate(withDuration: K.instructionsAnimationDuration, delay: 0, options: .curveLinear, animations: {
-                self.instructionsDisplay.alpha = alpha
+                self.instructionsDisplay.alpha = isReady ? K.enabledAlpha : K.disabledAlpha
             })
 
             if let sound = sound { soundController.play(sound) }
