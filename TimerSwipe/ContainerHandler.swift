@@ -1,5 +1,5 @@
 //
-//  ContainerViewAccessorizer.swift
+//  ContainerHandler.swift
 //  TimerSwipe
 //
 //  Created by Alan Kantz on 3/19/18.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-struct ContainerViewAccessorizer {
+struct ContainerHandler {
     
     private let view: UIView
     private let recognizer: UITapGestureRecognizer

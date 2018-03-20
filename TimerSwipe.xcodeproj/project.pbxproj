@@ -36,7 +36,7 @@
 		5AD81F4C205EB94E00490859 /* VoiceOverHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AD81F4B205EB94E00490859 /* VoiceOverHandler.swift */; };
 		5AD81F4E205F4F0500490859 /* MainViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5AD81F4D205F4F0500490859 /* MainViewController.storyboard */; };
 		5AD81F522060102700490859 /* CustomAccessibilityAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AD81F512060102700490859 /* CustomAccessibilityAction.swift */; };
-		5AD81F5420601FA100490859 /* ContainerViewAccessorizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AD81F5320601FA100490859 /* ContainerViewAccessorizer.swift */; };
+		5AD81F5420601FA100490859 /* ContainerHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AD81F5320601FA100490859 /* ContainerHandler.swift */; };
 		5AD81F5620609E0600490859 /* InstructionsHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AD81F5520609E0600490859 /* InstructionsHandler.swift */; };
 		5ADB6A181F561562006BEE1B /* InputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ADB6A171F561562006BEE1B /* InputView.swift */; };
 		5ADE6DC81FFD9E0600E8CF8C /* PermissionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ADE6DC71FFD9E0600E8CF8C /* PermissionManager.swift */; };
@@ -95,7 +95,7 @@
 		5AD81F4B205EB94E00490859 /* VoiceOverHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoiceOverHandler.swift; sourceTree = "<group>"; };
 		5AD81F4D205F4F0500490859 /* MainViewController.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = MainViewController.storyboard; sourceTree = "<group>"; };
 		5AD81F512060102700490859 /* CustomAccessibilityAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAccessibilityAction.swift; sourceTree = "<group>"; };
-		5AD81F5320601FA100490859 /* ContainerViewAccessorizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainerViewAccessorizer.swift; sourceTree = "<group>"; };
+		5AD81F5320601FA100490859 /* ContainerHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainerHandler.swift; sourceTree = "<group>"; };
 		5AD81F5520609E0600490859 /* InstructionsHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstructionsHandler.swift; sourceTree = "<group>"; };
 		5ADB6A171F561562006BEE1B /* InputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputView.swift; sourceTree = "<group>"; };
 		5ADE6DC71FFD9E0600E8CF8C /* PermissionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionManager.swift; sourceTree = "<group>"; };
@@ -211,7 +211,7 @@
 			children = (
 				5AB18AF91D2058CA007B9D9F /* MainViewController.swift */,
 				5AD81F5520609E0600490859 /* InstructionsHandler.swift */,
-				5AD81F5320601FA100490859 /* ContainerViewAccessorizer.swift */,
+				5AD81F5320601FA100490859 /* ContainerHandler.swift */,
 				5A1B03AD2031FDEB00704D00 /* TimeAnnouncementController.swift */,
 				5A23597D20128A5400393EAA /* LocalNotifications.swift */,
 				858480F51FCB55D300DBE466 /* TimeFormatter.swift */,
@@ -387,7 +387,7 @@
 				5ADE6DCD1FFF285000E8CF8C /* PermissionController.swift in Sources */,
 				5A7159921FCBC35E00BEB5EE /* MainVCStrings.swift in Sources */,
 				85B648AA1FFB19C3004E85F4 /* TimeoutManager.swift in Sources */,
-				5AD81F5420601FA100490859 /* ContainerViewAccessorizer.swift in Sources */,
+				5AD81F5420601FA100490859 /* ContainerHandler.swift in Sources */,
 				5A297B4C201B99A500E1E722 /* ApplicationShortcuts.swift in Sources */,
 				5A23598020128BC400393EAA /* AppStateNotifications.swift in Sources */,
 				5A03B9A81D1DDB9800E245C9 /* AppDelegate.swift in Sources */,
