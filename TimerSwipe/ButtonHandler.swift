@@ -21,23 +21,20 @@ struct ButtonHandler {
     
     // MARK: Methods
     
-    func setTitle(withTimerReadyStatus timerIsReady: Bool) {
+    func setTitle(timerIs ready: Bool) {
         // Use performWithoutAnimation to prevent weird flashing as button text animates.
         UIView.performWithoutAnimation {
-            button.setTitle(buttonText(timerIsReady: timerIsReady), for: UIControlState())
+            button.setTitle(buttonText(timerIs: ready), for: UIControlState())
             button.layoutIfNeeded()
         }
     }
     
-    /// Returns a localized string with text for the Change/Cancel button
-    private func buttonText(timerIsReady: Bool) -> String {
-        switch timerIsReady {
-        case true: return NSLocalizedString("changeButton",
-                                            value: "Change",
-                                            comment: "Change which timer is displayed")
-        case false: return NSLocalizedString("cancelButton",
-                                             value: "Cancel",
-                                             comment: "Cancel the timer that is currently running")
+    private func buttonText(timerIs ready: Bool) -> String {
+        switch ready {
+        case true:
+            return NSLocalizedString("changeButton", value: "Change", comment: "Change which timer is displayed")
+        case false:
+            return NSLocalizedString("cancelButton", value: "Cancel", comment: "Cancel the timer that is currently running")
         }
     }
 }

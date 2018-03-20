@@ -90,7 +90,7 @@ class MainViewController: UIViewController {
     
     /// The Change/Cancel button
     @IBOutlet var button: UIButton! {
-        didSet { buttonHandler.setTitle(withTimerReadyStatus: true) }
+        didSet { buttonHandler.setTitle(timerIs: true) }
     }
     
     @IBOutlet var containerView: UIStackView! {
@@ -142,21 +142,21 @@ extension MainViewController: CountdownDelegate {
     */
     func countdownDid(_ status: CountdownStatus) {
         func updateTimerStatus(sound: AudioCue? = nil) {
-            let isReady: Bool
+            let ready: Bool
             switch status {
-            case let .start(expirationDate): isReady = false
+            case let .start(expirationDate): ready = false
                 appStateNotifications.add(onBackground: countdown.sleep, onActive: countdown.wake)
                 localNotifications.enableNotification(on: expirationDate)
                 timeAnnouncementController.startTimeAnnouncements(for: expirationDate, duration: duration)
-            case .end, .cancel, .expire: isReady = true
+            case .end, .cancel, .expire: ready = true
                 appStateNotifications.removeAll()
                 localNotifications.disableNotification()
                 timeAnnouncementController.cancelTimeAnnouncements()
             }
             
-            buttonHandler.setTitle(withTimerReadyStatus: isReady)
-            containerHandler.label(timerReady: isReady, duration: duration)
-            instructionsHandler.animate(to: isReady)
+            buttonHandler.setTitle(timerIs: ready)
+            containerHandler.label(timerIs: ready, duration: duration)
+            instructionsHandler.animate(timerIs: ready)
             
             if let sound = sound { soundController.play(sound) }
             
