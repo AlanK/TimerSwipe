@@ -34,7 +34,7 @@ class MainViewController: UIViewController {
     private lazy var containerHandler = ContainerHandler(containerView, vc: self)
     private lazy var instructionsHandler = InstructionsHandler(instructionsDisplay)
     
-    lazy var countdown: Countdown = Countdown(delegate: self, duration: duration)
+    private lazy var countdown: Countdown = Countdown(delegate: self, duration: duration)
     
     var timeAnnouncementController = TimeAnnouncementController()
     
@@ -129,6 +129,12 @@ class MainViewController: UIViewController {
 // MARK: - Stopwatch delegate
 
 extension MainViewController: CountdownDelegate {
+    var countdownReady: Bool { return countdown.ready }
+    
+    func countdownStart() { countdown.start() }
+    
+    func countdownCancel() { countdown.cancel() }
+    
     /**
      Updates the timer display with a time interval.
      - parameter seconds: time remaining as a `TimeInterval`

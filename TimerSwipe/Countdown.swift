@@ -10,11 +10,16 @@ import Foundation
 
 /// Responsible for handling changes in countdown status and providing a display that can be updated
 protocol CountdownDelegate: class {
-    var countdown: Countdown { get }
     /// Handles changes in countdown status
     func countdownDid(_: CountdownStatus)
     /// Updates the countdown display with a value in seconds
     func updateDisplay(with: TimeInterval)
+    
+    var countdownReady: Bool { get }
+    
+    func countdownStart()
+    
+    func countdownCancel()
 }
 
 /// The object that runs countdowns
