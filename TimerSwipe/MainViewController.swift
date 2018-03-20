@@ -104,8 +104,8 @@ class MainViewController: UIViewController {
     var timeAnnouncementController = TimeAnnouncementController()
     
     private var appStateNotifications = AppStateNotifications()
+    private var duration: TimeInterval { return providedTimer.seconds }
     
-    private lazy var duration = providedTimer.seconds
     private lazy var buttonHandler = ButtonHandler(button)
     private lazy var containerHandler = ContainerHandler(containerView, vc: self)
     private lazy var instructionsHandler = InstructionsHandler(instructionsDisplay)
