@@ -36,6 +36,7 @@ class RootFC: UIViewController {
         loadNavigationStack(animated: false, with: model)
         addChildToRootView(nav)
         
+        voiceOverHandler.registerNotifications(true)
         appStateNotifications.add(onBackground: { [unowned self] in
             if self.soundController.isActive { self.soundController.setActive(false) }
         }) { [unowned self] in
@@ -60,18 +61,11 @@ class RootFC: UIViewController {
         }
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        // Make sure registering is paired with unregistering in viewWillDisappear
-        voiceOverHandler.registerNotifications(true)
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        // Make sure unregistering is paired with registering in viewWillAppear
+    deinit {
         voiceOverHandler.registerNotifications(false)
+        appStateNotifications.removeAll()
     }
-    
+
     // MARK: Properties
     
     let nav: UINavigationController = {
