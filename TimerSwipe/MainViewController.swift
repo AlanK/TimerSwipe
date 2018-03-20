@@ -93,7 +93,7 @@ class MainViewController: UIViewController {
     
     /// The Change/Cancel button
     @IBOutlet var button: UIButton! {
-        didSet { configureButton(withTimerReadyStatus: true) }
+        didSet { setButtonTitle(button, withTimerReadyStatus: true) }
     }
     
     @IBOutlet var containerView: UIStackView! {
@@ -126,11 +126,11 @@ class MainViewController: UIViewController {
     
     // MARK: Methods
     
-    private func configureButton(withTimerReadyStatus timerIsReady: Bool) {
+    private func setButtonTitle(_ button: UIButton, withTimerReadyStatus timerIsReady: Bool) {
         // Use performWithoutAnimation to prevent weird flashing as button text animates.
         UIView.performWithoutAnimation {
-            self.button.setTitle(strings.buttonText(timerIsReady: timerIsReady), for: UIControlState())
-            self.button.layoutIfNeeded()
+            button.setTitle(strings.buttonText(timerIsReady: timerIsReady), for: UIControlState())
+            button.layoutIfNeeded()
         }
     }
     
@@ -174,7 +174,7 @@ extension MainViewController: CountdownDelegate {
                 timeAnnouncementController.cancelTimeAnnouncements()
             }
             
-            configureButton(withTimerReadyStatus: isReady)
+            setButtonTitle(button, withTimerReadyStatus: isReady)
             containerView.accessibilityLabel = strings.containerViewLabel(timerReady: isReady, timerDuration: duration)
             instructionsVisible = isReady
             
