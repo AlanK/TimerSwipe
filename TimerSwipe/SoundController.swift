@@ -31,7 +31,7 @@ struct SoundController {
          - returns: An `AVAudioPlayer` configured to play the audio cue
          */
         func newPlayer(_ cue: AudioCue) -> AVAudioPlayer? {
-            guard let path = Bundle.main.path(forResource: cue.rawValue, ofType: nil) else {return nil}
+            guard let path = Bundle.main.path(forResource: cue.rawValue, ofType: nil) else { return nil }
             return try? AVAudioPlayer(contentsOf: URL(fileURLWithPath: path))
         }
         
@@ -40,8 +40,8 @@ struct SoundController {
                         .endCue : newPlayer(.endCue)]
         
         // Configure audio session to mix with background music
-        do {try audioSession.setCategory(AVAudioSessionCategoryAmbient, mode: AVAudioSessionModeDefault, options: [])}
-        catch {print("Could not set AVAudioSession category, mode, or options: \(error)")}
+        do { try audioSession.setCategory(AVAudioSessionCategoryAmbient, mode: AVAudioSessionModeDefault, options: []) }
+        catch { print("Could not set AVAudioSession category, mode, or options: \(error)") }
     }
     
     // MARK: Properties
@@ -54,14 +54,12 @@ struct SoundController {
      - parameter active: Whether the audio session should be activated or deactivated
      */
     func setActive(_ active: Bool) {
-        do {try audioSession.setActive(active)}
-        catch {print("Could not setActive(\(active)) AVAudioSession: \(error)")}
+        do { try audioSession.setActive(active) }
+        catch { print("Could not setActive(\(active)) AVAudioSession: \(error)") }
         
         // When activating the audio session, it is nice to prepare the sounds proactively.
-        guard active else {return}
-        for audioPlayer in audioPlayers {
-            audioPlayer.value?.prepareToPlay()
-        }
+        guard active else { return }
+        for audioPlayer in audioPlayers { audioPlayer.value?.prepareToPlay() }
     }
     
     /**
@@ -70,7 +68,7 @@ struct SoundController {
      */
     func play(_ cue: AudioCue) {
         /// Vibrate without playing a sound
-        func vibrate() {AudioServicesPlaySystemSound(kSystemSoundID_Vibrate)}
+        func vibrate() { AudioServicesPlaySystemSound(kSystemSoundID_Vibrate) }
         
         guard let audioPlayer = audioPlayers[cue] else {return}
         audioPlayer?.play()
