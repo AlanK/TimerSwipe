@@ -10,13 +10,15 @@ import UIKit
 
 struct ContainerViewAccessorizer {
     
+    private let view: UIView
     private let recognizer: UITapGestureRecognizer
     
-    init(_ vc: MainViewController) {
+    init(_ view: UIView, vc: MainViewController) {
+        self.view = view
         recognizer = UITapGestureRecognizer(target: vc, action: #selector(MainViewController.containerViewActivated(sender:)))
     }
     
-    func configure(_ view: UIView, owner: MainViewController, duration: TimeInterval) {
+    func configure(owner: MainViewController, duration: TimeInterval) {
         let primaryAction = CustomAccessibilityAction(target: owner, selector: #selector(MainViewController.containerAlternateActivated)) { [unowned owner] in
             return owner.strings.buttonLabel(timerIsReady: owner.countdown.ready)
         }
@@ -25,20 +27,18 @@ struct ContainerViewAccessorizer {
             return owner.timeAnnouncementController.preferenceInstructions
         }
         
-        
-        
         view.isAccessibilityElement = true
         view.accessibilityTraits = UIAccessibilityTraitSummaryElement
         view.accessibilityCustomActions = [primaryAction, toggleAction]
         view.accessibilityLabel = label(timerReady: true, timerDuration: duration)
     }
     
-    func voiceOver(_ view: UIView, voiceOverOn: Bool) {
+    func voiceOver(voiceOverOn: Bool) {
         voiceOverOn ? view.addGestureRecognizer(recognizer) : view.removeGestureRecognizer(recognizer)
         view.layoutIfNeeded()
     }
     
-    func label(_ view: UIView, timerReady: Bool, duration: TimeInterval) {
+    func label(timerReady: Bool, duration: TimeInterval) {
         view.accessibilityLabel = label(timerReady: timerReady, timerDuration: duration)
     }
     

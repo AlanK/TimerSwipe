@@ -95,7 +95,7 @@ class MainViewController: UIViewController {
     }
     
     @IBOutlet var containerView: UIStackView! {
-        didSet { containerHandler.configure(containerView, owner: self, duration: duration) }
+        didSet { containerHandler.configure(owner: self, duration: duration) }
     }
     
     // MARK: Properties
@@ -112,7 +112,7 @@ class MainViewController: UIViewController {
     private let timeFormatter = TimeFormatter()
     let strings = MainVCStrings()
     
-    private lazy var containerHandler = ContainerViewAccessorizer(self)
+    private lazy var containerHandler = ContainerViewAccessorizer(containerView, vc: self)
     
     // MARK: Methods
     
@@ -129,7 +129,7 @@ class MainViewController: UIViewController {
         let voiceOverOn = UIAccessibilityIsVoiceOverRunning()
         
         instructionsDisplay.text = strings.textInstructions(voiceOverIsOn: voiceOverOn)
-        containerHandler.voiceOver(containerView, voiceOverOn: voiceOverOn)
+        containerHandler.voiceOver(voiceOverOn: voiceOverOn)
     }
     
 }
@@ -164,7 +164,7 @@ extension MainViewController: CountdownDelegate {
             }
             
             setButtonTitle(button, withTimerReadyStatus: isReady)
-            containerHandler.label(containerView, timerReady: isReady, duration: duration)
+            containerHandler.label(timerReady: isReady, duration: duration)
             
             let alpha = isReady ? K.enabledAlpha : K.disabledAlpha
             UIView.animate(withDuration: K.instructionsAnimationDuration, delay: 0, options: .curveLinear, animations: {
