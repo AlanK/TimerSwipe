@@ -10,8 +10,11 @@ import UserNotifications
 
 /// Creates local notifications for app events
 struct LocalNotifications {
+    // MARK: Properties
     
     let center = UNUserNotificationCenter.current()
+    
+    // MARK: Methods
     
     func enableNotification(on expirationDate: Date) {
         let content = UNMutableNotificationContent()

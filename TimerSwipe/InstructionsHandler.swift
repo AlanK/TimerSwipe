@@ -9,12 +9,17 @@
 import UIKit
 
 struct InstructionsHandler {
+    // MARK: Dependencies
     
     private let instructions: UILabel
+    
+    // MARK: Initializers
     
     init(_ instructions: UILabel) {
         self.instructions = instructions
     }
+    
+    // MARK: Methods
     
     func animate(to isReady: Bool) {
         let instructions = self.instructions

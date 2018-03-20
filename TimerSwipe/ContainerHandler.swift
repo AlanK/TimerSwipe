@@ -9,14 +9,19 @@
 import UIKit
 
 struct ContainerHandler {
+    // MARK: Dependencies
     
     private let view: UIView
     private let recognizer: UITapGestureRecognizer
+    
+    // MARK: Initializers
     
     init(_ view: UIView, vc: MainViewController) {
         self.view = view
         recognizer = UITapGestureRecognizer(target: vc, action: #selector(MainViewController.containerViewActivated(sender:)))
     }
+    
+    // MARK: Methods
     
     func configure(owner: MainViewController, duration: TimeInterval) {
         let primaryAction = CustomAccessibilityAction(target: owner, selector: #selector(MainViewController.containerAlternateActivated)) { [unowned owner] in

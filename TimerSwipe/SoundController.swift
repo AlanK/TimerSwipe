@@ -20,6 +20,8 @@ struct SoundController {
     
     private let audioSession: AVAudioSession
     
+    // MARK: Initalizers
+    
     init(audioSession: AVAudioSession = AVAudioSession.sharedInstance()) {
         self.audioSession = audioSession
         
