@@ -45,10 +45,7 @@ class RootFC: UIViewController {
         
         // Make any necessary changes to views after being in the background for a long time
         _ = TimeoutManager { [unowned self] in
-            // TODO: Refactor this.
-            
-            let topVC = self.nav.topViewController
-            let model = self.model!
+            let topVC = self.nav.topViewController, model = self.model!
             
             // Don’t change views if a timer is running
             if let vc = topVC as? CountdownDelegate {
