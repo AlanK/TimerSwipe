@@ -57,7 +57,6 @@ class MainViewController: UIViewController {
     }
     
     override func accessibilityPerformMagicTap() -> Bool { return delegate.magicTapActivated(self) }
-    
     override func accessibilityPerformEscape() -> Bool { return delegate.accessibleEscapeActivated(self) }
     
     // MARK: Actions
@@ -103,6 +102,7 @@ class MainViewController: UIViewController {
     lazy var countdown: Countdown = Countdown(delegate: self, duration: duration)
     
     var timeAnnouncementController = TimeAnnouncementController()
+    
     private var appStateNotifications = AppStateNotifications()
     
     private lazy var duration = providedTimer.seconds
@@ -124,7 +124,6 @@ class MainViewController: UIViewController {
         instructionsHandler.setText(voiceOverOn: voiceOverOn)
         containerHandler.voiceOver(voiceOverOn: voiceOverOn)
     }
-    
 }
 
 // MARK: - Stopwatch delegate
