@@ -109,7 +109,7 @@ class MainViewController: UIViewController {
     }
     
     @IBOutlet var containerView: UIStackView! {
-        didSet { containerHandler.configure(owner: self, duration: duration) }
+        didSet { containerHandler.configure(with: duration) }
     }
     
     // MARK: Properties

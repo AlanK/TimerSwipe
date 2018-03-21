@@ -13,19 +13,21 @@ struct ContainerHandler {
     
     private let view: UIView
     private let recognizer: UITapGestureRecognizer
+    private unowned let vc: MainViewController
     
     // MARK: Initializers
     
     init(_ view: UIView, vc: MainViewController) {
         self.view = view
         recognizer = UITapGestureRecognizer(target: vc, action: #selector(MainViewController.containerViewActivated(sender:)))
+        self.vc = vc
     }
     
     // MARK: Methods
     
-    func configure(owner: MainViewController, duration: TimeInterval) {
-        let primaryAction = CustomAccessibilityAction(target: owner, selector: #selector(MainViewController.containerAlternateActivated)) { [unowned owner] in
-            switch owner.countdownIsReady {
+    func configure(with duration: TimeInterval) {
+        let primaryAction = CustomAccessibilityAction(target: vc, selector: #selector(MainViewController.containerAlternateActivated)) { [unowned vc] in
+            switch vc.countdownIsReady {
             case true:
                 return NSLocalizedString("Change timer", comment: "Change the timer by selecting another one")
             case false:
@@ -33,8 +35,8 @@ struct ContainerHandler {
             }
         }
         
-        let toggleAction = CustomAccessibilityAction(target: owner, selector: #selector(MainViewController.toggleAnnouncements)) { [unowned owner] in
-            return owner.timeAnnouncementPreferenceInstructions
+        let toggleAction = CustomAccessibilityAction(target: vc, selector: #selector(MainViewController.toggleAnnouncements)) { [unowned vc] in
+            return vc.timeAnnouncementPreferenceInstructions
         }
         
         view.isAccessibilityElement = true
