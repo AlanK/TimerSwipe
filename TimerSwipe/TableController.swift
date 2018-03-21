@@ -157,8 +157,8 @@ class TableController: UITableViewController {
     
     // MARK: Properties
     
-    private lazy var dragDropDelegate = TableDragDropDelegate.init(self, tableModelDragDropDelegate: self)
-    private lazy var textFieldDelegate = TableTFDelegate.init(completionHandler: createNewTimer)
+    private lazy var dragDropDelegate = TableDragDropDelegate(self, tableModelDragDropDelegate: self)
+    private lazy var textFieldDelegate = TableTFDelegate(completionHandler: createNewTimer)
     
     /// The view which can create new timers
     private lazy var keyboardAccessoryView: InputView = {
