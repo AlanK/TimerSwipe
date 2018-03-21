@@ -33,6 +33,7 @@ class MainViewController: UIViewController {
 
     private var appStateNotifications = AppStateNotifications()
     
+    private lazy var voiceOverHandler = VoiceOverHandler(nc: nil, observer: self)
     private lazy var buttonHandler = ButtonHandler(button)
     private lazy var containerHandler = ContainerHandler(containerView, vc: self)
     private lazy var instructionsHandler = InstructionsHandler(instructionsDisplay)
@@ -60,6 +61,7 @@ class MainViewController: UIViewController {
         // The display shouldn’t sleep while this view is visible since the user expects to start a timer when they can’t see the screen
         UIApplication.shared.isIdleTimerDisabled = true
         navigationController?.setNavigationBarHidden(true, animated: true)
+        voiceOverHandler.registerNotifications(true)
         handleVoiceOverStatus()
     }
     
@@ -67,6 +69,7 @@ class MainViewController: UIViewController {
         super.viewWillDisappear(animated)
         // The display should sleep in other views in the app
         UIApplication.shared.isIdleTimerDisabled = false
+        voiceOverHandler.registerNotifications(false)
     }
     
     override func accessibilityPerformMagicTap() -> Bool { return delegate.magicTapActivated(self) }

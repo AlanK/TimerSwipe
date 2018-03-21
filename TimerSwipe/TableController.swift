@@ -20,6 +20,8 @@ class TableController: UITableViewController {
     
     private weak var delegate: TableControllerDelegate!
     
+    private lazy var voiceOverHandler = VoiceOverHandler(nc: nil, observer: self)
+    
     // MARK: Initializers
     
     static func instantiate(with delegate: TableControllerDelegate, model: Model) -> TableController {
@@ -67,7 +69,8 @@ class TableController: UITableViewController {
         self.navigationController?.setNavigationBarHidden(false, animated: animated)
         refreshEditButton()
         handleVoiceOverStatus()
-        
+        voiceOverHandler.registerNotifications(true)
+
         guard let accessibleFirstFocus = accessibleFirstFocus else {return}
         UIAccessibilityPostNotification(UIAccessibilityScreenChangedNotification, accessibleFirstFocus)
     }
@@ -77,6 +80,7 @@ class TableController: UITableViewController {
         if keyboardAccessoryView.isVisible { exitKeyboardAccessoryView() }
         
         super.viewWillDisappear(animated)
+        voiceOverHandler.registerNotifications(false)
     }
     
     override func setEditing(_ editing: Bool, animated: Bool) {

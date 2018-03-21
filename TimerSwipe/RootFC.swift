@@ -38,7 +38,6 @@ class RootFC: UIViewController {
         loadNavigationStack(animated: false, with: model)
         addChildToRootView(nav)
         
-        voiceOverHandler.registerNotifications(true)
         appStateNotifications.add(onBackground: { [unowned self] in
             if self.soundController.isActive { self.soundController.setActive(false) }
         }) { [unowned self] in
@@ -66,16 +65,11 @@ class RootFC: UIViewController {
         }
     }
     
-    deinit {
-        voiceOverHandler.registerNotifications(false)
-        appStateNotifications.removeAll()
-    }
+    deinit { appStateNotifications.removeAll() }
 
     // MARK: Properties
     
     private var soundControllerShouldBeActive: Bool { return nav.topViewController is MainViewController }
-    
-    private lazy var voiceOverHandler = VoiceOverHandler() { [unowned self] in return self.nav.topViewController as? VoiceOverObserver }
     
     // MARK: Methods
     

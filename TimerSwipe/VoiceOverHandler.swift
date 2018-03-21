@@ -9,7 +9,7 @@
 import UIKit
 
 /// This protocol should be adopted by any object that wants to respond to changes in VoiceOver status
-protocol VoiceOverObserver {
+protocol VoiceOverObserver: AnyObject {
     /// This function is called whenever VoiceOver status changes and is passed the relevant notification
     func voiceOverStatusDidChange(_: Notification?)
 }
@@ -19,11 +19,11 @@ struct VoiceOverHandler {
     // MARK: Dependencies
     
     private let nc: NotificationCenter
-    private let observer: () -> VoiceOverObserver?
+    private unowned var observer: VoiceOverObserver
     
     // MARK: Initializers
 
-    init(nc: NotificationCenter? = nil, observer: @escaping () -> VoiceOverObserver?) {
+    init(nc: NotificationCenter? = nil, observer: VoiceOverObserver) {
         self.nc = nc ?? NotificationCenter.default
         self.observer = observer
     }
@@ -42,15 +42,14 @@ struct VoiceOverHandler {
         else { voiceOverNotice = NSNotification.Name(rawValue: UIAccessibilityVoiceOverStatusChanged) }
         
         switch register {
-        case true: observation = nc.addObserver(forName: voiceOverNotice, object: nil, queue: nil, using: forwardVoiceOverNotification(_:))
+        case true: observation = nc.addObserver(forName: voiceOverNotice, object: nil, queue: nil, using: voiceOverStatusDidChange(_:))
         case false:
             guard let voiceOverObservation = observation else { return }
             nc.removeObserver(voiceOverObservation, name: voiceOverNotice, object: nil)
         }
     }
     
-    /// Forwards the UIAccessibilityVoiceOverStatusChanged/.UIAccessibilityVoiceOverStatusDidChange notification to the observer if it is not nil.
-    private func forwardVoiceOverNotification(_ notification: Notification) {
-        observer()?.voiceOverStatusDidChange(notification)
+    private func voiceOverStatusDidChange(_ notification: Notification) {
+        observer.voiceOverStatusDidChange(notification)
     }
 }
