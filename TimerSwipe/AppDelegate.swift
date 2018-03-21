@@ -41,7 +41,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private func launchTimer(with shortcutItem: UIApplicationShortcutItem) -> Bool {
         let applicationShortcuts = ApplicationShortcuts()
         guard let timer = applicationShortcuts.performActionFor(shortcutItem), let root = window?.rootViewController as? RootFC else { return false }
-        root.loadNavigationStack(animated: false, with: model, timer: timer)
+        root.launchTimer(timer)
         return true
     }
 }
