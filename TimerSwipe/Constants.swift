@@ -82,6 +82,18 @@ extension UIButton {
     }
 }
 
+extension UINavigationController {
+    static func instantiateWithTSStyle() -> UINavigationController {
+        let nc = UINavigationController()
+        
+        nc.navigationBar.barStyle = .black
+        nc.navigationBar.barTintColor = K.tintColor
+        nc.navigationBar.tintColor = .white
+        
+        return nc
+    }
+}
+
 /// Common constants
 struct K {
     

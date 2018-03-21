@@ -15,6 +15,8 @@ class RootFC: UIViewController {
     private var soundController = SoundController()
     private var appStateNotifications = AppStateNotifications()
     
+    private let nav = UINavigationController.instantiateWithTSStyle()
+
     // MARK: Initializers
     
     static func instantiate(with model: Model) -> RootFC {
@@ -70,16 +72,6 @@ class RootFC: UIViewController {
     }
 
     // MARK: Properties
-    
-    private let nav: UINavigationController = {
-        let nc = UINavigationController()
-        
-        nc.navigationBar.barStyle = .black
-        nc.navigationBar.barTintColor = K.tintColor
-        nc.navigationBar.tintColor = .white
-        
-        return nc
-    }()
     
     private var soundControllerShouldBeActive: Bool { return nav.topViewController is MainViewController }
     
