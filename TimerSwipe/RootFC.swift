@@ -115,11 +115,11 @@ extension RootFC: TableControllerDelegate {
 // MARK:- MainViewControllerDelegate
 
 extension RootFC: MainViewControllerDelegate {
-    private func changeTimerOrCancelCountdown(_ vc: MainViewController) { vc.countdownIsReady ? leaveMainViewController() : vc.cancelCountdown() }
+    private func changeTimerOrCancelCountdown(_ vc: CountdownDelegate) { vc.countdownIsReady ? popVC() : vc.cancelCountdown() }
     
-    private func startOrEndCountdown(_ vc: MainViewController) { vc.countdownIsReady ? vc.startCountdown() : vc.cancelCountdown() }
+    private func startOrEndCountdown(_ vc: CountdownDelegate) { vc.countdownIsReady ? vc.startCountdown() : vc.cancelCountdown() }
     
-    private func leaveMainViewController() {
+    private func popVC() {
         _ = nav.popViewController(animated: true)
         setSoundControllerStatus()
     }
