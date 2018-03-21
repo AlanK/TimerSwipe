@@ -71,7 +71,7 @@ class RootFC: UIViewController {
 
     // MARK: Properties
     
-    let nav: UINavigationController = {
+    private let nav: UINavigationController = {
         let nc = UINavigationController()
         
         nc.navigationBar.barStyle = .black
@@ -105,7 +105,7 @@ class RootFC: UIViewController {
         setSoundControllerStatus()
     }
     
-    func setSoundControllerStatus() {
+    private func setSoundControllerStatus() {
         guard soundController.isActive == soundControllerShouldBeActive else {
             soundController.setActive(soundControllerShouldBeActive)
             return
