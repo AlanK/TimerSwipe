@@ -69,7 +69,7 @@ class RootFC: UIViewController {
 
     // MARK: Properties
     
-    private var soundControllerShouldBeActive: Bool { return nav.topViewController is MainViewController }
+    private var needsSound: Bool { return (nav.topViewController as? SoundClient)?.needsSound ?? false }
     
     // MARK: Methods
     
@@ -94,8 +94,8 @@ class RootFC: UIViewController {
     }
     
     private func setSoundControllerStatus() {
-        guard soundController.isActive == soundControllerShouldBeActive else {
-            soundController.setActive(soundControllerShouldBeActive)
+        guard soundController.isActive == needsSound else {
+            soundController.setActive(needsSound)
             return
         }
     }

@@ -192,3 +192,9 @@ extension MainViewController: CountdownDelegate {
 extension MainViewController: VoiceOverObserver {
     func voiceOverStatusDidChange(_: Notification? = nil) { handleVoiceOverStatus() }
 }
+
+// MARK: - SoundClient
+
+extension MainViewController: SoundClient {
+    var needsSound: Bool { return true }
+}

@@ -18,6 +18,10 @@ protocol SoundPlayer {
     func play(_: AudioCue)
 }
 
+protocol SoundClient: AnyObject {
+    var needsSound: Bool { get }
+}
+
 /// Handles sounds for the main view of the app
 struct SoundController {
     // MARK: Dependencies
