@@ -34,7 +34,7 @@ class MainViewController: UIViewController {
     private var timeAnnouncementController = TimeAnnouncementController()
     private var appStateNotifications = AppStateNotifications()
     
-    private lazy var voiceOverHandler = VoiceOverHandler(nc: nil, observer: self)
+    private lazy var voiceOverHandler = VoiceOverHandler(observer: self)
     private lazy var buttonHandler = ButtonHandler(button)
     private lazy var containerHandler = ContainerHandler(containerView, vc: self)
     private lazy var instructionsHandler = InstructionsHandler(instructionsDisplay)

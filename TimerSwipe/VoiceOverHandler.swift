@@ -23,7 +23,7 @@ struct VoiceOverHandler {
     
     // MARK: Initializers
 
-    init(nc: NotificationCenter? = nil, observer: VoiceOverObserver) {
+    init(observer: VoiceOverObserver, nc: NotificationCenter? = nil) {
         self.nc = nc ?? NotificationCenter.default
         self.observer = observer
     }

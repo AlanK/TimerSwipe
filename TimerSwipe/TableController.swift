@@ -20,7 +20,7 @@ class TableController: UITableViewController {
     
     private weak var delegate: TableControllerDelegate!
     
-    private lazy var voiceOverHandler = VoiceOverHandler(nc: nil, observer: self)
+    private lazy var voiceOverHandler = VoiceOverHandler(observer: self)
     
     // MARK: Initializers
     
