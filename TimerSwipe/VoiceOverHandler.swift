@@ -42,14 +42,16 @@ struct VoiceOverHandler {
         else { voiceOverNotice = NSNotification.Name(rawValue: UIAccessibilityVoiceOverStatusChanged) }
         
         switch register {
-        case true: observation = nc.addObserver(forName: voiceOverNotice, object: nil, queue: nil, using: voiceOverStatusDidChange(_:))
+        case true:
+            observation = nc.addObserver(forName: voiceOverNotice, object: nil, queue: nil, using: voiceOverStatusDidChange(_:))
+            voiceOverStatusDidChange()
         case false:
             guard let voiceOverObservation = observation else { return }
             nc.removeObserver(voiceOverObservation, name: voiceOverNotice, object: nil)
         }
     }
     
-    private func voiceOverStatusDidChange(_ notification: Notification) {
+    private func voiceOverStatusDidChange(_ notification: Notification? = nil) {
         observer.voiceOverStatusDidChange(notification)
     }
 }
