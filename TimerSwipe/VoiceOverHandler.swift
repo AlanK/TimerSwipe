@@ -30,12 +30,17 @@ struct VoiceOverHandler {
     
     // MARK: Properties
     
+    var isEnabled: Bool {
+        get { return observation != nil }
+        set { registerNotifications(newValue) }
+    }
+    
     private var observation: NSObjectProtocol?
     
     // MARK: Methods
     
-    /// Register and unregister for notifications on behalf of other VCs
-    mutating func registerNotifications(_ register: Bool) {
+    /// Register and unregister for notifications on behalf of the observer
+    private mutating func registerNotifications(_ register: Bool) {
         // UIAccessibilityVoiceOverStatusChanged and NSNotification.Name.UIAccessibilityVoiceOverStatusDidChange are the same notification in iOS 10 and iOS 11
         let voiceOverNotice: NSNotification.Name
         if #available(iOS 11.0, *) { voiceOverNotice = .UIAccessibilityVoiceOverStatusDidChange }

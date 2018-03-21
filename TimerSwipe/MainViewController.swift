@@ -61,14 +61,14 @@ class MainViewController: UIViewController {
         // The display shouldn’t sleep while this view is visible since the user expects to start a timer when they can’t see the screen
         UIApplication.shared.isIdleTimerDisabled = true
         navigationController?.setNavigationBarHidden(true, animated: true)
-        voiceOverHandler.registerNotifications(true)
+        voiceOverHandler.isEnabled = true
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         // The display should sleep in other views in the app
         UIApplication.shared.isIdleTimerDisabled = false
-        voiceOverHandler.registerNotifications(false)
+        voiceOverHandler.isEnabled = false
     }
     
     override func accessibilityPerformMagicTap() -> Bool { return delegate.magicTapActivated(self) }

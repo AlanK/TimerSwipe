@@ -67,7 +67,7 @@ class TableController: UITableViewController {
         // This view should have a navigation bar and toolbar
         self.navigationController?.setNavigationBarHidden(false, animated: animated)
         refreshEditButton()
-        voiceOverHandler.registerNotifications(true)
+        voiceOverHandler.isEnabled = true
 
         guard let accessibleFirstFocus = accessibleFirstFocus else {return}
         UIAccessibilityPostNotification(UIAccessibilityScreenChangedNotification, accessibleFirstFocus)
@@ -78,7 +78,7 @@ class TableController: UITableViewController {
         if keyboardAccessoryView.isVisible { exitKeyboardAccessoryView() }
         
         super.viewWillDisappear(animated)
-        voiceOverHandler.registerNotifications(false)
+        voiceOverHandler.isEnabled = false
     }
     
     override func setEditing(_ editing: Bool, animated: Bool) {
