@@ -42,7 +42,7 @@ struct ContainerHandler {
         view.isAccessibilityElement = true
         view.accessibilityTraits = UIAccessibilityTraitSummaryElement
         view.accessibilityCustomActions = [primaryAction, toggleAction]
-        view.accessibilityLabel = label(timerIs: true, timerDuration: duration)
+        view.accessibilityLabel = labelText(timerIs: true, duration: duration)
     }
     
     func voiceOver(voiceOverOn: Bool) {
@@ -51,11 +51,11 @@ struct ContainerHandler {
     }
     
     func label(timerIs ready: Bool, duration: TimeInterval) {
-        view.accessibilityLabel = label(timerIs: ready, timerDuration: duration)
+        view.accessibilityLabel = labelText(timerIs: ready, duration: duration)
     }
     
-    private func label(timerIs ready: Bool, timerDuration: TimeInterval) -> String {
-        let textDuration = String(Int(timerDuration))
+    private func labelText(timerIs ready: Bool, duration: TimeInterval) -> String {
+        let textDuration = String(Int(duration))
         switch ready {
         case true:
             return NSLocalizedString("timerReady",
