@@ -44,7 +44,6 @@ class TableController: UITableViewController {
             tableView.dropDelegate = dragDropDelegate
             tableView.dragInteractionEnabled = true
         }
-        handleVoiceOverStatus()
     }
     
     override func viewDidLayoutSubviews() {
