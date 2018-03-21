@@ -34,7 +34,7 @@ struct ContainerHandler {
         }
         
         let toggleAction = CustomAccessibilityAction(target: owner, selector: #selector(MainViewController.toggleAnnouncements)) { [unowned owner] in
-            return owner.timeAnnouncementController.preferenceInstructions
+            return owner.timeAnnouncementPreferenceInstructions
         }
         
         view.isAccessibilityElement = true

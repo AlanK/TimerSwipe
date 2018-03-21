@@ -31,14 +31,13 @@ class MainViewController: UIViewController {
     private let localNotifications = LocalNotifications()
     private let timeFormatter = TimeFormatter()
 
+    private var timeAnnouncementController = TimeAnnouncementController()
     private var appStateNotifications = AppStateNotifications()
     
     private lazy var voiceOverHandler = VoiceOverHandler(nc: nil, observer: self)
     private lazy var buttonHandler = ButtonHandler(button)
     private lazy var containerHandler = ContainerHandler(containerView, vc: self)
     private lazy var instructionsHandler = InstructionsHandler(instructionsDisplay)
-    
-    var timeAnnouncementController = TimeAnnouncementController()
     
     // MARK: Initializers
     
@@ -115,9 +114,13 @@ class MainViewController: UIViewController {
     
     // MARK: Properties
     
+    var timeAnnouncementPreferenceInstructions: String { return timeAnnouncementController.preferenceInstructions }
+    
     private var duration: TimeInterval { return timer.seconds }
     
     // MARK: Methods
+    
+    func toggleTimeAnnouncementPreference() { timeAnnouncementController.togglePreference() }
     
     private func handleVoiceOverStatus() {
         /// Change the text instructions to match the VO-enabled interaction paradigm and make the containerView touch-enabled
