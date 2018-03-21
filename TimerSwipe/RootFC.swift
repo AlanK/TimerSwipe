@@ -105,6 +105,8 @@ class RootFC: UIViewController {
     }
 }
 
+// MARK: - TableControllerDelegate
+
 extension RootFC: TableControllerDelegate {
     func tableView(_ model: Model, tableController: TableController, didSelectRowAt indexPath: IndexPath) {
         let timer = model[indexPath.row]
@@ -113,6 +115,8 @@ extension RootFC: TableControllerDelegate {
         setSoundControllerStatus()
     }
 }
+
+// MARK:- MainViewControllerDelegate
 
 extension RootFC: MainViewControllerDelegate {
     private func changeTimerOrCancelCountdown(_ vc: MainViewController) { vc.countdownIsReady ? leaveMainViewController() : vc.cancelCountdown() }
