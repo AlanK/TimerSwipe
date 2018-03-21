@@ -19,6 +19,7 @@ protocol MainViewControllerDelegate: AnyObject {
     func containerViewToggleActivated(_: MainViewController)
 }
 
+// MARK: -
 /// Primary view controller—displays the selected timer
 class MainViewController: UIViewController {
     // MARK: Dependencies

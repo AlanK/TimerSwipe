@@ -112,7 +112,7 @@ extension RootFC: TableControllerDelegate {
     }
 }
 
-// MARK:- MainViewControllerDelegate
+// MARK: - MainViewControllerDelegate
 
 extension RootFC: MainViewControllerDelegate {
     private func changeTimerOrCancelCountdown(_ vc: CountdownDelegate) { vc.countdownIsReady ? popVC() : vc.cancelCountdown() }
