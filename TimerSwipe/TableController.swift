@@ -67,7 +67,6 @@ class TableController: UITableViewController {
         // This view should have a navigation bar and toolbar
         self.navigationController?.setNavigationBarHidden(false, animated: animated)
         refreshEditButton()
-        handleVoiceOverStatus()
         voiceOverHandler.registerNotifications(true)
 
         guard let accessibleFirstFocus = accessibleFirstFocus else {return}
@@ -239,15 +238,6 @@ class TableController: UITableViewController {
         
         commitTimer(userSelectedTime)
     }
-    
-    // MARK: Accessibility
-    
-    private func handleVoiceOverStatus() {
-        let voiceOverOn = UIAccessibilityIsVoiceOverRunning()
-        
-        footer.text = TableStrings.footerText(voiceOverOn: voiceOverOn)
-        tableView.tableFooterView?.layoutIfNeeded()
-    }
 }
 
 // MARK: - Table Model Drag Drop Delegate
@@ -315,5 +305,10 @@ extension TableController {
 
 // MARK: - VoiceOver Observer
 extension TableController: VoiceOverObserver {
-    func voiceOverStatusDidChange(_: Notification? = nil) { handleVoiceOverStatus() }
+    func voiceOverStatusDidChange(_: Notification? = nil) {
+        let voiceOverOn = UIAccessibilityIsVoiceOverRunning()
+        
+        footer.text = TableStrings.footerText(voiceOverOn: voiceOverOn)
+        tableView.tableFooterView?.layoutIfNeeded()
+    }
 }

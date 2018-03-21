@@ -62,7 +62,6 @@ class MainViewController: UIViewController {
         UIApplication.shared.isIdleTimerDisabled = true
         navigationController?.setNavigationBarHidden(true, animated: true)
         voiceOverHandler.registerNotifications(true)
-        handleVoiceOverStatus()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -122,14 +121,6 @@ class MainViewController: UIViewController {
     // MARK: Methods
     
     func toggleTimeAnnouncementPreference() { timeAnnouncementController.togglePreference() }
-    
-    private func handleVoiceOverStatus() {
-        /// Change the text instructions to match the VO-enabled interaction paradigm and make the containerView touch-enabled
-        let voiceOverOn = UIAccessibilityIsVoiceOverRunning()
-        
-        instructionsHandler.setText(voiceOverOn: voiceOverOn)
-        containerHandler.voiceOver(voiceOverOn: voiceOverOn)
-    }
 }
 
 // MARK: - Stopwatch delegate
@@ -190,7 +181,13 @@ extension MainViewController: CountdownDelegate {
 // MARK: - VoiceOverObserver
 // Receive notifications when VoiceOver status changes
 extension MainViewController: VoiceOverObserver {
-    func voiceOverStatusDidChange(_: Notification? = nil) { handleVoiceOverStatus() }
+    func voiceOverStatusDidChange(_: Notification? = nil) {
+        /// Change the text instructions to match the VO-enabled interaction paradigm and make the containerView touch-enabled
+        let voiceOverOn = UIAccessibilityIsVoiceOverRunning()
+        
+        instructionsHandler.setText(voiceOverOn: voiceOverOn)
+        containerHandler.voiceOver(voiceOverOn: voiceOverOn)
+    }
 }
 
 // MARK: - SoundClient
