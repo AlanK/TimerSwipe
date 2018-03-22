@@ -37,8 +37,8 @@ class MainViewController: UIViewController {
     
     private lazy var voiceOverHandler = VoiceOverHandler(observer: self)
     private lazy var buttonHandler = ButtonHandler(button)
-    private lazy var containerHandler = ContainerHandler(containerView, vc: self)
-    private lazy var instructionsHandler = InstructionsHandler(instructionsDisplay)
+    private lazy var containerHandler = ContainerHandler(container, vc: self)
+    private lazy var instructionsHandler = InstructionsHandler(instructions)
     
     // MARK: Initializers
     
@@ -90,14 +90,14 @@ class MainViewController: UIViewController {
     
     // MARK: Outlets
     /// The "Swipe to Start" label
-    @IBOutlet var instructionsDisplay: UILabel! {
+    @IBOutlet var instructions: UILabel! {
         didSet { instructionsHandler.setText(voiceOverOn: UIAccessibilityIsVoiceOverRunning()) }
     }
     
     /// The "00:00.00" label
-    @IBOutlet var timeDisplay: UILabel! {
+    @IBOutlet var display: UILabel! {
         didSet {
-            timeDisplay.font = UIFont.monospacedDigitSystemFont(ofSize: 64.0, weight: UIFont.Weight.regular)
+            display.font = UIFont.monospacedDigitSystemFont(ofSize: 64.0, weight: UIFont.Weight.regular)
             // Get an initial value from the countdown
             countdown.wake()
         }
@@ -108,7 +108,7 @@ class MainViewController: UIViewController {
         didSet { buttonHandler.setTitle(timerIs: true) }
     }
     
-    @IBOutlet var containerView: UIStackView! {
+    @IBOutlet var container: UIStackView! {
         didSet { containerHandler.configure(with: duration) }
     }
     
@@ -137,7 +137,7 @@ extension MainViewController: CountdownDelegate {
      - parameter seconds: time remaining as a `TimeInterval`
      */
     func updateDisplay(with seconds: TimeInterval) {
-        timeDisplay.text = timeFormatter.display(time: seconds)
+        display.text = timeFormatter.display(time: seconds)
     }
     
     /**
