@@ -43,11 +43,9 @@ extension ListDataSourceAndDelegate: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int { return model.count }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "STTableViewCell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "STTableViewCell", for: indexPath) as! TableCell
         // Pass delegate and timer to cell so it can complete its own setup
-        if let cell = cell as? TableCell {
-            cell.setupCell(delegate: self, timer: model[indexPath.row])
-        }
+        cell.setupCell(delegate: self, timer: model[indexPath.row])
         return cell
     }
     
