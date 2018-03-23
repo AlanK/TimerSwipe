@@ -47,8 +47,5 @@ class ListController: UIViewController {
     // MARK: Methods
     
     /// Enable the Edit button when the table has one or more rows
-    func refreshEditButton() {
-        let numberOfTimers = model.count
-        self.navigationItem.leftBarButtonItem?.isEnabled = numberOfTimers > 0
-    }
+    func refreshEditButton() { navigationItem.leftBarButtonItem?.isEnabled = dataSourceAndDelegate.canEdit }
 }

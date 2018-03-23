@@ -21,6 +21,10 @@ class ListDataSourceAndDelegate: NSObject {
         self.model = model
         super.init()
     }
+    
+    // MARK: Properties
+    
+    var canEdit: Bool { return model.count > 0 }
 }
 
 // MARK: - Data Source
