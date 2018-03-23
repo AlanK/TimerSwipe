@@ -67,6 +67,16 @@ extension ListDataSourceAndDelegate: UITableViewDataSource {
     }
 }
 
+// MARK: - Table View Delegate
+
+extension ListDataSourceAndDelegate: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        // TODO: Implement this
+        
+    }
+}
+
 // MARK: - TableCellDelegate
 
 extension ListDataSourceAndDelegate: TableCellDelegate {
