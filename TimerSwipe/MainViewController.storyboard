@@ -88,7 +88,7 @@
                     </view>
                     <connections>
                         <outlet property="button" destination="yum-AW-GvH" id="XN3-PN-cy0"/>
-                        <outlet property="containerView" destination="F3f-0s-rqz" id="7s2-qr-qm1"/>
+                        <outlet property="container" destination="F3f-0s-rqz" id="7s2-qr-qm1"/>
                         <outlet property="instructions" destination="74y-S5-5gr" id="Mwc-fu-1O6"/>
                         <outlet property="timeDisplay" destination="Kn3-O2-ymo" id="drX-9g-UjM"/>
                     </connections>

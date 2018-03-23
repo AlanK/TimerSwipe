@@ -37,7 +37,7 @@ class MainViewController: UIViewController {
     
     private lazy var voiceOverHandler = VoiceOverHandler(observer: self)
     private lazy var buttonHandler = ButtonHandler(button)
-    private lazy var containerHandler = ContainerHandler(containerView, vc: self)
+    private lazy var containerHandler = ContainerHandler(container, vc: self)
     private lazy var instructionsHandler = InstructionsHandler(instructions)
     
     // MARK: Initializers
@@ -108,7 +108,7 @@ class MainViewController: UIViewController {
         didSet { buttonHandler.setTitle(timerIs: true) }
     }
     
-    @IBOutlet var containerView: UIStackView! {
+    @IBOutlet var container: UIStackView! {
         didSet { containerHandler.configure(with: duration) }
     }
     
