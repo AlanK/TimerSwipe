@@ -9,5 +9,14 @@
 import UIKit
 
 class ListDataSourceAndDelegate: NSObject {
+    // MARK: Dependencies
     
+    private let model: Model
+    
+    // MARK: Initializers
+    
+    init(_ model: Model) {
+        self.model = model
+        super.init()
+    }
 }

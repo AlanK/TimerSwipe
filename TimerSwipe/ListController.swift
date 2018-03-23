@@ -11,15 +11,17 @@ import UIKit
 class ListController: UIViewController {
     // MARK: Dependencies
     
+    private var model: Model!
     private var dataSourceAndDelegate: ListDataSourceAndDelegate!
     
     // MARK: Initializers
     
-    static func instantiate() -> ListController {
+    static func instantiate(model: Model) -> ListController {
         let storyboard = UIStoryboard.init(name: "ListController", bundle: Bundle.main)
         let vc = storyboard.instantiateViewController(withIdentifier: "ListController") as! ListController
         
-        vc.dataSourceAndDelegate = ListDataSourceAndDelegate()
+        vc.model = model
+        vc.dataSourceAndDelegate = ListDataSourceAndDelegate(model)
         
         return vc
     }
