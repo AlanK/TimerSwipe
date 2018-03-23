@@ -59,6 +59,12 @@ extension ListDataSourceAndDelegate: UITableViewDataSource {
             UIAccessibilityPostNotification(UIAccessibilityScreenChangedNotification, tableView.cellForRow(at: newIndexPath))
         }
     }
+    
+    func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to toIndexPath: IndexPath) {
+        let timer = model.remove(at: fromIndexPath.row)
+        model.insert(timer, at: toIndexPath.row)
+        model.saveData()
+    }
 }
 
 // MARK: - TableCellDelegate
