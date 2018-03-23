@@ -95,9 +95,9 @@ class MainViewController: UIViewController {
     }
     
     /// The "00:00.00" label
-    @IBOutlet var display: UILabel! {
+    @IBOutlet var timeDisplay: UILabel! {
         didSet {
-            display.font = UIFont.monospacedDigitSystemFont(ofSize: 64.0, weight: UIFont.Weight.regular)
+            timeDisplay.font = UIFont.monospacedDigitSystemFont(ofSize: 64.0, weight: UIFont.Weight.regular)
             // Get an initial value from the countdown
             countdown.wake()
         }
@@ -137,7 +137,7 @@ extension MainViewController: CountdownDelegate {
      - parameter seconds: time remaining as a `TimeInterval`
      */
     func updateDisplay(with seconds: TimeInterval) {
-        display.text = timeFormatter.display(time: seconds)
+        timeDisplay.text = timeFormatter.display(time: seconds)
     }
     
     /**
