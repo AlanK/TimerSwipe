@@ -20,3 +20,28 @@ class ListDataSourceAndDelegate: NSObject {
         super.init()
     }
 }
+
+// MARK: - Data Source
+
+extension ListDataSourceAndDelegate: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int { return model.count }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "STTableViewCell", for: indexPath)
+        // Pass delegate and timer to cell so it can complete its own setup
+        if let cell = cell as? TableCell {
+            cell.setupCell(delegate: self, timer: model[indexPath.row])
+        }
+        return cell
+    }
+}
+
+// MARK: - TableCellDelegate
+
+extension ListDataSourceAndDelegate: TableCellDelegate {
+    func cellButtonTapped(cell: TableCell) {
+        
+        // TODO: Implement this
+        
+    }
+}
