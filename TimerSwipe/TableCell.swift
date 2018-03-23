@@ -16,18 +16,17 @@ protocol TableCellDelegate: AnyObject {
 
 /// Custom table view cell with heart icon accessory view
 class TableCell: UITableViewCell {
-    private weak var delegate: TableCellDelegate!
-
-    @IBOutlet var secondsLabel: UILabel!
-    @IBOutlet var favoriteIcon: UIButton!
     
-    @IBAction func favoriteButton(_ sender: UIButton) { delegate.cellButtonTapped(cell: self) }
+    // MARK: Dependencies
+    
+    private weak var delegate: TableCellDelegate!
+    
+    // MARK: Initializers
     
     /**
      Sets up the cell with the standard layout.
-     
-     - Parameters:
-         - timer: an `STSavedTimer` with a duration and a favorite status
+     - parameter delegate: responsible for responding to taps on the favorite button
+     - parameter timer: an `STSavedTimer` with a duration and a favorite status
      */
     func configure(delegate: TableCellDelegate, timer: STSavedTimer) {
         self.delegate = delegate
@@ -50,4 +49,13 @@ class TableCell: UITableViewCell {
         accessibilityLabel = accessLabel
         accessibilityCustomActions = [toggleFavorite]
     }
+
+    // MARK: Actions
+    
+    @IBAction func favoriteButton(_ sender: UIButton) { delegate.cellButtonTapped(cell: self) }
+    
+    // MARK: Outlets
+    
+    @IBOutlet var secondsLabel: UILabel!
+    @IBOutlet var favoriteIcon: UIButton!
 }
