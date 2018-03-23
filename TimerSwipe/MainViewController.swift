@@ -38,7 +38,7 @@ class MainViewController: UIViewController {
     private lazy var voiceOverHandler = VoiceOverHandler(observer: self)
     private lazy var buttonHandler = ButtonHandler(button)
     private lazy var containerHandler = ContainerHandler(containerView, vc: self)
-    private lazy var instructionsHandler = InstructionsHandler(instructionsDisplay)
+    private lazy var instructionsHandler = InstructionsHandler(instructions)
     
     // MARK: Initializers
     
@@ -90,7 +90,7 @@ class MainViewController: UIViewController {
     
     // MARK: Outlets
     /// The "Swipe to Start" label
-    @IBOutlet var instructionsDisplay: UILabel! {
+    @IBOutlet var instructions: UILabel! {
         didSet { instructionsHandler.setText(voiceOverOn: UIAccessibilityIsVoiceOverRunning()) }
     }
     
