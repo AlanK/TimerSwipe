@@ -10,6 +10,7 @@ import UIKit
 
 protocol TableControllerDelegate: AnyObject {
     func tableView(_: Model, tableController: TableController, didSelectRowAt: IndexPath)
+    func addButtonActivated(_: Any, tableController: TableController)
 }
 
 /// The main table in the app

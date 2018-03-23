@@ -104,6 +104,8 @@ class RootFC: UIViewController {
 // MARK: - TableControllerDelegate
 
 extension RootFC: TableControllerDelegate {
+    func addButtonActivated(_: Any, tableController: TableController) { tableController.makeKAV(visible: true) }
+    
     func tableView(_ model: Model, tableController: TableController, didSelectRowAt indexPath: IndexPath) {
         let timer = model[indexPath.row]
         let vc = MainViewController.instantiate(with: self, sound: soundController, timer: timer)
