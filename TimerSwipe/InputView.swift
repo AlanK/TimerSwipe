@@ -86,7 +86,7 @@ class InputView: UIInputView {
         button.contentEdgeInsets = UIEdgeInsetsMake(InputView.vInset, InputView.medialInset, InputView.vInset, InputView.lateralInset)
         button.setContentHuggingPriority(.defaultHigh, for: .horizontal)
         button.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
-        button.accessibilityLabel = NSLocalizedString("titleOfAddButton", value: "Create new timer", comment: "")
+        button.accessibilityLabel = NSLocalizedString("Save new timer", comment: "")
         // Can’t add a timer until it has a valid time
         button.isEnabled = false
         return button
