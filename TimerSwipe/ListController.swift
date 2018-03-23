@@ -21,12 +21,28 @@ class ListController: UIViewController {
         let vc = storyboard.instantiateViewController(withIdentifier: "ListController") as! ListController
         
         vc.model = model
-        vc.dataSourceAndDelegate = ListDataSourceAndDelegate(model)
+        vc.dataSourceAndDelegate = ListDataSourceAndDelegate(vc, model: model)
         
         return vc
+    }
+    
+    // MARK: Overrides
+    
+    override func setEditing(_ editing: Bool, animated: Bool) {
+        model.saveData()
+        super.setEditing(editing, animated: animated)
     }
     
     // MARK: Outlets
     
     @IBOutlet var tableView: UITableView!
+    @IBOutlet var addButton: UIBarButtonItem!
+    
+    // MARK: Methods
+    
+    /// Enable the Edit button when the table has one or more rows
+    func refreshEditButton() {
+        let numberOfTimers = model.count
+        self.navigationItem.leftBarButtonItem?.isEnabled = numberOfTimers > 0
+    }
 }
