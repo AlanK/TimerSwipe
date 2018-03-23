@@ -89,7 +89,6 @@ class TableController: UITableViewController {
     // MARK: Actions
     
     @IBAction func addButtonActivated(_ sender: Any) {
-        keyboardAccessoryView.saveButton.isEnabled = false
         makeKAV(visible: true)
     }
     

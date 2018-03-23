@@ -132,6 +132,9 @@ class InputView: UIInputView {
             return show.isActive
         }
         set {
+            // The save button should always be inactive when showing or hiding the view
+            saveButton.isEnabled = false
+            
             // Always deactivate constraints before activating conflicting ones (or else this could be a lot less verbose)
             switch newValue {
             case true:
