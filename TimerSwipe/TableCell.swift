@@ -35,8 +35,9 @@ class TableCell: UITableViewCell {
         
         // Configure based on isFavorite status
         let buttonImage = timer.isFavorite ? #imageLiteral(resourceName: "Full heart") : #imageLiteral(resourceName: "Empty heart")
-        let accessLabel = timer.isFavorite ? label + ", " + TableStrings.isFavorite : label
-        let buttonDescription = timer.isFavorite ? TableStrings.makeNotFavorite : TableStrings.makeFavorite
+        let accessLabel = timer.isFavorite ? label + ", " + NSLocalizedString("Favorite", comment: "this is my favorite timer") : label
+        let buttonDescription = timer.isFavorite ? NSLocalizedString("Make not favorite", comment: "make this not be my favorite timer")
+                                                 : NSLocalizedString("Make favorite", comment: "make this timer my favorite timer")
         
         // Set visible state of cell
         secondsLabel.text = label
