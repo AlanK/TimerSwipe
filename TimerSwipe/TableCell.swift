@@ -31,7 +31,7 @@ class TableCell: UITableViewCell {
      - Parameters:
          - timer: an `STSavedTimer` with a duration and a favorite status
      */
-    func setupCell(delegate: TableCellDelegate, timer: STSavedTimer) {
+    func configure(delegate: TableCellDelegate, timer: STSavedTimer) {
         self.delegate = delegate
         
         let label = TableStrings.numberOfSeconds(Int(timer.seconds))
