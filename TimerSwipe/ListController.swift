@@ -11,7 +11,6 @@ import UIKit
 class ListController: UIViewController {
     // MARK: Dependencies
     
-    private var model: Model!
     private var dataSourceAndDelegate: ListDataSourceAndDelegate!
     
     // MARK: Initializers
@@ -20,7 +19,6 @@ class ListController: UIViewController {
         let storyboard = UIStoryboard.init(name: "ListController", bundle: Bundle.main)
         let vc = storyboard.instantiateViewController(withIdentifier: "ListController") as! ListController
         
-        vc.model = model
         vc.dataSourceAndDelegate = ListDataSourceAndDelegate(vc, model: model)
         
         return vc
@@ -35,7 +33,7 @@ class ListController: UIViewController {
     }
     
     override func setEditing(_ editing: Bool, animated: Bool) {
-        model.saveData()
+        dataSourceAndDelegate.saveState()
         super.setEditing(editing, animated: animated)
     }
     

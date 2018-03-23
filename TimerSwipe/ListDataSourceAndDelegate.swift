@@ -25,6 +25,12 @@ class ListDataSourceAndDelegate: NSObject {
     // MARK: Properties
     
     var canEdit: Bool { return model.count > 0 }
+    
+    // MARK: Methods
+    
+    func saveState() {
+        model.saveData()
+    }
 }
 
 // MARK: - Data Source
