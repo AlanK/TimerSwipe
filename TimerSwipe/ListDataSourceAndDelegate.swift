@@ -82,9 +82,8 @@ extension ListDataSourceAndDelegate: UITableViewDataSource {
 extension ListDataSourceAndDelegate: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-        // TODO: Implement this
-        
+        let timer = model[indexPath.row]
+        vc.didSelect(timer)
     }
 }
 
