@@ -83,7 +83,7 @@ class InputView: UIInputView {
         return button
     }()
     
-    let addButton: UIButton = {
+    let saveButton: UIButton = {
         let button = UIButton(type: .system)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setImage(#imageLiteral(resourceName: "Save Arrow").withRenderingMode(.alwaysTemplate), for: .normal)
@@ -187,7 +187,7 @@ class InputView: UIInputView {
         borderWrapper.addSubview(wrapper)
         wrapper.addSubview(cancelButton)
         wrapper.addSubview(innerWrapper)
-        wrapper.addSubview(addButton)
+        wrapper.addSubview(saveButton)
         innerWrapper.addSubview(textField)
         innerWrapper.addSubview(secondsLabel)
         
@@ -216,15 +216,15 @@ class InputView: UIInputView {
         secondsLabel.firstBaselineAnchor.constraint(equalTo: textField.firstBaselineAnchor).isActive = true
         secondsLabel.trailingAnchor.constraint(equalTo: innerWrapper.trailingAnchor).isActive = true
         
-        addButton.centerYAnchor.constraint(equalTo: textField.centerYAnchor).isActive = true
-        addButton.centerYAnchor.constraint(equalTo: cancelButton.centerYAnchor).isActive = true
-        addButton.trailingAnchor.constraint(lessThanOrEqualTo: margin.trailingAnchor, constant: horizontalGap).isActive = true
+        saveButton.centerYAnchor.constraint(equalTo: textField.centerYAnchor).isActive = true
+        saveButton.centerYAnchor.constraint(equalTo: cancelButton.centerYAnchor).isActive = true
+        saveButton.trailingAnchor.constraint(lessThanOrEqualTo: margin.trailingAnchor, constant: horizontalGap).isActive = true
         
-        let hintConstraint = addButton.trailingAnchor.constraint(equalTo: trailingAnchor)
+        let hintConstraint = saveButton.trailingAnchor.constraint(equalTo: trailingAnchor)
         hintConstraint.priority = UILayoutPriority.init(500.0)
         hintConstraint.isActive = true
         
         // Set the order of elements for accessibility to prevent the parent view from stealing accessibility focus
-        accessibilityElements = [cancelButton, textField, addButton]
+        accessibilityElements = [cancelButton, textField, saveButton]
     }
 }

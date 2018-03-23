@@ -89,7 +89,7 @@ class TableController: UITableViewController {
     // MARK: Actions
     
     @IBAction func addButtonActivated(_ sender: Any) {
-        keyboardAccessoryView.addButton.isEnabled = false
+        keyboardAccessoryView.saveButton.isEnabled = false
         makeKAV(visible: true)
     }
     
@@ -164,7 +164,7 @@ class TableController: UITableViewController {
     private lazy var keyboardAccessoryView: InputView = {
         let view = InputView(frame: .zero, inputViewStyle: .default)
         view.cancelButton.addTarget(self, action: #selector(exitKeyboardAccessoryView), for: .touchUpInside)
-        view.addButton.addTarget(self, action: #selector(createNewTimer), for: .touchUpInside)
+        view.saveButton.addTarget(self, action: #selector(createNewTimer), for: .touchUpInside)
         view.textField.addTarget(self, action: #selector(textInTextFieldChanged(_:)), for: UIControlEvents.editingChanged)
         view.textField.delegate = textFieldDelegate
         return view
@@ -218,7 +218,7 @@ class TableController: UITableViewController {
     /// Enable and disable the add button based on whether there is text in the text field
     @objc func textInTextFieldChanged(_ textField: UITextField) {
         let charactersInField = textField.text?.count ?? 0
-        keyboardAccessoryView.addButton.isEnabled = charactersInField > 0
+        keyboardAccessoryView.saveButton.isEnabled = charactersInField > 0
     }
     
     
