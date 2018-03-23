@@ -88,7 +88,7 @@ class TableController: UITableViewController {
     
     // MARK: Actions
     
-    @IBAction func inputNewTimer(_ sender: Any) {
+    @IBAction func addButtonActivated(_ sender: Any) {
         keyboardAccessoryView.addButton.isEnabled = false
         makeKAV(visible: true)
     }
