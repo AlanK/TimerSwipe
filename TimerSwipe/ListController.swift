@@ -28,6 +28,12 @@ class ListController: UIViewController {
     
     // MARK: Overrides
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        navigationItem.leftBarButtonItem = self.editButtonItem
+    }
+    
     override func setEditing(_ editing: Bool, animated: Bool) {
         model.saveData()
         super.setEditing(editing, animated: animated)
