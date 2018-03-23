@@ -27,6 +27,8 @@ class ListDataSourceAndDelegate: NSObject {
     
     var canEdit: Bool { return model.count > 0 }
     
+    private let numberOfSections = 1, currentSection = 0
+    
     // MARK: Methods
     
     func saveState() { model.saveData() }
@@ -36,7 +38,7 @@ class ListDataSourceAndDelegate: NSObject {
 
 extension ListDataSourceAndDelegate: UITableViewDataSource {
     
-    func numberOfSections(in tableView: UITableView) -> Int { return 1 }
+    func numberOfSections(in tableView: UITableView) -> Int { return numberOfSections }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int { return model.count }
     
@@ -72,7 +74,7 @@ extension ListDataSourceAndDelegate: UITableViewDataSource {
             
         default:
             
-            let newIndexPath = indexPath.row == 0 ? indexPath : IndexPath(row: indexPath.row - 1, section: 0)
+            let newIndexPath = indexPath.row == 0 ? indexPath : IndexPath(row: indexPath.row - 1, section: currentSection)
             let cell = tableView.cellForRow(at: newIndexPath)
             UIAccessibilityPostNotification(UIAccessibilityScreenChangedNotification, cell)
         }
@@ -107,7 +109,7 @@ extension ListDataSourceAndDelegate: TableCellDelegate {
         model.saveData()
         
         // Update the table view
-        let indexPaths = rowsToUpdate.map { IndexPath(row: $0, section: 0) }
+        let indexPaths = rowsToUpdate.map { IndexPath(row: $0, section: currentSection) }
         vc.tableView.reloadRows(at: indexPaths, with: .none)
     }
 }
