@@ -44,7 +44,7 @@ class TableCell: UITableViewCell {
         favoriteIcon.setImage(buttonImage.withRenderingMode(.alwaysTemplate), for: UIControlState())
         
         // Set accessibility state of cell
-        let toggleFavorite = UIAccessibilityCustomAction.init(name: buttonDescription, target: self, selector: #selector(favoriteButton(_:)) )
+        let toggleFavorite = UIAccessibilityCustomAction(name: buttonDescription, target: self, selector: #selector(favoriteButton(_:)) )
         
         isAccessibilityElement = true
         accessibilityLabel = accessLabel
