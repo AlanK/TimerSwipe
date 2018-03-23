@@ -9,6 +9,7 @@
 import UIKit
 
 class ListDataSourceAndDelegate: NSObject {
+    
     // MARK: Dependencies
     
     private unowned let vc: ListController
@@ -28,14 +29,13 @@ class ListDataSourceAndDelegate: NSObject {
     
     // MARK: Methods
     
-    func saveState() {
-        model.saveData()
-    }
+    func saveState() { model.saveData() }
 }
 
 // MARK: - Data Source
 
 extension ListDataSourceAndDelegate: UITableViewDataSource {
+    
     func numberOfSections(in tableView: UITableView) -> Int { return 1 }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int { return model.count }
@@ -80,6 +80,7 @@ extension ListDataSourceAndDelegate: UITableViewDataSource {
 // MARK: - Table View Delegate
 
 extension ListDataSourceAndDelegate: UITableViewDelegate {
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         // TODO: Implement this
@@ -90,6 +91,7 @@ extension ListDataSourceAndDelegate: UITableViewDelegate {
 // MARK: - TableCellDelegate
 
 extension ListDataSourceAndDelegate: TableCellDelegate {
+    
     func cellButtonTapped(cell: TableCell) {
         
         // TODO: Implement this
