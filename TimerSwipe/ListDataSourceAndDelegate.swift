@@ -52,21 +52,29 @@ extension ListDataSourceAndDelegate: UITableViewDataSource {
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         // Don't delete the row if the model can't be updated
         guard editingStyle == .delete else { return }
-        let _ = model.remove(at: indexPath.row)
+        _ = model.remove(at: indexPath.row)
         model.saveData()
+        
         tableView.deleteRows(at: [indexPath], with: .automatic)
         vc.refreshEditButton()
-        // You shouldn't toggle setEditing within this method, so GCD to the rescue
-        if model.count == 0 {
+
+        switch model.count {
+        case 0:
+            
+            // You shouldn't toggle setEditing within this method, so GCD to the rescue
             let nearFuture = DispatchTime.now() + K.editButtonDelay
-            let work = DispatchWorkItem {
+            let finishEditing = DispatchWorkItem { [unowned self] in
                 self.vc.setEditing(false, animated: false)
             }
-            DispatchQueue.main.asyncAfter(deadline: nearFuture, execute: work)
+            
+            DispatchQueue.main.asyncAfter(deadline: nearFuture, execute: finishEditing)
             UIAccessibilityPostNotification(UIAccessibilityScreenChangedNotification, vc.addButton)
-        } else {
-            let newIndexPath = (indexPath.row == 0) ? indexPath : IndexPath.init(row: indexPath.row - 1, section: 0)
-            UIAccessibilityPostNotification(UIAccessibilityScreenChangedNotification, tableView.cellForRow(at: newIndexPath))
+            
+        default:
+            
+            let newIndexPath = indexPath.row == 0 ? indexPath : IndexPath(row: indexPath.row - 1, section: 0)
+            let cell = tableView.cellForRow(at: newIndexPath)
+            UIAccessibilityPostNotification(UIAccessibilityScreenChangedNotification, cell)
         }
     }
     
