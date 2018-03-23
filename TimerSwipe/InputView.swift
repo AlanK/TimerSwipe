@@ -27,8 +27,13 @@ extension UIImage {
 class InputView: UIInputView {
     
     // MARK: Private properties
-    static private let secondsLabelFull = NSLocalizedString("secondsLabelFull", value: " seconds", comment: "A space followed by the word seconds, so it can be concatenated with an integer to form a phrase like '20 seconds'"),
-    secondsLabelTruncated = NSLocalizedString("secondsLabelTruncated", value: " sec", comment: "A space followed by an abbreviated word seconds, so it can be concatenated with an integer to form a phrase like '20 sec'")
+    static private let secondsLabelFull = NSLocalizedString(
+        " seconds",
+        comment: "A space followed by the word seconds, so it can be concatenated with an integer to form a phrase like '20 seconds'"),
+    secondsLabelTruncated = NSLocalizedString(
+        " sec",
+        comment: "A space followed by an abbreviated word seconds, so it can be concatenated with an integer to form a phrase like '20 sec'")
+    
     static private let vInset: CGFloat = 0.0, medialInset: CGFloat = 32.0, lateralInset: CGFloat = 16.0
     private lazy var margin = layoutMarginsGuide
 
@@ -74,7 +79,7 @@ class InputView: UIInputView {
         button.contentEdgeInsets = UIEdgeInsetsMake(InputView.vInset, InputView.lateralInset, InputView.vInset, InputView.medialInset)
         button.setContentHuggingPriority(.defaultHigh, for: .horizontal)
         button.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
-        button.accessibilityLabel = NSLocalizedString("cancelAddButton", value: "Cancel new timer", comment: "Cancel the user-initiated action of adding a new timer")
+        button.accessibilityLabel = NSLocalizedString("Cancel new timer", comment: "Cancel the user-initiated action of adding a new timer")
         return button
     }()
     
@@ -110,7 +115,7 @@ class InputView: UIInputView {
             textField.widthAnchor.constraint(equalTo: textField.heightAnchor, multiplier: fallbackTextFieldAspectRatio).isActive = true
         }
         
-        textField.accessibilityLabel = NSLocalizedString("descriptionOfTextField", value: "Timer duration in seconds", comment: "")
+        textField.accessibilityLabel = NSLocalizedString("Timer duration in seconds", comment: "")
         return textField
     }()
 
