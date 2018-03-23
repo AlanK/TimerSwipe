@@ -28,6 +28,8 @@
 		5A7D12D11F0B2ADC00C9B51A /* TS_short_out.aif in Resources */ = {isa = PBXBuildFile; fileRef = 5A7D12CF1F0B2ADC00C9B51A /* TS_short_out.aif */; };
 		5A871FFA1D6FC68900B08A05 /* TableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A871FF91D6FC68900B08A05 /* TableCell.swift */; };
 		5A90785D1EEB8C24006BCDD3 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A90785C1EEB8C24006BCDD3 /* Constants.swift */; };
+		5A97379A206591A400F4A425 /* ListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A973799206591A400F4A425 /* ListController.swift */; };
+		5A97379C206591EB00F4A425 /* ListController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5A97379B206591EB00F4A425 /* ListController.storyboard */; };
 		5AB18AFA1D2058CA007B9D9F /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AB18AF91D2058CA007B9D9F /* MainViewController.swift */; };
 		5AB69EBF1EC799370078DDA5 /* Countdown.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AB69EBE1EC799370078DDA5 /* Countdown.swift */; };
 		5AC60D751FE6D5B3002808C6 /* TableDragDropDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AC60D741FE6D5B3002808C6 /* TableDragDropDelegate.swift */; };
@@ -87,6 +89,8 @@
 		5A871FF91D6FC68900B08A05 /* TableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableCell.swift; sourceTree = "<group>"; };
 		5A8C4C0F1EF449D6000058B7 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/TableController.strings; sourceTree = "<group>"; };
 		5A90785C1EEB8C24006BCDD3 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		5A973799206591A400F4A425 /* ListController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListController.swift; sourceTree = "<group>"; };
+		5A97379B206591EB00F4A425 /* ListController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ListController.storyboard; sourceTree = "<group>"; };
 		5AB18AF91D2058CA007B9D9F /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		5AB69EBE1EC799370078DDA5 /* Countdown.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Countdown.swift; sourceTree = "<group>"; };
 		5AC60D741FE6D5B3002808C6 /* TableDragDropDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableDragDropDelegate.swift; sourceTree = "<group>"; };
@@ -183,6 +187,15 @@
 			name = Sounds;
 			sourceTree = "<group>";
 		};
+		5A9737982065917100F4A425 /* List */ = {
+			isa = PBXGroup;
+			children = (
+				5A973799206591A400F4A425 /* ListController.swift */,
+				5A97379B206591EB00F4A425 /* ListController.storyboard */,
+			);
+			name = List;
+			sourceTree = "<group>";
+		};
 		5AA3E3A81EEF34E900FB5F1D /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -242,6 +255,7 @@
 				85B648A91FFB19C3004E85F4 /* TimeoutManager.swift */,
 				5AD81F4B205EB94E00490859 /* VoiceOverHandler.swift */,
 				5ADE6DCB1FFEF46300E8CF8C /* Permissions */,
+				5A9737982065917100F4A425 /* List */,
 				5AA3E3AB1EEF356600FB5F1D /* Table */,
 				5AA3E3AA1EEF354300FB5F1D /* Main */,
 			);
@@ -353,6 +367,7 @@
 				5AD81F4E205F4F0500490859 /* MainViewController.storyboard in Resources */,
 				5A2731DE1FD62ED400FD5737 /* Localizable.strings in Resources */,
 				5A7D12D11F0B2ADC00C9B51A /* TS_short_out.aif in Resources */,
+				5A97379C206591EB00F4A425 /* ListController.storyboard in Resources */,
 				5A03B9B21D1DDB9800E245C9 /* LaunchScreen.storyboard in Resources */,
 				5A03B9AF1D1DDB9800E245C9 /* Assets.xcassets in Resources */,
 				5ADE6DCA1FFDBFCF00E8CF8C /* Permissions.storyboard in Resources */,
@@ -378,6 +393,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5A97379A206591A400F4A425 /* ListController.swift in Sources */,
 				5A23597E20128A5400393EAA /* LocalNotifications.swift in Sources */,
 				5ADB6A181F561562006BEE1B /* InputView.swift in Sources */,
 				5AC60D751FE6D5B3002808C6 /* TableDragDropDelegate.swift in Sources */,
