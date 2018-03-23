@@ -93,8 +93,14 @@ extension ListDataSourceAndDelegate: UITableViewDelegate {
 extension ListDataSourceAndDelegate: TableCellDelegate {
     
     func cellButtonTapped(cell: TableCell) {
+        guard let index = vc.tableView.indexPath(for: cell)?.row else { return }
         
-        // TODO: Implement this
+        // Update favorite timer and save
+        let rowsToUpdate = model.updateFavorite(at: index)
+        model.saveData()
         
+        // Update the table view
+        let indexPaths = rowsToUpdate.map { IndexPath(row: $0, section: 0) }
+        vc.tableView.reloadRows(at: indexPaths, with: .none)
     }
 }
