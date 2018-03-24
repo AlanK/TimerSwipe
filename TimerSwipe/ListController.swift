@@ -65,9 +65,5 @@ class ListController: UIViewController {
     /// Enable the Edit button when the table has one or more rows
     func refreshEditButton() { editButtonItem.isEnabled = dataSourceAndDelegate.canEdit }
     
-    func didSelect(_ timer: STSavedTimer) {
-        
-        // TODO: Implement this
-        
-    }
+    func didSelect(_ timer: STSavedTimer) { delegate.didSelect(timer, vc: self) }
 }
