@@ -55,13 +55,13 @@ class RootFC: UIViewController {
             // Don't change views if there is no favorite to change to
             guard let _ = model.favorite else { return }
             // Don't disrupt an active edit session
-            if let vc = topVC as? TableController {
+            if let vc = topVC as? ListController {
                 if vc.isEditing { return }
             }
             
             // Don't animate going from one timer to another; it looks weird
-            let leavingTableController = !(topVC is MainViewController)
-            self.loadNavigationStack(animated: leavingTableController, with: model)
+            let leavingListController = !(topVC is MainViewController)
+            self.loadNavigationStack(animated: leavingListController, with: model)
         }
     }
     
@@ -81,7 +81,7 @@ class RootFC: UIViewController {
             countdownDelegate.cancelCountdown()
         }
         
-        let vc = TableController.instantiate(with: self, model: model)
+        let vc = ListController.instantiate(delegate: self, model: model)
         var navHierarchy: [UIViewController] = [vc]
         
         if let timer = timer ?? model.favorite {
@@ -101,17 +101,22 @@ class RootFC: UIViewController {
     }
 }
 
-// MARK: - TableControllerDelegate
+// MARK: - List Controller Delegate
 
-extension RootFC: TableControllerDelegate {
-    func addButtonActivated(_: Any, tableController: TableController) { tableController.makeKAV(visible: true) }
-    
-    func tableView(_ model: Model, tableController: TableController, didSelectRowAt indexPath: IndexPath) {
-        let timer = model[indexPath.row]
+extension RootFC: ListControllerDelegate {
+    func didSelect(_ timer: STSavedTimer, vc: ListController) {
         let vc = MainViewController.instantiate(with: self, sound: soundController, timer: timer)
         nav.pushViewController(vc, animated: true)
         setSoundControllerStatus()
     }
+    
+    func addButtonActivated(vc: ListController) {
+        
+        // TODO: Implement this
+        
+    }
+    
+    
 }
 
 // MARK: - MainViewControllerDelegate
