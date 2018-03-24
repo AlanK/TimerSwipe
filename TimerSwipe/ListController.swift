@@ -30,6 +30,7 @@ class ListController: UIViewController {
         super.viewDidLoad()
         
         navigationItem.leftBarButtonItem = self.editButtonItem
+        editButtonItem.action = #selector(editButtonActivated)
     }
     
     override func setEditing(_ editing: Bool, animated: Bool) {
@@ -43,6 +44,11 @@ class ListController: UIViewController {
     @IBOutlet var addButton: UIBarButtonItem!
     
     // MARK: Methods
+    
+    @objc func editButtonActivated() {
+        setEditing(!isEditing, animated: true)
+        tableView.isEditing = isEditing
+    }
     
     /// Enable the Edit button when the table has one or more rows
     func refreshEditButton() { editButtonItem.isEnabled = dataSourceAndDelegate.canEdit }
