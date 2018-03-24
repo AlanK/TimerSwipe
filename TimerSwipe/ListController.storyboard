@@ -49,7 +49,12 @@
                         <viewLayoutGuide key="safeArea" id="X6o-3X-Cpa"/>
                     </view>
                     <navigationItem key="navigationItem" id="Dfd-im-wZv">
-                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="KKD-1i-Ceh"/>
+                        <barButtonItem key="leftBarButtonItem" systemItem="edit" id="rEQ-wL-sjk"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="KKD-1i-Ceh">
+                            <connections>
+                                <action selector="addButtonActivated:" destination="gC7-jv-bDp" id="Woa-62-bmX"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="addButton" destination="KKD-1i-Ceh" id="itE-Sh-iSO"/>
