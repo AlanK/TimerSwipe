@@ -40,6 +40,8 @@ class ListController: UIViewController {
         editButtonItem.action = #selector(editButtonActivated)
     }
     
+    override func viewWillAppear(_ animated: Bool) { navigationController?.setNavigationBarHidden(false, animated: animated) }
+    
     override func setEditing(_ editing: Bool, animated: Bool) {
         dataSourceAndDelegate.saveState()
         super.setEditing(editing, animated: animated)
@@ -66,7 +68,7 @@ class ListController: UIViewController {
     
     @objc func editButtonActivated() {
         setEditing(!isEditing, animated: true)
-        tableView.isEditing = isEditing
+        tableView.setEditing(isEditing, animated: true)
     }
     
     /// Enable the Edit button when the table has one or more rows

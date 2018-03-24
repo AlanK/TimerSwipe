@@ -28,10 +28,10 @@
             </objects>
             <point key="canvasLocation" x="-783" y="134"/>
         </scene>
-        <!--List Controller-->
+        <!--Timers-->
         <scene sceneID="9jj-PI-DaQ">
             <objects>
-                <viewController storyboardIdentifier="ListController" id="gC7-jv-bDp" customClass="ListController" customModule="TimerSwipe" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ListController" title="Timers" id="gC7-jv-bDp" customClass="ListController" customModule="TimerSwipe" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="mvB-4J-sDc">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -110,7 +110,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="X6o-3X-Cpa"/>
                     </view>
-                    <navigationItem key="navigationItem" id="Dfd-im-wZv">
+                    <navigationItem key="navigationItem" title="Timers" id="Dfd-im-wZv">
                         <barButtonItem key="leftBarButtonItem" systemItem="edit" id="rEQ-wL-sjk"/>
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="KKD-1i-Ceh">
                             <connections>
