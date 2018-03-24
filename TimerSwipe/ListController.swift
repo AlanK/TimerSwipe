@@ -52,7 +52,14 @@ class ListController: UIViewController {
     
     // MARK: Outlets
     
-    @IBOutlet var tableView: UITableView!
+    @IBOutlet var tableView: UITableView! {
+        didSet {
+            tableView.dataSource = dataSourceAndDelegate
+            tableView.delegate = dataSourceAndDelegate
+            tableView.reloadData()
+        }
+    }
+    
     @IBOutlet var addButton: UIBarButtonItem!
     
     // MARK: Methods
