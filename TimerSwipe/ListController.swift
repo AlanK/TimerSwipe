@@ -8,17 +8,24 @@
 
 import UIKit
 
+protocol ListControllerDelegate: AnyObject {
+    func didSelect(_: STSavedTimer, vc: ListController)
+    func addButtonActivated(vc: ListController)
+}
+
 class ListController: UIViewController {
     // MARK: Dependencies
     
+    private weak var delegate: ListControllerDelegate!
     private var dataSourceAndDelegate: ListDataSourceAndDelegate!
     
     // MARK: Initializers
     
-    static func instantiate(model: Model) -> ListController {
+    static func instantiate(delegate: ListControllerDelegate, model: Model) -> ListController {
         let storyboard = UIStoryboard.init(name: "ListController", bundle: Bundle.main)
         let vc = storyboard.instantiateViewController(withIdentifier: "ListController") as! ListController
         
+        vc.delegate = delegate
         vc.dataSourceAndDelegate = ListDataSourceAndDelegate(vc, model: model)
         
         return vc
