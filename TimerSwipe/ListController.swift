@@ -45,6 +45,11 @@ class ListController: UIViewController {
         super.setEditing(editing, animated: animated)
     }
     
+    // MARK: Actions
+    
+    
+    @IBAction func addButtonActivated(_ sender: Any) { delegate.addButtonActivated(vc: self) }
+    
     // MARK: Outlets
     
     @IBOutlet var tableView: UITableView!
