@@ -40,7 +40,10 @@ class ListController: UIViewController {
         editButtonItem.action = #selector(editButtonActivated)
     }
     
-    override func viewWillAppear(_ animated: Bool) { navigationController?.setNavigationBarHidden(false, animated: animated) }
+    override func viewWillAppear(_ animated: Bool) {
+        navigationController?.setNavigationBarHidden(false, animated: animated)
+        if let indexPath = tableView.indexPathForSelectedRow { tableView.deselectRow(at: indexPath, animated: true) }
+    }
     
     override func setEditing(_ editing: Bool, animated: Bool) {
         dataSourceAndDelegate.saveState()
