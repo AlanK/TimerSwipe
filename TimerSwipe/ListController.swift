@@ -41,13 +41,16 @@ class ListController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
         navigationController?.setNavigationBarHidden(false, animated: animated)
         if let indexPath = tableView.indexPathForSelectedRow { tableView.deselectRow(at: indexPath, animated: true) }
     }
     
     override func setEditing(_ editing: Bool, animated: Bool) {
-        dataSourceAndDelegate.saveState()
         super.setEditing(editing, animated: animated)
+        
+        dataSourceAndDelegate.saveState()
     }
     
     // MARK: Actions
