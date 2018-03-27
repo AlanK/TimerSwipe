@@ -75,7 +75,7 @@ class ListController: UIViewController {
             let iAV = inputAccessoryView as? InputView,
             iAV.textField.becomeFirstResponder() else { return false }
         
-        iAV.isVisible = true
+        setInputAccessoryViewVisibility(true)
         
         return iAV.isVisible
     }
@@ -158,7 +158,16 @@ class ListController: UIViewController {
     private func hideInputView() {
         guard let view = addTimerView as? InputView else { return }
         view.textField.resignFirstResponder()
-        view.isVisible = false
+        setInputAccessoryViewVisibility(false)
         addButton.isEnabled = true
+    }
+    
+    private func setInputAccessoryViewVisibility(_ isVisible: Bool) {
+        guard let view = addTimerView as? InputView else { return }
+        let options = isVisible ? K.keyboardAnimateInCurve : K.keyboardAnimateOutCurve
+        UIView.animate(withDuration: K.keyboardAnimationDuration, delay: 0.0, options: options, animations: {
+            view.isVisible = isVisible
+            view.supremeView.layoutIfNeeded()
+        })
     }
 }
