@@ -111,8 +111,10 @@ extension RootFC: ListControllerDelegate {
     }
     
     func addButtonActivated(_ addButton: UIBarButtonItem, vc: ListController) {
+        vc.wantsToBecomeFirstResponder = true
+        _ = vc.becomeFirstResponder()
         addButton.isEnabled = false
-        
+
         // TODO: Implement this
         
     }

@@ -69,7 +69,23 @@ class ListController: UIViewController {
         dataSourceAndDelegate.saveState()
     }
     
+    override func becomeFirstResponder() -> Bool {
+        guard wantsToBecomeFirstResponder,
+            super.becomeFirstResponder(),
+            let iAV = inputAccessoryView as? InputView,
+            iAV.textField.becomeFirstResponder() else { return false }
+        
+        iAV.isVisible = true
+        
+        return iAV.isVisible
+    }
+    
     override var canBecomeFirstResponder: Bool { return true }
+    
+    override var inputAccessoryView: UIView? {
+        get { return addTimerView }
+        set { addTimerView = newValue }
+    }
     
     // MARK: Actions
     
@@ -90,6 +106,15 @@ class ListController: UIViewController {
     }
     
     @IBOutlet var addButton: UIBarButtonItem!
+    
+    // MARK: Properties
+    
+    var wantsToBecomeFirstResponder = false
+    
+    private lazy var addTimerView: UIView? = {
+        let view = InputView(frame: .zero, inputViewStyle: .default)
+        return view
+    }()
     
     // MARK: Methods
     
