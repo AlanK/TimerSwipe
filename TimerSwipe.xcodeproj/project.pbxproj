@@ -171,7 +171,7 @@
 				5A297B4B201B99A500E1E722 /* ApplicationShortcuts.swift */,
 				5AA3E3AC1EEF360C00FB5F1D /* Views and Controllers */,
 				5AA3E3A81EEF34E900FB5F1D /* Model */,
-				5AA3E3A91EEF34F700FB5F1D /* Storyboards */,
+				5A03B9B01D1DDB9800E245C9 /* LaunchScreen.storyboard */,
 				5A03B9AE1D1DDB9800E245C9 /* Assets.xcassets */,
 				5A03B9B31D1DDB9800E245C9 /* Info.plist */,
 				5A66EB7A1F099E5900225C38 /* Sounds */,
@@ -209,20 +209,10 @@
 			name = Model;
 			sourceTree = "<group>";
 		};
-		5AA3E3A91EEF34F700FB5F1D /* Storyboards */ = {
-			isa = PBXGroup;
-			children = (
-				5A03B9B01D1DDB9800E245C9 /* LaunchScreen.storyboard */,
-				5A03B9AB1D1DDB9800E245C9 /* TableController.storyboard */,
-				5ADE6DC91FFDBFCF00E8CF8C /* Permissions.storyboard */,
-				5AD81F4D205F4F0500490859 /* MainViewController.storyboard */,
-			);
-			name = Storyboards;
-			sourceTree = "<group>";
-		};
 		5AA3E3AA1EEF354300FB5F1D /* Main */ = {
 			isa = PBXGroup;
 			children = (
+				5AD81F4D205F4F0500490859 /* MainViewController.storyboard */,
 				5AB18AF91D2058CA007B9D9F /* MainViewController.swift */,
 				5AD81F572060A59300490859 /* ButtonHandler.swift */,
 				5AD81F5320601FA100490859 /* ContainerHandler.swift */,
@@ -239,7 +229,9 @@
 		5AA3E3AB1EEF356600FB5F1D /* Table */ = {
 			isa = PBXGroup;
 			children = (
+				5A03B9AB1D1DDB9800E245C9 /* TableController.storyboard */,
 				5A12267B1D5A80BA006D49F1 /* TableController.swift */,
+				5ADE6DC71FFD9E0600E8CF8C /* PermissionManager.swift */,
 				5A871FF91D6FC68900B08A05 /* TableCell.swift */,
 				5AC60D741FE6D5B3002808C6 /* TableDragDropDelegate.swift */,
 				5ADB6A171F561562006BEE1B /* InputView.swift */,
@@ -268,8 +260,8 @@
 		5ADE6DCB1FFEF46300E8CF8C /* Permissions */ = {
 			isa = PBXGroup;
 			children = (
+				5ADE6DC91FFDBFCF00E8CF8C /* Permissions.storyboard */,
 				5ADE6DCC1FFF285000E8CF8C /* PermissionController.swift */,
-				5ADE6DC71FFD9E0600E8CF8C /* PermissionManager.swift */,
 			);
 			name = Permissions;
 			sourceTree = "<group>";
