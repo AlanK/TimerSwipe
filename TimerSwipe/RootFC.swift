@@ -110,7 +110,8 @@ extension RootFC: ListControllerDelegate {
         setSoundControllerStatus()
     }
     
-    func addButtonActivated(vc: ListController) {
+    func addButtonActivated(_ addButton: UIBarButtonItem, vc: ListController) {
+        addButton.isEnabled = false
         
         // TODO: Implement this
         

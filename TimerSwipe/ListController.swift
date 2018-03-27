@@ -10,7 +10,7 @@ import UIKit
 
 protocol ListControllerDelegate: AnyObject {
     func didSelect(_: STSavedTimer, vc: ListController)
-    func addButtonActivated(vc: ListController)
+    func addButtonActivated(_: UIBarButtonItem, vc: ListController)
 }
 
 class ListController: UIViewController {
@@ -71,7 +71,7 @@ class ListController: UIViewController {
     
     // MARK: Actions
     
-    @IBAction func addButtonActivated(_ sender: Any) { delegate.addButtonActivated(vc: self) }
+    @IBAction func addButtonActivated(_ sender: Any) { delegate.addButtonActivated(_: addButton, vc: self) }
     
     // MARK: Outlets
     
