@@ -72,12 +72,17 @@ class ListController: UIViewController {
     override func becomeFirstResponder() -> Bool {
         guard wantsToBecomeFirstResponder,
             super.becomeFirstResponder(),
-            let iAV = inputAccessoryView as? InputView,
-            iAV.textField.becomeFirstResponder() else { return false }
+            addTimerView.textField.becomeFirstResponder() else { return false }
         
         setInputAccessoryViewVisibility(true)
         
-        return iAV.isVisible
+        return addTimerView.isVisible
+    }
+    
+    override func resignFirstResponder() -> Bool {
+        addTimerView.textField.resignFirstResponder()
+        
+        return super.resignFirstResponder()
     }
     
     override var canBecomeFirstResponder: Bool { return true }
@@ -152,7 +157,7 @@ class ListController: UIViewController {
     }
     
     private func hideInputView() {
-        addTimerView.textField.resignFirstResponder()
+        _ = resignFirstResponder()
         setInputAccessoryViewVisibility(false)
         addButton.isEnabled = true
     }
@@ -161,7 +166,7 @@ class ListController: UIViewController {
         let options = isVisible ? K.keyboardAnimateInCurve : K.keyboardAnimateOutCurve
         UIView.animate(withDuration: K.keyboardAnimationDuration, delay: 0.0, options: options, animations: { [unowned self] in
             self.addTimerView.isVisible = isVisible
-            self.inputAccessoryView?.supremeView.layoutIfNeeded()
+            self.addTimerView.supremeView.layoutIfNeeded()
         })
     }
 }
