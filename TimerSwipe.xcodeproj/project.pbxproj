@@ -26,8 +26,6 @@
 		5A591CE91D3AA18E00B9BD3D /* SoundController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A591CE81D3AA18E00B9BD3D /* SoundController.swift */; };
 		5A7D12D01F0B2ADC00C9B51A /* TS_short_in.aif in Resources */ = {isa = PBXBuildFile; fileRef = 5A7D12CE1F0B2ADC00C9B51A /* TS_short_in.aif */; };
 		5A7D12D11F0B2ADC00C9B51A /* TS_short_out.aif in Resources */ = {isa = PBXBuildFile; fileRef = 5A7D12CF1F0B2ADC00C9B51A /* TS_short_out.aif */; };
-		5A84F5F0206A8ECE00581C9D /* ListInputController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A84F5EE206A8ECE00581C9D /* ListInputController.swift */; };
-		5A84F5F1206A8ECE00581C9D /* ListInputController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5A84F5EF206A8ECE00581C9D /* ListInputController.xib */; };
 		5A871FFA1D6FC68900B08A05 /* TableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A871FF91D6FC68900B08A05 /* TableCell.swift */; };
 		5A90785D1EEB8C24006BCDD3 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A90785C1EEB8C24006BCDD3 /* Constants.swift */; };
 		5A97379A206591A400F4A425 /* ListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A973799206591A400F4A425 /* ListController.swift */; };
@@ -89,8 +87,6 @@
 		5A6E07951F8C443200B7062A /* TS_short_warn.aif */ = {isa = PBXFileReference; lastKnownFileType = file; path = TS_short_warn.aif; sourceTree = "<group>"; };
 		5A7D12CE1F0B2ADC00C9B51A /* TS_short_in.aif */ = {isa = PBXFileReference; lastKnownFileType = file; name = TS_short_in.aif; path = "../../TS Sounds/TS_short_in.aif"; sourceTree = "<group>"; };
 		5A7D12CF1F0B2ADC00C9B51A /* TS_short_out.aif */ = {isa = PBXFileReference; lastKnownFileType = file; name = TS_short_out.aif; path = "../../TS Sounds/TS_short_out.aif"; sourceTree = "<group>"; };
-		5A84F5EE206A8ECE00581C9D /* ListInputController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListInputController.swift; sourceTree = "<group>"; };
-		5A84F5EF206A8ECE00581C9D /* ListInputController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ListInputController.xib; sourceTree = "<group>"; };
 		5A871FF91D6FC68900B08A05 /* TableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableCell.swift; sourceTree = "<group>"; };
 		5A8C4C0F1EF449D6000058B7 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/TableController.strings; sourceTree = "<group>"; };
 		5A90785C1EEB8C24006BCDD3 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
@@ -200,8 +196,6 @@
 				5A97379B206591EB00F4A425 /* ListController.storyboard */,
 				5A973799206591A400F4A425 /* ListController.swift */,
 				5A97379D2065A09400F4A425 /* ListDataSourceAndDelegate.swift */,
-				5A84F5EF206A8ECE00581C9D /* ListInputController.xib */,
-				5A84F5EE206A8ECE00581C9D /* ListInputController.swift */,
 			);
 			name = List;
 			sourceTree = "<group>";
@@ -374,7 +368,6 @@
 				5ADE6DCA1FFDBFCF00E8CF8C /* Permissions.storyboard in Resources */,
 				5A03B9AD1D1DDB9800E245C9 /* TableController.storyboard in Resources */,
 				5A2731E21FD6311100FD5737 /* Localizable.stringsdict in Resources */,
-				5A84F5F1206A8ECE00581C9D /* ListInputController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -424,7 +417,6 @@
 				5AD81F522060102700490859 /* CustomAccessibilityAction.swift in Sources */,
 				5ADE6DC81FFD9E0600E8CF8C /* PermissionManager.swift in Sources */,
 				5A12267C1D5A80BA006D49F1 /* TableController.swift in Sources */,
-				5A84F5F0206A8ECE00581C9D /* ListInputController.swift in Sources */,
 				5A97379E2065A09400F4A425 /* ListDataSourceAndDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
