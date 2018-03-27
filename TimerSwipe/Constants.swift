@@ -89,6 +89,7 @@ extension UINavigationController {
         nc.navigationBar.barStyle = .black
         nc.navigationBar.barTintColor = K.tintColor
         nc.navigationBar.tintColor = .white
+        if #available(iOS 11.0, *) { nc.navigationBar.prefersLargeTitles = true }
         
         return nc
     }
