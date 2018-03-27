@@ -71,7 +71,6 @@ class ListController: UIViewController {
     
     // MARK: Actions
     
-    
     @IBAction func addButtonActivated(_ sender: Any) { delegate.addButtonActivated(vc: self) }
     
     // MARK: Outlets
