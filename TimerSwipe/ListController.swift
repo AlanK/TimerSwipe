@@ -69,6 +69,8 @@ class ListController: UIViewController {
         dataSourceAndDelegate.saveState()
     }
     
+    override var canBecomeFirstResponder: Bool { return true }
+    
     // MARK: Actions
     
     @IBAction func addButtonActivated(_ sender: Any) { delegate.addButtonActivated(_: addButton, vc: self) }
