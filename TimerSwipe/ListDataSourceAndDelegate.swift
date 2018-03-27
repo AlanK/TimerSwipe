@@ -32,6 +32,14 @@ class ListDataSourceAndDelegate: NSObject {
     // MARK: Methods
     
     func saveState() { model.saveData() }
+    
+    func addTimer(seconds: TimeInterval) {
+        let timer = STSavedTimer(seconds: seconds)
+        model.append(timer: timer)
+        model.saveData()
+        vc.tableView.insertRows(at: [IndexPath(row: model.count - 1, section: currentSection)], with: .automatic)
+        vc.refreshEditButton()
+    }
 }
 
 // MARK: - Data Source

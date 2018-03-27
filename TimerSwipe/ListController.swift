@@ -91,6 +91,18 @@ class ListController: UIViewController {
     
     @IBAction func addButtonActivated(_ sender: Any) { delegate.addButtonActivated(_: addButton, vc: self) }
     
+    @objc func cancelButtonActivated(_ sender: Any) { hideInputView() }
+    
+    @objc func saveButtonActivated(_ sender: Any) {
+        createAndAddTimer()
+        hideInputView()
+    }
+    
+    @objc func textInTextFieldChanged(_ textField: UITextField) {
+        let charactersInField = textField.text?.count ?? 0
+        (addTimerView as? InputView)?.saveButton.isEnabled = charactersInField > 0
+    }
+    
     // MARK: Outlets
     
     @IBOutlet var tableView: UITableView! {
@@ -113,6 +125,10 @@ class ListController: UIViewController {
     
     private lazy var addTimerView: UIView? = {
         let view = InputView(frame: .zero, inputViewStyle: .default)
+        view.textField.delegate = TableTFDelegate(completionHandler: createAndAddTimer)
+        view.cancelButton.addTarget(self, action: #selector(cancelButtonActivated(_:)), for: .touchUpInside)
+        view.saveButton.addTarget(self, action: #selector(saveButtonActivated(_:)), for: .touchUpInside)
+        view.textField.addTarget(self, action: #selector(textInTextFieldChanged(_:)), for: .editingChanged)
         return view
     }()
     
@@ -127,4 +143,22 @@ class ListController: UIViewController {
     func refreshEditButton() { editButtonItem.isEnabled = dataSourceAndDelegate.canEdit }
     
     func didSelect(_ timer: STSavedTimer) { delegate.didSelect(timer, vc: self) }
+    
+    private func createAndAddTimer() {
+        guard let inputAccessoryView = addTimerView as? InputView,
+            let text = inputAccessoryView.textField.text,
+            let seconds = TimeInterval(text),
+            seconds > 0 else { return }
+        
+        print("How many seconds? \(seconds)")
+        
+        dataSourceAndDelegate.addTimer(seconds: seconds)
+    }
+    
+    private func hideInputView() {
+        guard let view = addTimerView as? InputView else { return }
+        view.textField.resignFirstResponder()
+        view.isVisible = false
+        addButton.isEnabled = true
+    }
 }
