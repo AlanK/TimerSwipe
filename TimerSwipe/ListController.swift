@@ -33,6 +33,22 @@ class ListController: UIViewController {
     
     // MARK: Overrides
     
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        // Apply layout to the footer
+        guard let footerView = tableView.tableFooterView else {return}
+        // Get the auto layout-determined height of the footer and its actual frame
+        let height = footerView.systemLayoutSizeFitting(UILayoutFittingCompressedSize).height
+        var frame = footerView.frame
+        
+        // If the correct height doesn't match the frame, apply the correct height and re-attach the footer
+        guard height != frame.size.height else {return}
+        frame.size.height = height
+        footerView.frame = frame
+        tableView.tableFooterView = footerView
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -66,6 +82,10 @@ class ListController: UIViewController {
             tableView.delegate = dataSourceAndDelegate
             tableView.reloadData()
         }
+    }
+    
+    @IBOutlet var footer: UILabel! {
+        didSet { footer.accessibilityLabel = NSLocalizedString("Mark a timer favorite to open it by default", comment: "") }
     }
     
     @IBOutlet var addButton: UIBarButtonItem!
