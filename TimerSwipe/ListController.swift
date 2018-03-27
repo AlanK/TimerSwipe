@@ -72,22 +72,22 @@ class ListController: UIViewController {
     override func becomeFirstResponder() -> Bool {
         guard wantsToBecomeFirstResponder,
             super.becomeFirstResponder(),
-            addTimerView.textField.becomeFirstResponder() else { return false }
+            keyboardAccessoryView.textField.becomeFirstResponder() else { return false }
         
         setInputAccessoryViewVisibility(true)
         
-        return addTimerView.isVisible
+        return keyboardAccessoryView.isVisible
     }
     
     override func resignFirstResponder() -> Bool {
-        addTimerView.textField.resignFirstResponder()
+        keyboardAccessoryView.textField.resignFirstResponder()
         
         return super.resignFirstResponder()
     }
     
     override var canBecomeFirstResponder: Bool { return true }
     
-    override var inputAccessoryView: UIView? { return addTimerView }
+    override var inputAccessoryView: UIView? { return keyboardAccessoryView }
     
     // MARK: Actions
     
@@ -102,7 +102,7 @@ class ListController: UIViewController {
     
     @objc func textInTextFieldChanged(_ textField: UITextField) {
         let charactersInField = textField.text?.count ?? 0
-        addTimerView.saveButton.isEnabled = charactersInField > 0
+        keyboardAccessoryView.saveButton.isEnabled = charactersInField > 0
     }
     
     // MARK: Outlets
@@ -125,7 +125,7 @@ class ListController: UIViewController {
     
     var wantsToBecomeFirstResponder = false
     
-    private lazy var addTimerView: InputView = {
+    lazy var keyboardAccessoryView: InputView = {
         let view = InputView(frame: .zero, inputViewStyle: .default)
         view.textField.delegate = TableTFDelegate(completionHandler: createAndAddTimer)
         view.cancelButton.addTarget(self, action: #selector(cancelButtonActivated(_:)), for: .touchUpInside)
@@ -147,7 +147,7 @@ class ListController: UIViewController {
     func didSelect(_ timer: STSavedTimer) { delegate.didSelect(timer, vc: self) }
     
     private func createAndAddTimer() {
-        guard let text = addTimerView.textField.text,
+        guard let text = keyboardAccessoryView.textField.text,
             let seconds = TimeInterval(text),
             seconds > 0 else { return }
         
@@ -165,8 +165,8 @@ class ListController: UIViewController {
     private func setInputAccessoryViewVisibility(_ isVisible: Bool) {
         let options = isVisible ? K.keyboardAnimateInCurve : K.keyboardAnimateOutCurve
         UIView.animate(withDuration: K.keyboardAnimationDuration, delay: 0.0, options: options, animations: { [unowned self] in
-            self.addTimerView.isVisible = isVisible
-            self.addTimerView.supremeView.layoutIfNeeded()
+            self.keyboardAccessoryView.isVisible = isVisible
+            self.keyboardAccessoryView.supremeView.layoutIfNeeded()
         })
     }
 }
