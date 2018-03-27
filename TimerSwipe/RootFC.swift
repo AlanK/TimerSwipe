@@ -110,16 +110,7 @@ extension RootFC: ListControllerDelegate {
         setSoundControllerStatus()
     }
     
-    func addButtonActivated(_ addButton: UIBarButtonItem, vc: ListController) {
-        vc.wantsToBecomeFirstResponder = true
-        _ = vc.becomeFirstResponder()
-        addButton.isEnabled = false
-
-        // TODO: Implement this
-        
-    }
-    
-    
+    func addButtonActivated(_ addButton: UIBarButtonItem, vc: ListController) { vc.setInputAccessoryViewVisibility(true) }
 }
 
 // MARK: - MainViewControllerDelegate

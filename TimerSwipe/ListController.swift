@@ -69,21 +69,21 @@ class ListController: UIViewController {
         dataSourceAndDelegate.saveState()
     }
     
-    override func becomeFirstResponder() -> Bool {
-        guard wantsToBecomeFirstResponder,
-            super.becomeFirstResponder(),
-            keyboardAccessoryView.textField.becomeFirstResponder() else { return false }
-        
-        setInputAccessoryViewVisibility(true)
-        
-        return keyboardAccessoryView.isVisible
-    }
-    
-    override func resignFirstResponder() -> Bool {
-        keyboardAccessoryView.textField.resignFirstResponder()
-        
-        return super.resignFirstResponder()
-    }
+//    override func becomeFirstResponder() -> Bool {
+//        guard wantsToBecomeFirstResponder,
+//            super.becomeFirstResponder(),
+//            keyboardAccessoryView.textField.becomeFirstResponder() else { return false }
+//
+//        setInputAccessoryViewVisibility(true)
+//
+//        return keyboardAccessoryView.isVisible
+//    }
+//
+//    override func resignFirstResponder() -> Bool {
+//        keyboardAccessoryView.textField.resignFirstResponder()
+//        
+//        return super.resignFirstResponder()
+//    }
     
     override var canBecomeFirstResponder: Bool { return true }
     
@@ -93,11 +93,11 @@ class ListController: UIViewController {
     
     @IBAction func addButtonActivated(_ sender: Any) { delegate.addButtonActivated(_: addButton, vc: self) }
     
-    @objc func cancelButtonActivated(_ sender: Any) { hideInputView() }
+    @objc func cancelButtonActivated(_ sender: Any) { setInputAccessoryViewVisibility(false) }
     
     @objc func saveButtonActivated(_ sender: Any) {
         createAndAddTimer()
-        hideInputView()
+        setInputAccessoryViewVisibility(false)
     }
     
     @objc func textInTextFieldChanged(_ textField: UITextField) {
@@ -123,7 +123,7 @@ class ListController: UIViewController {
     
     // MARK: Properties
     
-    var wantsToBecomeFirstResponder = false
+//    var wantsToBecomeFirstResponder = false
     
     lazy var keyboardAccessoryView: InputView = {
         let view = InputView(frame: .zero, inputViewStyle: .default)
@@ -156,16 +156,19 @@ class ListController: UIViewController {
         dataSourceAndDelegate.addTimer(seconds: seconds)
     }
     
-    private func hideInputView() {
-        _ = resignFirstResponder()
-        setInputAccessoryViewVisibility(false)
-        addButton.isEnabled = true
-    }
+//    private func hideInputView() {
+//        _ = resignFirstResponder()
+//        setInputAccessoryViewVisibility(false)
+//        addButton.isEnabled = true
+//    }
     
-    private func setInputAccessoryViewVisibility(_ isVisible: Bool) {
-        let options = isVisible ? K.keyboardAnimateInCurve : K.keyboardAnimateOutCurve
+    func setInputAccessoryViewVisibility(_ viewWillBecomeVisible: Bool) {
+        addButton.isEnabled = !viewWillBecomeVisible
+        if !viewWillBecomeVisible { keyboardAccessoryView.textField.text?.removeAll() }
+        _ = viewWillBecomeVisible ? keyboardAccessoryView.textField.becomeFirstResponder() : keyboardAccessoryView.textField.resignFirstResponder()
+        let options = viewWillBecomeVisible ? K.keyboardAnimateInCurve : K.keyboardAnimateOutCurve
         UIView.animate(withDuration: K.keyboardAnimationDuration, delay: 0.0, options: options, animations: { [unowned self] in
-            self.keyboardAccessoryView.isVisible = isVisible
+            self.keyboardAccessoryView.isVisible = viewWillBecomeVisible
             self.keyboardAccessoryView.supremeView.layoutIfNeeded()
         })
     }
