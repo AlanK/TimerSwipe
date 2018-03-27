@@ -169,6 +169,7 @@
 				5A90785C1EEB8C24006BCDD3 /* Constants.swift */,
 				5A03B9A71D1DDB9800E245C9 /* AppDelegate.swift */,
 				5A297B4B201B99A500E1E722 /* ApplicationShortcuts.swift */,
+				5A23597D20128A5400393EAA /* LocalNotifications.swift */,
 				5AA3E3AC1EEF360C00FB5F1D /* Views and Controllers */,
 				5AA3E3A81EEF34E900FB5F1D /* Model */,
 				5A03B9B01D1DDB9800E245C9 /* LaunchScreen.storyboard */,
@@ -204,6 +205,7 @@
 			children = (
 				5A4DC9171D596D460009446B /* STSavedTimer.swift */,
 				5A12267D1D5A94C3006D49F1 /* STTimerList.swift */,
+				5AB69EBE1EC799370078DDA5 /* Countdown.swift */,
 				5A44E74B2030BF7E0093983C /* TimeAnnouncementPreference.swift */,
 			);
 			name = Model;
@@ -219,9 +221,7 @@
 				5AD81F5520609E0600490859 /* InstructionsHandler.swift */,
 				5AD81F512060102700490859 /* CustomAccessibilityAction.swift */,
 				5A1B03AD2031FDEB00704D00 /* TimeAnnouncementController.swift */,
-				5A23597D20128A5400393EAA /* LocalNotifications.swift */,
 				858480F51FCB55D300DBE466 /* TimeFormatter.swift */,
-				5AB69EBE1EC799370078DDA5 /* Countdown.swift */,
 			);
 			name = Main;
 			sourceTree = "<group>";
@@ -231,7 +231,6 @@
 			children = (
 				5A03B9AB1D1DDB9800E245C9 /* TableController.storyboard */,
 				5A12267B1D5A80BA006D49F1 /* TableController.swift */,
-				5ADE6DC71FFD9E0600E8CF8C /* PermissionManager.swift */,
 				5A871FF91D6FC68900B08A05 /* TableCell.swift */,
 				5AC60D741FE6D5B3002808C6 /* TableDragDropDelegate.swift */,
 				5ADB6A171F561562006BEE1B /* InputView.swift */,
@@ -262,6 +261,7 @@
 			children = (
 				5ADE6DC91FFDBFCF00E8CF8C /* Permissions.storyboard */,
 				5ADE6DCC1FFF285000E8CF8C /* PermissionController.swift */,
+				5ADE6DC71FFD9E0600E8CF8C /* PermissionManager.swift */,
 			);
 			name = Permissions;
 			sourceTree = "<group>";
