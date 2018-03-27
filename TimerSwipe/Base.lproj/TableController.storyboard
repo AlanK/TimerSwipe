@@ -91,13 +91,5 @@
             </objects>
             <point key="canvasLocation" x="-470" y="322"/>
         </scene>
-        <!--mainView-->
-        <scene sceneID="EJD-vk-V4D">
-            <objects>
-                <viewControllerPlaceholder storyboardIdentifier="mainView" storyboardName="MainViewController" referencedIdentifier="mainView" id="KuU-yl-DWh" sceneMemberID="viewController"/>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="4WH-eF-zsb" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1052" y="322"/>
-        </scene>
     </scenes>
 </document>
