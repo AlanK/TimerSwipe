@@ -46,7 +46,7 @@ struct PermissionManager {
         DispatchQueue.main.async { self.parentVC.showDetailViewController(vc, sender: nil) }
     }
     
-    /// Takes no action of local notifications are disabled
+    /// Takes no action if local notifications are disabled
     private func notificationsDenied() { }
     
     
