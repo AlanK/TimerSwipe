@@ -43,9 +43,7 @@ struct PermissionManager {
     /// Presents a permission controller modally if local notification preferences have never been set
     private func notificationsNotDetermined() {
         let vc = PermissionController.instantiate(with: self)
-        DispatchQueue.main.async {
-            self.parentVC.showDetailViewController(vc, sender: nil)
-        }
+        DispatchQueue.main.async { self.parentVC.showDetailViewController(vc, sender: nil) }
     }
     
     /// Takes no action of local notifications are disabled
@@ -66,14 +64,10 @@ extension PermissionManager: PermissionControllerDelegate {
     func askMyPermission(_ permissionController: PermissionController) {
         center.requestAuthorization(options: [.sound, .alert]) { (isAuthorized, error) in
             if let error = error { print(error) }
-            DispatchQueue.main.async {
-                permissionController.wrapUp()
-            }
+            DispatchQueue.main.async { permissionController.wrapUp() }
             isAuthorized ? self.notificationsAuthorized() : self.notificationsDenied()
         }
     }
     
-    func done(_ permissionController: PermissionController) {
-        permissionController.dismiss(animated: true, completion: nil)
-    }
+    func done(_ permissionController: PermissionController) { permissionController.dismiss(animated: true, completion: nil) }
 }
