@@ -76,13 +76,13 @@ class MainViewController: UIViewController {
     
     // MARK: Actions
 
-    @IBAction func button(_ sender: AnyObject) { delegate.buttonActivated(button, vc: self) }
+    @IBAction private func button(_ sender: AnyObject) { delegate.buttonActivated(button, vc: self) }
     
     // A swipe in any direction has the same effect.
-    @IBAction func swipeRight(_ sender: AnyObject) { delegate.swipe(self) }
-    @IBAction func swipeLeft(_ sender: AnyObject) { delegate.swipe(self) }
-    @IBAction func swipeUp(_ sender: AnyObject) { delegate.swipe(self) }
-    @IBAction func swipeDown(_ sender: AnyObject) { delegate.swipe(self) }
+    @IBAction private func swipeRight(_ sender: AnyObject) { delegate.swipe(self) }
+    @IBAction private func swipeLeft(_ sender: AnyObject) { delegate.swipe(self) }
+    @IBAction private func swipeUp(_ sender: AnyObject) { delegate.swipe(self) }
+    @IBAction private func swipeDown(_ sender: AnyObject) { delegate.swipe(self) }
     
     @objc func containerViewActivated(sender: UITapGestureRecognizer) { delegate.containerViewActivated(self, sender: sender) }
     @objc func containerAlternateActivated() { delegate.containerViewAlternateActivated(self) }
@@ -90,12 +90,12 @@ class MainViewController: UIViewController {
     
     // MARK: Outlets
     /// The "Swipe to Start" label
-    @IBOutlet var instructions: UILabel! {
+    @IBOutlet private var instructions: UILabel! {
         didSet { instructionsHandler.setText(voiceOverOn: UIAccessibilityIsVoiceOverRunning()) }
     }
     
     /// The "00:00.00" label
-    @IBOutlet var timeDisplay: UILabel! {
+    @IBOutlet private var timeDisplay: UILabel! {
         didSet {
             timeDisplay.font = UIFont.monospacedDigitSystemFont(ofSize: 64.0, weight: UIFont.Weight.regular)
             // Get an initial value from the countdown
@@ -104,11 +104,11 @@ class MainViewController: UIViewController {
     }
     
     /// The Change/Cancel button
-    @IBOutlet var button: UIButton! {
+    @IBOutlet private var button: UIButton! {
         didSet { buttonHandler.setTitle(timerIs: true) }
     }
     
-    @IBOutlet var container: UIStackView! {
+    @IBOutlet private var container: UIStackView! {
         didSet { containerHandler.configure(with: duration) }
     }
     

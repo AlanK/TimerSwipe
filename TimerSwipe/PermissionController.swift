@@ -45,29 +45,29 @@ class PermissionController: UIViewController {
     /// Makes status bar text white with a transparent background
     override var preferredStatusBarStyle: UIStatusBarStyle { return .lightContent }
     
-    @IBOutlet var mainView: UIView! {
+    @IBOutlet private var mainView: UIView! {
         didSet { mainView.backgroundColor = K.tintColor }
     }
     
-    @IBOutlet var textArea: UITextView! {
+    @IBOutlet private var textArea: UITextView! {
         didSet {
             textArea.text = NSLocalizedString("TimerSwipe can alert you when your timer has finished, even if you are in another app.\n\nIt must ask for your permission to enable or disable this feature.", comment: "")
         }
     }
     
-    @IBOutlet var permissionButton: UIButton! {
+    @IBOutlet private var permissionButton: UIButton! {
         didSet { permissionButton.lightButtonStyle() }
     }
     
-    @IBOutlet var doneButton: UIButton! {
+    @IBOutlet private var doneButton: UIButton! {
         didSet { doneButton.lightButtonStyle() }
     }
     
     // MARK: Actions
     
-    @IBAction func permissionButtonAction(_ sender: Any) { delegate.askMyPermission(self) }
+    @IBAction private func permissionButtonAction(_ sender: Any) { delegate.askMyPermission(self) }
     
-    @IBAction func doneButtonAction(_ sender: Any) { delegate.done(self) }
+    @IBAction private func doneButtonAction(_ sender: Any) { delegate.done(self) }
     
     // MARK: Methods
     /// Advance this permission controller from its initial state to its final state
