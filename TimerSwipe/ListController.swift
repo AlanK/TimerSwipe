@@ -76,16 +76,16 @@ class ListController: UIViewController {
     
     // MARK: Actions
     
-    @IBAction func addButtonActivated(_ sender: Any) { delegate.addButtonActivated(_: addButton, vc: self) }
+    @IBAction private func addButtonActivated(_ sender: Any) { delegate.addButtonActivated(_: addButton, vc: self) }
     
-    @objc func cancelButtonActivated(_ sender: Any) { setInputAccessoryViewVisibility(false) }
+    @objc private func cancelButtonActivated(_ sender: Any) { setInputAccessoryViewVisibility(false) }
     
-    @objc func saveButtonActivated(_ sender: Any) {
+    @objc private func saveButtonActivated(_ sender: Any) {
         createAndAddTimer()
         setInputAccessoryViewVisibility(false)
     }
     
-    @objc func textInTextFieldChanged(_ textField: UITextField) {
+    @objc private func textInTextFieldChanged(_ textField: UITextField) {
         let charactersInField = textField.text?.count ?? 0
         keyboardAccessoryView.saveButton.isEnabled = charactersInField > 0
     }
@@ -108,7 +108,7 @@ class ListController: UIViewController {
     
     // MARK: Properties
     
-    lazy var keyboardAccessoryView: InputView = {
+    private lazy var keyboardAccessoryView: InputView = {
         let view = InputView(frame: .zero, inputViewStyle: .default)
         view.textField.delegate = TableTFDelegate(completionHandler: createAndAddTimer)
         view.cancelButton.addTarget(self, action: #selector(cancelButtonActivated(_:)), for: .touchUpInside)
@@ -119,7 +119,7 @@ class ListController: UIViewController {
     
     // MARK: Methods
     
-    @objc func editButtonActivated() {
+    @objc private func editButtonActivated() {
         setEditing(!isEditing, animated: true)
         tableView.setEditing(isEditing, animated: true)
     }
