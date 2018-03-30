@@ -78,7 +78,6 @@ extension ListDataSourceAndDelegate: UITableViewDataSource {
             }
             
             DispatchQueue.main.asyncAfter(deadline: nearFuture, execute: finishEditing)
-            UIAccessibilityPostNotification(UIAccessibilityScreenChangedNotification, vc.addButton)
             
         default:
             
