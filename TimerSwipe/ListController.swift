@@ -99,7 +99,7 @@ class ListController: UIViewController {
         }
     }
     
-    @IBOutlet var footer: UILabel! {
+    @IBOutlet private var footer: UILabel! {
         didSet { footer.accessibilityLabel = NSLocalizedString("Mark a timer favorite to open it by default", comment: "") }
     }
     
