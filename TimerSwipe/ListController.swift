@@ -80,6 +80,11 @@ class ListController: UIViewController {
     
     @objc private func cancelButtonActivated(_ sender: Any) { setInputAccessoryViewVisibility(false) }
     
+    @objc private func editButtonActivated() {
+        setEditing(!isEditing, animated: true)
+        tableView.setEditing(isEditing, animated: true)
+    }
+    
     @objc private func saveButtonActivated(_ sender: Any) {
         createAndAddTimer()
         setInputAccessoryViewVisibility(false)
@@ -119,25 +124,10 @@ class ListController: UIViewController {
     
     // MARK: Methods
     
-    @objc private func editButtonActivated() {
-        setEditing(!isEditing, animated: true)
-        tableView.setEditing(isEditing, animated: true)
-    }
-    
     /// Enable the Edit button when the table has one or more rows
     func refreshEditButton() { editButtonItem.isEnabled = dataSourceAndDelegate.canEdit }
     
     func didSelect(_ timer: STSavedTimer) { delegate.didSelect(timer, vc: self) }
-    
-    private func createAndAddTimer() {
-        guard let text = keyboardAccessoryView.textField.text,
-            let seconds = TimeInterval(text),
-            seconds > 0 else { return }
-        
-        print("How many seconds? \(seconds)")
-        
-        dataSourceAndDelegate.addTimer(seconds: seconds)
-    }
     
     func setInputAccessoryViewVisibility(_ viewWillBecomeVisible: Bool) {
         addButton.isEnabled = !viewWillBecomeVisible
@@ -148,5 +138,15 @@ class ListController: UIViewController {
             self.keyboardAccessoryView.isVisible = viewWillBecomeVisible
             self.keyboardAccessoryView.supremeView.layoutIfNeeded()
         })
+    }
+
+    private func createAndAddTimer() {
+        guard let text = keyboardAccessoryView.textField.text,
+            let seconds = TimeInterval(text),
+            seconds > 0 else { return }
+        
+        print("How many seconds? \(seconds)")
+        
+        dataSourceAndDelegate.addTimer(seconds: seconds)
     }
 }
