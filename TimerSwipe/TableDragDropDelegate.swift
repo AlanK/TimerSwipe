@@ -75,7 +75,7 @@ extension TableDragDropDelegate: UITableViewDropDelegate {
         if destinationIndexPath.row < rowsInSection {
             correctedDestination = destinationIndexPath
         } else {
-            correctedDestination = IndexPath.init(row: rowsInSection - 1, section: destinationIndexPath.section)
+            correctedDestination = IndexPath(row: rowsInSection - 1, section: destinationIndexPath.section)
         }
         
         // Get ready
@@ -120,7 +120,7 @@ extension TableDragDropDelegate: UITableViewDropDelegate {
         
         let endUpdatePath: IndexPath
         if destination > bottomSrc {
-            endUpdatePath = IndexPath.init(row: destination.row - 1, section: destination.section)
+            endUpdatePath = IndexPath(row: destination.row - 1, section: destination.section)
         } else {
             endUpdatePath = bottomSrc
         }
@@ -130,7 +130,7 @@ extension TableDragDropDelegate: UITableViewDropDelegate {
         var pathsAtDestinationAndBelow = [IndexPath]()
         
         for row in startUpdatePath.row...endUpdatePath.row {
-            let path = IndexPath.init(row: row, section: destination.section)
+            let path = IndexPath(row: row, section: destination.section)
             if path < correctedDestination {
                 pathsAboveDestination.append(path)
             } else {

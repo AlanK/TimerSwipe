@@ -22,7 +22,7 @@ class ListController: UIViewController {
     // MARK: Initializers
     
     static func instantiate(delegate: ListControllerDelegate, model: Model) -> ListController {
-        let storyboard = UIStoryboard.init(name: "ListController", bundle: Bundle.main)
+        let storyboard = UIStoryboard(name: "ListController", bundle: Bundle.main)
         let vc = storyboard.instantiateViewController(withIdentifier: "ListController") as! ListController
         
         vc.delegate = delegate

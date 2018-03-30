@@ -160,7 +160,7 @@ class InputView: UIInputView {
     }
     
     override var intrinsicContentSize: CGSize {
-        return CGSize.init(width: bounds.size.width, height: borderWrapper.bounds.size.height)
+        return CGSize(width: bounds.size.width, height: borderWrapper.bounds.size.height)
     }
     
     // MARK: Initializers
@@ -224,7 +224,7 @@ class InputView: UIInputView {
         saveButton.trailingAnchor.constraint(lessThanOrEqualTo: margin.trailingAnchor, constant: horizontalGap).isActive = true
         
         let hintConstraint = saveButton.trailingAnchor.constraint(equalTo: trailingAnchor)
-        hintConstraint.priority = UILayoutPriority.init(500.0)
+        hintConstraint.priority = UILayoutPriority(500.0)
         hintConstraint.isActive = true
         
         // Set the order of elements for accessibility to prevent the parent view from stealing accessibility focus

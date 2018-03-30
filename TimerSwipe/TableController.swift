@@ -26,7 +26,7 @@ class TableController: UITableViewController {
     // MARK: Initializers
     
     static func instantiate(with delegate: TableControllerDelegate, model: Model) -> TableController {
-        let storyboard = UIStoryboard.init(name: "TableController", bundle: Bundle.main)
+        let storyboard = UIStoryboard(name: "TableController", bundle: Bundle.main)
         let vc = storyboard.instantiateViewController(withIdentifier: MainID.tableView.rawValue) as! TableController
         
         vc.model = model
@@ -140,7 +140,7 @@ class TableController: UITableViewController {
             DispatchQueue.main.asyncAfter(deadline: nearFuture, execute: work)
             UIAccessibilityPostNotification(UIAccessibilityScreenChangedNotification, self.addButton)
         } else {
-            let newIndexPath = (indexPath.row == 0) ? indexPath : IndexPath.init(row: indexPath.row - 1, section: mainSection)
+            let newIndexPath = (indexPath.row == 0) ? indexPath : IndexPath(row: indexPath.row - 1, section: mainSection)
             UIAccessibilityPostNotification(UIAccessibilityScreenChangedNotification, tableView.cellForRow(at: newIndexPath))
         }
     }
@@ -173,7 +173,7 @@ class TableController: UITableViewController {
     lazy var accessibleFirstFocus: UIResponder? = {
         guard model.count > 0 else { return nil }
         let index = model.favoriteIndex ?? 0
-        return self.tableView.cellForRow(at: IndexPath.init(row: index, section: mainSection))
+        return self.tableView.cellForRow(at: IndexPath(row: index, section: mainSection))
     }()
     
     private let cellID = "STTableViewCell"
@@ -282,7 +282,7 @@ extension TableController: TableCellDelegate {
         // Update the table view
         var indexPaths = [IndexPath]()
         for row in rowsToUpdate {
-            let path = IndexPath.init(row: row, section: mainSection)
+            let path = IndexPath(row: row, section: mainSection)
             indexPaths.append(path)
         }
         tableView.reloadRows(at: indexPaths, with: .none)

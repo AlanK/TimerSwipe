@@ -34,7 +34,7 @@ struct TimeAnnouncementPreference: Codable {
     private let defaults = UserDefaults.standard
     private let encoder = JSONEncoder()
     private let decoder = JSONDecoder()
-    private let queue = DispatchQueue.init(label: "preferences", qos: .utility)
+    private let queue = DispatchQueue(label: "preferences", qos: .utility)
     
     // MARK: Methods
     // Write the preference to disk on a utility queue

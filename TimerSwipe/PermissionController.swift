@@ -35,7 +35,7 @@ class PermissionController: UIViewController {
      - parameter delegate: An instance of a type conforming to the `PermissionControllerDelegate` protocol
      */
     static func instantiate(with delegate: PermissionControllerDelegate) -> PermissionController {
-        let storyboard = UIStoryboard.init(name: Storyboards.permissions.rawValue, bundle: Bundle.main)
+        let storyboard = UIStoryboard(name: Storyboards.permissions.rawValue, bundle: Bundle.main)
         let pc = storyboard.instantiateViewController(withIdentifier: PermissionsID.permissionController.rawValue) as! PermissionController
         pc.delegate = delegate
         return pc

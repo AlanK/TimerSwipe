@@ -12,7 +12,7 @@ import XCTest
 @available(iOS 11.0, *)
 class TableDragDropTests: XCTestCase {
     
-    let tableController = UIStoryboard.init(name: Storyboards.main.rawValue, bundle: nil).instantiateViewController(withIdentifier: MainID.tableView.rawValue) as? TableController
+    let tableController = UIStoryboard(name: Storyboards.main.rawValue, bundle: nil).instantiateViewController(withIdentifier: MainID.tableView.rawValue) as? TableController
     let tableModelDDD: TableModelDragDropDelegate = {
         class TableModelDDD: NSObject, TableModelDragDropDelegate {
             func updateModelOnDrop(_ sourcePaths: [IndexPath], targetIndexPath: IndexPath) -> Bool {
@@ -20,7 +20,7 @@ class TableDragDropTests: XCTestCase {
             }
         }
         
-        return TableModelDDD.init()
+        return TableModelDDD()
     }()
     
     override func setUp() {
@@ -38,7 +38,7 @@ class TableDragDropTests: XCTestCase {
             XCTFail()
             return
         }
-        let _ = TableDragDropDelegate.init(tableController, tableModelDragDropDelegate: tableModelDDD)
+        let _ = TableDragDropDelegate(tableController, tableModelDragDropDelegate: tableModelDDD)
         
     }
     

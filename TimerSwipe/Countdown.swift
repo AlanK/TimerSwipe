@@ -53,8 +53,8 @@ class Countdown {
         guard unlocked else { return }
         unlocked = false
         
-        let startDate = Date.init()
-        let expirationDate = Date.init(timeInterval: duration, since: startDate)
+        let startDate = Date()
+        let expirationDate = Date(timeInterval: duration, since: startDate)
         self.expirationDate = expirationDate
         createTimer(expire: expirationDate)
         
@@ -72,7 +72,7 @@ class Countdown {
     }
     
     func wake() {
-        guard let expirationDate = expirationDate, Date.init() < expirationDate else {
+        guard let expirationDate = expirationDate, Date() < expirationDate else {
             delegate.countdownDid(.expire)
             clear()
             return
@@ -92,7 +92,7 @@ class Countdown {
     private func createTimer(expire expirationDate: Date) {
         timer?.invalidate()
         timer = Timer.scheduledTimer(withTimeInterval: K.hundredthOfASecond, repeats: true) { timer in
-            let currentTime = Date.init()
+            let currentTime = Date()
             guard currentTime < expirationDate else {
                 // If the current time >= the end time, end the timer
                 self.clear()

@@ -37,7 +37,7 @@ class STTimerList: NSObject, NSCoding {
     // MARK: Initializers
     
     /// Memberwise initializer
-    init(timers: [STSavedTimer] = [STSavedTimer](), serialQueue: DispatchQueue = DispatchQueue.init(label: "serialQueue", qos: .userInitiated)) {
+    init(timers: [STSavedTimer] = [STSavedTimer](), serialQueue: DispatchQueue = DispatchQueue(label: "serialQueue", qos: .userInitiated)) {
         self.timers = timers
         self.serialQueue = serialQueue
         super.init()
@@ -133,7 +133,7 @@ extension STTimerList {
         // Number of shortcuts can't exceed system max or number of timers
         let numberOfShortcuts = count < systemDefinedMaxShortcuts ? count : systemDefinedMaxShortcuts
         let userInfoKey = type
-        let icon = UIApplicationShortcutIcon.init(type: UIApplicationShortcutIconType.time)
+        let icon = UIApplicationShortcutIcon(type: UIApplicationShortcutIconType.time)
         
         // Grab just the timers that should have shortcuts
         let timersToUse = timers[timers.startIndex..<numberOfShortcuts]
@@ -143,7 +143,7 @@ extension STTimerList {
             let localizedTitle = NSLocalizedString("quickActionTitle", value: "\(seconds)-Second Timer", comment: "A timer of [seconds]-second duration")
             let userInfo = [userInfoKey : seconds]
             
-            return UIApplicationShortcutItem.init(type: type, localizedTitle: localizedTitle, localizedSubtitle: nil, icon: icon, userInfo: userInfo)
+            return UIApplicationShortcutItem(type: type, localizedTitle: localizedTitle, localizedSubtitle: nil, icon: icon, userInfo: userInfo)
         }
         // Save the shortcuts
         DispatchQueue.main.async { UIApplication.shared.shortcutItems = shortcuts }
@@ -160,7 +160,7 @@ extension STTimerList {
             model = extractedModel
         } else {
             // No model extracted; give up and load the default model
-            model = STTimerList.init(timers: [STSavedTimer(seconds: 60.0), STSavedTimer(seconds: 30.0, isFavorite: true), STSavedTimer(seconds: 15.0)])
+            model = STTimerList(timers: [STSavedTimer(seconds: 60.0), STSavedTimer(seconds: 30.0, isFavorite: true), STSavedTimer(seconds: 15.0)])
         }
         // Update the application shortcuts in case this is the first time we're running a version that supports application shortcuts
         model.updateShortcuts()

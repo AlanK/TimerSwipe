@@ -20,7 +20,7 @@ class RootFC: UIViewController {
     // MARK: Initializers
     
     static func instantiate(with model: Model) -> RootFC {
-        let fc = RootFC.init(nibName: nil, bundle: nil)
+        let fc = RootFC(nibName: nil, bundle: nil)
         fc.model = model
         
         return fc
