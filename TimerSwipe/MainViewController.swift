@@ -76,6 +76,10 @@ class MainViewController: UIViewController {
     
     // MARK: Actions
 
+    @objc func containerViewActivated(sender: UITapGestureRecognizer) { delegate.containerViewActivated(self, sender: sender) }
+    @objc func containerAlternateActivated() { delegate.containerViewAlternateActivated(self) }
+    @objc func toggleAnnouncements() { delegate.containerViewToggleActivated(self) }
+    
     @IBAction private func button(_ sender: AnyObject) { delegate.buttonActivated(button, vc: self) }
     
     // A swipe in any direction has the same effect.
@@ -83,10 +87,6 @@ class MainViewController: UIViewController {
     @IBAction private func swipeLeft(_ sender: AnyObject) { delegate.swipe(self) }
     @IBAction private func swipeUp(_ sender: AnyObject) { delegate.swipe(self) }
     @IBAction private func swipeDown(_ sender: AnyObject) { delegate.swipe(self) }
-    
-    @objc func containerViewActivated(sender: UITapGestureRecognizer) { delegate.containerViewActivated(self, sender: sender) }
-    @objc func containerAlternateActivated() { delegate.containerViewAlternateActivated(self) }
-    @objc func toggleAnnouncements() { delegate.containerViewToggleActivated(self) }
     
     // MARK: Outlets
     /// The "Swipe to Start" label
