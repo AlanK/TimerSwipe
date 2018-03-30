@@ -69,22 +69,6 @@ class ListController: UIViewController {
         dataSourceAndDelegate.saveState()
     }
     
-//    override func becomeFirstResponder() -> Bool {
-//        guard wantsToBecomeFirstResponder,
-//            super.becomeFirstResponder(),
-//            keyboardAccessoryView.textField.becomeFirstResponder() else { return false }
-//
-//        setInputAccessoryViewVisibility(true)
-//
-//        return keyboardAccessoryView.isVisible
-//    }
-//
-//    override func resignFirstResponder() -> Bool {
-//        keyboardAccessoryView.textField.resignFirstResponder()
-//        
-//        return super.resignFirstResponder()
-//    }
-    
     override var canBecomeFirstResponder: Bool { return true }
     
     override var inputAccessoryView: UIView? { return keyboardAccessoryView }
@@ -123,8 +107,6 @@ class ListController: UIViewController {
     
     // MARK: Properties
     
-//    var wantsToBecomeFirstResponder = false
-    
     lazy var keyboardAccessoryView: InputView = {
         let view = InputView(frame: .zero, inputViewStyle: .default)
         view.textField.delegate = TableTFDelegate(completionHandler: createAndAddTimer)
@@ -155,12 +137,6 @@ class ListController: UIViewController {
         
         dataSourceAndDelegate.addTimer(seconds: seconds)
     }
-    
-//    private func hideInputView() {
-//        _ = resignFirstResponder()
-//        setInputAccessoryViewVisibility(false)
-//        addButton.isEnabled = true
-//    }
     
     func setInputAccessoryViewVisibility(_ viewWillBecomeVisible: Bool) {
         addButton.isEnabled = !viewWillBecomeVisible
