@@ -14,12 +14,14 @@ class ListDataSourceAndDelegate: NSObject {
     
     private unowned let vc: ListController
     private let model: Model
+    private let tableView: UITableView
     
     // MARK: Initializers
     
-    init(_ vc: ListController, model: Model) {
+    init(_ vc: ListController, model: Model, tableView: UITableView) {
         self.vc = vc
         self.model = model
+        self.tableView = tableView
         super.init()
     }
     
@@ -37,7 +39,7 @@ class ListDataSourceAndDelegate: NSObject {
         let timer = STSavedTimer(seconds: seconds)
         model.append(timer: timer)
         model.saveData()
-        vc.tableView.insertRows(at: [IndexPath(row: model.count - 1, section: currentSection)], with: .automatic)
+        tableView.insertRows(at: [IndexPath(row: model.count - 1, section: currentSection)], with: .automatic)
         vc.refreshEditButton()
     }
 }
@@ -108,7 +110,7 @@ extension ListDataSourceAndDelegate: UITableViewDelegate {
 extension ListDataSourceAndDelegate: TableCellDelegate {
     
     func cellButtonTapped(cell: TableCell) {
-        guard let index = vc.tableView.indexPath(for: cell)?.row else { return }
+        guard let index = tableView.indexPath(for: cell)?.row else { return }
         
         // Update favorite timer and save
         let rowsToUpdate = model.updateFavorite(at: index)
@@ -116,6 +118,6 @@ extension ListDataSourceAndDelegate: TableCellDelegate {
         
         // Update the table view
         let indexPaths = rowsToUpdate.map { IndexPath(row: $0, section: currentSection) }
-        vc.tableView.reloadRows(at: indexPaths, with: .none)
+        tableView.reloadRows(at: indexPaths, with: .none)
     }
 }

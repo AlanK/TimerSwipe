@@ -17,7 +17,8 @@ class ListController: UIViewController {
     // MARK: Dependencies
     
     private weak var delegate: ListControllerDelegate!
-    private var dataSourceAndDelegate: ListDataSourceAndDelegate!
+    private lazy var dataSourceAndDelegate = ListDataSourceAndDelegate(self, model: model, tableView: tableView)
+    private var model: Model!
     
     // MARK: Initializers
     
@@ -26,7 +27,7 @@ class ListController: UIViewController {
         let vc = storyboard.instantiateViewController(withIdentifier: "ListController") as! ListController
         
         vc.delegate = delegate
-        vc.dataSourceAndDelegate = ListDataSourceAndDelegate(vc, model: model)
+        vc.model = model
         
         return vc
     }
@@ -91,7 +92,7 @@ class ListController: UIViewController {
     
     // MARK: Outlets
     
-    @IBOutlet var tableView: UITableView! {
+    @IBOutlet private var tableView: UITableView! {
         didSet {
             tableView.dataSource = dataSourceAndDelegate
             tableView.delegate = dataSourceAndDelegate
