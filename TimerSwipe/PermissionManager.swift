@@ -35,7 +35,7 @@ struct PermissionManager {
             switch settings.authorizationStatus {
             case .notDetermined: self.notificationsNotDetermined()
             case .denied: self.notificationsDenied()
-            case .authorized: self.notificationsAuthorized()
+            case .authorized, .provisional: self.notificationsAuthorized()
             }
         }
     }

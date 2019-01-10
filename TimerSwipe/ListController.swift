@@ -19,6 +19,7 @@ class ListController: UIViewController {
     private weak var delegate: ListControllerDelegate!
     private lazy var dataSourceAndDelegate = ListDataSourceAndDelegate(self, model: model, tableView: tableView)
     private var model: Model!
+    private var textFieldDelegate: TableTFDelegate?
     
     // MARK: Initializers
     
@@ -115,7 +116,8 @@ class ListController: UIViewController {
     
     private lazy var keyboardAccessoryView: InputView = {
         let view = InputView(frame: .zero, inputViewStyle: .default)
-        view.textField.delegate = TableTFDelegate(completionHandler: createAndAddTimer)
+        textFieldDelegate = TableTFDelegate(completionHandler: createAndAddTimer)
+        view.textField.delegate = textFieldDelegate
         view.cancelButton.addTarget(self, action: #selector(cancelButtonActivated(_:)), for: .touchUpInside)
         view.saveButton.addTarget(self, action: #selector(saveButtonActivated(_:)), for: .touchUpInside)
         view.textField.addTarget(self, action: #selector(textInTextFieldChanged(_:)), for: .editingChanged)
