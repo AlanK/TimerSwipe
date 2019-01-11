@@ -40,7 +40,7 @@ struct ContainerHandler {
         }
         
         view.isAccessibilityElement = true
-        view.accessibilityTraits = UIAccessibilityTraitSummaryElement
+        view.accessibilityTraits = UIAccessibilityTraits.summaryElement
         view.accessibilityCustomActions = [primaryAction, toggleAction]
         view.accessibilityLabel = labelText(timerIs: true, duration: duration)
     }

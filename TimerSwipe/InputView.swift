@@ -76,7 +76,7 @@ class InputView: UIInputView {
         // button.tintColor = K.tintColor
         // This insane pile of hacks dodges a terrible rendering bug that appears on UIButton images when the bold text accessibility option is selected
         button.setImage(UIImage.imageTinted(image: #imageLiteral(resourceName: "Cancel X"), color: K.tintColor)?.withRenderingMode(.alwaysOriginal), for: .normal)
-        button.contentEdgeInsets = UIEdgeInsetsMake(InputView.vInset, InputView.lateralInset, InputView.vInset, InputView.medialInset)
+        button.contentEdgeInsets = UIEdgeInsets.init(top: InputView.vInset, left: InputView.lateralInset, bottom: InputView.vInset, right: InputView.medialInset)
         button.setContentHuggingPriority(.defaultHigh, for: .horizontal)
         button.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
         button.accessibilityLabel = NSLocalizedString("Cancel new timer", comment: "Cancel the user-initiated action of adding a new timer")
@@ -88,7 +88,7 @@ class InputView: UIInputView {
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setImage(#imageLiteral(resourceName: "Save Arrow").withRenderingMode(.alwaysTemplate), for: .normal)
         button.tintColor = K.tintColor
-        button.contentEdgeInsets = UIEdgeInsetsMake(InputView.vInset, InputView.medialInset, InputView.vInset, InputView.lateralInset)
+        button.contentEdgeInsets = UIEdgeInsets.init(top: InputView.vInset, left: InputView.medialInset, bottom: InputView.vInset, right: InputView.lateralInset)
         button.setContentHuggingPriority(.defaultHigh, for: .horizontal)
         button.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
         button.accessibilityLabel = NSLocalizedString("Save new timer", comment: "")
@@ -100,7 +100,7 @@ class InputView: UIInputView {
     let textField: UITextField = {
         let textField = UITextField()
         textField.translatesAutoresizingMaskIntoConstraints = false
-        textField.borderStyle = UITextBorderStyle.none
+        textField.borderStyle = UITextField.BorderStyle.none
         textField.font = K.largeFont
         textField.placeholder = "0"
         textField.adjustsFontForContentSizeCategory = true
@@ -169,7 +169,7 @@ class InputView: UIInputView {
         super.init(coder: aDecoder)
     }
 
-    override init(frame: CGRect, inputViewStyle: UIInputViewStyle) {
+    override init(frame: CGRect, inputViewStyle: UIInputView.Style) {
         super.init(frame: frame, inputViewStyle: inputViewStyle)
         
         let verticalGap: CGFloat = 10.0, horizontalGap: CGFloat = 18.0

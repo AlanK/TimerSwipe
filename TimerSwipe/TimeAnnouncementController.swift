@@ -48,7 +48,7 @@ struct TimeAnnouncementController {
             
             return Timer.scheduledTimer(withTimeInterval: timeInterval, repeats: false) { _ in
                 guard model.preference == true else { return }
-                UIAccessibilityPostNotification(UIAccessibilityAnnouncementNotification, timeRemaining(secondsRemaining))
+                UIAccessibility.post(notification: UIAccessibility.Notification.announcement, argument: timeRemaining(secondsRemaining))
             }
         }
     }

@@ -91,7 +91,7 @@ class MainViewController: UIViewController {
     // MARK: Outlets
     /// The "Swipe to Start" label
     @IBOutlet private var instructions: UILabel! {
-        didSet { instructionsHandler.setText(voiceOverOn: UIAccessibilityIsVoiceOverRunning()) }
+        didSet { instructionsHandler.setText(voiceOverOn: UIAccessibility.isVoiceOverRunning) }
     }
     
     /// The "00:00.00" label
@@ -165,8 +165,8 @@ extension MainViewController: CountdownDelegate {
             if let cue = cue { sound.play(cue) }
             
             if let notice = status.notice {
-                UIAccessibilityPostNotification(UIAccessibilityLayoutChangedNotification, nil)
-                UIAccessibilityPostNotification(UIAccessibilityAnnouncementNotification, notice)
+                UIAccessibility.post(notification: UIAccessibility.Notification.layoutChanged, argument: nil)
+                UIAccessibility.post(notification: UIAccessibility.Notification.announcement, argument: notice)
             }
         }
         
@@ -183,7 +183,7 @@ extension MainViewController: CountdownDelegate {
 extension MainViewController: VoiceOverObserver {
     func voiceOverStatusDidChange(_: Notification? = nil) {
         /// Change the text instructions to match the VO-enabled interaction paradigm and make the containerView touch-enabled
-        let voiceOverOn = UIAccessibilityIsVoiceOverRunning()
+        let voiceOverOn = UIAccessibility.isVoiceOverRunning
         
         instructionsHandler.setText(voiceOverOn: voiceOverOn)
         containerHandler.voiceOver(voiceOverOn: voiceOverOn)

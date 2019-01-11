@@ -20,7 +20,7 @@ struct LocalNotifications {
         let content = UNMutableNotificationContent()
         content.title = NSString.localizedUserNotificationString(forKey: "Timer Done", arguments: nil)
         content.body = NSString.localizedUserNotificationString(forKey: "The timer has finished running.", arguments: nil)
-        content.sound = UNNotificationSound(named: AudioCue.endCue.rawValue)
+        content.sound = UNNotificationSound(named: convertToUNNotificationSoundName(AudioCue.endCue.rawValue))
         
         let calendar = Calendar.current
         let dateComponents = calendar.dateComponents([.hour, .minute, .second], from: expirationDate)
@@ -37,4 +37,9 @@ struct LocalNotifications {
         center.removeDeliveredNotifications(withIdentifiers: [K.notificationID])
     }
 
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertToUNNotificationSoundName(_ input: String) -> UNNotificationSoundName {
+	return UNNotificationSoundName(rawValue: input)
 }

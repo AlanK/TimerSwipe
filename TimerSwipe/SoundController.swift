@@ -48,7 +48,7 @@ struct SoundController {
                         .endCue : newPlayer(.endCue)]
         
         // Configure audio session to mix with background music
-        do { try audioSession.setCategory(AVAudioSessionCategoryAmbient, mode: AVAudioSessionModeDefault, options: []) }
+        do { try audioSession.setCategory(AVAudioSession.Category.ambient, mode: AVAudioSession.Mode(rawValue: convertFromAVAudioSessionMode(AVAudioSession.Mode.default)), options: []) }
         catch { print("Could not set AVAudioSession category, mode, or options: \(error)") }
     }
     
@@ -95,3 +95,8 @@ struct SoundController {
 extension SoundController: SoundPlayer {  }
 
 
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertFromAVAudioSessionMode(_ input: AVAudioSession.Mode) -> String {
+	return input.rawValue
+}

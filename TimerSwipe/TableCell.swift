@@ -41,7 +41,7 @@ class TableCell: UITableViewCell {
         
         // Set visible state of cell
         secondsLabel.text = label
-        favoriteIcon.setImage(buttonImage.withRenderingMode(.alwaysTemplate), for: UIControlState())
+        favoriteIcon.setImage(buttonImage.withRenderingMode(.alwaysTemplate), for: UIControl.State())
         
         // Set accessibility state of cell
         let toggleFavorite = UIAccessibilityCustomAction(name: buttonDescription, target: self, selector: #selector(favoriteButton(_:)) )

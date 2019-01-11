@@ -24,7 +24,7 @@ struct ButtonHandler {
     func setTitle(timerIs ready: Bool) {
         // Use performWithoutAnimation to prevent weird flashing as button text animates.
         UIView.performWithoutAnimation {
-            button.setTitle(buttonText(timerIs: ready), for: UIControlState())
+            button.setTitle(buttonText(timerIs: ready), for: UIControl.State())
             button.layoutIfNeeded()
         }
     }

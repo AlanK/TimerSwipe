@@ -133,7 +133,7 @@ extension STTimerList {
         // Number of shortcuts can't exceed system max or number of timers
         let numberOfShortcuts = count < systemDefinedMaxShortcuts ? count : systemDefinedMaxShortcuts
         let userInfoKey = type
-        let icon = UIApplicationShortcutIcon(type: UIApplicationShortcutIconType.time)
+        let icon = UIApplicationShortcutIcon(type: UIApplicationShortcutIcon.IconType.time)
         
         // Grab just the timers that should have shortcuts
         let timersToUse = timers[timers.startIndex..<numberOfShortcuts]
@@ -143,7 +143,7 @@ extension STTimerList {
             let localizedTitle = NSLocalizedString("quickActionTitle", value: "\(seconds)-Second Timer", comment: "A timer of [seconds]-second duration")
             let userInfo = [userInfoKey : seconds]
             
-            return UIApplicationShortcutItem(type: type, localizedTitle: localizedTitle, localizedSubtitle: nil, icon: icon, userInfo: userInfo)
+            return UIApplicationShortcutItem(type: type, localizedTitle: localizedTitle, localizedSubtitle: nil, icon: icon, userInfo: userInfo as [String : NSSecureCoding])
         }
         // Save the shortcuts
         DispatchQueue.main.async { UIApplication.shared.shortcutItems = shortcuts }

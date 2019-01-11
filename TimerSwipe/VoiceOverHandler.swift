@@ -43,7 +43,7 @@ struct VoiceOverHandler {
     private mutating func registerNotifications(_ register: Bool) {
         // UIAccessibilityVoiceOverStatusChanged and NSNotification.Name.UIAccessibilityVoiceOverStatusDidChange are the same notification in iOS 10 and iOS 11
         let voiceOverNotice: NSNotification.Name
-        if #available(iOS 11.0, *) { voiceOverNotice = .UIAccessibilityVoiceOverStatusDidChange }
+        if #available(iOS 11.0, *) { voiceOverNotice = UIAccessibility.voiceOverStatusDidChangeNotification }
         else { voiceOverNotice = NSNotification.Name(rawValue: UIAccessibilityVoiceOverStatusChanged) }
         
         switch register {

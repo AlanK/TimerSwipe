@@ -53,7 +53,7 @@ class TableController: UITableViewController {
         // Apply layout to the footer
         guard let footerView = tableView.tableFooterView else {return}
         // Get the auto layout-determined height of the footer and its actual frame
-        let height = footerView.systemLayoutSizeFitting(UILayoutFittingCompressedSize).height
+        let height = footerView.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize).height
         var frame = footerView.frame
         
         // If the correct height doesn't match the frame, apply the correct height and re-attach the footer
@@ -71,7 +71,7 @@ class TableController: UITableViewController {
         voiceOverHandler.isEnabled = true
 
         guard let accessibleFirstFocus = accessibleFirstFocus else {return}
-        UIAccessibilityPostNotification(UIAccessibilityScreenChangedNotification, accessibleFirstFocus)
+        UIAccessibility.post(notification: UIAccessibility.Notification.screenChanged, argument: accessibleFirstFocus)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -124,7 +124,7 @@ class TableController: UITableViewController {
         return cell
     }
     
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         // Don't delete the row if the model can't be updated
         guard editingStyle == .delete else { return }
         let _ = model.remove(at: indexPath.row)
@@ -138,10 +138,10 @@ class TableController: UITableViewController {
                 self.setEditing(false, animated: false)
             }
             DispatchQueue.main.asyncAfter(deadline: nearFuture, execute: work)
-            UIAccessibilityPostNotification(UIAccessibilityScreenChangedNotification, self.addButton)
+            UIAccessibility.post(notification: UIAccessibility.Notification.screenChanged, argument: self.addButton)
         } else {
             let newIndexPath = (indexPath.row == 0) ? indexPath : IndexPath(row: indexPath.row - 1, section: mainSection)
-            UIAccessibilityPostNotification(UIAccessibilityScreenChangedNotification, tableView.cellForRow(at: newIndexPath))
+            UIAccessibility.post(notification: UIAccessibility.Notification.screenChanged, argument: tableView.cellForRow(at: newIndexPath))
         }
     }
     
@@ -165,7 +165,7 @@ class TableController: UITableViewController {
         let view = InputView(frame: .zero, inputViewStyle: .default)
         view.cancelButton.addTarget(self, action: #selector(exitKeyboardAccessoryView), for: .touchUpInside)
         view.saveButton.addTarget(self, action: #selector(createNewTimer), for: .touchUpInside)
-        view.textField.addTarget(self, action: #selector(textInTextFieldChanged(_:)), for: UIControlEvents.editingChanged)
+        view.textField.addTarget(self, action: #selector(textInTextFieldChanged(_:)), for: UIControl.Event.editingChanged)
         view.textField.delegate = textFieldDelegate
         return view
     }()
@@ -191,7 +191,7 @@ class TableController: UITableViewController {
         tableView.insertRows(at: [newIndexPath], with: .automatic)
         refreshEditButton()
         
-        UIAccessibilityPostNotification(UIAccessibilityScreenChangedNotification, tableView.cellForRow(at: newIndexPath))
+        UIAccessibility.post(notification: UIAccessibility.Notification.screenChanged, argument: tableView.cellForRow(at: newIndexPath))
     }
     
     /// Enable the Edit button when the table has one or more rows
@@ -306,7 +306,7 @@ extension TableController {
 // MARK: - VoiceOver Observer
 extension TableController: VoiceOverObserver {
     func voiceOverStatusDidChange(_: Notification? = nil) {
-        let voiceOverOn = UIAccessibilityIsVoiceOverRunning()
+        let voiceOverOn = UIAccessibility.isVoiceOverRunning
         
         footer.text = TableStrings.footerText(voiceOverOn: voiceOverOn)
         tableView.tableFooterView?.layoutIfNeeded()

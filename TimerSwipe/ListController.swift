@@ -41,7 +41,7 @@ class ListController: UIViewController {
         // Apply layout to the footer
         guard let footerView = tableView.tableFooterView else {return}
         // Get the auto layout-determined height of the footer and its actual frame
-        let height = footerView.systemLayoutSizeFitting(UILayoutFittingCompressedSize).height
+        let height = footerView.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize).height
         var frame = footerView.frame
         
         // If the correct height doesn't match the frame, apply the correct height and re-attach the footer

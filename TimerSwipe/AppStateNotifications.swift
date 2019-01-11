@@ -25,12 +25,12 @@ struct AppStateNotifications {
     // MARK: Methods
     
     mutating func add(onBackground: @escaping () -> Void, onActive: @escaping () -> Void) {
-        backgroundObserver.append(nc.addObserver(forName: .UIApplicationDidEnterBackground,
+        backgroundObserver.append(nc.addObserver(forName: UIApplication.didEnterBackgroundNotification,
                                                  object: nil,
                                                  queue: nil,
                                                  using: { _ in onBackground() }))
         
-        activeObserver.append(nc.addObserver(forName: .UIApplicationDidBecomeActive,
+        activeObserver.append(nc.addObserver(forName: UIApplication.didBecomeActiveNotification,
                                              object: nil,
                                              queue: nil,
                                              using: { _ in onActive() }))

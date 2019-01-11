@@ -59,7 +59,7 @@ extension ListDataSourceAndDelegate: UITableViewDataSource {
         return cell
     }
     
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         // Don't delete the row if the model can't be updated
         guard editingStyle == .delete else { return }
         _ = model.remove(at: indexPath.row)
@@ -83,7 +83,7 @@ extension ListDataSourceAndDelegate: UITableViewDataSource {
             
             let newIndexPath = indexPath.row == 0 ? indexPath : IndexPath(row: indexPath.row - 1, section: currentSection)
             let cell = tableView.cellForRow(at: newIndexPath)
-            UIAccessibilityPostNotification(UIAccessibilityScreenChangedNotification, cell)
+            UIAccessibility.post(notification: UIAccessibility.Notification.screenChanged, argument: cell)
         }
     }
     

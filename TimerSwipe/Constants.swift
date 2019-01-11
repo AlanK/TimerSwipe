@@ -32,26 +32,26 @@ enum ShortcutTypes: String {
 
 extension UIViewController {
     func addChild(_ childVC: UIViewController, to view: UIView) {
-        addChildViewController(childVC)
+        addChild(childVC)
         view.addSubview(childVC.view)
         
-        childVC.didMove(toParentViewController: self)
+        childVC.didMove(toParent: self)
     }
     
     func addChildToRootView(_ childVC: UIViewController) {
-        addChildViewController(childVC)
+        addChild(childVC)
         view.addSubview(childVC.view)
         childVC.view.frame = view.bounds
         childVC.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         
-        childVC.didMove(toParentViewController: self)
+        childVC.didMove(toParent: self)
     }
     
     /// Remove this view controller from a parent view controller
     func remove() {
         guard let _ = parent else { return }
-        willMove(toParentViewController: nil)
-        removeFromParentViewController()
+        willMove(toParent: nil)
+        removeFromParent()
         view.removeFromSuperview()
     }
 }
@@ -73,7 +73,7 @@ extension UIButton {
         titleLabel?.font = UIFont.systemFont(ofSize: 20.0, weight: .semibold)
         
         let vInset: CGFloat = 8.0, hInset: CGFloat = 16.0
-        contentEdgeInsets = UIEdgeInsetsMake(vInset, hInset, vInset, hInset)
+        contentEdgeInsets = UIEdgeInsets.init(top: vInset, left: hInset, bottom: vInset, right: hInset)
         
         layer.cornerRadius = 6.0
         tintColor = K.tintColor
@@ -115,8 +115,8 @@ struct K {
     
     // MARK: Keyboard Animation
     static let keyboardAnimationDuration: TimeInterval = 1.0/3.0
-    static let keyboardAnimateInCurve: UIViewAnimationOptions = .curveEaseOut
-    static let keyboardAnimateOutCurve: UIViewAnimationOptions = .curveEaseInOut
+    static let keyboardAnimateInCurve: UIView.AnimationOptions = .curveEaseOut
+    static let keyboardAnimateOutCurve: UIView.AnimationOptions = .curveEaseInOut
     
     // MARK: Time
     static let defaultDuration: TimeInterval = 30.0
