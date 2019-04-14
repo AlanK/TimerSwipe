@@ -11,14 +11,13 @@ import UIKit
 struct ApplicationShortcuts {
     let type = ShortcutTypes.timer.rawValue
 
-    var existingShortcuts: [UIApplicationShortcutItem]? {
-        get { return UIApplication.shared.shortcutItems }
-    }
+    var existingShortcuts: [UIApplicationShortcutItem]? { return UIApplication.shared.shortcutItems }
     
     func performActionFor(_ shortcut: UIApplicationShortcutItem) -> STSavedTimer? {
-        guard shortcut.type == type, let seconds = shortcut.userInfo?[type] as? Int else { return nil }
+        
+        guard shortcut.type == type,
+            let seconds = shortcut.userInfo?[type] as? Int else { return nil }
         let timeInterval = Double(seconds)
-        let timer = STSavedTimer(seconds: timeInterval)
-        return timer
+        return STSavedTimer(seconds: timeInterval)
     }
 }

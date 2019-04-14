@@ -59,12 +59,8 @@ extension UIViewController {
 extension UIView {
     /// Recursively find and return the topmost superview
     var supremeView: UIView {
-        func getSupremeView(of view: UIView) -> UIView {
-            guard let superview = view.superview else {return view}
-            return getSupremeView(of: superview)
-        }
-        
-        return getSupremeView(of: self)
+        guard let superview = superview else { return self }
+        return superview.supremeView
     }
 }
 

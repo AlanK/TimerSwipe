@@ -34,13 +34,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func application(_ application: UIApplication, performActionFor shortcutItem: UIApplicationShortcutItem, completionHandler: @escaping (Bool) -> Void) {
-        let success = launchTimer(with: shortcutItem)
-        completionHandler(success)
+        
+        completionHandler(launchTimer(with: shortcutItem))
     }
     
     private func launchTimer(with shortcutItem: UIApplicationShortcutItem) -> Bool {
-        let applicationShortcuts = ApplicationShortcuts()
-        guard let timer = applicationShortcuts.performActionFor(shortcutItem), let root = window?.rootViewController as? RootFC else { return false }
+        
+        guard let timer = ApplicationShortcuts().performActionFor(shortcutItem),
+            let root = window?.rootViewController as? RootFC else { return false }
         root.launchTimer(timer)
         return true
     }
