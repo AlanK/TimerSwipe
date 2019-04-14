@@ -39,13 +39,13 @@ class ListController: UIViewController {
         super.viewDidLayoutSubviews()
         
         // Apply layout to the footer
-        guard let footerView = tableView.tableFooterView else {return}
+        guard let footerView = tableView.tableFooterView else { return }
         // Get the auto layout-determined height of the footer and its actual frame
         let height = footerView.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize).height
         var frame = footerView.frame
         
         // If the correct height doesn't match the frame, apply the correct height and re-attach the footer
-        guard height != frame.size.height else {return}
+        guard height != frame.size.height else { return }
         frame.size.height = height
         footerView.frame = frame
         tableView.tableFooterView = footerView
@@ -143,6 +143,7 @@ class ListController: UIViewController {
     }
 
     private func createAndAddTimer() {
+        
         guard let text = keyboardAccessoryView.textField.text,
             let seconds = TimeInterval(text),
             seconds > 0 else { return }

@@ -54,16 +54,13 @@ struct TimeAnnouncementController {
     }
     
     mutating func cancelTimeAnnouncements() {
+        
         scheduledAnnouncements.forEach { $0.invalidate() }
         scheduledAnnouncements = [Timer]()
     }
     
     mutating func togglePreference(_ newPref: Bool? = nil) {
-        guard let newPref = newPref else {
-            model.preference = !(model.preference)
-            return
-        }
-        model.preference = newPref
+        model.preference = newPref ?? !model.preference
     }
 
     private func timeRemaining(_ seconds: TimeInterval) -> String {

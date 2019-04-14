@@ -39,8 +39,11 @@ struct SoundController {
          - returns: An `AVAudioPlayer` configured to play the audio cue
          */
         func newPlayer(_ cue: AudioCue) -> AVAudioPlayer? {
-            guard let path = Bundle.main.path(forResource: cue.rawValue, ofType: nil) else { return nil }
-            return try? AVAudioPlayer(contentsOf: URL(fileURLWithPath: path))
+            
+            return Bundle
+                .main
+                .path(forResource: cue.rawValue, ofType: nil)
+                .flatMap { try? AVAudioPlayer(contentsOf: URL(fileURLWithPath: $0)) }
         }
         
         // Initialize the audio players
@@ -48,7 +51,7 @@ struct SoundController {
                         .endCue : newPlayer(.endCue)]
         
         // Configure audio session to mix with background music
-        do { try audioSession.setCategory(AVAudioSession.Category.ambient, mode: AVAudioSession.Mode(rawValue: convertFromAVAudioSessionMode(AVAudioSession.Mode.default)), options: []) }
+        do { try audioSession.setCategory(AVAudioSession.Category.ambient, mode: AVAudioSession.Mode(rawValue: AVAudioSession.Mode.default.rawValue), options: []) }
         catch { print("Could not set AVAudioSession category, mode, or options: \(error)") }
     }
     
@@ -82,12 +85,10 @@ struct SoundController {
      - parameter cue: Which audio cue should play
      */
     func play(_ cue: AudioCue) {
-        /// Vibrate without playing a sound
-        func vibrate() { AudioServicesPlaySystemSound(kSystemSoundID_Vibrate) }
         
-        guard let audioPlayer = audioPlayers[cue] else {return}
+        guard let audioPlayer = audioPlayers[cue] else { return }
         audioPlayer?.play()
-        vibrate()
+        AudioServicesPlaySystemSound(kSystemSoundID_Vibrate)
         audioPlayer?.prepareToPlay()
     }
 }

@@ -76,7 +76,7 @@ class InputView: UIInputView {
         // button.tintColor = K.tintColor
         // This insane pile of hacks dodges a terrible rendering bug that appears on UIButton images when the bold text accessibility option is selected
         button.setImage(UIImage.imageTinted(image: #imageLiteral(resourceName: "Cancel X"), color: K.tintColor)?.withRenderingMode(.alwaysOriginal), for: .normal)
-        button.contentEdgeInsets = UIEdgeInsets.init(top: InputView.vInset, left: InputView.lateralInset, bottom: InputView.vInset, right: InputView.medialInset)
+        button.contentEdgeInsets = UIEdgeInsets(top: InputView.vInset, left: InputView.lateralInset, bottom: InputView.vInset, right: InputView.medialInset)
         button.setContentHuggingPriority(.defaultHigh, for: .horizontal)
         button.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
         button.accessibilityLabel = NSLocalizedString("Cancel new timer", comment: "Cancel the user-initiated action of adding a new timer")
@@ -88,7 +88,7 @@ class InputView: UIInputView {
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setImage(#imageLiteral(resourceName: "Save Arrow").withRenderingMode(.alwaysTemplate), for: .normal)
         button.tintColor = K.tintColor
-        button.contentEdgeInsets = UIEdgeInsets.init(top: InputView.vInset, left: InputView.medialInset, bottom: InputView.vInset, right: InputView.lateralInset)
+        button.contentEdgeInsets = UIEdgeInsets(top: InputView.vInset, left: InputView.medialInset, bottom: InputView.vInset, right: InputView.lateralInset)
         button.setContentHuggingPriority(.defaultHigh, for: .horizontal)
         button.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
         button.accessibilityLabel = NSLocalizedString("Save new timer", comment: "")

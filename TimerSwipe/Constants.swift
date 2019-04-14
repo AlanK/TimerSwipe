@@ -49,7 +49,7 @@ extension UIViewController {
     
     /// Remove this view controller from a parent view controller
     func remove() {
-        guard let _ = parent else { return }
+        guard parent != nil else { return }
         willMove(toParent: nil)
         removeFromParent()
         view.removeFromSuperview()

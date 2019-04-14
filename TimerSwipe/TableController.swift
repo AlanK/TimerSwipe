@@ -53,13 +53,13 @@ class TableController: UITableViewController {
         super.viewDidLayoutSubviews()
         
         // Apply layout to the footer
-        guard let footerView = tableView.tableFooterView else {return}
+        guard let footerView = tableView.tableFooterView else { return }
         // Get the auto layout-determined height of the footer and its actual frame
         let height = footerView.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize).height
         var frame = footerView.frame
         
         // If the correct height doesn't match the frame, apply the correct height and re-attach the footer
-        guard height != frame.size.height else {return}
+        guard height != frame.size.height else { return }
         frame.size.height = height
         footerView.frame = frame
         tableView.tableFooterView = footerView
@@ -72,7 +72,7 @@ class TableController: UITableViewController {
         refreshEditButton()
         voiceOverHandler.isEnabled = true
 
-        guard let accessibleFirstFocus = accessibleFirstFocus else {return}
+        guard let accessibleFirstFocus = accessibleFirstFocus else { return }
         UIAccessibility.post(notification: UIAccessibility.Notification.screenChanged, argument: accessibleFirstFocus)
     }
     
@@ -251,7 +251,7 @@ class TableController: UITableViewController {
         // Create a valid userSelectedTime or exit early
         guard let text = keyboardAccessoryView.textField.text,
             let userTimeInSeconds = Int(text),
-            userTimeInSeconds > 0 else {return}
+            userTimeInSeconds > 0 else { return }
         let userSelectedTime = TimeInterval(userTimeInSeconds)
         
         commitTimer(userSelectedTime)

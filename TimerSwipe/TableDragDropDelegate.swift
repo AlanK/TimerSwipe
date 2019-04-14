@@ -52,7 +52,7 @@ extension TableDragDropDelegate: UITableViewDropDelegate {
     }
     
     func tableView(_ tableView: UITableView, dropSessionDidUpdate session: UIDropSession, withDestinationIndexPath destinationIndexPath: IndexPath?) -> UITableViewDropProposal {
-        guard let _ = destinationIndexPath else {
+        guard destinationIndexPath != nil else {
             let cancelProposal = UITableViewDropProposal(operation: .cancel, intent: .automatic)
             return cancelProposal
         }

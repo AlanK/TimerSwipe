@@ -47,6 +47,7 @@ class STTimerList: NSObject, NSCoding {
     // MARK: Favorites
     /// Toggle favorite status of a specific timer and return an array of all timers with favorite status changed
     private func internalUpdateFavorite(at index: Int) -> [Int] {
+        
         guard timers[index].isFavorite == false else {
             timers[index].isFavorite = false
             return [index]
@@ -109,6 +110,7 @@ class STTimerList: NSObject, NSCoding {
     }
     
     required convenience init?(coder aDecoder: NSCoder) {
+        
         guard let timers = aDecoder.decodeObject(forKey: K.timersKey) as? [STSavedTimer] else { return nil }
         self.init(timers: timers)
     }    

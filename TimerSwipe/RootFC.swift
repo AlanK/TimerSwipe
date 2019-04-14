@@ -49,15 +49,16 @@ class RootFC: UIViewController {
             let topVC = self.nav.topViewController, model = self.model!
             
             // Don’t change views if a timer is running
-            if let vc = topVC as? CountdownDelegate {
-                guard vc.countdownIsReady else { return }
+            if let vc = topVC as? CountdownDelegate,
+                !vc.countdownIsReady {
+                return
             }
             // Don't change views if there is no favorite to change to
-            guard let _ = model.favorite else { return }
+            if model.favorite == nil { return }
+            
             // Don't disrupt an active edit session
-            if let vc = topVC as? ListController {
-                if vc.isEditing { return }
-            }
+            if let vc = topVC as? ListController,
+                vc.isEditing { return }
             
             // Don't animate going from one timer to another; it looks weird
             let leavingListController = !(topVC is MainViewController)
@@ -94,10 +95,7 @@ class RootFC: UIViewController {
     }
     
     private func setSoundControllerStatus() {
-        guard soundController.isActive == needsSound else {
-            soundController.setActive(needsSound)
-            return
-        }
+        if soundController.isActive != needsSound { soundController.setActive(needsSound) }
     }
 }
 
@@ -142,7 +140,8 @@ extension RootFC: MainViewControllerDelegate {
     }
     
     func containerViewActivated(_ vc: MainViewController, sender: UITapGestureRecognizer) {
-        guard sender.state == .ended else {return}
+        
+        guard sender.state == .ended else { return }
         startOrEndCountdown(vc)
     }
     
