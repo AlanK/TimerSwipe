@@ -69,7 +69,7 @@ extension UIButton {
         titleLabel?.font = UIFont.systemFont(ofSize: 20.0, weight: .semibold)
         
         let vInset: CGFloat = 8.0, hInset: CGFloat = 16.0
-        contentEdgeInsets = UIEdgeInsets.init(top: vInset, left: hInset, bottom: vInset, right: hInset)
+        contentEdgeInsets = UIEdgeInsets(top: vInset, left: hInset, bottom: vInset, right: hInset)
         
         layer.cornerRadius = 6.0
         tintColor = K.tintColor
